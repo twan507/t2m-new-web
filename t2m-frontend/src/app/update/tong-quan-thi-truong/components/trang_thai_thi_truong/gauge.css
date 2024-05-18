@@ -1,0 +1,6 @@
+.ta-gauge-chart-container {
+    width: 300px; /* Điều chỉnh kích thước của biểu đồ */
+    height: 150px;
+    margin: auto;
+    position: relative;
+  }
