@@ -53,7 +53,7 @@ const MarketBreathChart = (props: any) => {
           let dataArr = ctx.chart.data.datasets[0].data;
           //@ts-ignore
           dataArr.map(data => {
-            sum += data;
+            sum += parseInt(data);
           });
           let percentage = (value * 100 / sum).toFixed(1) + "%";
           return percentage;
@@ -62,7 +62,10 @@ const MarketBreathChart = (props: any) => {
       tooltip: {
         callbacks: {
           label: function (tooltipItem: any) {
-            return `Số lượng: ${tooltipItem.raw} (${((tooltipItem.raw / props?.data?.reduce((sum: any, item: any) => sum + item.count, 0)) * 100).toFixed(2) + '%'})`;
+            console.log(props?.data)
+            console.log(tooltipItem.raw)
+            console.log(props?.data?.reduce((sum: any, item: any) => sum + item.count, 0))
+            return `Số lượng: ${tooltipItem.raw} (${((tooltipItem.raw / props?.data?.reduce((sum: any, item: any) => sum + parseInt(item.count, 10), 0)) * 100).toFixed(1) + '%'})`;
           }
         },
         displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip

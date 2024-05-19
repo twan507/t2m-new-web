@@ -8,7 +8,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 const MarketStructureChart = (props: any) => {
 
     const data_sets = props?.data?.filter((item: any) => item.name === 'Thị trường')
-        .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     const dateList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
@@ -17,7 +17,7 @@ const MarketStructureChart = (props: any) => {
         return `${day}-${month}`;
     });
 
-    const slice = props?.ww > 768 ? -60 : (props?.ww > 500 ? -40 : -25)
+    const slice = props?.ww > 768 ? -60 : (props?.ww > 500 ? -40 : -25);
 
     const lines = {
         labels: dateList?.slice(slice) || [],
@@ -165,6 +165,11 @@ const MarketStructureChart = (props: any) => {
                         return `${value}%`; // Hiển thị dạng phần trăm
                     }
                 },
+                grid: {
+                    display: true,
+                    color: '#dfdfdf', // Màu của grid line
+                    lineWidth: 0.5, // Độ dày của grid line
+                }
             },
         },
     };
@@ -180,7 +185,7 @@ const MarketStructureChart = (props: any) => {
                 <Line data={lines} options={options} />
             </div>
         );
-    };
+    }
 }
 
 export default MarketStructureChart;
