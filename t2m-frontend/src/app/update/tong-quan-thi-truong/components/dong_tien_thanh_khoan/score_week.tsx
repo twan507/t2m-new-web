@@ -160,7 +160,7 @@ const MarketWeekScoreChart = (props: any) => {
     if (!checkAuth) {
         return (
             <>
-                <div style={{ height: '300px', width: '100%' }}>
+                <div style={{ height: '317px', width: '100%' }}>
                     <Bar data={data} options={options} plugins={[customLegendMargin, customTitleMargin]} />
                 </div>
             </>
