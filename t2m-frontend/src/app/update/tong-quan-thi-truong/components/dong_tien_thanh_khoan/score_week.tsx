@@ -63,7 +63,7 @@ const MarketWeekScoreChart = (props: any) => {
             tooltip: {
                 callbacks: {
                     label: function (tooltipItem: any) {
-                        return `${tooltipItem.dataset.label}: ${tooltipItem.raw.toFixed(2)}`;
+                        return `${tooltipItem.dataset.label}: ${tooltipItem?.raw?.toFixed(2)}`;
                     }
                 },
                 displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip

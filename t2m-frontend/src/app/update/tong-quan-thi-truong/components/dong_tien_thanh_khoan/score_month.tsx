@@ -92,7 +92,7 @@ const MarketMonthScoreChart = (props: any) => {
                         return `Ngày ${tooltipItems[0].label}`;
                     },
                     label: function (tooltipItem: any) {
-                        return `${tooltipItem.dataset.label}: ${tooltipItem.raw.toFixed(2)}`;
+                        return `${tooltipItem.dataset.label}: ${tooltipItem?.raw?.toFixed(2)}`;
                     }
                 },
                 displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip

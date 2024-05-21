@@ -66,45 +66,6 @@ function getUserName(name: string) {
 
 const Homelayout = ({ children }: React.PropsWithChildren) => {
 
-  const [isAutoReloadEnabled, setIsAutoReloadEnabled] = useState(true); // State to track switch
-  const timeoutIdRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    const resetTimeout = () => {
-      if (timeoutIdRef.current) {
-        clearTimeout(timeoutIdRef.current);
-      }
-      timeoutIdRef.current = setTimeout(() => {
-        if (isAutoReloadEnabled) {
-          window.location.reload();
-        }
-      }, 120000);  // 60000 ms = 1 minute
-    };
-
-    // Immediately reset timeout to start the timeout process
-    resetTimeout();
-
-    // Setup event listeners to reset the timeout on user activity
-    const handleUserActivity = () => resetTimeout();
-    window.addEventListener('mousemove', handleUserActivity);
-    window.addEventListener('keypress', handleUserActivity);
-    window.addEventListener('scroll', handleUserActivity);
-
-    // Cleanup on component unmount
-    return () => {
-      if (timeoutIdRef.current) {
-        clearTimeout(timeoutIdRef.current);
-      }
-      window.removeEventListener('mousemove', handleUserActivity);
-      window.removeEventListener('keypress', handleUserActivity);
-      window.removeEventListener('scroll', handleUserActivity);
-    };
-  }, [isAutoReloadEnabled]);
-
-  const handleAutoReloadChange = (checked: boolean) => {
-    setIsAutoReloadEnabled(checked);
-  };
-
   //@ts-ignore
   const [path, setPath] = useState(children.props.childProp.segment === "__PAGE__" ? "tong-quan-thi-truong" : children.props.childProp.segment)
 
@@ -326,7 +287,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
               items={sider_menu}
             />
             <div style={{
-              marginTop: `calc(100vh - 150px - ${5 * 55}px`
+              marginTop: `calc(100vh - 110px - ${5 * 55}px`
             }}
             >
               {showLogout && (
@@ -346,20 +307,6 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
                     }}
                   >
                     {collapsed ? '' : 'Đăng xuất'}
-                  </Button>
-                  <Button
-                    icon={<ReloadOutlined style={{}} />}
-                    onClick={() => { isAutoReloadEnabled ? handleAutoReloadChange(false) : handleAutoReloadChange(true) }}
-                    style={{
-                      fontSize: '14px',
-                      height: "30px",
-                      color: '#dfdfdf',
-                      marginLeft: collapsed ? '11px' : '40px',
-                      border: '0px',
-                      background: isAutoReloadEnabled ? '#1677ff' : '#fb4c4d'
-                    }}
-                  >
-                    {collapsed ? '' : 'Auto reload'}
                   </Button>
                 </div>
               )}
@@ -396,7 +343,8 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
                     {
                       label: collapsed ? <Link onClick={() => { window.location.href = "/" }} href='/' /> : null,
                       key: 'home',
-                      icon: collapsed ? <img src="/photo/text-logo.png" alt="Home Icon" style={{ width: '120px', height: '65px', paddingTop: '40px', marginBottom: '16px' }} /> : null
+                      icon: collapsed ? <div style={{ padding: 0, margin: 0 }}><img src="/photo/text-logo.png" alt="Home Icon" style={{ width: '120px', height: 'auto', marginTop: '24px', marginLeft: '-15px' }} /> </div> : null
+
                     }
                   ] : [
                     {

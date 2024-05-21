@@ -62,9 +62,6 @@ const MarketBreathChart = (props: any) => {
       tooltip: {
         callbacks: {
           label: function (tooltipItem: any) {
-            console.log(props?.data)
-            console.log(tooltipItem.raw)
-            console.log(props?.data?.reduce((sum: any, item: any) => sum + item.count, 0))
             return `Số lượng: ${tooltipItem.raw} (${((tooltipItem.raw / props?.data?.reduce((sum: any, item: any) => sum + parseInt(item.count, 10), 0)) * 100).toFixed(1) + '%'})`;
           }
         },

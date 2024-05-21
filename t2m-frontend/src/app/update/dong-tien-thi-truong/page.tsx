@@ -1,114 +1,172 @@
 'use client'
-import { useAppSelector } from '@/redux/store';
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import { sendRequest } from "@/utlis/api"
+import { Button, Col, Menu, MenuProps, Radio, Row } from "antd";
+import { useEffect, useState } from "react";
+import './styles.css'
+import MoneyFlowValueChart from "./nhom_co_phieu_eod/gia_tri_dong_tien";
+import MoneyFlowBreathChart from "./nhom_co_phieu_eod/do_rong_dong_tien";
+import MoneyFlowLiquidityChart from "./nhom_co_phieu_eod/chi_so_thanh_khoan_eod";
 
-const Page2 = () => {
-
-  const authInfo = useAppSelector((state) => state.auth)
-  const authState = !!authInfo?.user?._id
-
-  const router = useRouter()
-
-  useEffect(() => {
-    if (!authState) {
-      router.push("/");
-    }
-  }, [authState, router]);
-
-  const [showOverlay, setShowOverlay] = useState(true);
-
-  const [iframeHeight, setIframeHeight] = useState(2220);
-  const iframeWidth = 1300
-
-  const updateIframeSize = () => {
-
-    const currentWidth = window.innerWidth;
-    let newHeight = iframeHeight;
-
-    if (currentWidth < iframeWidth) {
-      const widthDecrease = iframeWidth - currentWidth;
-      newHeight -= widthDecrease * (iframeHeight / iframeWidth  - 0.1);
-    }
-
-    setIframeHeight(newHeight);
-  };
-
+const useWindowWidth = (): any => {
+  const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowOverlay(false);
-    }, 3000);
+    const handleResize = () => {
+      setWindowWidth(Math.min(window.innerWidth, 1250));
+    };
 
-    window.addEventListener('resize', updateIframeSize);
-    updateIframeSize(); // Gọi ngay khi component mount để đảm bảo kích thước iframe được điều chỉnh ngay lập tức
-
+    window.addEventListener('resize', handleResize);
     return () => {
-      clearTimeout(timer);
-      window.removeEventListener('resize', updateIframeSize);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  const [checkAuth, setCheckAuth] = useState(true);
+  return windowWidth;
+};
 
+export default function Page1() {
+  const getData = async (tableName: string) => {
+    const res = await sendRequest<IBackendRes<any>>({
+      url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
+      method: "GET",
+    })
+    if (tableName === 'update_time') {
+      await set_update_time(res.data)
+    }
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      getData('update_time');
+    };
+    fetchData();
+
+    const interval = setInterval(fetchData, 10 * 1000); // Gọi lại mỗi x giây
+    return () => clearInterval(interval); // Xóa interval khi component unmount
+  }, []);
+
+  const [update_time, set_update_time] = useState<any[]>([]);
+  const [switch_itd_eod, set_switch_itd_eod] = useState('eod');
+  const [switch_group_stock, set_switch_group_stock] = useState('D');
+
+  console.log(switch_itd_eod, switch_group_stock)
+
+
+  const ww = useWindowWidth();
+  const pixel = (ratio: number, min: number) => {
+    return `${Math.max(ratio * ww, min)?.toFixed(0)}px`;
+  }
+
+  const onChangeSwitchItdEod = (e: any) => {
+    set_switch_itd_eod(switch_itd_eod === 'eod' ? 'itd' : 'eod')
+  };
+
+  const onChangeGroupStock = (e: any) => {
+    const value = e.target.value;
+    set_switch_group_stock(value)
+  };
+
+  const switch_itd_eod_items: any = [
+    {
+      key: 'D',
+      label: 'Trong phiên',
+    },
+    {
+      key: 'M',
+      label: 'Trong tuần/tháng',
+    },
+  ];
+
+  const onChangeGroupStockMobile: MenuProps['onClick'] = (e) => {
+    set_switch_group_stock(e.key);
+  };
+
+  const [checkAuth, setCheckAuth] = useState(true);
   useEffect(() => {
     setCheckAuth(false)
   }, []);
-
   if (!checkAuth) {
-
     return (
-
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-        {/* Nếu showOverlay là true, hiển thị overlay */}
-        {showOverlay && (
-          <div style={{
-            position: 'fixed', // Sử dụng fixed để overlay che toàn bộ nội dung
-            top: 0,
-            left: 0,
-            zIndex: 100, // Đảm bảo overlay nằm trên cùng
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            background: 'black',
-            height: '100vh'
-          }}>
-            <img src="/photo/gif_loading.gif" alt="Loading" width='100%' />
-          </div>
-        )}
-        <div style={{
-          position: 'relative',
-          width: `${iframeWidth}px`
+      <>
+        <Col style={{
+          display: 'flex',
+          justifyContent: 'center',  // Căn giữa ngang
+          alignItems: 'center',      // Căn giữa dọc
+          marginTop: '30px'
         }}>
-          <iframe
-            className="iframe-style"
-            style={{
-              width: '100%', // Thiết lập chiều rộng của container phù hợp với iframe
-              height: `${iframeHeight}px`, // Thiết lập chiều cao của container để chứa đủ iframe và overlay
-              border: '0px',
-            }}
-            src="https://app.powerbi.com/view?r=eyJrIjoiNTU2YmE4ODgtN2M1OC00ZGM0LWE1MzEtZTI2M2VkOWY5MDVjIiwidCI6IjUxZmUxNTRlLThlNTYtNGM2NC05ZDM5LTU2NTc0ZDk3MmU1YyIsImMiOjEwfQ%3D%3D"
-            title="Dòng tiền thị trường">
-          </iframe>
-
-          {/* Overlay nằm ở dưới cùng của container, che phần dưới của iframe */}
-          <div style={{
-            position: 'absolute',
-            bottom: '0px',
-            width: '100%',
-            height: '70px', // Thiết lập chiều cao cho overlay
-            backgroundColor: 'rgba(0, 0, 0)', // Thiết lập màu nền và độ mờ cho overlay
-            zIndex: 2, // Đảm bảo overlay nằm trên cùng
-          }}>
-          </div>
-        </div>
-      </div >
-    );
+          <Row>
+            <Col style={{ width: ww, margin: 0.03 * ww }}>
+              <Row gutter={25} style={{ height: '10px', margin: '-40px 0px 0px 0px' }}></Row>
+              <Row gutter={25} style={{ marginTop: '0px', marginBottom: '10px' }}>
+                <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                  <div style={{ height: '100%', width: '100%' }}></div>
+                </Col>
+                <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                  <Button className="custom-button" block={true} size={ww > 768 ? 'large' : 'middle'}
+                    style={{ fontSize: pixel(0.013, 12) }} onClick={onChangeSwitchItdEod}
+                  >
+                    {switch_itd_eod === 'eod' ? (ww > 768 ? 'Xem diễn biến Intraday' : 'Xem diễn biến ITD')
+                      : (ww > 768 ? 'Xem diễn biến End-of-day' : 'Xem diễn biến EOD')}
+                  </Button>
+                </Col>
+              </Row>
+              {/* {switch_itd_eod === 'eod' && ( */}
+              <Row gutter={25} style={{ marginTop: '0px', marginBottom: '10px' }}>
+                <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                  <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
+                    Dòng tiền & Thanh khoản nhóm cổ phiếu
+                  </p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+                </Col>
+                <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                  {ww > 768 && (
+                    <Radio.Group
+                      className="custom-radio-group"
+                      defaultValue={switch_group_stock}
+                      buttonStyle="solid"
+                      onChange={onChangeGroupStock}
+                      style={{ display: 'flex', width: '100%', marginTop: '5px', height: '50px' }}
+                    >
+                      <Radio.Button value="D" className="custom-radio-button"
+                        style={{
+                          fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
+                        }}>Trong phiên
+                      </Radio.Button>
+                      <Radio.Button value="M" className="custom-radio-button"
+                        style={{
+                          fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
+                        }}>Trong tuần/tháng
+                      </Radio.Button>
+                    </Radio.Group>
+                  )}
+                  {ww <= 768 && (
+                    <Menu
+                      theme='dark'
+                      onClick={onChangeGroupStockMobile}
+                      className="page2-menu"
+                      style={{ width: '100%', background: 'black', fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf', height: '50px' }}
+                      defaultOpenKeys={[switch_group_stock]}
+                      selectedKeys={[switch_group_stock]}
+                      mode="vertical"
+                      items={switch_itd_eod_items}
+                    />
+                  )}
+                </Col>
+              </Row>
+              <Row gutter={20}>
+                <Col span={7}>
+                  <MoneyFlowValueChart ww={ww} fontSize={pixel(0.015, 17)} />
+                </Col>
+                <Col span={7}>
+                  <MoneyFlowBreathChart ww={ww} fontSize={pixel(0.015, 17)} />
+                </Col>
+                <Col span={10}>
+                  <MoneyFlowLiquidityChart ww={ww} fontSize={pixel(0.015, 17)} />
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Col >
+      </>
+    )
   }
 }
-
-export default Page2;
