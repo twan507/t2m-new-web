@@ -15,7 +15,7 @@ ChartJS.register(
 );
 
 const MarketWeekScoreChart = (props: any) => {
-    
+
     const data_sets = props?.data?.filter((item: any) => item.group_name === 'Thị trường')
         .sort((a: any, b: any) => a.day_index - b.day_index)
 
@@ -63,7 +63,7 @@ const MarketWeekScoreChart = (props: any) => {
             tooltip: {
                 callbacks: {
                     label: function (tooltipItem: any) {
-                        return `${tooltipItem.dataset.label}: ${tooltipItem?.raw?.toFixed(2)}`;
+                        return `${tooltipItem?.dataset.label}: ${tooltipItem?.raw?.toFixed(2)}`;
                     }
                 },
                 displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip

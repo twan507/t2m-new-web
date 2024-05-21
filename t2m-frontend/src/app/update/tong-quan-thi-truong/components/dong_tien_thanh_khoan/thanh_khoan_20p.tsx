@@ -10,11 +10,11 @@ const LiquidityLineChart20p = (props: any) => {
     const data_sets = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     const dateList: string[] = data_sets?.map((item: any) => {
-		const date = new Date(item.date);
-		const month = ('0' + (date.getMonth() + 1)).slice(-2); // Lấy tháng và thêm số 0 nếu cần
-		const day = ('0' + date.getDate()).slice(-2); // Lấy ngày và thêm số 0 nếu cần
-		return `${day}-${month}`;
-	});
+        const date = new Date(item.date);
+        const month = ('0' + (date.getMonth() + 1)).slice(-2); // Lấy tháng và thêm số 0 nếu cần
+        const day = ('0' + date.getDate()).slice(-2); // Lấy ngày và thêm số 0 nếu cần
+        return `${day}-${month}`;
+    });
 
     const lines = {
         labels: dateList || [],
@@ -54,7 +54,7 @@ const LiquidityLineChart20p = (props: any) => {
                 caretPadding: 20, // Kéo ô tooltip ra xa khỏi điểm dữ liệu một chút
                 callbacks: {
                     label: function (tooltipItem: any) {
-                        return ` ${tooltipItem.dataset.label}: ${tooltipItem.raw}%`;
+                        return ` ${tooltipItem?.dataset.label}: ${tooltipItem?.raw}%`;
                     }
                 }
             },

@@ -54,7 +54,7 @@ const LiquidityLineChart = (props: any) => {
                 caretPadding: 20, // Kéo ô tooltip ra xa khỏi điểm dữ liệu một chút
                 callbacks: {
                     label: function (tooltipItem: any) {
-                        return ` ${tooltipItem.dataset.label}: ${tooltipItem.raw}%`;
+                        return ` ${tooltipItem?.dataset.label}: ${tooltipItem?.raw}%`;
                     }
                 }
             },

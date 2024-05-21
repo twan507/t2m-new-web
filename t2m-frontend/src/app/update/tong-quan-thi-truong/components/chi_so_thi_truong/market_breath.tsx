@@ -62,7 +62,7 @@ const MarketBreathChart = (props: any) => {
       tooltip: {
         callbacks: {
           label: function (tooltipItem: any) {
-            return `Số lượng: ${tooltipItem.raw} (${((tooltipItem.raw / props?.data?.reduce((sum: any, item: any) => sum + parseInt(item.count, 10), 0)) * 100).toFixed(1) + '%'})`;
+            return `Số lượng: ${tooltipItem?.raw} (${((tooltipItem?.raw / props?.data?.reduce((sum: any, item: any) => sum + parseInt(item.count, 10), 0)) * 100).toFixed(1) + '%'})`;
           }
         },
         displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip

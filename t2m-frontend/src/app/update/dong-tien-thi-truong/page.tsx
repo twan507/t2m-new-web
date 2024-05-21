@@ -3,9 +3,9 @@ import { sendRequest } from "@/utlis/api"
 import { Button, Col, Menu, MenuProps, Radio, Row } from "antd";
 import { useEffect, useState } from "react";
 import './styles.css'
-import MoneyFlowValueChart from "./nhom_co_phieu_eod/gia_tri_dong_tien";
-import MoneyFlowBreathChart from "./nhom_co_phieu_eod/do_rong_dong_tien";
-import MoneyFlowLiquidityChart from "./nhom_co_phieu_eod/chi_so_thanh_khoan_eod";
+import MoneyFlowValueChart from "./eod/gia_tri_dong_tien";
+import MoneyFlowBreathChart from "./eod/do_rong_dong_tien";
+import MoneyFlowLiquidityChart from "./eod/chi_so_thanh_khoan_eod";
 
 const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
@@ -32,11 +32,17 @@ export default function Page1() {
     })
     if (tableName === 'update_time') {
       await set_update_time(res.data)
+    } else if (tableName === 'itd_score_liquidity_last') {
+      await set_itd_score_liquidity_last(res.data)
+    } else if (tableName === 'market_breath_df') {
+      await set_market_breath_df(res.data)
     }
   }
   useEffect(() => {
     const fetchData = async () => {
       getData('update_time');
+      getData('itd_score_liquidity_last');
+      getData('market_breath_df');
     };
     fetchData();
 
@@ -44,11 +50,14 @@ export default function Page1() {
     return () => clearInterval(interval); // Xóa interval khi component unmount
   }, []);
 
+  //State lưu trữ dữ liệu cổ phiếu
   const [update_time, set_update_time] = useState<any[]>([]);
+  const [itd_score_liquidity_last, set_itd_score_liquidity_last] = useState<any[]>([]);
+  const [market_breath_df, set_market_breath_df] = useState<any[]>([]);
+
+  //State lưu giữ trạng thái hiển thị của các nút bấm
   const [switch_itd_eod, set_switch_itd_eod] = useState('eod');
   const [switch_group_stock, set_switch_group_stock] = useState('D');
-
-  console.log(switch_itd_eod, switch_group_stock)
 
 
   const ww = useWindowWidth();
@@ -109,7 +118,6 @@ export default function Page1() {
                   </Button>
                 </Col>
               </Row>
-              {/* {switch_itd_eod === 'eod' && ( */}
               <Row gutter={25} style={{ marginTop: '0px', marginBottom: '10px' }}>
                 <Col xs={14} sm={14} md={14} lg={14} xl={14}>
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
@@ -152,17 +160,32 @@ export default function Page1() {
                   )}
                 </Col>
               </Row>
-              <Row gutter={20}>
-                <Col span={7}>
-                  <MoneyFlowValueChart ww={ww} fontSize={pixel(0.015, 17)} />
-                </Col>
-                <Col span={7}>
-                  <MoneyFlowBreathChart ww={ww} fontSize={pixel(0.015, 17)} />
-                </Col>
-                <Col span={10}>
-                  <MoneyFlowLiquidityChart ww={ww} fontSize={pixel(0.015, 17)} />
-                </Col>
-              </Row>
+              {switch_itd_eod === 'eod' && (
+                <>
+                  <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                    <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+                      <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 17)} group='hs'/>
+                    </Col>
+                    <Col xs={5} sm={5} md={6} lg={6} xl={6}>
+                      <MoneyFlowBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.015, 17)} group='hs'/>
+                    </Col>
+                    <Col xs={7} sm={7} md={8} lg={8} xl={8}>
+                      <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 17)} group='hs'/>
+                    </Col>
+                  </Row>
+                  <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                    <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+                      <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 17)} group='cap'/>
+                    </Col>
+                    <Col xs={5} sm={5} md={6} lg={6} xl={6}>
+                      <MoneyFlowBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.015, 17)} group='cap'/>
+                    </Col>
+                    <Col xs={7} sm={7} md={8} lg={8} xl={8}>
+                      <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 17)} group='cap'/>
+                    </Col>
+                  </Row>
+                </>
+              )}
             </Col>
           </Row>
         </Col >

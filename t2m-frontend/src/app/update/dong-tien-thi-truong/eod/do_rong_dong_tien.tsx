@@ -15,42 +15,39 @@ ChartJS.register(
     ChartDataLabels // Đăng ký plugin datalabels
 );
 
-const MoneyFlowBreathChart = (props: any) => {
-    const sampleData = [
-        { date: '2023-05-01', nn_value: 500, td_value: 200 },
-        { date: '2023-05-02', nn_value: 300, td_value: 100 },
-        { date: '2023-05-03', nn_value: 150, td_value: 250 },
-        { date: '2023-05-04', nn_value: 100, td_value: 300 },
-    ];
+const MoneyFlowBreathChart = (props: any): any => {
+
+    // const data_sets = [
+    //     { name: '2023-05-01', in_flow: 768, out_flow: 200 },
+    //     { name: '2023-05-02', in_flow: 300, out_flow: 100 },
+    //     { name: '2023-05-03', in_flow: 150, out_flow: 250 },
+    //     { name: '2023-05-04', in_flow: 300, out_flow: 69 },
+    // ];
+
+    const data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.order - b.order)
+
 
     // Chuẩn hóa dữ liệu thành phần trăm
-    const normalizedData = sampleData.map(item => {
-        const total = item.nn_value + item.td_value;
+    const normalizedData = data_sets.map((item: any) => {
+        const total = parseInt(item.in_flow) + parseInt(item.out_flow);
         return {
-            date: item.date,
-            nn_value: (item.nn_value / total) * 100,
-            td_value: (item.td_value / total) * 100,
+            name: item.name,
+            in_flow: (item.in_flow / total) * 100,
+            out_flow: (item.out_flow / total) * 100,
         };
     });
 
-    const dateList = normalizedData.map(item => {
-        const date = new Date(item.date);
-        const month = ('0' + (date.getMonth() + 1)).slice(-2); // Lấy tháng và thêm số 0 nếu cần
-        const day = ('0' + date.getDate()).slice(-2); // Lấy ngày và thêm số 0 nếu cần
-        return `${day}-${month}`;
-    });
-
     const data = {
-        labels: dateList,
+        labels: normalizedData.map((item: any) => item.name),
         datasets: [
             {
                 label: 'Tiền vào',
-                data: normalizedData.map(item => item.nn_value), // Sử dụng nn_value từ sample data
+                data: normalizedData.map((item: any) => item.in_flow), // Sử dụng in_flow từ sample data
                 backgroundColor: '#24B75E',
             },
             {
                 label: 'Tiền ra',
-                data: normalizedData.map(item => item.td_value), // Sử dụng td_value từ sample data
+                data: normalizedData.map((item: any) => item.out_flow), // Sử dụng out_flow từ sample data
                 backgroundColor: '#e14040',
             },
         ],
@@ -60,14 +57,9 @@ const MoneyFlowBreathChart = (props: any) => {
         responsive: true,
         maintainAspectRatio: false,
         indexAxis: 'y', // Chuyển đổi biểu đồ cột thành biểu đồ cột ngang
-        layout: {
-            margin: {
-                top: -5,
-            }
-        },
         plugins: {
             legend: {
-                display: true,
+                display: props?.ww > 768 ? true : false,
                 position: 'top',
                 labels: {
                     boxWidth: 20, // Độ rộng của hộp màu trong legend
@@ -84,11 +76,13 @@ const MoneyFlowBreathChart = (props: any) => {
             },
             title: {
                 display: true,
-                text: 'Độ rộng dòng tiền',
-                padding: {},
+                text: props?.ww > 768 ? 'Độ rộng dòng tiền' : 'Độ rộng',
+                padding: {
+                    bottom: props?.ww > 768 ? 0 : 15
+                },
                 font: {
                     family: 'Calibri, sans-serif',
-                    size: 18, // Chỉnh sửa cỡ chữ
+                    size: parseInt(props?.fontSize) - 2, // Chỉnh sửa cỡ chữ
                     weight: 'bold', // Chỉnh sửa kiểu chữ
                 },
                 color: '#dfdfdf' // Chỉnh sửa màu chữ
@@ -96,7 +90,11 @@ const MoneyFlowBreathChart = (props: any) => {
             tooltip: {
                 callbacks: {
                     label: function (tooltipItem: any) {
-                        return `${tooltipItem.dataset.label}: ${tooltipItem?.raw?.toFixed(2)}%`;
+                        if (props?.ww > 768) {
+                            return `${tooltipItem?.dataset.label}: ${tooltipItem?.raw?.toFixed(1)}%`;
+                        } else {
+                            return `${tooltipItem?.raw?.toFixed(1)}%`;
+                        }
                     }
                 },
                 displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip
@@ -107,13 +105,13 @@ const MoneyFlowBreathChart = (props: any) => {
                 boxWidth: 10, // Kích thước của ô màu
             },
             datalabels: {
-                display: true,
+                display: props?.ww > 768 ? true : false,
                 anchor: 'center',
                 align: 'center',
-                formatter: (value: any) => value.toFixed(2) + '%', // Định dạng giá trị hiển thị
+                formatter: (value: any) => value > 20 ? (value.toFixed(1) + '%') : '', // Định dạng giá trị hiển thị
                 font: {
                     family: 'Helvetica, sans-serif',
-                    size: 11, // Chỉnh sửa cỡ chữ
+                    size: parseInt(props?.fontSize) - 7, // Chỉnh sửa cỡ chữ
                 },
                 color: '#ffffff',
             },
@@ -148,7 +146,7 @@ const MoneyFlowBreathChart = (props: any) => {
     if (!checkAuth) {
         return (
             <>
-                <div style={{ height: '200px', width: '100%' }}>
+                <div style={{ height: props?.ww > 768 ? '200px' : '150px', width: '100%', marginLeft: props?.ww > 768 ? '-20px' : '-10px' }}>
                     <Bar data={data} options={options} />
                 </div>
             </>
