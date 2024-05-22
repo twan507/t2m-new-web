@@ -23,8 +23,6 @@ const MoneyFlowValueChart = (props: any) => {
         data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.order - b.order)
     }
 
-
-
     const industry_data_sets = props?.data?.filter((item: any) => ['A', 'B', 'C', 'D'].includes(item.group))
     const minIndustryScore = industry_data_sets.reduce((min: any, current: any) => current?.score < min ? current?.score : min, industry_data_sets?.[0]?.score);
     const maxIndustryScore = industry_data_sets.reduce((max: any, current: any) => current?.score > max ? current?.score : max, industry_data_sets?.[0]?.score);

@@ -22,7 +22,7 @@ const NganhHsDLiquidItd = (props: any) => {
         datasets: [
             {
                 label: 'Bảo hiểm',
-                data: data_sets?.map((item: any) => item.bao_hiem),
+                data: data_sets?.map((item: any) => item.liquid_bao_hiem * 100),
                 borderColor: '#24B75E',
                 pointRadius: 0,
                 hoverRadius: 5,
@@ -32,7 +32,7 @@ const NganhHsDLiquidItd = (props: any) => {
             },
             {
                 label: 'Du lịch và DV',
-                data: data_sets?.map((item: any) => item.dv_dulich),
+                data: data_sets?.map((item: any) => item.liquid_dulich_dv * 100),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 0,
@@ -43,7 +43,7 @@ const NganhHsDLiquidItd = (props: any) => {
             },
             {
                 label: 'DV hạ tầng',
-                data: data_sets?.map((item: any) => item.dv_hatang),
+                data: data_sets?.map((item: any) => item.liquid_dv_hatang * 100),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 0,
@@ -54,7 +54,7 @@ const NganhHsDLiquidItd = (props: any) => {
             },
             {
                 label: 'Y tế',
-                data: data_sets?.map((item: any) => item.y_te),
+                data: data_sets?.map((item: any) => item.liquid_y_te * 100),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 0,
@@ -87,7 +87,11 @@ const NganhHsDLiquidItd = (props: any) => {
                 }
             },
             tooltip: {
-
+                callbacks: {
+                    label: function (tooltipItem: any) {
+                        return `${tooltipItem?.dataset?.label}: ${tooltipItem?.raw?.toFixed(2)}%`;
+                    }
+                },
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
@@ -98,7 +102,7 @@ const NganhHsDLiquidItd = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng dòng tiền' : 'Xếp hạng',
+                text: props?.ww > 768 ? 'Diễn biến thanh khoản nhóm ngành D' : 'TK nhóm ngành D',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',
@@ -125,6 +129,9 @@ const NganhHsDLiquidItd = (props: any) => {
                 position: 'right',
                 ticks: {
                     color: '#dfdfdf',
+                    callback: function (value: any) {
+                        return `${value}%`;
+                    }
                 },
                 grid: {
                     display: false,

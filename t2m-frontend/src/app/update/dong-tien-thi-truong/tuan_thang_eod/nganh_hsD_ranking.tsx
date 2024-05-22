@@ -34,7 +34,7 @@ const NganhHsDRanking = (props: any) => {
             },
             {
                 label: 'Du lịch và DV',
-                data: data_sets?.map((item: any) => item.dv_dulich).slice(slice),
+                data: data_sets?.map((item: any) => item.dulich_dv).slice(slice),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 2,

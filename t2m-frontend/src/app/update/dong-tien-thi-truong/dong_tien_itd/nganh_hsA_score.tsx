@@ -22,7 +22,7 @@ const NganhHsAScoreItd = (props: any) => {
         datasets: [
             {
                 label: 'Bán lẻ',
-                data: data_sets?.map((item: any) => item.ban_le),
+                data: data_sets?.map((item: any) => item.score_ban_le),
                 borderColor: '#C031C7',
                 pointRadius: 0,
                 hoverRadius: 5,
@@ -32,7 +32,7 @@ const NganhHsAScoreItd = (props: any) => {
             },
             {
                 label: 'Bất động sản',
-                data: data_sets?.map((item: any) => item.bds),
+                data: data_sets?.map((item: any) => item.score_bds),
                 fill: 'origin',
                 borderColor: '#24B75E',
                 pointRadius: 0,
@@ -43,7 +43,7 @@ const NganhHsAScoreItd = (props: any) => {
             },
             {
                 label: 'Chứng khoán',
-                data: data_sets?.map((item: any) => item.chung_khoan),
+                data: data_sets?.map((item: any) => item.score_chung_khoan),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 0,
@@ -54,7 +54,7 @@ const NganhHsAScoreItd = (props: any) => {
             },
             {
                 label: 'Tài chính',
-                data: data_sets?.map((item: any) => item.tai_chinh),
+                data: data_sets?.map((item: any) => item.score_tai_chinh),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 0,
@@ -65,7 +65,7 @@ const NganhHsAScoreItd = (props: any) => {
             },
             {
                 label: 'Thép',
-                data: data_sets?.map((item: any) => item.thep),
+                data: data_sets?.map((item: any) => item.score_thep),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 0,
@@ -76,7 +76,7 @@ const NganhHsAScoreItd = (props: any) => {
             },
             {
                 label: 'VLXD',
-                data: data_sets?.map((item: any) => item.vlxd),
+                data: data_sets?.map((item: any) => item.score_vlxd),
                 fill: 'origin',
                 borderColor: '#00cccc',
                 pointRadius: 0,
@@ -87,7 +87,7 @@ const NganhHsAScoreItd = (props: any) => {
             },
             {
                 label: 'Xây dựng',
-                data: data_sets?.map((item: any) => item.xd),
+                data: data_sets?.map((item: any) => item.score_xd),
                 fill: 'origin',
                 borderColor: '#999999',
                 pointRadius: 0,
@@ -109,7 +109,6 @@ const NganhHsAScoreItd = (props: any) => {
                 labels: {
                     boxWidth: 20,
                     boxHeight: 6,
-                    // padding: 10,
                     pointStyle: 'circle',
                     usePointStyle: true,
                     font: {
@@ -120,7 +119,11 @@ const NganhHsAScoreItd = (props: any) => {
                 }
             },
             tooltip: {
-
+                callbacks: {
+                    label: function (tooltipItem: any) {
+                        return `${tooltipItem?.dataset?.label}: ${tooltipItem?.raw?.toFixed(2)}`;
+                    }
+                },
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
@@ -131,7 +134,7 @@ const NganhHsAScoreItd = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng dòng tiền' : 'Xếp hạng',
+                text: props?.ww > 768 ? 'Diễn biến dòng tiền nhóm ngành A' : 'DT nhóm ngành A',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',
@@ -160,8 +163,13 @@ const NganhHsAScoreItd = (props: any) => {
                     color: '#dfdfdf',
                 },
                 grid: {
-                    display: false,
-                }
+                    display: true,
+                    color: '#dfdfdf',
+                    drawBorder: false,
+                    lineWidth: function (context: any) {
+                        return context.tick.value === 0 ? 2 : 0; // Draw grid line only at value 0
+                    },
+                },
             },
         },
     };

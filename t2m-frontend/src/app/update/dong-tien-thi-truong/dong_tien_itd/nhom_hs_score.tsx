@@ -87,7 +87,11 @@ const NhomHsScoreItd = (props: any) => {
                 }
             },
             tooltip: {
-
+                callbacks: {
+                    label: function (tooltipItem: any) {
+                        return `${tooltipItem?.dataset?.label}: ${tooltipItem?.raw?.toFixed(2)}`;
+                    }
+                },
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
@@ -98,7 +102,7 @@ const NhomHsScoreItd = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng dòng tiền' : 'Xếp hạng',
+                text: props?.ww > 768 ? 'Diễn biến dòng tiền nhóm hiệu suất' : 'DT nhóm hiệu suất',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',
@@ -127,8 +131,13 @@ const NhomHsScoreItd = (props: any) => {
                     color: '#dfdfdf',
                 },
                 grid: {
-                    display: false,
-                }
+                    display: true,
+                    color: '#dfdfdf',
+                    drawBorder: false,
+                    lineWidth: function (context: any) {
+                        return context.tick.value === 0 ? 2 : 0; // Draw grid line only at value 0
+                    },
+                },
             },
         },
     };

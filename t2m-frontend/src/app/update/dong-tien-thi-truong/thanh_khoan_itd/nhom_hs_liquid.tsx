@@ -32,7 +32,7 @@ const NhomHsLiquidItd = (props: any) => {
             },
             {
                 label: 'Hiệu suất B',
-                data: data_sets?.map((item: any) => item.liquid_B*100),
+                data: data_sets?.map((item: any) => item.liquid_B * 100),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 0,
@@ -43,7 +43,7 @@ const NhomHsLiquidItd = (props: any) => {
             },
             {
                 label: 'Hiệu suất C',
-                data: data_sets?.map((item: any) => item.liquid_C*100),
+                data: data_sets?.map((item: any) => item.liquid_C * 100),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 0,
@@ -54,7 +54,7 @@ const NhomHsLiquidItd = (props: any) => {
             },
             {
                 label: 'Hiệu suất D',
-                data: data_sets?.map((item: any) => item.liquid_D*100),
+                data: data_sets?.map((item: any) => item.liquid_D * 100),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 0,
@@ -87,7 +87,11 @@ const NhomHsLiquidItd = (props: any) => {
                 }
             },
             tooltip: {
-
+                callbacks: {
+                    label: function (tooltipItem: any) {
+                        return `${tooltipItem?.dataset?.label}: ${tooltipItem?.raw?.toFixed(2)}%`;
+                    }
+                },
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
@@ -98,7 +102,7 @@ const NhomHsLiquidItd = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng dòng tiền' : 'Xếp hạng',
+                text: props?.ww > 768 ? 'Diễn biến thanh khoản nhóm hiệu suất' : 'TK nhóm hiệu suất',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',

@@ -14,8 +14,18 @@ import NganhHsARanking from "./tuan_thang_eod/nganh_hsA_ranking";
 import NganhHsCRanking from "./tuan_thang_eod/nganh_hsC_ranking";
 import NganhHsBRanking from "./tuan_thang_eod/nganh_hsB_ranking";
 import NganhHsDRanking from "./tuan_thang_eod/nganh_hsD_ranking";
-import NhomHsLiquidItd from "./thanh_khoan_itd/nhom_hs_liquid";
 import NhomHsScoreItd from "./dong_tien_itd/nhom_hs_score";
+import NhomVhScoreItd from "./dong_tien_itd/nhom_vh_score";
+import NhomVhLiquidItd from "./thanh_khoan_itd/nhom_vh_liquid";
+import NganhHsAScoreItd from "./dong_tien_itd/nganh_hsA_score";
+import NganhHsALiquidItd from "./thanh_khoan_itd/nganh_hsA_liquid";
+import NhomHsLiquidItd from "./thanh_khoan_itd/nhom_hs_liquid";
+import NganhHsBLiquidItd from "./thanh_khoan_itd/nganh_hsB_liquid";
+import NganhHsBScoreItd from "./dong_tien_itd/nganh_hsB_score";
+import NganhHsCScoreItd from "./dong_tien_itd/nganh_hsC_score";
+import NganhHsCLiquidItd from "./thanh_khoan_itd/nganh_hsC_liquid";
+import NganhHsDScoreItd from "./dong_tien_itd/nganh_hsD_score";
+import NganhHsDLiquidItd from "./thanh_khoan_itd/nganh_hsD_liquid";
 
 const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
@@ -274,11 +284,21 @@ export default function Page1() {
                   <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NhomHsScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
-                        height={ww > 768 ? '370px' : '200px'} type='group' />
+                        height={ww > 768 ? '300px' : '200px'} type='group' />
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NhomHsLiquidItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
-                        height={ww > 768 ? '370px' : '200px'} type='group' />
+                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                    </Col>
+                  </Row>
+                  <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                      <NhomVhScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
+                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                      <NhomVhLiquidItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
+                        height={ww > 768 ? '300px' : '200px'} type='group' />
                     </Col>
                   </Row>
                 </>
@@ -433,6 +453,50 @@ export default function Page1() {
                       </Row>
                     </>
                   )}
+                </>
+              )}
+              {switch_itd_eod === 'itd' && (
+                <>
+                  <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                      <NganhHsAScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
+                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                      <NganhHsALiquidItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
+                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                    </Col>
+                  </Row>
+                  <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                      <NganhHsBScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
+                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                      <NganhHsBLiquidItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
+                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                    </Col>
+                  </Row>
+                  <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                      <NganhHsCScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
+                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                      <NganhHsCLiquidItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
+                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                    </Col>
+                  </Row>
+                  <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                      <NganhHsDScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
+                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                      <NganhHsDLiquidItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
+                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                    </Col>
+                  </Row>
                 </>
               )}
               {switch_itd_eod === 'eod' && (

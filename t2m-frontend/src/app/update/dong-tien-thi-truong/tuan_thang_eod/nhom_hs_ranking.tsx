@@ -78,7 +78,6 @@ const NhomHsRanking = (props: any) => {
                 labels: {
                     boxWidth: 20,
                     boxHeight: 6,
-                    // padding: 10,
                     pointStyle: 'circle',
                     usePointStyle: true,
                     font: {

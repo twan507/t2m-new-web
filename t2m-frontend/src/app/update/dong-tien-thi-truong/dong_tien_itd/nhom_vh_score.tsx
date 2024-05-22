@@ -22,7 +22,7 @@ const NhomVhScoreItd = (props: any) => {
         datasets: [
             {
                 label: 'LARGECAP',
-                data: data_sets?.map((item: any) => item.large),
+                data: data_sets?.map((item: any) => item.score_large),
                 borderColor: '#24B75E',
                 pointRadius: 0,
                 hoverRadius: 5,
@@ -32,7 +32,7 @@ const NhomVhScoreItd = (props: any) => {
             },
             {
                 label: 'MIDCAP',
-                data: data_sets?.map((item: any) => item.mid),
+                data: data_sets?.map((item: any) => item.score_mid),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 0,
@@ -43,7 +43,7 @@ const NhomVhScoreItd = (props: any) => {
             },
             {
                 label: 'SMALLCAP',
-                data: data_sets?.map((item: any) => item.small),
+                data: data_sets?.map((item: any) => item.score_small),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 0,
@@ -54,7 +54,7 @@ const NhomVhScoreItd = (props: any) => {
             },
             {
                 label: 'PENNY',
-                data: data_sets?.map((item: any) => item.penny),
+                data: data_sets?.map((item: any) => item.score_penny),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 0,
@@ -76,7 +76,6 @@ const NhomVhScoreItd = (props: any) => {
                 labels: {
                     boxWidth: 20,
                     boxHeight: 6,
-                    // padding: 10,
                     pointStyle: 'circle',
                     usePointStyle: true,
                     font: {
@@ -87,7 +86,11 @@ const NhomVhScoreItd = (props: any) => {
                 }
             },
             tooltip: {
-
+                callbacks: {
+                    label: function (tooltipItem: any) {
+                        return `${tooltipItem?.dataset?.label}: ${tooltipItem?.raw?.toFixed(2)}`;
+                    }
+                },
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
@@ -98,7 +101,7 @@ const NhomVhScoreItd = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng dòng tiền' : 'Xếp hạng',
+                text: props?.ww > 768 ? 'Diễn biến dòng tiền nhóm vốn hoá' : 'DT nhóm vốn hoá',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',
@@ -123,23 +126,17 @@ const NhomVhScoreItd = (props: any) => {
             },
             y: {
                 position: 'right',
-                min: 0,
-                max: 5,
                 ticks: {
-                    stepSize: 1,
                     color: '#dfdfdf',
-                    callback: function (value: any) {
-                        if (value >= 1 && value <= 4) {
-                            return value;
-                        }
-                        return '';
-                    }
                 },
                 grid: {
-                    display: false,
+                    display: true,
                     color: '#dfdfdf',
-                    lineWidth: 0.5,
-                }
+                    drawBorder: false,
+                    lineWidth: function (context: any) {
+                        return context.tick.value === 0 ? 2 : 0; // Draw grid line only at value 0
+                    },
+                },
             },
         },
     };

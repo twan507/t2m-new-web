@@ -22,7 +22,7 @@ const NganhHsBLiquidItd = (props: any) => {
         datasets: [
             {
                 label: 'Công nghiệp',
-                data: data_sets?.map((item: any) => item.cong_nghiep),
+                data: data_sets?.map((item: any) => item.liquid_cong_nghiep*100),
                 borderColor: '#C031C7',
                 pointRadius: 0,
                 hoverRadius: 5,
@@ -32,7 +32,7 @@ const NganhHsBLiquidItd = (props: any) => {
             },
             {
                 label: 'Dầu khí',
-                data: data_sets?.map((item: any) => item.dau_khi),
+                data: data_sets?.map((item: any) => item.liquid_dau_khi*100),
                 fill: 'origin',
                 borderColor: '#24B75E',
                 pointRadius: 0,
@@ -43,7 +43,7 @@ const NganhHsBLiquidItd = (props: any) => {
             },
             {
                 label: 'Dệt may',
-                data: data_sets?.map((item: any) => item.det_may),
+                data: data_sets?.map((item: any) => item.liquid_det_may*100),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 0,
@@ -54,7 +54,7 @@ const NganhHsBLiquidItd = (props: any) => {
             },
             {
                 label: 'Hoá chất',
-                data: data_sets?.map((item: any) => item.hoa_chat),
+                data: data_sets?.map((item: any) => item.liquid_hoa_chat*100),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 0,
@@ -65,7 +65,7 @@ const NganhHsBLiquidItd = (props: any) => {
             },
             {
                 label: 'Khoáng sản',
-                data: data_sets?.map((item: any) => item.khoang_san),
+                data: data_sets?.map((item: any) => item.liquid_khoang_san*100),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 0,
@@ -76,7 +76,7 @@ const NganhHsBLiquidItd = (props: any) => {
             },
             {
                 label: 'Thuỷ sản',
-                data: data_sets?.map((item: any) => item.thuy_san),
+                data: data_sets?.map((item: any) => item.liquid_thuy_san*100),
                 fill: 'origin',
                 borderColor: '#00cccc',
                 pointRadius: 0,
@@ -109,7 +109,11 @@ const NganhHsBLiquidItd = (props: any) => {
                 }
             },
             tooltip: {
-
+                callbacks: {
+                    label: function (tooltipItem: any) {
+                        return `${tooltipItem?.dataset?.label}: ${tooltipItem?.raw?.toFixed(2)}%`;
+                    }
+                },
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
@@ -120,7 +124,7 @@ const NganhHsBLiquidItd = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng dòng tiền' : 'Xếp hạng',
+                text: props?.ww > 768 ? 'Diễn biến thanh khoản nhóm ngành B' : 'TK nhóm ngành B',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',
@@ -147,6 +151,9 @@ const NganhHsBLiquidItd = (props: any) => {
                 position: 'right',
                 ticks: {
                     color: '#dfdfdf',
+                    callback: function (value: any) {
+                        return `${value}%`;
+                    }
                 },
                 grid: {
                     display: false,

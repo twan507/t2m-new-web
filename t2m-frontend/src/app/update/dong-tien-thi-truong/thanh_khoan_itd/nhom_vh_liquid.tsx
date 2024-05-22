@@ -22,7 +22,7 @@ const NhomVhLiquidItd = (props: any) => {
         datasets: [
             {
                 label: 'LARGECAP',
-                data: data_sets?.map((item: any) => item.large),
+                data: data_sets?.map((item: any) => item.liquid_large * 100),
                 borderColor: '#24B75E',
                 pointRadius: 0,
                 hoverRadius: 5,
@@ -32,7 +32,7 @@ const NhomVhLiquidItd = (props: any) => {
             },
             {
                 label: 'MIDCAP',
-                data: data_sets?.map((item: any) => item.mid),
+                data: data_sets?.map((item: any) => item.liquid_mid * 100),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 0,
@@ -43,7 +43,7 @@ const NhomVhLiquidItd = (props: any) => {
             },
             {
                 label: 'SMALLCAP',
-                data: data_sets?.map((item: any) => item.small),
+                data: data_sets?.map((item: any) => item.liquid_small * 100),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 0,
@@ -54,7 +54,7 @@ const NhomVhLiquidItd = (props: any) => {
             },
             {
                 label: 'PENNY',
-                data: data_sets?.map((item: any) => item.penny),
+                data: data_sets?.map((item: any) => item.liquid_penny * 100),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 0,
@@ -87,7 +87,11 @@ const NhomVhLiquidItd = (props: any) => {
                 }
             },
             tooltip: {
-
+                callbacks: {
+                    label: function (tooltipItem: any) {
+                        return `${tooltipItem?.dataset?.label}: ${tooltipItem?.raw?.toFixed(2)}%`;
+                    }
+                },
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
@@ -98,7 +102,7 @@ const NhomVhLiquidItd = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng dòng tiền' : 'Xếp hạng',
+                text: props?.ww > 768 ? 'Diễn biến thanh khoản nhóm vốn hoá' : 'TK nhóm vốn hoá',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',
@@ -123,22 +127,14 @@ const NhomVhLiquidItd = (props: any) => {
             },
             y: {
                 position: 'right',
-                min: 0,
-                max: 5,
                 ticks: {
-                    stepSize: 1,
                     color: '#dfdfdf',
                     callback: function (value: any) {
-                        if (value >= 1 && value <= 4) {
-                            return value;
-                        }
-                        return '';
+                        return `${value}%`;
                     }
                 },
                 grid: {
                     display: false,
-                    color: '#dfdfdf',
-                    lineWidth: 0.5,
                 }
             },
         },

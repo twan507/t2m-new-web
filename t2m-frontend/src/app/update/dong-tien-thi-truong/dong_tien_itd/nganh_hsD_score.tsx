@@ -22,7 +22,7 @@ const NganhHsDScoreItd = (props: any) => {
         datasets: [
             {
                 label: 'Bảo hiểm',
-                data: data_sets?.map((item: any) => item.bao_hiem),
+                data: data_sets?.map((item: any) => item.score_bao_hiem),
                 borderColor: '#24B75E',
                 pointRadius: 0,
                 hoverRadius: 5,
@@ -32,7 +32,7 @@ const NganhHsDScoreItd = (props: any) => {
             },
             {
                 label: 'Du lịch và DV',
-                data: data_sets?.map((item: any) => item.dv_dulich),
+                data: data_sets?.map((item: any) => item.score_dulich_dv),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 0,
@@ -43,7 +43,7 @@ const NganhHsDScoreItd = (props: any) => {
             },
             {
                 label: 'DV hạ tầng',
-                data: data_sets?.map((item: any) => item.dv_hatang),
+                data: data_sets?.map((item: any) => item.score_dv_hatang),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 0,
@@ -54,7 +54,7 @@ const NganhHsDScoreItd = (props: any) => {
             },
             {
                 label: 'Y tế',
-                data: data_sets?.map((item: any) => item.y_te),
+                data: data_sets?.map((item: any) => item.score_y_te),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 0,
@@ -87,7 +87,11 @@ const NganhHsDScoreItd = (props: any) => {
                 }
             },
             tooltip: {
-
+                callbacks: {
+                    label: function (tooltipItem: any) {
+                        return `${tooltipItem?.dataset?.label}: ${tooltipItem?.raw?.toFixed(2)}`;
+                    }
+                },
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
@@ -98,7 +102,7 @@ const NganhHsDScoreItd = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng dòng tiền' : 'Xếp hạng',
+                text: props?.ww > 768 ? 'Diễn biến dòng tiền nhóm ngành D' : 'DT nhóm ngành D',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',
@@ -127,8 +131,13 @@ const NganhHsDScoreItd = (props: any) => {
                     color: '#dfdfdf',
                 },
                 grid: {
-                    display: false,
-                }
+                    display: true,
+                    color: '#dfdfdf',
+                    drawBorder: false,
+                    lineWidth: function (context: any) {
+                        return context.tick.value === 0 ? 2 : 0; // Draw grid line only at value 0
+                    },
+                },
             },
         },
     };

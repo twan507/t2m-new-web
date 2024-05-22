@@ -22,7 +22,7 @@ const NganhHsALiquidItd = (props: any) => {
         datasets: [
             {
                 label: 'Bán lẻ',
-                data: data_sets?.map((item: any) => item.ban_le),
+                data: data_sets?.map((item: any) => item.liquid_ban_le * 100),
                 borderColor: '#C031C7',
                 pointRadius: 0,
                 hoverRadius: 5,
@@ -32,7 +32,7 @@ const NganhHsALiquidItd = (props: any) => {
             },
             {
                 label: 'Bất động sản',
-                data: data_sets?.map((item: any) => item.bds),
+                data: data_sets?.map((item: any) => item.liquid_bds * 100),
                 fill: 'origin',
                 borderColor: '#24B75E',
                 pointRadius: 0,
@@ -43,7 +43,7 @@ const NganhHsALiquidItd = (props: any) => {
             },
             {
                 label: 'Chứng khoán',
-                data: data_sets?.map((item: any) => item.chung_khoan),
+                data: data_sets?.map((item: any) => item.liquid_chung_khoan * 100),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 0,
@@ -54,7 +54,7 @@ const NganhHsALiquidItd = (props: any) => {
             },
             {
                 label: 'Tài chính',
-                data: data_sets?.map((item: any) => item.tai_chinh),
+                data: data_sets?.map((item: any) => item.liquid_tai_chinh * 100),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 0,
@@ -65,7 +65,7 @@ const NganhHsALiquidItd = (props: any) => {
             },
             {
                 label: 'Thép',
-                data: data_sets?.map((item: any) => item.thep),
+                data: data_sets?.map((item: any) => item.liquid_thep * 100),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 0,
@@ -76,7 +76,7 @@ const NganhHsALiquidItd = (props: any) => {
             },
             {
                 label: 'VLXD',
-                data: data_sets?.map((item: any) => item.vlxd),
+                data: data_sets?.map((item: any) => item.liquid_vlxd * 100),
                 fill: 'origin',
                 borderColor: '#00cccc',
                 pointRadius: 0,
@@ -87,7 +87,7 @@ const NganhHsALiquidItd = (props: any) => {
             },
             {
                 label: 'Xây dựng',
-                data: data_sets?.map((item: any) => item.xd),
+                data: data_sets?.map((item: any) => item.liquid_xd * 100),
                 fill: 'origin',
                 borderColor: '#999999',
                 pointRadius: 0,
@@ -120,7 +120,11 @@ const NganhHsALiquidItd = (props: any) => {
                 }
             },
             tooltip: {
-
+                callbacks: {
+                    label: function (tooltipItem: any) {
+                        return `${tooltipItem?.dataset?.label}: ${tooltipItem?.raw?.toFixed(2)}%`;
+                    }
+                },
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
@@ -131,7 +135,7 @@ const NganhHsALiquidItd = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng dòng tiền' : 'Xếp hạng',
+                text: props?.ww > 768 ? 'Diễn biến thanh khoản nhóm ngành A' : 'TK nhóm ngành A',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',
@@ -158,6 +162,9 @@ const NganhHsALiquidItd = (props: any) => {
                 position: 'right',
                 ticks: {
                     color: '#dfdfdf',
+                    callback: function (value: any) {
+                        return `${value}%`;
+                    }
                 },
                 grid: {
                     display: false,

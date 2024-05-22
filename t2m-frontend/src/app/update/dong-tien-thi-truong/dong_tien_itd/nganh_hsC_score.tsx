@@ -22,7 +22,7 @@ const NganhHsCScoreItd = (props: any) => {
         datasets: [
             {
                 label: 'BĐS KCN',
-                data: data_sets?.map((item: any) => item.bds_kcn),
+                data: data_sets?.map((item: any) => item.score_bds_kcn),
                 borderColor: '#C031C7',
                 pointRadius: 0,
                 hoverRadius: 5,
@@ -32,7 +32,7 @@ const NganhHsCScoreItd = (props: any) => {
             },
             {
                 label: 'Công nghệ',
-                data: data_sets?.map((item: any) => item.cong_nghe),
+                data: data_sets?.map((item: any) => item.score_cong_nghe),
                 fill: 'origin',
                 borderColor: '#24B75E',
                 pointRadius: 0,
@@ -43,7 +43,7 @@ const NganhHsCScoreItd = (props: any) => {
             },
             {
                 label: 'Hàng tiêu dùng',
-                data: data_sets?.map((item: any) => item.htd),
+                data: data_sets?.map((item: any) => item.score_htd),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 0,
@@ -54,7 +54,7 @@ const NganhHsCScoreItd = (props: any) => {
             },
             {
                 label: 'Ngân hàng',
-                data: data_sets?.map((item: any) => item.ngan_hang),
+                data: data_sets?.map((item: any) => item.score_ngan_hang),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 0,
@@ -65,7 +65,7 @@ const NganhHsCScoreItd = (props: any) => {
             },
             {
                 label: 'Thực phẩm',
-                data: data_sets?.map((item: any) => item.thuc_pham),
+                data: data_sets?.map((item: any) => item.score_thuc_pham),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 0,
@@ -76,7 +76,7 @@ const NganhHsCScoreItd = (props: any) => {
             },
             {
                 label: 'Vận tải',
-                data: data_sets?.map((item: any) => item.van_tai),
+                data: data_sets?.map((item: any) => item.score_van_tai),
                 fill: 'origin',
                 borderColor: '#00cccc',
                 pointRadius: 0,
@@ -109,7 +109,11 @@ const NganhHsCScoreItd = (props: any) => {
                 }
             },
             tooltip: {
-
+                callbacks: {
+                    label: function (tooltipItem: any) {
+                        return `${tooltipItem?.dataset?.label}: ${tooltipItem?.raw?.toFixed(2)}`;
+                    }
+                },
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
@@ -120,7 +124,7 @@ const NganhHsCScoreItd = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng dòng tiền' : 'Xếp hạng',
+                text: props?.ww > 768 ? 'Diễn biến dòng tiền nhóm ngành C' : 'DT nhóm ngành C',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',
@@ -149,8 +153,13 @@ const NganhHsCScoreItd = (props: any) => {
                     color: '#dfdfdf',
                 },
                 grid: {
-                    display: false,
-                }
+                    display: true,
+                    color: '#dfdfdf',
+                    drawBorder: false,
+                    lineWidth: function (context: any) {
+                        return context.tick.value === 0 ? 2 : 0; // Draw grid line only at value 0
+                    },
+                },
             },
         },
     };
