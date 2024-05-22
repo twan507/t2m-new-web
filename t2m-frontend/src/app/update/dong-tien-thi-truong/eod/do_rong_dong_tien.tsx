@@ -28,7 +28,7 @@ const MoneyFlowBreathChart = (props: any): any => {
 
 
     // Chuẩn hóa dữ liệu thành phần trăm
-    const normalizedData = data_sets.map((item: any) => {
+    const normalizedData = data_sets?.map((item: any) => {
         const total = parseInt(item.in_flow) + parseInt(item.out_flow);
         return {
             name: item.name,

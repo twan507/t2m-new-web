@@ -31,7 +31,7 @@ const MoneyFlowValueChart = (props: any) => {
         datasets: [
             {
                 label: 'Giá trị',
-                data: data_sets.map((item: any) => item.score), // Sử dụng nn_value từ sample data
+                data: data_sets?.map((item: any) => item.score), // Sử dụng nn_value từ sample data
                 backgroundColor: function (context: any) {
                     const value = context.dataset.data[context.dataIndex];
                     return value > 0 ? '#24B75E' : '#e14040';

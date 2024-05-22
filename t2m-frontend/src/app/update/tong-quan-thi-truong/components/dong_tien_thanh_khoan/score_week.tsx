@@ -21,18 +21,18 @@ const MarketWeekScoreChart = (props: any) => {
 
 
     const data = {
-        labels: data_sets.map((item: any) => item.week_day) || [],
+        labels: data_sets?.map((item: any) => item.week_day) || [],
         datasets: [
             {
                 label: 'Tuần này',
-                data: data_sets.map((item: any) => item.w1),
+                data: data_sets?.map((item: any) => item.w1),
                 backgroundColor: '#C031C7',
                 barPercentage: 0.8, // Điều chỉnh độ rộng của bar
                 categoryPercentage: 0.7, // Điều chỉnh khoảng cách giữa các bar
             },
             {
                 label: 'Tuần trước',
-                data: data_sets.map((item: any) => item.w2),
+                data: data_sets?.map((item: any) => item.w2),
                 backgroundColor: '#025bc4',
                 barPercentage: 0.8, // Điều chỉnh độ rộng của bar
                 categoryPercentage: 0.7, // Điều chỉnh khoảng cách giữa các bar

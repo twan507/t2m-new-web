@@ -37,11 +37,11 @@ const MarketMonthScoreChart = (props: any) => {
         .sort((a: any, b: any) => a.day_num - b.day_num)
 
     const lines = {
-        labels: data_sets.map((item: any) => item.day_num) || [],
+        labels: data_sets?.map((item: any) => item.day_num) || [],
         datasets: [
             {
                 label: 'Tháng này',
-                data: data_sets.map((item: any) => item.m1),
+                data: data_sets?.map((item: any) => item.m1),
                 fill: 'origin',
                 backgroundColor: 'rgba(192, 49, 199, 0.2)', // Thêm màu nền cho khu vực dưới đường biểu đồ
                 borderColor: '#C031C7',
@@ -53,7 +53,7 @@ const MarketMonthScoreChart = (props: any) => {
             },
             {
                 label: 'Tháng trước',
-                data: data_sets.map((item: any) => item.m2),
+                data: data_sets?.map((item: any) => item.m2),
                 fill: 'origin',
                 backgroundColor: 'rgba(2, 91, 196, 0.2)', // Thêm màu nền cho khu vực dưới đường biểu đồ
                 borderColor: '#025bc4',
