@@ -27,7 +27,7 @@ const SentimentLineChart = (props: any) => {
                 hoverRadius: 4,
                 pointBackgroundColor: '#999999',
                 tension: 0.4,
-                borderWidth: 3,
+                borderWidth: props?.ww > 768 ? 3 : 2,
             },
         ],
     };

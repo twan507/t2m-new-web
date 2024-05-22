@@ -29,7 +29,7 @@ const LiquidityLineChart = (props: any) => {
                 hoverRadius: 4, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#025bc4', // Màu nền cho các điểm
                 tension: 0.4, // Đường cong mượt
-                borderWidth: 3, // Độ rộng của đường
+                borderWidth: props?.ww > 768 ? 3 : 2, // Độ rộng của đường
             },
         ],
     };

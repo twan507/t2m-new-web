@@ -14,30 +14,30 @@ ChartJS.register(
     ChartDataLabels // Đăng ký plugin datalabels
 );
 
-const MoneyFlowLiquidityChart = (props: any) => {
+const MoneyFlowValueChart = (props: any) => {
 
-    // const sampleData = [
-    //     { name: 'Hiệu suất A', liquidity: 0.8 },
-    //     { name: 'Hiệu suất B', liquidity: 1.6 },
-    //     { name: 'Hiệu suất C', liquidity: 0.6 },
-    //     { name: 'Hiệu suất D', liquidity: 0.9 },
-    // ];
-    // const data_sets = sampleData
-    const data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.order - b.order)
+    let data_sets: any
+    if (props?.type === 'industry') {
+        data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.index - b.index)
+    } else {
+        data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.order - b.order)
+    }
+
+
+
+    const industry_data_sets = props?.data?.filter((item: any) => ['A', 'B', 'C', 'D'].includes(item.group))
+    const minIndustryScore = industry_data_sets.reduce((min: any, current: any) => current?.score < min ? current?.score : min, industry_data_sets?.[0]?.score);
+    const maxIndustryScore = industry_data_sets.reduce((max: any, current: any) => current?.score > max ? current?.score : max, industry_data_sets?.[0]?.score);
 
     const data = {
-        labels: data_sets?.map((item: any) => item.name),
+        labels: data_sets?.map((item: any) => props?.ww > 768 ? (item.name + '        ') : item.name),
         datasets: [
             {
                 label: 'Giá trị',
-                data: data_sets?.map((item: any) => item.liquidity), // Sử dụng nn_value từ sample data
+                data: data_sets?.map((item: any) => item.score), // Sử dụng nn_value từ sample data
                 backgroundColor: function (context: any) {
-                    const value = context.dataset.data[context.dataIndex] * 100;
-                    if (value < 60) return '#00cccc';
-                    if (value < 90) return '#e14040';
-                    if (value < 120) return '#D0be0f';
-                    if (value < 150) return '#24B75E';
-                    return '#C031C7';
+                    const value = context.dataset.data[context.dataIndex];
+                    return value > 0 ? '#24B75E' : '#e14040';
                 },
             },
         ],
@@ -49,7 +49,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
         indexAxis: 'y', // Chuyển đổi biểu đồ cột thành biểu đồ cột ngang
         layout: {
             padding: {
-                right: props?.ww > 768 ? 50 : 0
+                right: props?.ww > 768 ? 40 : 0,
             }
         },
         plugins: {
@@ -75,9 +75,9 @@ const MoneyFlowLiquidityChart = (props: any) => {
                 callbacks: {
                     label: function (tooltipItem: any) {
                         if (props?.ww > 768) {
-                            return `${tooltipItem?.dataset.label}: ${(tooltipItem?.raw * 100)?.toFixed(1)}%`;
+                            return `${tooltipItem?.dataset.label}: ${tooltipItem?.raw?.toFixed(2)}`;
                         } else {
-                            return `${(tooltipItem?.raw * 100)?.toFixed(1)}%`;
+                            return `${tooltipItem?.raw?.toFixed(2)}`;
                         }
                     }
                 },
@@ -90,7 +90,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Chỉ số thanh khoản' : 'Thanh khoản',
+                text: props?.ww > 768 ? 'Giá trị dòng tiền' : 'Dòng tiền',
                 padding: {
                     bottom: props?.ww > 768 ? 0 : 15
                 },
@@ -111,7 +111,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
                     const value = context.dataset.data[context.dataIndex];
                     return value > 0 ? 'end' : 'start';
                 },
-                formatter: (value: any) => `${(value * 100)?.toFixed(1)}%`, // Định dạng giá trị hiển thị
+                formatter: (value: any) => ((value > 0.01) || (value < -0.01)) ? value?.toFixed(2) : '', // Định dạng giá trị hiển thị
                 font: {
                     family: 'Helvetica, sans-serif',
                     size: parseInt(props?.fontSize) - 7, // Chỉnh sửa cỡ chữ
@@ -121,6 +121,8 @@ const MoneyFlowLiquidityChart = (props: any) => {
         },
         scales: {
             x: {
+                min: props?.type === 'industry' ? minIndustryScore : null,
+                max: props?.type === 'industry' ? maxIndustryScore : null,
                 grid: {
                     display: false, // Loại bỏ grid dọc
                 },
@@ -134,7 +136,11 @@ const MoneyFlowLiquidityChart = (props: any) => {
                     display: false, // Loại bỏ grid ngang
                 },
                 ticks: {
-                    display: false,
+                    display: props?.ww > 400 ? true : false,
+                    color: '#dfdfdf', // Màu của các nhãn trên trục X
+                    font: {
+                        size: parseInt(props?.fontSize) - 7
+                    }
                 },
             },
         },
@@ -148,7 +154,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
     if (!checkAuth) {
         return (
             <>
-                <div style={{ height: props?.ww > 768 ? '200px' : '150px', width: '100%' }}>
+                <div style={{ height: props?.height, width: '100%' }}>
                     <Bar data={data} options={options} />
                 </div>
             </>
@@ -156,4 +162,4 @@ const MoneyFlowLiquidityChart = (props: any) => {
     }
 };
 
-export default MoneyFlowLiquidityChart;
+export default MoneyFlowValueChart;
