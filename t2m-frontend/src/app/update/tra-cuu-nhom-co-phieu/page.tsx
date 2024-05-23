@@ -30,12 +30,6 @@ const useWindowWidth = (): any => {
   return windowWidth;
 };
 
-const groupList = ['Khoáng sản', 'Thực phẩm', 'Hiệu suất A', 'Hiệu suất C', 'Hàng tiêu dùng', 'SMALLCAP', 'Chứng khoán',
-  'Y tế', 'Công nghiệp', 'MIDCAP', 'Bảo hiểm', 'LARGECAP', 'Dệt may', 'Vật liệu xây dựng', 'Ngân hàng', 'Hiệu suất B',
-  'Hiệu suất D', 'PENNY', 'Thuỷ sản', 'Du lịch và DV', 'Thép', 'BĐS KCN', 'Bất động sản', 'Công nghệ', 'Bán lẻ', 'Vận tải',
-  'DV hạ tầng', 'Hoá chất', 'Xây dựng', 'Công ty tài chính', 'Dầu khí', 'Thị trường']
-
-
 export default function Page3() {
   const [select_group, set_select_group] = useState('Bán lẻ');
 
@@ -99,7 +93,7 @@ export default function Page3() {
   const [switch_group_industry, set_switch_group_industry] = useState('industry');
   const [switch_hs_cap, set_switch_hs_cap] = useState('hs');
   const [switch_nhom_nganh_hs, set_switch_nhom_nganh_hs] = useState('A');
-  const [time_span, set_time_span] = useState('1Y');
+  const [time_span, set_time_span] = useState('1M');
 
   const ww = useWindowWidth();
   const pixel = (ratio: number, min: number) => {
@@ -150,30 +144,6 @@ export default function Page3() {
     const value = e.target.value;
     set_time_span(value)
   };
-
-
-  // const nhom_hs_items: any = [
-  //   {
-  //     key: 'A',
-  //     label: 'Hiệu suất A',
-  //   },
-  //   {
-  //     key: 'B',
-  //     label: 'Hiệu suất B',
-  //   },
-  //   {
-  //     key: 'C',
-  //     label: 'Hiệu suất C',
-  //   },
-  //   {
-  //     key: 'D',
-  //     label: 'Hiệu suất D',
-  //   },
-  // ];
-
-  // const onChangeHsCapMobile: MenuProps['onClick'] = (e) => {
-  //   set_switch_group(e.key);
-  // };
 
   const [checkAuth, setCheckAuth] = useState(true);
   useEffect(() => {

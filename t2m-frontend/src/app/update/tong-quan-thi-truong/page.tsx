@@ -123,7 +123,7 @@ export default function Page1() {
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
   const [chi_so_thi_truong, set_chi_so_thi_truong] = useState('TQ');
-  const [time_span, set_time_span] = useState('1Y');
+  const [time_span, set_time_span] = useState('1M');
   const [index_name, set_index_name] = useState('VNINDEX');
   const [mobile_ta_mode, set_mobile_ta_mode] = useState('month');
   const [tttt_dttk, set_tttt_dttk] = useState('TTTT');

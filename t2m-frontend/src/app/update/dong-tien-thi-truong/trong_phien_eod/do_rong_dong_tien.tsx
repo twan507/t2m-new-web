@@ -32,11 +32,6 @@ const MoneyFlowBreathChart = (props: any): any => {
         data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.order - b.order)
     }
 
-    if (props?.group === 'cap') {
-        console.log(data_sets)
-    }
-
-
     // Chuẩn hóa dữ liệu thành phần trăm
     const normalizedData = data_sets?.map((item: any) => {
         const total = parseInt(item.in_flow) + parseInt(item.out_flow);
