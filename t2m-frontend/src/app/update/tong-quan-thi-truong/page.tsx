@@ -908,8 +908,8 @@ export default function Page1() {
                       <MarketMonthScoreChart data={group_score_month} ww={ww} fontSize={pixel(0.015, 17)} />
                     </Col>
                   </Row>
-                  <Row style={{ marginTop: '20px' }}>
-                    <LiquidityLineChart20p data={eod_group_liquidity_df} width='100%' height='250px' />
+                  <Row style={{ marginTop: '30px' }}>
+                    <LiquidityLineChart20p data={eod_group_liquidity_df} fontSize={pixel(0.015, 17)} width='100%' height='250px' />
                   </Row>
                 </>
               )}

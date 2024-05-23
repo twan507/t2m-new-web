@@ -22,7 +22,7 @@ const NganhHsCLiquidItd = (props: any) => {
         datasets: [
             {
                 label: 'BĐS KCN',
-                data: data_sets?.map((item: any) => item.liquid_bds_kcn*100),
+                data: data_sets?.map((item: any) => item.liquid_bao_hiem === null ? null : item.liquid_bds_kcn * 100),
                 borderColor: '#C031C7',
                 pointRadius: 0,
                 hoverRadius: 5,
@@ -32,7 +32,7 @@ const NganhHsCLiquidItd = (props: any) => {
             },
             {
                 label: 'Công nghệ',
-                data: data_sets?.map((item: any) => item.liquid_cong_nghe*100),
+                data: data_sets?.map((item: any) => item.liquid_cong_nghe === null ? null : item.liquid_cong_nghe * 100),
                 fill: 'origin',
                 borderColor: '#24B75E',
                 pointRadius: 0,
@@ -43,7 +43,7 @@ const NganhHsCLiquidItd = (props: any) => {
             },
             {
                 label: 'Hàng tiêu dùng',
-                data: data_sets?.map((item: any) => item.liquid_htd*100),
+                data: data_sets?.map((item: any) => item.liquid_htd === null ? null : item.liquid_htd * 100),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 0,
@@ -54,7 +54,7 @@ const NganhHsCLiquidItd = (props: any) => {
             },
             {
                 label: 'Ngân hàng',
-                data: data_sets?.map((item: any) => item.liquid_ngan_hang*100),
+                data: data_sets?.map((item: any) => item.liquid_ngan_hang === null ? null : item.liquid_ngan_hang * 100),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 0,
@@ -65,7 +65,7 @@ const NganhHsCLiquidItd = (props: any) => {
             },
             {
                 label: 'Thực phẩm',
-                data: data_sets?.map((item: any) => item.liquid_thuc_pham*100),
+                data: data_sets?.map((item: any) => item.liquid_thuc_pham === null ? null : item.liquid_thuc_pham * 100),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 0,
@@ -76,7 +76,7 @@ const NganhHsCLiquidItd = (props: any) => {
             },
             {
                 label: 'Vận tải',
-                data: data_sets?.map((item: any) => item.liquid_van_tai*100),
+                data: data_sets?.map((item: any) => item.liquid_van_tai === null ? null : item.liquid_van_tai * 100),
                 fill: 'origin',
                 borderColor: '#00cccc',
                 pointRadius: 0,

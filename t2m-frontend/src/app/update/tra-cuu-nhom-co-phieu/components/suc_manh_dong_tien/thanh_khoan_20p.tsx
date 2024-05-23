@@ -5,9 +5,10 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, ChartDataLabels);
 
-const LiquidityLineChart20p = (props: any) => {
+const GroupLiquidityLineChart20p = (props: any) => {
 
-    const data_sets = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    const data_sets = props?.data?.filter((item: any) => item.group_name === props?.select_group)
+        .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     const dateList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
@@ -21,7 +22,7 @@ const LiquidityLineChart20p = (props: any) => {
         datasets: [
             {
                 label: 'Giá trị',
-                data: data_sets?.map((item: any) => item.all_stock === null ? null : (item.all_stock * 100).toFixed(2)),
+                data: data_sets?.map((item: any) => item.liquidity === null ? null : (item.liquidity * 100).toFixed(2)),
                 fill: 'start',
                 backgroundColor: 'rgba(2, 91, 196, 0.2)', // Thêm màu nền cho khu vực dưới đường biểu đồ
                 borderColor: '#025bc4',
@@ -54,11 +55,6 @@ const LiquidityLineChart20p = (props: any) => {
                 color: '#dfdfdf'
             },
             tooltip: {
-                mode: 'index',
-                intersect: false,
-                displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip
-                usePointStyle: true, // Sử dụng point style (hình dáng được định nghĩa trong datasets cho ô màu)
-                caretPadding: 20, // Kéo ô tooltip ra xa khỏi điểm dữ liệu một chút
                 callbacks: {
                     title: function (tooltipItems: any) {
                         return `Ngày ${tooltipItems[0].label}`;
@@ -66,7 +62,14 @@ const LiquidityLineChart20p = (props: any) => {
                     label: function (tooltipItem: any) {
                         return ` ${tooltipItem?.dataset.label}: ${tooltipItem?.raw}%`;
                     }
-                }
+                },
+                displayColors: true,
+                usePointStyle: true,
+                bodyFontColor: '#dfdfdf',
+                bodyFontSize: parseInt(props?.fontSize) - 4,
+                bodyFontStyle: 'bold',
+                boxHeight: 8,
+                caretPadding: 20
             },
             datalabels: {
                 display: false, // Tắt các số tại các data label
@@ -97,10 +100,10 @@ const LiquidityLineChart20p = (props: any) => {
     };
 
     return (
-        <div style={{ width: props?.width, height: props?.height, marginTop: '-15px' }}>
+        <div style={{ width: '100%', height: '250px' }}>
             <Line data={lines} options={options} />
         </div>
     );
 };
 
-export default LiquidityLineChart20p;
+export default GroupLiquidityLineChart20p;

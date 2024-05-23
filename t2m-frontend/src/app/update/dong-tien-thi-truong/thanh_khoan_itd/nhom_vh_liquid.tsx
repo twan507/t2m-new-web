@@ -22,7 +22,7 @@ const NhomVhLiquidItd = (props: any) => {
         datasets: [
             {
                 label: 'LARGECAP',
-                data: data_sets?.map((item: any) => item.liquid_large * 100),
+                data: data_sets?.map((item: any) =>item.liquid_large === null ? null : item.liquid_large * 100),
                 borderColor: '#24B75E',
                 pointRadius: 0,
                 hoverRadius: 5,
@@ -32,7 +32,7 @@ const NhomVhLiquidItd = (props: any) => {
             },
             {
                 label: 'MIDCAP',
-                data: data_sets?.map((item: any) => item.liquid_mid * 100),
+                data: data_sets?.map((item: any) => item.liquid_mid === null ? null :item.liquid_mid * 100),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 0,
@@ -43,7 +43,7 @@ const NhomVhLiquidItd = (props: any) => {
             },
             {
                 label: 'SMALLCAP',
-                data: data_sets?.map((item: any) => item.liquid_small * 100),
+                data: data_sets?.map((item: any) => item.liquid_small === null ? null :item.liquid_small * 100),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 0,
@@ -54,7 +54,7 @@ const NhomVhLiquidItd = (props: any) => {
             },
             {
                 label: 'PENNY',
-                data: data_sets?.map((item: any) => item.liquid_penny * 100),
+                data: data_sets?.map((item: any) => item.liquid_penny === null ? null :item.liquid_penny * 100),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 0,

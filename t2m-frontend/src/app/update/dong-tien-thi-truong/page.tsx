@@ -44,7 +44,7 @@ const useWindowWidth = (): any => {
   return windowWidth;
 };
 
-export default function Page1() {
+export default function Page2() {
   const getData = async (tableName: string) => {
     const res = await sendRequest<IBackendRes<any>>({
       url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,

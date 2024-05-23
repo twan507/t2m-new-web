@@ -6,9 +6,10 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, ChartDataLabels);
 
-const NhomHsLiquidItd = (props: any) => {
+const DtVaTkTrongPhien = (props: any) => {
 
-    const data_sets = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    const data_sets = props?.data?.filter((item: any) => item.group_name === props?.select_group)
+        .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
     const timeList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
@@ -21,18 +22,19 @@ const NhomHsLiquidItd = (props: any) => {
         labels: timeList || [],
         datasets: [
             {
-                label: 'Hiệu suất A',
-                data: data_sets?.map((item: any) => item.liquid_A === null ? null : item.liquid_A * 100),
-                borderColor: '#24B75E',
+                label: 'Dòng tiền',
+                data: data_sets?.map((item: any) => item.score === null ? null : item.score),
+                borderColor: '#C031C7',
                 pointRadius: 0,
                 hoverRadius: 5,
-                pointBackgroundColor: '#24B75E',
+                pointBackgroundColor: '#C031C7',
                 tension: 0.4,
                 borderWidth: props?.ww > 768 ? 3 : 2,
+                yAxisID: 'y',
             },
             {
-                label: 'Hiệu suất B',
-                data: data_sets?.map((item: any) => item.liquid_B === null ? null : item.liquid_B * 100),
+                label: 'Thanh khoản',
+                data: data_sets?.map((item: any) => item.liquidity === null ? null : item.liquidity * 100),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 0,
@@ -40,28 +42,7 @@ const NhomHsLiquidItd = (props: any) => {
                 pointBackgroundColor: '#025bc4',
                 tension: 0.4,
                 borderWidth: props?.ww > 768 ? 3 : 2,
-            },
-            {
-                label: 'Hiệu suất C',
-                data: data_sets?.map((item: any) => item.liquid_C === null ? null : item.liquid_C * 100),
-                fill: 'origin',
-                borderColor: '#D0be0f',
-                pointRadius: 0,
-                hoverRadius: 5,
-                pointBackgroundColor: '#D0be0f',
-                tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
-            },
-            {
-                label: 'Hiệu suất D',
-                data: data_sets?.map((item: any) => item.liquid_D === null ? null : item.liquid_D * 100),
-                fill: 'origin',
-                borderColor: '#e14040',
-                pointRadius: 0,
-                hoverRadius: 5,
-                pointBackgroundColor: '#e14040',
-                tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                yAxisID: 'y1',
             },
         ],
     };
@@ -76,7 +57,6 @@ const NhomHsLiquidItd = (props: any) => {
                 labels: {
                     boxWidth: 20,
                     boxHeight: 6,
-                    // padding: 10,
                     pointStyle: 'circle',
                     usePointStyle: true,
                     font: {
@@ -89,7 +69,12 @@ const NhomHsLiquidItd = (props: any) => {
             tooltip: {
                 callbacks: {
                     label: function (tooltipItem: any) {
-                        return `${tooltipItem?.dataset?.label}: ${tooltipItem?.raw?.toFixed(2)}%`;
+                        // Kiểm tra yAxisID để hiển thị khác nhau cho từng trục y
+                        if (tooltipItem.dataset.yAxisID === 'y') {
+                            return `${tooltipItem.dataset.label}: ${tooltipItem.raw.toFixed(2)}`;
+                        } else if (tooltipItem.dataset.yAxisID === 'y1') {
+                            return `${tooltipItem.dataset.label}: ${tooltipItem.raw.toFixed(2)}%`;
+                        }
                     }
                 },
                 displayColors: true,
@@ -102,7 +87,7 @@ const NhomHsLiquidItd = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến thanh khoản nhóm hiệu suất' : 'TK nhóm hiệu suất',
+                text: props?.ww > 768 ? 'Diễn biến dòng tiền và thanh khoản trong phiên' : 'Diễn biến dòng tiền và thanh khoản',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',
@@ -126,6 +111,24 @@ const NhomHsLiquidItd = (props: any) => {
                 },
             },
             y: {
+                type: 'linear',
+                display: true,
+                position: 'left',
+                ticks: {
+                    color: '#dfdfdf',
+                },
+                grid: {
+                    display: true,
+                    color: '#dfdfdf',
+                    drawBorder: false,
+                    lineWidth: function (context: any) {
+                        return context.tick.value === 0 ? 0.7 : 0; // Draw grid line only at value 0
+                    },
+                },
+            },
+            y1: {
+                type: 'linear',
+                display: true,
                 position: 'right',
                 ticks: {
                     color: '#dfdfdf',
@@ -134,8 +137,8 @@ const NhomHsLiquidItd = (props: any) => {
                     }
                 },
                 grid: {
-                    display: false,
-                }
+                    drawOnChartArea: false, // Chỉ y1 không hiện lưới
+                },
             },
         },
     };
@@ -147,7 +150,7 @@ const NhomHsLiquidItd = (props: any) => {
 
     if (!checkAuth) {
         return (
-            <div style={{ width: '100%', height: props?.height }}>
+            <div style={{ width: '100%', height: '300px' }}>
                 <Line data={lines} options={options} />
             </div>
         );
@@ -156,4 +159,4 @@ const NhomHsLiquidItd = (props: any) => {
     return null;
 }
 
-export default NhomHsLiquidItd;
+export default DtVaTkTrongPhien;

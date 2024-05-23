@@ -15,4 +15,14 @@ export class StockdataService {
     const query = `SELECT * FROM ${tableName}`;
     return this.dataSource.query(query);
   }
+
+  async findFilterTable(tableName: string, columnName: string, columnValue: string | number): Promise<any[]> {
+    try {
+      const query = `SELECT * FROM \`${tableName}\` WHERE \`${columnName}\` = ?`;
+      return this.dataSource.query(query, [columnValue]);
+    } catch {
+      const query = `SELECT * FROM ${tableName}`;
+      return this.dataSource.query(query);
+    }
+  }
 }

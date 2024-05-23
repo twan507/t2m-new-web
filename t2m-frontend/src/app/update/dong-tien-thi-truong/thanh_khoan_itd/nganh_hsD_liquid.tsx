@@ -22,7 +22,7 @@ const NganhHsDLiquidItd = (props: any) => {
         datasets: [
             {
                 label: 'Bảo hiểm',
-                data: data_sets?.map((item: any) => item.liquid_bao_hiem * 100),
+                data: data_sets?.map((item: any) => item.liquid_bao_hiem === null ? null : item.liquid_bao_hiem * 100),
                 borderColor: '#24B75E',
                 pointRadius: 0,
                 hoverRadius: 5,
@@ -32,7 +32,7 @@ const NganhHsDLiquidItd = (props: any) => {
             },
             {
                 label: 'Du lịch và DV',
-                data: data_sets?.map((item: any) => item.liquid_dulich_dv * 100),
+                data: data_sets?.map((item: any) => item.liquid_dulich_dv === null ? null : item.liquid_dulich_dv * 100),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 0,
@@ -43,7 +43,7 @@ const NganhHsDLiquidItd = (props: any) => {
             },
             {
                 label: 'DV hạ tầng',
-                data: data_sets?.map((item: any) => item.liquid_dv_hatang * 100),
+                data: data_sets?.map((item: any) => item.liquid_dv_hatang === null ? null : item.liquid_dv_hatang * 100),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 0,
@@ -54,7 +54,7 @@ const NganhHsDLiquidItd = (props: any) => {
             },
             {
                 label: 'Y tế',
-                data: data_sets?.map((item: any) => item.liquid_y_te * 100),
+                data: data_sets?.map((item: any) => item.liquid_y_te === null ? null : item.liquid_y_te * 100),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 0,

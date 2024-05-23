@@ -5,9 +5,9 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ChartDataLabels);
 
-const IndexPriceChart = (props: any) => {
+const IndexGroupPriceChart = (props: any) => {
 
-	const data_sets = props?.data?.filter((item: any) => item.index_name === props?.index_name && item.time_span === props?.time_span)
+	const data_sets = props?.data?.filter((item: any) => item.group_name === props?.select_group && item.time_span === props?.time_span)
 		.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
 	const dateList: string[] = data_sets?.map((item: any) => {
@@ -57,7 +57,7 @@ const IndexPriceChart = (props: any) => {
                         return `Ngày ${tooltipItems[0].label}`;
                     },
 					label: function (tooltipItem: any) {
-						return ` ${tooltipItem?.dataset.label}: ${tooltipItem?.raw}`;
+						return ` ${tooltipItem?.dataset.label}: ${tooltipItem?.raw?.toFixed(2)}`;
 					}
 				}
 			},
@@ -91,4 +91,4 @@ const IndexPriceChart = (props: any) => {
 	);
 };
 
-export default IndexPriceChart;
+export default IndexGroupPriceChart;

@@ -56,7 +56,7 @@ const MoneyFlowValueChart = (props: any) => {
         indexAxis: 'y', // Chuyển đổi biểu đồ cột thành biểu đồ cột ngang
         layout: {
             padding: {
-                right: props?.ww > 768 ? 40 : 0,
+                right: props?.ww > 768 ? 50 : 0,
             }
         },
         plugins: {
