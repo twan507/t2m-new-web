@@ -4,7 +4,6 @@ import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -15,6 +14,15 @@ ChartJS.register(
     ChartDataLabels // Đăng ký plugin datalabels
 );
 
+const name_dict: any = {
+    'hs': 'nhóm hiệu suất',
+    'cap': 'nhóm vốn hoá',
+    'A': 'ngành hiệu suất A',
+    'B': 'ngành hiệu suất B',
+    'C': 'ngành hiệu suất C',
+    'D': 'ngành hiệu suất D',
+}
+
 const MoneyFlowBreathChart = (props: any): any => {
 
     let data_sets: any
@@ -22,6 +30,10 @@ const MoneyFlowBreathChart = (props: any): any => {
         data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.index - b.index)
     } else {
         data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.order - b.order)
+    }
+
+    if (props?.group === 'cap') {
+        console.log(data_sets)
     }
 
 
@@ -36,16 +48,16 @@ const MoneyFlowBreathChart = (props: any): any => {
     });
 
     const data = {
-        labels: normalizedData.map((item: any) => item.name),
+        labels: normalizedData?.map((item: any) => item.name),
         datasets: [
             {
                 label: 'Tiền vào',
-                data: normalizedData.map((item: any) => item.in_flow), // Sử dụng in_flow từ sample data
+                data: normalizedData?.map((item: any) => item.in_flow), // Sử dụng in_flow từ sample data
                 backgroundColor: '#24B75E',
             },
             {
                 label: 'Tiền ra',
-                data: normalizedData.map((item: any) => item.out_flow), // Sử dụng out_flow từ sample data
+                data: normalizedData?.map((item: any) => item.out_flow), // Sử dụng out_flow từ sample data
                 backgroundColor: '#e14040',
             },
         ],
@@ -74,7 +86,7 @@ const MoneyFlowBreathChart = (props: any): any => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Độ rộng dòng tiền' : 'Độ rộng',
+                text: props?.ww > 768 ? `Độ rộng ${name_dict[props?.group]}` : `Độ rộng`,
                 padding: {
                     bottom: props?.ww > 768 ? 0 : 15
                 },
@@ -117,6 +129,8 @@ const MoneyFlowBreathChart = (props: any): any => {
         scales: {
             x: {
                 stacked: true,
+                min: 0,
+                max: 100,
                 grid: {
                     display: false, // Loại bỏ grid dọc
                 },

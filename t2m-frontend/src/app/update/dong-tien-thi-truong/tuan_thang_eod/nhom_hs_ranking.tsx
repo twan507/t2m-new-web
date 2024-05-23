@@ -103,7 +103,7 @@ const NhomHsRanking = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng dòng tiền' : 'Xếp hạng',
+                text: props?.ww > 768 ? 'Diễn biến xếp hạng nhóm hiệu suất' : 'Xếp hạng nhóm hiệu suất',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',

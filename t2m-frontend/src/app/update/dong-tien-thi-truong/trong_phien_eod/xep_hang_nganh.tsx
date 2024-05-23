@@ -77,7 +77,17 @@ const TopIndustryChart = (props: any) => {
                 boxWidth: 10, // Kích thước của ô màu
             },
             title: {
-                display: false,
+                display: true,
+                text: props?.ww > 768 ? 'Xếp hạng sức mạnh dòng tiền các nhóm ngành hiện tại' : 'Xếp hạng nhóm ngành',
+                padding: {
+                    bottom: props?.ww > 768 ? 0 : 15
+                },
+                font: {
+                    family: 'Calibri, sans-serif',
+                    size: parseInt(props?.fontSize) - 2, // Chỉnh sửa cỡ chữ
+                    weight: 'bold', // Chỉnh sửa kiểu chữ
+                },
+                color: '#dfdfdf' // Chỉnh sửa màu chữ
             },
             datalabels: {
                 display: props?.ww > 768 ? true : false,
@@ -104,7 +114,10 @@ const TopIndustryChart = (props: any) => {
                 },
                 ticks: {
                     display: true,
-                    color: '#dfdfdf'
+                    color: '#dfdfdf',
+                    font: {
+                        size: parseInt(props?.fontSize) - 9
+                    }
                 },
             },
             y: {

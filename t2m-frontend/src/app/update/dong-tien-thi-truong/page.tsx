@@ -170,8 +170,8 @@ export default function Page1() {
                   <Button className="custom-button" block={true} size={ww > 768 ? 'large' : 'middle'}
                     style={{ fontSize: pixel(0.013, 12) }} onClick={onChangeSwitchItdEod}
                   >
-                    {switch_itd_eod === 'eod' ? (ww > 768 ? 'Xem diễn biến Intraday' : 'Xem diễn biến ITD')
-                      : (ww > 768 ? 'Xem diễn biến End-of-day' : 'Xem diễn biến EOD')}
+                    {switch_itd_eod === 'eod' ? (ww > 768 ? 'Xem diễn biến trong phiên' : 'Diễn biến trong phiên')
+                      : (ww > 768 ? 'Quay lại' : 'Quay lại')}
                   </Button>
                 </Col>
               </Row>
@@ -411,6 +411,9 @@ export default function Page1() {
                   )}
                   {switch_industry === 'M' && (
                     <>
+                      <Row style={{marginTop: '30px'}}>
+                        <TopIndustryChart data={full_industry_ranking} ww={ww} fontSize={pixel(0.017, 17)} />
+                      </Row>
                       <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
@@ -499,7 +502,7 @@ export default function Page1() {
                   </Row>
                 </>
               )}
-              {switch_itd_eod === 'eod' && (
+              {/* {switch_itd_eod === 'eod' && (
                 <>
                   <Row gutter={25} style={{ marginTop: '50px', marginBottom: '10px' }}>
                     <Col>
@@ -513,7 +516,7 @@ export default function Page1() {
                     <TopIndustryChart data={full_industry_ranking} ww={ww} fontSize={pixel(0.015, 17)} />
                   </Row>
                 </>
-              )}
+              )} */}
             </Col>
           </Row>
         </Col >

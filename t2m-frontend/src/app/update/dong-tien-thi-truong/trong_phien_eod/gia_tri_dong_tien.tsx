@@ -14,6 +14,15 @@ ChartJS.register(
     ChartDataLabels // Đăng ký plugin datalabels
 );
 
+const name_dict: any = {
+    'hs': 'nhóm hiệu suất',
+    'cap': 'nhóm vốn hoá',
+    'A': 'ngành hiệu suất A',
+    'B': 'ngành hiệu suất B',
+    'C': 'ngành hiệu suất C',
+    'D': 'ngành hiệu suất D',
+}
+
 const MoneyFlowValueChart = (props: any) => {
 
     let data_sets: any
@@ -24,8 +33,8 @@ const MoneyFlowValueChart = (props: any) => {
     }
 
     const industry_data_sets = props?.data?.filter((item: any) => ['A', 'B', 'C', 'D'].includes(item.group))
-    const minIndustryScore = industry_data_sets.reduce((min: any, current: any) => current?.score < min ? current?.score : min, industry_data_sets?.[0]?.score);
-    const maxIndustryScore = industry_data_sets.reduce((max: any, current: any) => current?.score > max ? current?.score : max, industry_data_sets?.[0]?.score);
+    const minIndustryScore = industry_data_sets?.reduce((min: any, current: any) => current?.score < min ? current?.score : min, industry_data_sets?.[0]?.score);
+    const maxIndustryScore = industry_data_sets?.reduce((max: any, current: any) => current?.score > max ? current?.score : max, industry_data_sets?.[0]?.score);
 
     const data = {
         labels: data_sets?.map((item: any) => props?.ww > 768 ? (item.name + '        ') : item.name),
@@ -88,7 +97,7 @@ const MoneyFlowValueChart = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Giá trị dòng tiền' : 'Dòng tiền',
+                text: props?.ww > 768 ? `Dòng tiền ${name_dict[props?.group]}` : `DT ${name_dict[props?.group]}`,
                 padding: {
                     bottom: props?.ww > 768 ? 0 : 15
                 },

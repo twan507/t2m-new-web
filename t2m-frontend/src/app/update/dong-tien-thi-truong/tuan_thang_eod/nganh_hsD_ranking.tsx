@@ -104,7 +104,7 @@ const NganhHsDRanking = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng dòng tiền' : 'Xếp hạng',
+                text: props?.ww > 768 ? 'Diễn biến xếp hạng ngành hiệu suất D' : 'Xếp hạng ngành hiệu suất D',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',

@@ -14,6 +14,15 @@ ChartJS.register(
     ChartDataLabels // Đăng ký plugin datalabels
 );
 
+const name_dict: any = {
+    'hs': 'nhóm hiệu suất',
+    'cap': 'nhóm vốn hoá',
+    'A': 'ngành hiệu suất A',
+    'B': 'ngành hiệu suất B',
+    'C': 'ngành hiệu suất C',
+    'D': 'ngành hiệu suất D',
+}
+
 const MoneyFlowLiquidityChart = (props: any) => {
 
     let data_sets: any
@@ -24,7 +33,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
     }
 
     const industry_data_sets = props?.data?.filter((item: any) => ['A', 'B', 'C', 'D'].includes(item.group))
-    const maxIndustryLiquidity = industry_data_sets.reduce((max: any, current: any) => current?.liquidity > max ? current?.liquidity : max, industry_data_sets?.[0]?.liquidity);
+    const maxIndustryLiquidity = industry_data_sets?.reduce((max: any, current: any) => current?.liquidity > max ? current?.liquidity : max, industry_data_sets?.[0]?.liquidity);
 
     const data = {
         labels: data_sets?.map((item: any) => item.name),
@@ -50,7 +59,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
         indexAxis: 'y', // Chuyển đổi biểu đồ cột thành biểu đồ cột ngang
         layout: {
             padding: {
-                right: props?.ww > 768 ? 50 : 0
+                right: props?.ww > 768 ? 60 : 0
             }
         },
         plugins: {
@@ -91,7 +100,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Chỉ số thanh khoản' : 'Thanh khoản',
+                text: props?.ww > 768 ? `Thanh khoản ${name_dict[props?.group]}` : `Thanh khoản`,
                 padding: {
                     bottom: props?.ww > 768 ? 0 : 15
                 },
