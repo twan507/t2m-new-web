@@ -5,7 +5,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ChartDataLabels);
 
-const IndexGroupPriceChart = (props: any) => {
+const StockPriceChart = (props: any) => {
 
 	const data_sets = props?.data?.filter((item: any) => item.stock === props?.select_stock && item.time_span === props?.time_span)
 		.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime())
@@ -91,4 +91,4 @@ const IndexGroupPriceChart = (props: any) => {
 	);
 };
 
-export default IndexGroupPriceChart;
+export default StockPriceChart;

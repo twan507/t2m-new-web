@@ -486,17 +486,15 @@ export default function Page1() {
                               }}>
                                 {index_card_df?.filter(item => item.stock === index_name)?.[0]?.close?.toFixed(2)}
                               </p>
-                              {ww > 500 && (
-                                <p style={{
-                                  fontSize: pixel(0.015, 12), fontFamily: 'Calibri, sans-serif',
-                                  fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: 0,
-                                  color: (index_card_df?.filter(item => item.stock === index_name)?.[0]?.change_percent) > 0.0001 ? '#24B75E' :
-                                    ((index_card_df?.filter(item => item.stock === index_name)?.[0]?.change_percent) >= -0.0001 &&
-                                      (index_card_df?.filter(item => item.stock === index_name)?.[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
-                                }}>
-                                  {index_card_df?.filter(item => item.stock === index_name)?.[0]?.change_value?.toFixed(2)}
-                                </p>
-                              )}
+                              <p style={{
+                                fontSize: pixel(0.015, 12), fontFamily: 'Calibri, sans-serif',
+                                fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: 0,
+                                color: (index_card_df?.filter(item => item.stock === index_name)?.[0]?.change_percent) > 0.0001 ? '#24B75E' :
+                                  ((index_card_df?.filter(item => item.stock === index_name)?.[0]?.change_percent) >= -0.0001 &&
+                                    (index_card_df?.filter(item => item.stock === index_name)?.[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
+                              }}>
+                                {index_card_df?.filter(item => item.stock === index_name)?.[0]?.change_value?.toFixed(2)}
+                              </p>
                               <p style={{
                                 fontSize: pixel(0.015, 12), fontFamily: 'Calibri, sans-serif', color: 'white',
                                 fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: '0px 3px 0px 3px', borderRadius: '5px',
