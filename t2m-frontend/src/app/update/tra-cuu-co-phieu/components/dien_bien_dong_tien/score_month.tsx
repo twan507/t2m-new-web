@@ -142,6 +142,14 @@ const StockMonthScoreChart = (props: any) => {
                 ticks: {
                     color: '#dfdfdf', // Màu của các nhãn trên trục Y
                 },
+                grid: {
+                    display: true,
+                    color: '#dfdfdf',
+                    drawBorder: false,
+                    lineWidth: function (context: any) {
+                        return context.tick.value === 0 ? 1 : 0; // Draw grid line only at value 0
+                    },
+                },
             },
         },
     };

@@ -39,8 +39,6 @@ export default function Page4() {
   const [select_perform, set_select_perform] = useState('Hiệu suất B');
   const [select_cap, set_select_cap] = useState('SMALLCAP');
 
-  const [data_state, set_data_state] = useState(true);
-
   const getData = async (tableName: string, columnName: any) => {
     const res = await sendRequest<IBackendRes<any>>({
       url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
@@ -65,17 +63,7 @@ export default function Page4() {
       await set_stock_ta_df(res.data)
     } else if (tableName === 'group_score_ranking_melted') {
       await set_group_score_ranking_melted(res.data)
-    }
-  }
-
-  const getDataPrice = async (tableName: string, columnName: any) => {
-    const res = await sendRequest<IBackendRes<any>>({
-      url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
-      method: "GET",
-      queryParams: { columnName: columnName, columnValue: select_stock },
-    })
-    if (!res.data || res.data.length < 1) { set_data_state(data_state === true ? false : true) }
-    if (tableName === 'stock_price_chart_df') {
+    } else if (tableName === 'stock_price_chart_df') {
       await set_stock_price_chart_df(res.data)
     }
   }
@@ -90,20 +78,12 @@ export default function Page4() {
       getData('eod_score_df', null);
       getData('stock_ta_df', 'stock');
       getData('group_score_ranking_melted', null);
+      getData('stock_price_chart_df', 'stock');
     };
     fetchData();
     const interval = setInterval(fetchData, 5 * 1000); // Gọi lại mỗi x giây
     return () => clearInterval(interval); // Xóa interval khi component unmount
   }, [select_stock]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      getDataPrice('stock_price_chart_df', 'stock');
-    };
-    fetchData();
-    const interval = setInterval(fetchData, 60 * 1000); // Gọi lại mỗi x giây
-    return () => clearInterval(interval); // Xóa interval khi component unmount
-  }, [select_stock, data_state]);
 
   //State lưu trữ dữ liệu cổ phiếu
   const [update_time, set_update_time] = useState<any[]>([]);

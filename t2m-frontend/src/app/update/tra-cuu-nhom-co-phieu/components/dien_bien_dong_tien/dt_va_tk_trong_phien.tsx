@@ -122,7 +122,7 @@ const DtVaTkTrongPhien = (props: any) => {
                     color: '#dfdfdf',
                     drawBorder: false,
                     lineWidth: function (context: any) {
-                        return context.tick.value === 0 ? 0.7 : 0; // Draw grid line only at value 0
+                        return context.tick.value === 0 ? 1 : 0; // Draw grid line only at value 0
                     },
                 },
             },

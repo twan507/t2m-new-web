@@ -9,9 +9,9 @@ const SearchComponent = (props: any) => {
     const inputRef = useRef<any>(null);
 
 
-    const allOptions = props?.data
-        .map((obj: any) => ({ 
-            value: obj.stock, 
+    const allOptions = props?.data?.
+        map((obj: any) => ({
+            value: obj.stock,
             industry_name: obj.industry_name,
             industry_perform: obj.industry_perform,
             marketcap_group: obj.marketcap_group,
