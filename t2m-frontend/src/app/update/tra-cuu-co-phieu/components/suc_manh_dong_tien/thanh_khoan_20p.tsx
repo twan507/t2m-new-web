@@ -5,9 +5,9 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, ChartDataLabels);
 
-const GroupLiquidityLineChart20p = (props: any) => {
+const StockLiquidityLineChart20p = (props: any) => {
 
-    const data_sets = props?.data?.filter((item: any) => item.group_name === props?.select_group)
+    const data_sets = props?.data?.filter((item: any) => item.stock === props?.select_stock)
         .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     const dateList: string[] = data_sets?.map((item: any) => {
@@ -22,7 +22,7 @@ const GroupLiquidityLineChart20p = (props: any) => {
         datasets: [
             {
                 label: 'Giá trị',
-                data: data_sets?.map((item: any) => item.liquidity === null ? null : (item.liquidity * 100).toFixed(2)),
+                data: data_sets?.map((item: any) => item.liquid_ratio === null ? null : (item.liquid_ratio * 100).toFixed(2)),
                 fill: 'start',
                 backgroundColor: 'rgba(2, 91, 196, 0.2)', // Thêm màu nền cho khu vực dưới đường biểu đồ
                 borderColor: '#025bc4',
@@ -106,4 +106,4 @@ const GroupLiquidityLineChart20p = (props: any) => {
     );
 };
 
-export default GroupLiquidityLineChart20p;
+export default StockLiquidityLineChart20p;

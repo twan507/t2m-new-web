@@ -22,7 +22,7 @@ const DtVaTkTrongPhien = (props: any) => {
         labels: timeList || [],
         datasets: [
             {
-                label: 'Dòng tiền',
+                label: props?.ww > 768 ? 'Dòng tiền trong phiên' : 'Dòng tiền',
                 data: data_sets?.map((item: any) => item.score === null ? null : item.score),
                 borderColor: '#C031C7',
                 pointRadius: 0,
@@ -33,7 +33,7 @@ const DtVaTkTrongPhien = (props: any) => {
                 yAxisID: 'y',
             },
             {
-                label: 'Thanh khoản',
+                label: props?.ww > 768 ? 'Chỉ số thanh khoản' : 'Thanh khoản',
                 data: data_sets?.map((item: any) => item.liquidity === null ? null : item.liquidity * 100),
                 fill: 'origin',
                 borderColor: '#025bc4',

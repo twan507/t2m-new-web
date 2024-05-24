@@ -7,6 +7,11 @@ import './styles.css'
 import StockPriceChart from "./components/thong_tin_co_phieu/stock_price_chart";
 import SearchComponent from "./components/search_bar";
 import StockTaTable from "./components/thong_tin_co_phieu/stock_ta_table";
+import DtVaTkTrongPhien from "./components/dien_bien_dong_tien/dt_va_tk_trong_phien";
+import StockWeekScoreChart from "./components/dien_bien_dong_tien/score_week";
+import StockMonthScoreChart from "./components/dien_bien_dong_tien/score_month";
+import StockRankingChart from "./components/suc_manh_dong_tien/stock_ranking";
+import StockLiquidityLineChart20p from "./components/suc_manh_dong_tien/thanh_khoan_20p";
 
 
 const useWindowWidth = (): any => {
@@ -28,6 +33,7 @@ const useWindowWidth = (): any => {
 
 export default function Page4() {
   const [select_stock, set_select_stock] = useState('AAA');
+  const [data_state, set_data_state] = useState(true);
 
   const getData = async (tableName: string, columnName: any) => {
     const res = await sendRequest<IBackendRes<any>>({
@@ -35,24 +41,19 @@ export default function Page4() {
       method: "GET",
       queryParams: { columnName: columnName, columnValue: select_stock },
     })
+    // if (!res.data || res.data.length < 1) { set_data_state(data_state === true ? false : true) }
     if (tableName === 'update_time') {
       await set_update_time(res.data)
     } else if (tableName === 'stock_price_chart_df') {
       await set_stock_price_chart_df(res.data)
-    } else if (tableName === 'itd_score_liquidity_melted') {
-      await set_itd_score_liquidity_melted(res.data)
-    } else if (tableName === 'group_score_week') {
-      await set_group_score_week(res.data)
-    } else if (tableName === 'group_score_month') {
-      await set_group_score_month(res.data)
-    } else if (tableName === 'group_score_ranking_melted') {
-      await set_group_score_ranking_melted(res.data)
-    } else if (tableName === 'eod_score_liquidity_melted') {
-      await set_eod_score_liquidity_melted(res.data)
-    } else if (tableName === 'market_ms') {
-      await set_market_ms(res.data)
-    } else if (tableName === 'group_stock_top_10_df') {
-      await set_group_stock_top_10_df(res.data)
+    } else if (tableName === 'stock_liquidty_score_t0') {
+      await set_stock_liquidty_score_t0(res.data)
+    } else if (tableName === 'stock_score_week') {
+      await set_stock_score_week(res.data)
+    } else if (tableName === 'stock_score_month') {
+      await set_stock_score_month(res.data)
+    } else if (tableName === 'stock_score_power_df') {
+      await set_stock_score_power_df(res.data)
     } else if (tableName === 'eod_score_df') {
       await set_eod_score_df(res.data)
     } else if (tableName === 'stock_ta_df') {
@@ -63,45 +64,30 @@ export default function Page4() {
     const fetchData = async () => {
       getData('update_time', null);
       getData('stock_price_chart_df', 'stock');
-
-      getData('itd_score_liquidity_melted', 'group_name');
-      getData('group_score_week', 'group_name');
-      getData('group_score_month', 'group_name');
-      getData('group_score_month', 'group_name');
-      getData('group_score_ranking_melted', 'group_name');
-      getData('eod_score_liquidity_melted', 'group_name');
-      getData('market_ms', 'name');
-      getData('group_stock_top_10_df', 'name');
-
-      getData('eod_score_df', 'stock');
+      getData('stock_liquidty_score_t0', 'stock');
+      getData('stock_score_week', 'stock');
+      getData('stock_score_month', 'stock');
+      getData('stock_score_power_df', 'stock');
+      getData('eod_score_df', null);
       getData('stock_ta_df', 'stock');
     };
     fetchData();
-
-    const interval = setInterval(fetchData, 10 * 1000); // Gọi lại mỗi x giây
+    const interval = setInterval(fetchData, 60 * 1000); // Gọi lại mỗi x giây
     return () => clearInterval(interval); // Xóa interval khi component unmount
-  }, [select_stock]);
+  }, [select_stock, data_state]);
 
   //State lưu trữ dữ liệu cổ phiếu
   const [update_time, set_update_time] = useState<any[]>([]);
   const [eod_score_df, set_eod_score_df] = useState<any[]>([]);
   const [stock_price_chart_df, set_stock_price_chart_df] = useState<any[]>([]);
   const [stock_ta_df, set_stock_ta_df] = useState<any[]>([]);
-
-  const [itd_score_liquidity_melted, set_itd_score_liquidity_melted] = useState<any[]>([]);
-  const [group_score_week, set_group_score_week] = useState<any[]>([]);
-  const [group_score_month, set_group_score_month] = useState<any[]>([]);
-  const [group_score_ranking_melted, set_group_score_ranking_melted] = useState<any[]>([]);
-  const [eod_score_liquidity_melted, set_eod_score_liquidity_melted] = useState<any[]>([]);
-  const [market_ms, set_market_ms] = useState<any[]>([]);
-  const [group_stock_top_10_df, set_group_stock_top_10_df] = useState<any[]>([]);
+  const [stock_liquidty_score_t0, set_stock_liquidty_score_t0] = useState<any[]>([]);
+  const [stock_score_week, set_stock_score_week] = useState<any[]>([]);
+  const [stock_score_month, set_stock_score_month] = useState<any[]>([]);
+  const [stock_score_power_df, set_stock_score_power_df] = useState<any[]>([]);
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
-  const [switch_group_industry, set_switch_group_industry] = useState('group');
-  const [switch_hs_cap, set_switch_hs_cap] = useState('hs');
-  const [switch_nhom_nganh_hs, set_switch_nhom_nganh_hs] = useState('A');
   const [time_span, set_time_span] = useState('1M');
-
   const [thong_tin_cp, set_thong_tin_cp] = useState('BD');
   const [mobile_ta_mode, set_mobile_ta_mode] = useState('month');
 
@@ -109,11 +95,6 @@ export default function Page4() {
   const pixel = (ratio: number, min: number) => {
     return `${Math.max(ratio * ww, min)?.toFixed(0)}px`;
   }
-
-  const onChangeSelectGroup = (e: any) => {
-    const value = e.target.value;
-    set_select_stock(value)
-  };
 
   const onChangeIndexPriceChartTimeSpan = (e: any) => {
     const value = e.target.value;
@@ -145,6 +126,44 @@ export default function Page4() {
     set_mobile_ta_mode(value)
   };
 
+  const getColorLiquidity = (value: number) => {
+    if (value < 60) return '#00cccc';
+    if (value < 90) return '#e14040';
+    if (value < 120) return '#D0be0f';
+    if (value < 150) return '#24B75E';
+    return '#C031C7';
+  };
+
+  const getColorStockRank = (value: number) => {
+    if (value < 10) return '#C031C7';
+    if (value < 50) return '#24B75E';
+    if (value < 150) return '#D0be0f';
+    if (value < 250) return '#e14040';
+    return '#00cccc';
+  };
+
+  const getColorTopRankCount = (value: number) => {
+    if (value < 1) return '#00cccc';
+    if (value < 3) return '#e14040';
+    if (value < 5) return '#D0be0f';
+    if (value < 10) return '#24B75E';
+    return '#C031C7';
+  };
+
+  const getColorIndustryPerform = (value: string) => {
+    if (value === 'Hiệu suất A') return '#24B75E';
+    if (value === 'Hiệu suất B') return '#025bc4';
+    if (value === 'Hiệu suất C') return '#D0be0f';
+    if (value === 'Hiệu suất D') return '#e14040';
+  };
+
+  const getColorMarketCap = (value: string) => {
+    if (value === 'LARGECAP') return '#24B75E';
+    if (value === 'MIDCAP') return '#025bc4';
+    if (value === 'SMALLCAP') return '#D0be0f';
+    if (value === 'PENNY') return '#e14040';
+  };
+
   const [checkAuth, setCheckAuth] = useState(true);
   useEffect(() => {
     setCheckAuth(false)
@@ -172,8 +191,166 @@ export default function Page4() {
                   </Row>
                 </Col>
               </Row>
-              <Row style={{ marginTop: '50px' }}>
+              <Row style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px', marginTop: '50px' }}>
+                <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>Thông tin cổ phiếu</p>
+                <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+              </Row>
+              <Row gutter={10} style={{ marginTop: '0px' }}>
                 <Col xs={8} sm={6} md={5} lg={5} xl={4}>
+                  <div style={{
+                    width: '100%', height: '185px', background: '#161616',
+                    padding: '10px', borderRadius: '5px'
+                  }}>
+                    <Row>
+                      <Col>
+                        <p style={{
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                        }}>
+                          Dòng tiền trong phiên
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.t0_score > 0 ? '#24B75E' :
+                            (eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.t0_score < 0 ? '#e14040' : '#D0be0f'),
+                          fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                        }}>
+                          {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.t0_score.toFixed(2)}
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
+                        }}>
+                          Dòng tiền trong tuần
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.t5_score > 0 ? '#24B75E' :
+                            (eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.t5_score < 0 ? '#e14040' : '#D0be0f'),
+                          fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                        }}>
+                          {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.t5_score.toFixed(2)}
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
+                        }}>
+                          Chỉ số thanh khoản
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: getColorLiquidity(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.liquid_ratio * 100),
+                          fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                        }}>
+                          {`${(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.liquid_ratio * 100).toFixed(2)}%`}
+                        </p>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col span={12}>
+                        <p style={{
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
+                        }}>
+                          Xếp hạng
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: getColorStockRank(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.rank),
+                          fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                        }}>
+                          {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.rank}
+                        </p>
+                      </Col>
+                      <Col span={12}>
+                        <p style={{
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
+                        }}>
+                          Top 10%
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: getColorTopRankCount(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.top_count),
+                          fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                        }}>
+                          {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.top_count}
+                          <span style={{ color: '#B3B3B3', fontSize: pixel(0.012, 9) }}> lần</span>
+                        </p>
+                      </Col>
+                    </Row>
+                  </div>
+                  <div style={{
+                    width: '100%', height: '145px', background: '#161616',
+                    padding: '10px', borderRadius: '5px', marginTop: '10px'
+                  }}>
+                    <Row>
+                      <Col>
+                        <p style={{
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                        }}>
+                          Hiệu suất cổ phiếu
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: 'white',
+                          fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                        }}>
+                          {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.stock_perform}
+                          &nbsp;
+                          <span style={{ color: '#C031C7', fontSize: pixel(0.015, 12) }}>
+                            {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.t2m_select}
+                          </span>
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
+                        }}>
+                          Nhóm ngành
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: 'white',
+                          fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                        }}>
+                          {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.industry_name}
+                        </p>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col span={13}>
+                        <p style={{
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
+                        }}>
+                          Hiệu suất
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.014, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: getColorIndustryPerform(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.industry_perform),
+                          fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                        }}>
+                          {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.industry_perform}
+                        </p>
+                      </Col>
+                      <Col span={11}>
+                        <p style={{
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
+                        }}>
+                          Vốn hoá
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.014, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: getColorMarketCap(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.marketcap_group),
+                          fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                        }}>
+                          {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.marketcap_group}
+                        </p>
+                      </Col>
+                    </Row>
+                  </div>
                 </Col>
                 <Col xs={16} sm={18} md={19} lg={19} xl={20}>
                   <Row gutter={20} style={{ height: '60px', marginBottom: '10px' }}>
@@ -187,14 +364,14 @@ export default function Page4() {
                           }}>
                             <p style={{
                               height: '28px', color: 'white', fontSize: pixel(0.02, 14), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-                              margin: `1px 0px 0px ${pixel(0.01, 0)}`, display: 'flex', alignItems: 'center'
+                              margin: `1px 0px 0px ${pixel(0.002, 0)}`, display: 'flex', alignItems: 'center'
                             }}>
                               Cổ phiếu {select_stock}
                             </p>
                             <div style={{ height: '24px', display: 'flex', margin: 0, padding: 0, alignItems: 'center', marginTop: '8px' }}>
                               <p style={{
                                 color: 'white', fontSize: pixel(0.015, 12), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-                                margin: `0px 0px 0px ${pixel(0.01, 0)}`
+                                margin: `0px 0px 0px ${pixel(0.002, 0)}`
                               }}>
                                 {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.close?.toFixed(2)}
                               </p>
@@ -234,12 +411,12 @@ export default function Page4() {
                             <Radio.Button value="BD" className="custom-radio-button"
                               style={{
                                 fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                              }}>Biểu đồ
+                              }}>Biểu đồ giá
                             </Radio.Button>
                             <Radio.Button value="PTKT" className="custom-radio-button"
                               style={{
                                 fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                              }}>PTKT
+                              }}>Phân tích kỹ thuật
                             </Radio.Button>
                           </Radio.Group>
                           {thong_tin_cp === 'BD' && (
@@ -321,7 +498,7 @@ export default function Page4() {
                             </Radio.Button>
                           </Radio.Group>
                         )}
-                        <StockPriceChart data={stock_price_chart_df} select_stock={select_stock} time_span={time_span} width='100%' height={ww > 768 ? '270px' : '215px'} />
+                        <StockPriceChart data={stock_price_chart_df} select_stock={select_stock} time_span={time_span} width='100%' height={ww > 768 ? '270px' : '255px'} />
                       </>
                     )}
                     {thong_tin_cp === 'PTKT' && (
@@ -358,17 +535,17 @@ export default function Page4() {
                               marginTop: '1px', margin: 0, height: ww > 768 ? '32px' : '22px'
                             }}>Chỉ số {ww > 768 ? 'tháng' : (mobile_ta_mode === 'month' ? 'tháng' : (mobile_ta_mode === 'quarter' ? 'quý' : 'năm'))}</p>
                             <StockTaTable data={stock_ta_df} select_stock={select_stock} id={ww > 768 ? 'month' : mobile_ta_mode} ta_name={['candle']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '0px' : '0px'}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
+                              width='100%' height={ww > 768 ? '70px' : '64px'} marginTop={ww > 768 ? '0px' : '0px'}
                             />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
                             <StockTaTable data={stock_ta_df} select_stock={select_stock} id={ww > 768 ? 'month' : mobile_ta_mode} ta_name={['ma', 'pivot']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '8px' : '8px'} />
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
+                              width='100%' height={ww > 768 ? '70px' : '64px'} marginTop={ww > 768 ? '8px' : '8px'} />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
                             <StockTaTable data={stock_ta_df} select_stock={select_stock} id={ww > 768 ? 'month' : mobile_ta_mode} ta_name={['fibo']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '8px' : '8px'} />
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
+                              width='100%' height={ww > 768 ? '70px' : '62px'} marginTop={ww > 768 ? '8px' : '8px'} />
                           </div>
                         </Col>
                         <Col xs={0} sm={0} md={8} lg={8} xl={8}>
@@ -378,16 +555,16 @@ export default function Page4() {
                               marginTop: '1px', margin: 0, height: ww > 768 ? '32px' : '22px'
                             }}>Chỉ số quý</p>
                             <StockTaTable data={stock_ta_df} select_stock={select_stock} id='quarter' ta_name={['candle']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
                               width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '0px' : '0px'}
                             />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
                             <StockTaTable data={stock_ta_df} select_stock={select_stock} id='quarter' ta_name={['ma', 'pivot']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
                               width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '8px' : '8px'} />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
                             <StockTaTable data={stock_ta_df} select_stock={select_stock} id='quarter' ta_name={['fibo']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
                               width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '8px' : '8px'} />
                           </div>
                         </Col>
@@ -398,16 +575,16 @@ export default function Page4() {
                               marginTop: '1px', margin: 0, height: ww > 768 ? '32px' : '22px'
                             }}>Chỉ số năm</p>
                             <StockTaTable data={stock_ta_df} select_stock={select_stock} id='year' ta_name={['candle']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
                               width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '0px' : '0px'}
                             />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
                             <StockTaTable data={stock_ta_df} select_stock={select_stock} id='year' ta_name={['ma', 'pivot']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
                               width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '8px' : '8px'} />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
                             <StockTaTable data={stock_ta_df} select_stock={select_stock} id='year' ta_name={['fibo']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
                               width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '8px' : '8px'} />
                           </div>
                         </Col>
@@ -415,50 +592,43 @@ export default function Page4() {
                     )}
                   </Row>
                 </Col>
-                {/* <Col xs={16} sm={18} md={19} lg={19} xl={20}>
-                  <Row gutter={25} style={{ marginTop: '30px', marginBottom: '10px' }}>
-                    <Col xs={12} sm={12} md={14} lg={14} xl={14}>
-                      <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
-                        {`Index nhóm ${select_stock}`}
-                      </p>
-                      <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
-                    </Col>
-                    <Col xs={12} sm={12} md={10} lg={10} xl={10}>
-                      <Radio.Group
-                        size='small'
-                        className="custom-radio-group"
-                        defaultValue={time_span}
-                        buttonStyle="solid"
-                        onChange={onChangeIndexPriceChartTimeSpan}
-                        style={{ display: 'flex', width: '100%', marginTop: ww > 768 ? '30px' : '10px', height: '20px' }}
-                      >
-                        <Radio.Button value="1M" className="custom-radio-button"
-                          style={{
-                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>1M
-                        </Radio.Button>
-                        <Radio.Button value="3M" className="custom-radio-button"
-                          style={{
-                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>3M
-                        </Radio.Button>
-                        <Radio.Button value="6M" className="custom-radio-button"
-                          style={{
-                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>6M
-                        </Radio.Button>
-                        <Radio.Button value="1Y" className="custom-radio-button"
-                          style={{
-                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>1Y
-                        </Radio.Button>
-                      </Radio.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <StockPriceChart data={stock_price_chart_df} select_stock={select_stock} time_span={time_span} width='100%' height={ww > 768 ? '270px' : '215px'} />
-                  </Row>
-                </Col> */}
+              </Row>
+              <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
+                <Col>
+                  <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
+                    {`Diễn biến dòng tiền cổ phiếu ${select_stock}`}
+                  </p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+                </Col>
+              </Row>
+              <Row style={{ marginTop: '30px' }}>
+                <DtVaTkTrongPhien data={stock_liquidty_score_t0} select_stock={select_stock} ww={ww} fontSize={pixel(0.017, 17)} />
+              </Row>
+              <Row gutter={10} style={{ marginTop: '20px' }}>
+                <Col xs={12} sm={10} md={8} lg={8} xl={8}>
+                  <StockWeekScoreChart data={stock_score_week} ww={ww} select_stock={select_stock} fontSize={pixel(0.015, 17)} />
+                </Col>
+                <Col xs={12} sm={14} md={16} lg={16} xl={16}>
+                  <StockMonthScoreChart data={stock_score_month} ww={ww} select_stock={select_stock} fontSize={pixel(0.015, 17)} />
+                </Col>
+              </Row>
+              <Row style={{ marginTop: '40px', marginBottom: '10px' }}>
+                <Col>
+                  <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
+                    {`Sức mạnh dòng tiền cổ phiếu ${select_stock}`}
+                  </p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+                </Col>
+              </Row>
+              <Row style={{ marginTop: ww > 768 ? '30px' : '20px' }}>
+                <Col span={12}>
+                  <StockRankingChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 17)} stock_count={eod_score_df?.length} />
+                </Col>
+                <Col span={12}>
+                </Col>
+              </Row>
+              <Row style={{ marginTop: ww > 768 ? '20px' : '10px' }}>
+                <StockLiquidityLineChart20p data={stock_score_power_df} select_stock={select_stock} fontSize={pixel(0.017, 17)} />
               </Row>
             </Col >
           </Row >

@@ -32,6 +32,7 @@ const useWindowWidth = (): any => {
 
 export default function Page3() {
   const [select_group, set_select_group] = useState('Bán lẻ');
+  const [data_state, set_data_state] = useState(true);
 
   const getData = async (tableName: string, columnName: any) => {
     const res = await sendRequest<IBackendRes<any>>({
@@ -39,6 +40,7 @@ export default function Page3() {
       method: "GET",
       queryParams: { columnName: columnName, columnValue: select_group },
     })
+    if (!res.data || res.data.length < 1) { set_data_state(data_state === true ? false : true) }
     if (tableName === 'update_time') {
       await set_update_time(res.data)
     } else if (tableName === 'group_stock_price_index') {
@@ -66,7 +68,6 @@ export default function Page3() {
       getData('itd_score_liquidity_melted', 'group_name');
       getData('group_score_week', 'group_name');
       getData('group_score_month', 'group_name');
-      getData('group_score_month', 'group_name');
       getData('group_score_ranking_melted', 'group_name');
       getData('eod_score_liquidity_melted', 'group_name');
       getData('market_ms', 'name');
@@ -74,9 +75,9 @@ export default function Page3() {
     };
     fetchData();
 
-    const interval = setInterval(fetchData, 10 * 1000); // Gọi lại mỗi x giây
+    const interval = setInterval(fetchData, 5 * 1000); // Gọi lại mỗi x giây
     return () => clearInterval(interval); // Xóa interval khi component unmount
-  }, [select_group]);
+  }, [select_group, data_state]);
 
   //State lưu trữ dữ liệu cổ phiếu
   const [update_time, set_update_time] = useState<any[]>([]);

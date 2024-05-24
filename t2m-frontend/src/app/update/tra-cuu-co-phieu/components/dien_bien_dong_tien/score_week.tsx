@@ -14,9 +14,9 @@ ChartJS.register(
     ChartDataLabels // Đăng ký plugin datalabels
 );
 
-const GroupWeekScoreChart = (props: any) => {
+const StockWeekScoreChart = (props: any) => {
 
-    const data_sets = props?.data?.filter((item: any) => item.group_name === props?.select_group)
+    const data_sets = props?.data?.filter((item: any) => item.stock === props?.select_stock)
         .sort((a: any, b: any) => a.day_index - b.day_index)
 
 
@@ -168,4 +168,4 @@ const GroupWeekScoreChart = (props: any) => {
     }
 };
 
-export default GroupWeekScoreChart;
+export default StockWeekScoreChart;

@@ -31,9 +31,10 @@ const customTitleMargin: Plugin = {
     },
 };
 
-const GroupMonthScoreChart = (props: any) => {
+const StockMonthScoreChart = (props: any) => {
 
-    const data_sets = props?.data?.filter((item: any) => item.group_name === props?.select_group)
+
+    const data_sets = props?.data?.filter((item: any) => item.stock === props?.select_stock)
         .sort((a: any, b: any) => a.day_num - b.day_num)
 
     const lines = {
@@ -159,4 +160,4 @@ const GroupMonthScoreChart = (props: any) => {
     };
 }
 
-export default GroupMonthScoreChart;
+export default StockMonthScoreChart;

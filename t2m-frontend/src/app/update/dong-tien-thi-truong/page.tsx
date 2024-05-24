@@ -45,11 +45,14 @@ const useWindowWidth = (): any => {
 };
 
 export default function Page2() {
+  const [data_state, set_data_state] = useState(true);
+
   const getData = async (tableName: string) => {
     const res = await sendRequest<IBackendRes<any>>({
       url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
       method: "GET",
     })
+    if (!res.data || res.data.length < 1) { set_data_state(data_state === true ? false : true) }
     if (tableName === 'update_time') {
       await set_update_time(res.data)
     } else if (tableName === 'itd_score_liquidity_last') {
@@ -78,9 +81,9 @@ export default function Page2() {
     };
     fetchData();
 
-    const interval = setInterval(fetchData, 10 * 1000); // Gọi lại mỗi x giây
+    const interval = setInterval(fetchData, 5 * 1000); // Gọi lại mỗi x giây
     return () => clearInterval(interval); // Xóa interval khi component unmount
-  }, []);
+  }, [data_state]);
 
   //State lưu trữ dữ liệu cổ phiếu
   const [update_time, set_update_time] = useState<any[]>([]);
@@ -411,7 +414,7 @@ export default function Page2() {
                   )}
                   {switch_industry === 'M' && (
                     <>
-                      <Row style={{marginTop: '30px'}}>
+                      <Row style={{ marginTop: '30px' }}>
                         <TopIndustryChart data={full_industry_ranking} ww={ww} fontSize={pixel(0.017, 17)} />
                       </Row>
                       <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>

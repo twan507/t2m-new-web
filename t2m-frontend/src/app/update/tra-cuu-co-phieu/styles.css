@@ -186,7 +186,7 @@
 .ant-select-dropdown {
     background-color: #000000 !important;
     color: #B3B3B3 !important;
-    max-height: 132px;
+    max-height: 100px;
     /* Giới hạn chiều cao của danh sách gợi ý */
     overflow-y: auto;
     /* Thêm cuộn dọc khi danh sách dài hơn 200px */

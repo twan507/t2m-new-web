@@ -8,7 +8,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const DtVaTkTrongPhien = (props: any) => {
 
-    const data_sets = props?.data?.filter((item: any) => item.group_name === props?.select_group)
+    const data_sets = props?.data?.filter((item: any) => item.stock === props?.select_stock)
         .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
     const timeList: string[] = data_sets?.map((item: any) => {
@@ -22,8 +22,8 @@ const DtVaTkTrongPhien = (props: any) => {
         labels: timeList || [],
         datasets: [
             {
-                label: 'Dòng tiền',
-                data: data_sets?.map((item: any) => item.score === null ? null : item.score),
+                label: props?.ww > 768 ? 'Dòng tiền trong phiên' : 'Dòng tiền',
+                data: data_sets?.map((item: any) => item.score === null ? null : item.t0_score),
                 borderColor: '#C031C7',
                 pointRadius: 0,
                 hoverRadius: 5,
@@ -33,8 +33,8 @@ const DtVaTkTrongPhien = (props: any) => {
                 yAxisID: 'y',
             },
             {
-                label: 'Thanh khoản',
-                data: data_sets?.map((item: any) => item.liquidity === null ? null : item.liquidity * 100),
+                label: props?.ww > 768 ? 'Chỉ số thanh khoản' : 'Thanh khoản',
+                data: data_sets?.map((item: any) => item.liquid_ratio === null ? null : item.liquid_ratio * 100),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 0,
