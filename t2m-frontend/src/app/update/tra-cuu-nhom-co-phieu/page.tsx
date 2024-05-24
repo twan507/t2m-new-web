@@ -32,7 +32,6 @@ const useWindowWidth = (): any => {
 
 export default function Page3() {
   const [select_group, set_select_group] = useState('Bán lẻ');
-  const [data_state, set_data_state] = useState(true);
 
   const getData = async (tableName: string, columnName: any) => {
     const res = await sendRequest<IBackendRes<any>>({
@@ -40,7 +39,6 @@ export default function Page3() {
       method: "GET",
       queryParams: { columnName: columnName, columnValue: select_group },
     })
-    if (!res.data || res.data.length < 1) { set_data_state(data_state === true ? false : true) }
     if (tableName === 'update_time') {
       await set_update_time(res.data)
     } else if (tableName === 'group_stock_price_index') {
@@ -77,7 +75,7 @@ export default function Page3() {
 
     const interval = setInterval(fetchData, 5 * 1000); // Gọi lại mỗi x giây
     return () => clearInterval(interval); // Xóa interval khi component unmount
-  }, [select_group, data_state]);
+  }, [select_group]);
 
   //State lưu trữ dữ liệu cổ phiếu
   const [update_time, set_update_time] = useState<any[]>([]);

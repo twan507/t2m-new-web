@@ -1,19 +1,10 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, Filler, Plugin } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, Plugin } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, Filler, ChartDataLabels);
-
-const hexToRgba = (hex: string, alpha: number) => {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-};
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, ChartDataLabels);
 
 const customLegendMargin: Plugin = {
     id: 'customLegendMargin',
@@ -41,7 +32,8 @@ const customTitleMargin: Plugin = {
     },
 };
 
-const StockRankingChart = (props: any) => {
+
+const ScorePriceCorrelationChart = (props: any) => {
 
     const data_sets = props?.data?.filter((item: any) => item.stock === props?.select_stock)
         .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
@@ -53,35 +45,28 @@ const StockRankingChart = (props: any) => {
         return `${day}-${month}`;
     });
 
-    const lines: any = {
+    const lines = {
         labels: dateList || [],
         datasets: [
             {
-                label: props?.select_stock,
-                data: data_sets?.map((item: any) => item.rank),
+                label: '% biến động dòng tiền',
+                data: data_sets?.map((item: any) => item.score_change * 100),
                 borderColor: '#C031C7',
                 pointRadius: 2,
                 hoverRadius: 7,
                 pointBackgroundColor: '#C031C7',
                 tension: 0.4,
                 borderWidth: props?.ww > 768 ? 3 : 2,
-                yAxisID: 'y',
             },
             {
-                label: 'Top 10% tiền vào',
-                type: 'bar',
-                data: data_sets?.map((item: any) => item.top_rank_check),
-                backgroundColor: hexToRgba('#24B75E', 0.5),
-                barPercentage: props?.ww > 768 ? 0.4 : 0.8,
-                yAxisID: 'y1',
-            },
-            {
-                label: 'Top 10% tiền ra',
-                type: 'bar',
-                data: data_sets?.map((item: any) => item.bot_rank_check),
-                backgroundColor: hexToRgba('#e14040', 0.5),
-                barPercentage: props?.ww > 768 ? 0.4 : 0.8,
-                yAxisID: 'y2',
+                label: '% biến động giá',
+                data: data_sets?.map((item: any) => item.price_change * 100),
+                borderColor: '#025bc4',
+                pointRadius: 2,
+                hoverRadius: 7,
+                pointBackgroundColor: '#025bc4',
+                tension: 0.4,
+                borderWidth: props?.ww > 768 ? 3 : 2,
             },
         ],
     };
@@ -92,9 +77,10 @@ const StockRankingChart = (props: any) => {
         plugins: {
             legend: {
                 display: true,
+                position: 'top',
                 labels: {
                     boxWidth: 20, // Độ rộng của hộp màu trong legend
-                    boxHeight: 8,
+                    boxHeight: 6,
                     padding: 10, // Khoảng cách giữa các mục trong legend
                     pointStyle: 'circle', // Đặt kiểu điểm thành hình tròn
                     usePointStyle: true, // Bảo đảm sử dụng pointStyle cho biểu tượng
@@ -102,11 +88,7 @@ const StockRankingChart = (props: any) => {
                         size: parseInt(props?.fontSize) - 4, // Điều chỉnh cỡ chữ của legend
                         family: 'Calibri', // Điều chỉnh font chữ của legend
                     },
-                    color: '#dfdfdf', // Màu chữ của legend
-                    filter: (legendItem: any, chartData: any) => {
-                        // Only show legend items for y1 and y2
-                        return legendItem.datasetIndex === 1 || legendItem.datasetIndex === 2;
-                    }
+                    color: '#dfdfdf' // Màu chữ của legend
                 }
             },
             tooltip: {
@@ -115,16 +97,8 @@ const StockRankingChart = (props: any) => {
                         return `Ngày ${tooltipItems[0].label}`;
                     },
                     label: function (tooltipItem: any) {
-                        // Only show tooltip for y axis
-                        if (tooltipItem.datasetIndex === 0) {
-                            return `${props?.select_stock}: ${tooltipItem.raw}`;
-                        }
-                        return null;
+                        return `${tooltipItem?.dataset?.label}: ${tooltipItem?.raw?.toFixed(2)}%`;
                     }
-                },
-                filter: function (tooltipItem: any) {
-                    // Only show tooltip items for y axis
-                    return tooltipItem.datasetIndex === 0;
                 },
                 displayColors: true,
                 usePointStyle: true,
@@ -137,7 +111,7 @@ const StockRankingChart = (props: any) => {
             title: {
                 display: true,
                 padding: {},
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng sức mạnh dòng tiền' : 'Xếp hạng dòng tiền',
+                text: props?.ww > 768 ? 'Tương quan biến động giá và dòng tiền' : 'Tương quan giá và dòng tiền',
                 font: {
                     family: 'Calibri, sans-serif',
                     size: parseInt(props?.fontSize) - 2,
@@ -155,48 +129,26 @@ const StockRankingChart = (props: any) => {
         },
         scales: {
             x: {
-                stacked: true,
                 ticks: {
                     color: '#dfdfdf',
                 },
             },
             y: {
-                type: 'linear',
-                min: 0,
-                max: props?.stock_count,
                 position: 'right',
-                reverse: true,
                 ticks: {
-                    stepSize: 10,
                     color: '#dfdfdf',
+                    callback: function (value: number) {
+                        return `${value}%`; // Hiển thị dạng phần trăm
+                    }
                 },
                 grid: {
-                    display: false,
+                    display: true,
                     color: '#dfdfdf',
-                    lineWidth: 0.5,
-                }
-            },
-            y1: {
-                type: 'linear',
-                stacked: true,
-                position: 'left',
-                grid: {
-                    display: false,
+                    drawBorder: false,
+                    lineWidth: function (context: any) {
+                        return context.tick.value === 0 ? 0.5 : 0; // Draw grid line only at value 0
+                    },
                 },
-                ticks: {
-                    display: false,
-                }
-            },
-            y2: {
-                type: 'linear',
-                stacked: true,
-                position: 'left',
-                grid: {
-                    display: false,
-                },
-                ticks: {
-                    display: false,
-                }
             },
         },
     };
@@ -217,4 +169,4 @@ const StockRankingChart = (props: any) => {
     return null;
 }
 
-export default StockRankingChart;
+export default ScorePriceCorrelationChart;

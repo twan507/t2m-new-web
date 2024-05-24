@@ -10,7 +10,12 @@ const SearchComponent = (props: any) => {
 
 
     const allOptions = props?.data
-        .map((obj: any) => ({ value: obj.stock }))
+        .map((obj: any) => ({ 
+            value: obj.stock, 
+            industry_name: obj.industry_name,
+            industry_perform: obj.industry_perform,
+            marketcap_group: obj.marketcap_group,
+        }))
         .sort((a: any, b: any) => a.value.localeCompare(b.value));
 
     const onSearch = (searchText: string) => {
@@ -24,6 +29,9 @@ const SearchComponent = (props: any) => {
         if (options.length > 0) {
             setInputValue(options[0].value);
             props.set_select_stock(options[0].value)
+            props.set_select_industry(options[0].industry_name)
+            props.set_select_perform(options[0].industry_perform)
+            props.set_select_cap(options[0].marketcap_group)
             inputRef.current.blur();
         }
     };

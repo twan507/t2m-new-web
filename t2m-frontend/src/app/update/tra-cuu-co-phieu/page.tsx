@@ -5,13 +5,15 @@ import { useEffect, useRef, useState } from "react";
 import './styles.css'
 
 import StockPriceChart from "./components/thong_tin_co_phieu/stock_price_chart";
-import SearchComponent from "./components/search_bar";
+import SearchComponent from "./components/search_bar/search_bar";
 import StockTaTable from "./components/thong_tin_co_phieu/stock_ta_table";
 import DtVaTkTrongPhien from "./components/dien_bien_dong_tien/dt_va_tk_trong_phien";
 import StockWeekScoreChart from "./components/dien_bien_dong_tien/score_week";
 import StockMonthScoreChart from "./components/dien_bien_dong_tien/score_month";
 import StockRankingChart from "./components/suc_manh_dong_tien/stock_ranking";
 import StockLiquidityLineChart20p from "./components/suc_manh_dong_tien/thanh_khoan_20p";
+import ScorePriceCorrelationChart from "./components/suc_manh_dong_tien/tuong_quan_dong_tien";
+import GroupRankingChart from "./components/dong_tien_nhom_phu_thuoc/group_ranking";
 
 
 const useWindowWidth = (): any => {
@@ -33,6 +35,10 @@ const useWindowWidth = (): any => {
 
 export default function Page4() {
   const [select_stock, set_select_stock] = useState('AAA');
+  const [select_industry, set_select_industry] = useState('Hoá chất');
+  const [select_perform, set_select_perform] = useState('Hiệu suất B');
+  const [select_cap, set_select_cap] = useState('SMALLCAP');
+
   const [data_state, set_data_state] = useState(true);
 
   const getData = async (tableName: string, columnName: any) => {
@@ -41,7 +47,6 @@ export default function Page4() {
       method: "GET",
       queryParams: { columnName: columnName, columnValue: select_stock },
     })
-    // if (!res.data || res.data.length < 1) { set_data_state(data_state === true ? false : true) }
     if (tableName === 'update_time') {
       await set_update_time(res.data)
     } else if (tableName === 'stock_price_chart_df') {
@@ -58,18 +63,42 @@ export default function Page4() {
       await set_eod_score_df(res.data)
     } else if (tableName === 'stock_ta_df') {
       await set_stock_ta_df(res.data)
+    } else if (tableName === 'group_score_ranking_melted') {
+      await set_group_score_ranking_melted(res.data)
     }
   }
+
+  const getDataPrice = async (tableName: string, columnName: any) => {
+    const res = await sendRequest<IBackendRes<any>>({
+      url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
+      method: "GET",
+      queryParams: { columnName: columnName, columnValue: select_stock },
+    })
+    if (!res.data || res.data.length < 1) { set_data_state(data_state === true ? false : true) }
+    if (tableName === 'stock_price_chart_df') {
+      await set_stock_price_chart_df(res.data)
+    }
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       getData('update_time', null);
-      getData('stock_price_chart_df', 'stock');
       getData('stock_liquidty_score_t0', 'stock');
       getData('stock_score_week', 'stock');
       getData('stock_score_month', 'stock');
       getData('stock_score_power_df', 'stock');
       getData('eod_score_df', null);
       getData('stock_ta_df', 'stock');
+      getData('group_score_ranking_melted', null);
+    };
+    fetchData();
+    const interval = setInterval(fetchData, 5 * 1000); // Gọi lại mỗi x giây
+    return () => clearInterval(interval); // Xóa interval khi component unmount
+  }, [select_stock]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      getDataPrice('stock_price_chart_df', 'stock');
     };
     fetchData();
     const interval = setInterval(fetchData, 60 * 1000); // Gọi lại mỗi x giây
@@ -85,6 +114,7 @@ export default function Page4() {
   const [stock_score_week, set_stock_score_week] = useState<any[]>([]);
   const [stock_score_month, set_stock_score_month] = useState<any[]>([]);
   const [stock_score_power_df, set_stock_score_power_df] = useState<any[]>([]);
+  const [group_score_ranking_melted, set_group_score_ranking_melted] = useState<any[]>([]);
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
   const [time_span, set_time_span] = useState('1M');
@@ -186,14 +216,23 @@ export default function Page4() {
                   <Row gutter={20}>
                     <Col xs={0} sm={12} md={12} lg={12} xl={12}><div style={{ width: '100%' }} /></Col>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                      <SearchComponent data={eod_score_df} set_select_stock={set_select_stock} />
+                      <SearchComponent data={eod_score_df}
+                        set_select_stock={set_select_stock}
+                        set_select_industry={set_select_industry}
+                        set_select_perform={set_select_perform}
+                        set_select_cap={set_select_cap}
+                      />
                     </Col>
                   </Row>
                 </Col>
               </Row>
               <Row style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px', marginTop: '50px' }}>
-                <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>Thông tin cổ phiếu</p>
-                <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+                <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
+                  {`Thông tin cổ phiếu ${select_stock}`}
+                </p>
+                <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>
+                  {update_time?.[0]?.date}
+                </p>
               </Row>
               <Row gutter={10} style={{ marginTop: '0px' }}>
                 <Col xs={8} sm={6} md={5} lg={5} xl={4}>
@@ -625,10 +664,33 @@ export default function Page4() {
                   <StockRankingChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 17)} stock_count={eod_score_df?.length} />
                 </Col>
                 <Col span={12}>
+                  <ScorePriceCorrelationChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 17)} />
                 </Col>
               </Row>
               <Row style={{ marginTop: ww > 768 ? '20px' : '10px' }}>
                 <StockLiquidityLineChart20p data={stock_score_power_df} select_stock={select_stock} fontSize={pixel(0.017, 17)} />
+              </Row>
+              <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
+                <Col>
+                  <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
+                    {`Xếp các nhón phụ thuộc cổ phiếu ${select_stock}`}
+                  </p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+                </Col>
+              </Row>
+              <Row gutter={10}>
+                <Col span={8}>
+                  <GroupRankingChart data={group_score_ranking_melted} ww={ww} select_group={select_industry}
+                    switch_group_industry='industry' fontSize={pixel(0.017, 17)} />
+                </Col>
+                <Col span={8}>
+                  <GroupRankingChart data={group_score_ranking_melted} ww={ww} select_group={select_perform}
+                    switch_group_industry='group' fontSize={pixel(0.017, 17)} />
+                </Col>
+                <Col span={8}>
+                  <GroupRankingChart data={group_score_ranking_melted} ww={ww} select_group={select_cap}
+                    switch_group_industry='group' fontSize={pixel(0.017, 17)} />
+                </Col>
               </Row>
             </Col >
           </Row >

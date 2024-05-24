@@ -39,14 +39,11 @@ const useWindowWidth = (): any => {
 };
 
 export default function Page1() {
-  const [data_state, set_data_state] = useState(true);
-
   const getData = async (tableName: string) => {
     const res = await sendRequest<IBackendRes<any>>({
       url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
       method: "GET",
     })
-    if (!res.data || res.data.length < 1) { set_data_state(data_state === true ? false : true) }
     if (tableName === 'update_time') {
       await set_update_time(res.data)
     } else if (tableName === 'index_card_df') {
@@ -104,7 +101,7 @@ export default function Page1() {
 
     const interval = setInterval(fetchData, 5 * 1000); // Gọi lại mỗi x giây
     return () => clearInterval(interval); // Xóa interval khi component unmount
-  }, [data_state]);
+  }, []);
 
   //State lưu trữ dữ liệu cổ phiếu
   const [update_time, set_update_time] = useState<any[]>([]);
