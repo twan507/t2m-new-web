@@ -85,7 +85,7 @@ const NnTdHispory = (props: any) => {
                 },
                 ticks: {
                     color: '#dfdfdf', // Màu của các nhãn trên trục X
-                    padding: 5, // Khoảng cách giữa các nhãn và trục x
+                    padding: 15, // Khoảng cách giữa các nhãn và trục x
                 },
             },
             y: {
