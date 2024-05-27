@@ -22,7 +22,7 @@ const TopCoPhieuTable = (props: any) => {
             {
                 title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> Mã </span>,
                 dataIndex: 'stock',
-                // width: '8%',
+                width: '7%',
                 render: (text: string) => (
                     <span style={{
                         color: '#ffffff',
@@ -49,6 +49,8 @@ const TopCoPhieuTable = (props: any) => {
                         lineHeight: props?.lineHeight
                     }}>{text}</span>
                 ),
+                // ellipsis: true,
+
             },
             {
                 title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> Hiệu suất </span>,

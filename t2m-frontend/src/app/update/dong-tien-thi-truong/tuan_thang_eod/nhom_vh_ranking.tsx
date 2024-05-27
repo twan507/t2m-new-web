@@ -104,7 +104,7 @@ const NhomVhRanking = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng nhóm vốn hoá' : 'Xếp hạng nhóm vốn hoá',
+                text: props?.ww > 768 ? 'Sức mạnh dòng tiền nhóm vốn hoá' : 'Sức mạnh nhóm vốn hoá',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',

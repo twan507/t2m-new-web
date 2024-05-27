@@ -57,7 +57,7 @@ const GroupRankingChart = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng sức mạnh dòng tiền' : 'Xếp hạng sức mạnh dòng tiền',
+                text: props?.ww > 768 ? 'Diễn biến sức mạnh dòng tiền' : 'Diễn biến sức mạnh dòng tiền',
                 font: {
                     family: 'Calibri, sans-serif',
                     size: parseInt(props?.fontSize) - 2,

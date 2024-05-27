@@ -137,7 +137,7 @@ const StockRankingChart = (props: any) => {
             title: {
                 display: true,
                 padding: {},
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng sức mạnh dòng tiền' : 'Xếp hạng dòng tiền',
+                text: props?.ww > 768 ? 'Diễn biến sức mạnh dòng tiền' : 'Diễn biến SMDT',
                 font: {
                     family: 'Calibri, sans-serif',
                     size: parseInt(props?.fontSize) - 2,

@@ -126,7 +126,7 @@ const NganhHsCRanking = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng ngành hiệu suất C' : 'Xếp hạng ngành hiệu suất C',
+                text: props?.ww > 768 ? 'Sức mạnh dòng tiền ngành hiệu suất C' : 'Sức mạnh ngành hiệu suất C',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',

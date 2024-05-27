@@ -502,21 +502,6 @@ export default function Page2() {
                   </Row>
                 </>
               )}
-              {/* {switch_itd_eod === 'eod' && (
-                <>
-                  <Row gutter={25} style={{ marginTop: '50px', marginBottom: '10px' }}>
-                    <Col>
-                      <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
-                        Xếp hạng các nhóm ngành hiện tại
-                      </p>
-                      <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <TopIndustryChart data={full_industry_ranking} ww={ww} fontSize={pixel(0.015, 17)} />
-                  </Row>
-                </>
-              )} */}
             </Col>
           </Row>
         </Col >

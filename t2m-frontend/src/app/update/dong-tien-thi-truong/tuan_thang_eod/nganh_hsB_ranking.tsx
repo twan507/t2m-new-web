@@ -126,7 +126,7 @@ const NganhHsBRanking = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến xếp hạng ngành hiệu suất B' : 'Xếp hạng ngành hiệu suất B',
+                text: props?.ww > 768 ? 'Sức mạnh dòng tiền ngành hiệu suất B' : 'Sức mạnh ngành hiệu suất B',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',

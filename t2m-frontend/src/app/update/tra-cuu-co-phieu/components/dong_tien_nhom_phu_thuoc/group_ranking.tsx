@@ -57,7 +57,7 @@ const GroupRankingChart = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? `Diễn biến xếp hạng nhóm ${props?.select_group}` : `Nhóm ${props?.select_group}`,
+                text: props?.ww > 768 ? `Sức mạnh dòng tiền nhóm ${props?.select_group}` : `Nhóm ${props?.select_group}`,
                 font: {
                     family: 'Calibri, sans-serif',
                     size: parseInt(props?.fontSize) - 2,

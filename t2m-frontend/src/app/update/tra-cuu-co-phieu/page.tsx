@@ -653,7 +653,7 @@ export default function Page4() {
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
                 <Col>
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
-                    {`Xếp các nhón phụ thuộc cổ phiếu ${select_stock}`}
+                    {`Sức mạnh các nhóm liên quan cổ phiếu ${select_stock}`}
                   </p>
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
