@@ -151,6 +151,16 @@
     background-color: #161616;
 }
 
+.custom-table .ant-pagination .ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-ellipsis,
+.custom-table .ant-pagination .ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-ellipsis {
+    color: #666666;
+}
+
+.custom-table .ant-pagination .ant-pagination-item-active {
+    border-color: #dfdfdf;
+}
+
+/* Các phần này là cho select */
 .custom-table .ant-select:not(.ant-select-customize-input) .ant-select-selector {
     background-color: #161616;
 }
@@ -163,16 +173,6 @@
     color: #dfdfdf;
 }
 
-.custom-table .ant-pagination .ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-ellipsis,
-.custom-table .ant-pagination .ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-ellipsis {
-    color: #666666;
-}
-
-.custom-table .ant-pagination .ant-pagination-item-active {
-    border-color: #dfdfdf;
-}
-
-/* Các phần này là cho select */
 .custom-table .ant-select-selector {
     border-color: #dfdfdf !important;
 }
@@ -194,6 +194,23 @@
     background-color: #333 !important;
 }
 
+/* Các phần này cho cho sort */
+.custom-table .ant-table-column-sorters {
+    pointer-events: none;
+}
+
+.left-sort .ant-table-column-sorters {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+}
+
+.left-sort .ant-table-column-title {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
 /* -------------------------------------------------------------------------------------------------------------- */
 /* CSS cho các button */
 .custom-button {
@@ -206,4 +223,65 @@
 .custom-button:hover {
     background-color: #1677ff !important;
     color: #dfdfdf !important;
+}
+
+/* --------------------------------------------------------------------------------------------------------------- */
+/* CSS cho select */
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    cursor: pointer !important;
+}
+
+.ant-select-show-search.ant-select:not(.ant-select-customize-input) .ant-select-selector input {
+    cursor: pointer !important;
+}
+
+.custom-select .ant-select-single .ant-select-selector {
+    color: #dfdfdf;
+}
+
+.custom-select .ant-select-selector {
+    border-color: #dfdfdf !important;
+}
+
+.custom-select .ant-select-arrow {
+    color: #dfdfdf !important;
+}
+
+.custom-select .ant-select-dropdown {
+    background-color: black !important;
+}
+
+.custom-select .ant-select-item {
+    color: #dfdfdf !important;
+}
+
+.custom-select .ant-select-selector {
+    background-color: transparent !important;
+}
+
+.ant-select-dropdown {
+    background-color: transparent !important;
+    color: #dfdfdf
+        /* Thay đổi màu nền */
+}
+
+.ant-select-item-option:hover {
+    background-color: #333 !important;
+    /* Thay đổi màu nền khi hover */
+}
+
+.ant-select-item-option-selected {
+    background-color: #333 !important;
+    /* Thay đổi màu nền khi được chọn */
+}
+
+.ant-select-dropdown .ant-select-item {
+    color: #dfdfdf !important;
+}
+
+/* --------------------------------------------------------------------------------------------------------------- */
+/* CSS cho slider */
+.ant-slider-rail {
+    background-color: #333 !important;
+    /* Màu của phần chưa trượt */
 }

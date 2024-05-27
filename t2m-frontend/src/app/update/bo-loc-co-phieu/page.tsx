@@ -51,31 +51,37 @@ export default function Page1() {
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
   const [chi_so_thi_truong, set_chi_so_thi_truong] = useState('TQ');
+  const [switch_itd_eod, set_switch_itd_eod] = useState('eod');
+  const [switch_group, set_switch_group] = useState('D');
 
   const ww = useWindowWidth();
   const pixel = (ratio: number, min: number) => {
     return `${Math.max(ratio * ww, min)?.toFixed(0)}px`;
   }
 
-  // const onChangeChiSoThiTruong = (e: any) => {
-  //   const value = e.target.value;
-  //   set_chi_so_thi_truong(value)
-  // };
+  const onChangeSwitchItdEod = (e: any) => {
+    set_switch_itd_eod(switch_itd_eod === 'eod' ? 'itd' : 'eod')
+  };
 
-  // const tttt_mobile_items: any = [
-  //   {
-  //     key: 'TTTT',
-  //     label: ww > 500 ? 'Trạng thái thị truờng' : 'Trạng thái TT',
-  //   },
-  //   {
-  //     key: 'DTTK',
-  //     label: ww > 500 ? 'Dòng tiền & Thanh khoản' : 'DT & TK',
-  //   },
-  // ];
+  const onChangeGroup = (e: any) => {
+    const value = e.target.value;
+    set_switch_group(value)
+  };
 
-  // const onChangeTtttMobile: MenuProps['onClick'] = (e) => {
-  //   set_tttt_dttk(e.key);
-  // };
+  const switch_group_items: any = [
+    {
+      key: 'D',
+      label: 'Trong phiên',
+    },
+    {
+      key: 'M',
+      label: 'Trong tuần/tháng',
+    },
+  ];
+
+  const onChangeGroupMobile: MenuProps['onClick'] = (e) => {
+    set_switch_group(e.key);
+  };
 
   const [checkAuth, setCheckAuth] = useState(true);
   useEffect(() => {
@@ -92,7 +98,23 @@ export default function Page1() {
         }}>
           <Row>
             <Col style={{ width: ww, margin: 0.03 * ww }}>
-              <FilterStockTable data={filter_stock_df} ww={ww} fontSize={pixel(0.013, 11)} lineHeight='34px' />
+              <Row gutter={25} style={{ marginTop: '0px', marginBottom: '10px' }}>
+                <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                  <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
+                    Dòng tiền và thanh khoản nhóm cổ phiếu
+                  </p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+                </Col>
+                <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                  <Button className="custom-button" block={true} size={ww > 768 ? 'large' : 'middle'}
+                    style={{ fontSize: pixel(0.013, 12) }} onClick={onChangeSwitchItdEod}
+                  >Xoá bộ lọc
+                  </Button>
+                </Col>
+              </Row>
+              <Row>
+                <FilterStockTable data={filter_stock_df} ww={ww} fontSize={pixel(0.013, 11)} lineHeight='34px' />
+              </Row>
             </Col >
           </Row >
         </Col >
