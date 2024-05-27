@@ -14,7 +14,9 @@ import {
   MenuFoldOutlined,
   UsergroupAddOutlined,
   AppstoreOutlined,
-  ReloadOutlined
+  ReloadOutlined,
+  PieChartOutlined,
+  FileSearchOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, Button, Avatar, notification } from 'antd';
 import { useRouter } from 'next/navigation';
@@ -141,7 +143,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
         </Link>
       ),
       key: 'tong-quan-thi-truong',
-      icon: <AppstoreOutlined style={{ fontSize: '20px', marginLeft: '-1px' }} />
+      icon: <PieChartOutlined style={{ fontSize: '20px', marginLeft: '-1px' }} />
     },
     {
       label: (
@@ -150,7 +152,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
         </Link>
       ),
       key: 'dong-tien-thi-truong',
-      icon: <FundViewOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
+      icon: <BarChartOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
     },
     {
       label: (
@@ -159,7 +161,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
         </Link>
       ),
       key: 'tra-cuu-nhom-co-phieu',
-      icon: <BarChartOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
+      icon: <FileSearchOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
     },
     {
       label: (
@@ -168,7 +170,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
         </Link>
       ),
       key: 'tra-cuu-co-phieu',
-      icon: <LineChartOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
+      icon: <SearchOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
     },
     {
       label: (
@@ -177,7 +179,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
         </Link>
       ),
       key: 'bo-loc-co-phieu',
-      icon: <SearchOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
+      icon: <FundViewOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
     }
   ]
 
