@@ -40,24 +40,8 @@
 }
 
 /* -------------------------------------------------------------------------------------------------------------- */
-/* CSS cho phần menu mobile mục chỉ số thị trường */
-.cstt-menu .ant-menu-item {
-    text-align: center;
-    /* Căn giữa chữ */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.cstt-menu .ant-menu-item,
-.cstt-menu .ant-menu-submenu-title {
-    height: 27px !important;
-    line-height: 27px !important;
-}
-
-/* -------------------------------------------------------------------------------------------------------------- */
 /* CSS cho phần menu mobile mục trạng thái thì trường */
-.tttt-menu .ant-menu-item {
+.page2-menu .ant-menu-item {
     text-align: center;
     /* Căn giữa chữ */
     display: flex;
@@ -65,10 +49,10 @@
     align-items: center;
 }
 
-.tttt-menu .ant-menu-item,
-.tttt-menu .ant-menu-submenu-title {
-    height: 23px !important;
-    line-height: 23px !important;
+.page2-menu .ant-menu-item,
+.page2-menu .ant-menu-submenu-title {
+    height: 24px !important;
+    line-height: 24px !important;
 }
 
 
@@ -154,54 +138,72 @@
 }
 
 
+.custom-table .ant-pagination .ant-pagination-next button,
+.custom-table .ant-pagination .ant-pagination-prev button {
+    color: #dfdfdf;
+}
+
+.custom-table .ant-pagination .ant-pagination-item a {
+    color: #dfdfdf;
+}
+
+.custom-table .ant-pagination .ant-pagination-item-active {
+    background-color: #161616;
+}
+
+.custom-table .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    background-color: #161616;
+}
+
+.custom-table .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    cursor: pointer !important;
+}
+
+.custom-table .ant-select-single .ant-select-selector {
+    color: #dfdfdf;
+}
+
+.custom-table .ant-pagination .ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-ellipsis,
+.custom-table .ant-pagination .ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-ellipsis {
+    color: #666666;
+}
+
+.custom-table .ant-pagination .ant-pagination-item-active {
+    border-color: #dfdfdf;
+}
+
+/* Các phần này là cho select */
+.custom-table .ant-select-selector {
+    border-color: #dfdfdf !important;
+}
+
+.custom-table .ant-select-arrow {
+    color: #dfdfdf !important;
+}
+
+.custom-table .ant-select-dropdown {
+    background-color: black !important;
+}
+
+.custom-table .ant-select-item {
+    color: #dfdfdf !important;
+}
+
+.custom-table .ant-select-item-option-active,
+.custom-table .ant-select-item-option-selected {
+    background-color: #333 !important;
+}
+
 /* -------------------------------------------------------------------------------------------------------------- */
-/* CSS cho thanh tìm kiếm cổ phiếu */
-.custom-search .ant-input {
-    background-color: black;
+/* CSS cho các button */
+.custom-button {
+    background-color: transparent !important;
+    border: 1px solid #1677ff;
+    color: #dfdfdf !important;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.custom-search .ant-input-affix-wrapper {
-    background-color: black;
-}
-
-.custom-search .ant-input::placeholder {
-    color: #B3B3B3;
-    /* Thay đổi màu chữ của placeholder */
-    opacity: 1;
-    /* Đảm bảo độ trong suốt của màu */
-}
-
-.custom-search .ant-input-affix-wrapper input::placeholder {
-    color: #B3B3B3;
-    /* Thay đổi màu chữ của placeholder */
-    opacity: 1;
-    /* Đảm bảo độ trong suốt của màu */
-}
-
-.custom-search .ant-input-affix-wrapper input {
-    color: white;
-    /* Thay đổi màu chữ khi gõ vào */
-}
-
-.ant-select-dropdown {
-    background-color: #000000 !important;
-    color: #B3B3B3 !important;
-}
-
-.ant-select-dropdown .ant-select-item {
-    color: #B3B3B3 !important;
-}
-
-.ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
-    background-color: #333333 !important;
-}
-
-/* Thay đổi màu của biểu tượng thành màu trắng */
-.custom-search-icon {
-    color: #B3B3B3 !important;
-}
-
-/* Thay đổi màu của biểu tượng khi ô input được focus */
-.custom-search .ant-input-affix-wrapper-focused .anticon {
-    color: #1677ff !important; /* Thay đổi màu biểu tượng khi input được focus */
+.custom-button:hover {
+    background-color: #1677ff !important;
+    color: #dfdfdf !important;
 }

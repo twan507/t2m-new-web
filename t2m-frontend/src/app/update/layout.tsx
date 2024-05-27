@@ -138,7 +138,10 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
   const sider_menu = [
     {
       label: (
-        <Link href="/update/tong-quan-thi-truong" onClick={(e) => { e.preventDefault() }}>
+        <Link href="/update/tong-quan-thi-truong" onClick={(e) => {
+          e.preventDefault()
+          setCollapsed(true)
+        }}>
           Tổng quan thị trường
         </Link>
       ),
@@ -147,7 +150,10 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
     },
     {
       label: (
-        <Link href="/update/dong-tien-thi-truong" onClick={(e) => { e.preventDefault() }} >
+        <Link href="/update/dong-tien-thi-truong" onClick={(e) => {
+          e.preventDefault()
+          setCollapsed(true)
+        }}>
           Dòng tiền thị trường
         </Link>
       ),
@@ -156,8 +162,11 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
     },
     {
       label: (
-        <Link href="/update/tra-cuu-nhom-co-phieu" onClick={(e) => { e.preventDefault() }} >
-          Tra cứu nhóm cổ phiếu
+        <Link href="/update/tra-cuu-nhom-co-phieu" onClick={(e) => {
+          e.preventDefault()
+          setCollapsed(true)
+        }}>
+          Tra cứu nhóm CP
         </Link>
       ),
       key: 'tra-cuu-nhom-co-phieu',
@@ -165,7 +174,10 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
     },
     {
       label: (
-        <Link href="/update/tra-cuu-co-phieu" onClick={(e) => { e.preventDefault() }} >
+        <Link href="/update/tra-cuu-co-phieu" onClick={(e) => {
+          e.preventDefault()
+          setCollapsed(true)
+        }}>
           Tra cứu cổ phiếu
         </Link>
       ),
@@ -174,7 +186,10 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
     },
     {
       label: (
-        <Link href="/update/bo-loc-co-phieu" onClick={(e) => { e.preventDefault() }} >
+        <Link href="/update/bo-loc-co-phieu" onClick={(e) => {
+          e.preventDefault()
+          setCollapsed(true)
+        }}>
           Bộ lọc cổ phiếu
         </Link>
       ),

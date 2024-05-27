@@ -1,0 +1,7 @@
+.custom-select .ant-select-selector {
+  border-color: blue !important;
+}
+
+.custom-select .ant-select-arrow {
+  color: green !important;
+}

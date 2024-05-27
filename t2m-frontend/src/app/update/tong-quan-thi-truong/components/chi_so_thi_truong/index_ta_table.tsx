@@ -35,16 +35,19 @@ const TaTable = (props: any) => {
       dataIndex: 'value',
       key: 'value',
       width: '30%',
-      render: (value: number) => (
-        <span style={{
-          color: value < 0 ? '#e14040' : '#24B75E',
-          fontFamily: 'Calibri, sans-serif',
-          fontSize: props?.fontSize,
-          display: 'flex',
-          justifyContent: 'flex-end',
-          lineHeight: props?.lineHeight
-        }}>{value}</span>
-      ),
+      render: (value: number, record: any) => {
+        const fromValue = record.from; // Lấy giá trị từ dataIndex "from"
+        return (
+          <span style={{
+            color: fromValue < 0 ? '#e14040' : '#24B75E',
+            fontFamily: 'Calibri, sans-serif',
+            fontSize: props?.fontSize,
+            display: 'flex',
+            justifyContent: 'flex-end',
+            lineHeight: props?.lineHeight
+          }}>{value}</span>
+        );
+      }
     },
     {
       title: '',

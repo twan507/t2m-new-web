@@ -396,15 +396,15 @@ export default function Page2() {
                       <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='D' height={ww > 768 ? '200px' : '150px'} type='industry' />
+                            group='D' height={ww > 768 ? '200px' : '110px'} type='industry' />
                         </Col>
                         <Col xs={5} sm={5} md={6} lg={6} xl={6}>
                           <MoneyFlowBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='D' height={ww > 768 ? '200px' : '150px'} type='industry' />
+                            group='D' height={ww > 768 ? '200px' : '110px'} type='industry' />
                         </Col>
                         <Col xs={7} sm={7} md={8} lg={8} xl={8}>
                           <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='D' height={ww > 768 ? '200px' : '150px'} type='industry' />
+                            group='D' height={ww > 768 ? '200px' : '110px'} type='industry' />
                         </Col>
                       </Row>
                     </>
