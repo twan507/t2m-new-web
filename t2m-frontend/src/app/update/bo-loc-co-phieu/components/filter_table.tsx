@@ -34,6 +34,14 @@ const getColorMarketCap = (value: string) => {
     if (value === 'PENNY') return '#e14040';
 };
 
+const getColorTrend = (value: string) => {
+    if (value === 'Tăng mạnh') return '#C031C7';
+    if (value === 'Tăng') return '#24B75E';
+    if (value === 'Trung lập') return '#D0be0f';
+    if (value === 'Giảm') return '#e14040';
+    if (value === 'Giảm mạnh') return '#00cccc';
+};
+
 const FilterStockTable = (props: any) => {
 
     const filterData = (data: any) => {
@@ -67,18 +75,7 @@ const FilterStockTable = (props: any) => {
         ?.sort((a: any, b: any) => a.stock.localeCompare(b.stock))
         ?.map((item: any, stt: any) => ({ ...item, stt: stt + 1 }));
 
-
-
-    // const filterNhomNganh = (data: any, filter: any) => {
-    //     if (!filter || filter.length === 0) { return data }
-    //     return data.filter((item: any) => filter.includes(item.industry_name));
-    // };
-
-    // const data_sets = filterNhomNganh(props?.data, props?.filter_nhom_nganh)
-    //     ?.sort((a: any, b: any) => a.stock.localeCompare(b.stock))
-    //     ?.map((item: any, stt: any) => ({ ...item, stt: stt + 1 }));
-
-    const columns = (props: any, ww: any): TableProps<any>['columns'] => {
+    const dt_columns = (props: any, ww: any): TableProps<any>['columns'] => {
         const baseColumns = [
             {
                 title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> # </span>,
@@ -424,6 +421,326 @@ const FilterStockTable = (props: any) => {
         return baseColumns;
     };
 
+    const candle_columns = [
+        {
+            title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> # </span>,
+            width: '3%',
+            dataIndex: 'stt',
+            render: (text: number) => (
+                <span style={{
+                    color: '#ffffff',
+                    fontFamily: 'Calibri, sans-serif',
+                    fontSize: parseInt(props?.fontSize) - 1,
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    lineHeight: props?.lineHeight
+                }}>{text}</span>
+            ),
+            sorter: (a: any, b: any) => {
+                const aValue = parseFloat(a.stt);
+                const bValue = parseFloat(b.stt);
+                return bValue - aValue;
+            }
+        },
+        {
+            title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> {props?.ww > 768 ? 'Cổ phiếu' : 'Mã'} </span>,
+            dataIndex: 'stock',
+            width: '5%',
+            render: (text: string) => (
+                <span style={{
+                    color: '#ffffff',
+                    fontFamily: 'Calibri, sans-serif',
+                    fontSize: parseInt(props?.fontSize) - 1,
+                    display: 'flex',
+                    fontWeight: 'bold',
+                    justifyContent: 'flex-start',
+                    lineHeight: props?.lineHeight
+                }}>{text}</span>
+            ),
+            sorter: (a: any, b: any) => {
+                const aValue = a.stock.toLowerCase();
+                const bValue = b.stock.toLowerCase();
+                if (aValue < bValue) {
+                    return -1;
+                }
+                if (aValue > bValue) {
+                    return 1;
+                }
+                return 0;
+            }
+        },
+        {
+            title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> {props?.ww > 768 ? 'Xu hướng Tháng' : 'Mã'} </span>,
+            dataIndex: 'month_trend',
+            width: '8%',
+            render: (text: string) => (
+                <span style={{
+                    color: getColorTrend(text),
+                    fontFamily: 'Calibri, sans-serif',
+                    fontSize: parseInt(props?.fontSize) - 1,
+                    display: 'flex',
+                    fontWeight: 'bold',
+                    justifyContent: 'flex-start',
+                    lineHeight: props?.lineHeight
+                }}>{text}</span>
+            ),
+            sorter: (a: any, b: any) => {
+                const aValue = a.stock.toLowerCase();
+                const bValue = b.stock.toLowerCase();
+                if (aValue < bValue) {
+                    return -1;
+                }
+                if (aValue > bValue) {
+                    return 1;
+                }
+                return 0;
+            }
+        },
+        {
+            title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> {props?.ww > 768 ? 'Xu hướng Quý' : 'Mã'} </span>,
+            dataIndex: 'quarter_trend',
+            width: '8%',
+            render: (text: string) => (
+                <span style={{
+                    color: getColorTrend(text),
+                    fontFamily: 'Calibri, sans-serif',
+                    fontSize: parseInt(props?.fontSize) - 1,
+                    display: 'flex',
+                    fontWeight: 'bold',
+                    justifyContent: 'flex-start',
+                    lineHeight: props?.lineHeight
+                }}>{text}</span>
+            ),
+            sorter: (a: any, b: any) => {
+                const aValue = a.stock.toLowerCase();
+                const bValue = b.stock.toLowerCase();
+                if (aValue < bValue) {
+                    return -1;
+                }
+                if (aValue > bValue) {
+                    return 1;
+                }
+                return 0;
+            }
+        },
+        {
+            title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> {props?.ww > 768 ? 'Xu hướng Năm' : 'Mã'} </span>,
+            dataIndex: 'year_trend',
+            width: '8%',
+            render: (text: string) => (
+                <span style={{
+                    color: getColorTrend(text),
+                    fontFamily: 'Calibri, sans-serif',
+                    fontSize: parseInt(props?.fontSize) - 1,
+                    display: 'flex',
+                    fontWeight: 'bold',
+                    justifyContent: 'flex-start',
+                    lineHeight: props?.lineHeight
+                }}>{text}</span>
+            ),
+            sorter: (a: any, b: any) => {
+                const aValue = a.stock.toLowerCase();
+                const bValue = b.stock.toLowerCase();
+                if (aValue < bValue) {
+                    return -1;
+                }
+                if (aValue > bValue) {
+                    return 1;
+                }
+                return 0;
+            }
+        },
+        {
+            title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> {'Month\nOpen'} </span>,
+            dataIndex: `from_month_open`,
+            className: 'left-sort',
+            // width: '12%',
+            render: (value: number) => (
+                <span style={{
+                    color: value > 0.0001 ? '#24B75E' : (value >= -0.0001 && value <= 0.0001 ? '#D0be0f' : '#e14040'),
+                    fontFamily: 'Calibri, sans-serif',
+                    fontSize: props?.fontSize,
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    lineHeight: props?.lineHeight
+                }}>{`${(value * 100).toFixed(2)}%`}</span>
+            ),
+            sorter: (a: any, b: any) => {
+                const aValue = parseFloat(a.from_month_open);
+                const bValue = parseFloat(b.from_month_open);
+                return bValue - aValue;
+            }
+        },
+        {
+            title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> {'Month\nLast High'} </span>,
+            dataIndex: `from_month_last_high`,
+            className: 'left-sort',
+            // width: '12%',
+            render: (value: number) => (
+                <span style={{
+                    color: value > 0.0001 ? '#24B75E' : (value >= -0.0001 && value <= 0.0001 ? '#D0be0f' : '#e14040'),
+                    fontFamily: 'Calibri, sans-serif',
+                    fontSize: props?.fontSize,
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    lineHeight: props?.lineHeight
+                }}>{`${(value * 100).toFixed(2)}%`}</span>
+            ),
+            sorter: (a: any, b: any) => {
+                const aValue = parseFloat(a.from_month_last_high);
+                const bValue = parseFloat(b.from_month_last_high);
+                return bValue - aValue;
+            }
+        },
+        {
+            title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> Month Last Low </span>,
+            dataIndex: `from_month_last_low`,
+            className: 'left-sort',
+            // width: '12%',
+            render: (value: number) => (
+                <span style={{
+                    color: value > 0.0001 ? '#24B75E' : (value >= -0.0001 && value <= 0.0001 ? '#D0be0f' : '#e14040'),
+                    fontFamily: 'Calibri, sans-serif',
+                    fontSize: props?.fontSize,
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    lineHeight: props?.lineHeight
+                }}>{`${(value * 100).toFixed(2)}%`}</span>
+            ),
+            sorter: (a: any, b: any) => {
+                const aValue = parseFloat(a.from_month_last_low);
+                const bValue = parseFloat(b.from_month_last_low);
+                return bValue - aValue;
+            }
+        },
+        {
+            title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> Quarter Open </span>,
+            dataIndex: `from_quarter_open`,
+            className: 'left-sort',
+            // width: '12%',
+            render: (value: number) => (
+                <span style={{
+                    color: value > 0.0001 ? '#24B75E' : (value >= -0.0001 && value <= 0.0001 ? '#D0be0f' : '#e14040'),
+                    fontFamily: 'Calibri, sans-serif',
+                    fontSize: props?.fontSize,
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    lineHeight: props?.lineHeight
+                }}>{`${(value * 100).toFixed(2)}%`}</span>
+            ),
+            sorter: (a: any, b: any) => {
+                const aValue = parseFloat(a.from_quarter_open);
+                const bValue = parseFloat(b.from_quarter_open);
+                return bValue - aValue;
+            }
+        },
+        {
+            title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> Quarter Last High </span>,
+            dataIndex: `from_quarter_last_high`,
+            className: 'left-sort',
+            // width: '12%',
+            render: (value: number) => (
+                <span style={{
+                    color: value > 0.0001 ? '#24B75E' : (value >= -0.0001 && value <= 0.0001 ? '#D0be0f' : '#e14040'),
+                    fontFamily: 'Calibri, sans-serif',
+                    fontSize: props?.fontSize,
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    lineHeight: props?.lineHeight
+                }}>{`${(value * 100).toFixed(2)}%`}</span>
+            ),
+            sorter: (a: any, b: any) => {
+                const aValue = parseFloat(a.from_quarter_last_high);
+                const bValue = parseFloat(b.from_quarter_last_high);
+                return bValue - aValue;
+            }
+        },
+        {
+            title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> Quarter Last Low </span>,
+            dataIndex: `from_quarter_last_low`,
+            className: 'left-sort',
+            // width: '12%',
+            render: (value: number) => (
+                <span style={{
+                    color: value > 0.0001 ? '#24B75E' : (value >= -0.0001 && value <= 0.0001 ? '#D0be0f' : '#e14040'),
+                    fontFamily: 'Calibri, sans-serif',
+                    fontSize: props?.fontSize,
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    lineHeight: props?.lineHeight
+                }}>{`${(value * 100).toFixed(2)}%`}</span>
+            ),
+            sorter: (a: any, b: any) => {
+                const aValue = parseFloat(a.from_quarter_last_low);
+                const bValue = parseFloat(b.from_quarter_last_low);
+                return bValue - aValue;
+            }
+        },
+        {
+            title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> Year Open </span>,
+            dataIndex: `from_year_open`,
+            className: 'left-sort',
+            // width: '12%',
+            render: (value: number) => (
+                <span style={{
+                    color: value > 0.0001 ? '#24B75E' : (value >= -0.0001 && value <= 0.0001 ? '#D0be0f' : '#e14040'),
+                    fontFamily: 'Calibri, sans-serif',
+                    fontSize: props?.fontSize,
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    lineHeight: props?.lineHeight
+                }}>{`${(value * 100).toFixed(2)}%`}</span>
+            ),
+            sorter: (a: any, b: any) => {
+                const aValue = parseFloat(a.from_year_open);
+                const bValue = parseFloat(b.from_year_open);
+                return bValue - aValue;
+            }
+        },
+        {
+            title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> Year Last High </span>,
+            dataIndex: `from_year_last_high`,
+            className: 'left-sort',
+            // width: '12%',
+            render: (value: number) => (
+                <span style={{
+                    color: value > 0.0001 ? '#24B75E' : (value >= -0.0001 && value <= 0.0001 ? '#D0be0f' : '#e14040'),
+                    fontFamily: 'Calibri, sans-serif',
+                    fontSize: props?.fontSize,
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    lineHeight: props?.lineHeight
+                }}>{`${(value * 100).toFixed(2)}%`}</span>
+            ),
+            sorter: (a: any, b: any) => {
+                const aValue = parseFloat(a.from_year_last_high);
+                const bValue = parseFloat(b.from_year_last_high);
+                return bValue - aValue;
+            }
+        },
+        {
+            title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> Year Last Low </span>,
+            dataIndex: `from_year_last_low`,
+            className: 'left-sort',
+            // width: '12%',
+            render: (value: number) => (
+                <span style={{
+                    color: value > 0.0001 ? '#24B75E' : (value >= -0.0001 && value <= 0.0001 ? '#D0be0f' : '#e14040'),
+                    fontFamily: 'Calibri, sans-serif',
+                    fontSize: props?.fontSize,
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    lineHeight: props?.lineHeight
+                }}>{`${(value * 100).toFixed(2)}%`}</span>
+            ),
+            sorter: (a: any, b: any) => {
+                const aValue = parseFloat(a.from_year_last_low);
+                const bValue = parseFloat(b.from_year_last_low);
+                return bValue - aValue;
+            }
+        },
+    ];
+
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
 
@@ -436,10 +753,11 @@ const FilterStockTable = (props: any) => {
         return (
             <>
                 <div style={{ width: '100%', margin: 0, padding: '0px', borderRadius: '5px' }}>
-                    {/* <Table className="custom-table" columns={columns(props, props?.ww)} dataSource={data_sets} pagination={false} rowKey="index" /> */}
                     <Table
+                        style={{ padding: '0px 10px 10px 10px' }}
                         className="custom-table"
-                        columns={columns(props, props?.ww)}
+                        // columns={dt_columns(props, props?.ww)}
+                        columns={candle_columns}
                         dataSource={data_sets}
                         pagination={{
                             current: currentPage,
