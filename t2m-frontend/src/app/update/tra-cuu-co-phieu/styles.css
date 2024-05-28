@@ -183,7 +183,7 @@
     /* Thay đổi màu chữ khi gõ vào */
 }
 
-.ant-select-dropdown {
+.custom-search .ant-select-dropdown {
     background-color: #000000 !important;
     color: #B3B3B3 !important;
     max-height: 100px;
@@ -192,16 +192,16 @@
     /* Thêm cuộn dọc khi danh sách dài hơn 200px */
 }
 
-.ant-select-dropdown .ant-select-item {
+.custom-search .ant-select-dropdown .ant-select-item {
     color: #B3B3B3 !important;
 }
 
-.ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+.custom-search .ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
     background-color: #333333 !important;
 }
 
 /* Thay đổi màu của biểu tượng thành màu trắng */
-.custom-search-icon {
+.custom-search .custom-search-icon {
     color: #B3B3B3 !important;
 }
 

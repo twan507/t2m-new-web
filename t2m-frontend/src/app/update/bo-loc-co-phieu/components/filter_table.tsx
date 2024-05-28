@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 import type { TableProps } from 'antd';
-import '../styles.css'; // Import CSS file for custom styles
+import '../styles.css';
 
 const getColorLiquidity = (value: number) => {
     if (value < 60) return '#00cccc';
@@ -36,9 +36,47 @@ const getColorMarketCap = (value: string) => {
 
 const FilterStockTable = (props: any) => {
 
+    const filterData = (data: any) => {
+        let filterData: any = data
+
+        if (props?.filter_nhom_nganh?.length === 0) { filterData = filterData }
+        else { filterData = filterData.filter((item: any) => props?.filter_nhom_nganh?.includes(item.industry_name)) };
+
+        if (props?.filter_hieu_suat?.length === 0) { filterData = filterData }
+        else { filterData = filterData.filter((item: any) => props?.filter_hieu_suat?.includes(item.industry_perform)) };
+
+        if (props?.filter_von_hoa?.length === 0) { filterData = filterData }
+        else { filterData = filterData.filter((item: any) => props?.filter_von_hoa?.includes(item.marketcap_group)) };
+
+        if (props?.filter_t0?.length === 0) { filterData = filterData }
+        else { filterData = filterData.filter((item: any) => props?.filter_t0?.includes(item.filter_t0)) };
+
+        if (props?.filter_t5?.length === 0) { filterData = filterData }
+        else { filterData = filterData.filter((item: any) => props?.filter_t5?.includes(item.filter_t5)) };
+
+        if (props?.filter_liquid?.length === 0) { filterData = filterData }
+        else { filterData = filterData.filter((item: any) => props?.filter_liquid?.includes(item.filter_liquid)) };
+
+        if (props?.filter_rank?.length === 0) { filterData = filterData }
+        else { filterData = filterData.filter((item: any) => props?.filter_rank?.includes(item.filter_rank)) };
+
+        return filterData
+    };
+
+    const data_sets = filterData(props?.data)
+        ?.sort((a: any, b: any) => a.stock.localeCompare(b.stock))
+        ?.map((item: any, stt: any) => ({ ...item, stt: stt + 1 }));
 
 
-    const data_sets = props?.data?.sort((a: any, b: any) => a.stock.localeCompare(b.stock)).map((item: any, stt: number) => ({ ...item, stt: stt + 1 }));
+
+    // const filterNhomNganh = (data: any, filter: any) => {
+    //     if (!filter || filter.length === 0) { return data }
+    //     return data.filter((item: any) => filter.includes(item.industry_name));
+    // };
+
+    // const data_sets = filterNhomNganh(props?.data, props?.filter_nhom_nganh)
+    //     ?.sort((a: any, b: any) => a.stock.localeCompare(b.stock))
+    //     ?.map((item: any, stt: any) => ({ ...item, stt: stt + 1 }));
 
     const columns = (props: any, ww: any): TableProps<any>['columns'] => {
         const baseColumns = [
@@ -90,7 +128,7 @@ const FilterStockTable = (props: any) => {
                 }
             },
             {
-                title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 768 ? 'Tên ngành' : 'Ngành'} </span>,
+                title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 768 ? 'Nhóm ngành' : 'Ngành'} </span>,
                 dataIndex: 'industry_name',
                 // width: '21%',
                 render: (text: string) => (

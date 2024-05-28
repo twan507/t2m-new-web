@@ -191,11 +191,11 @@ export default function Page4() {
             <Col style={{ width: ww, margin: 0.03 * ww }}>
               <Row gutter={25} style={{ height: '10px', margin: '-40px 0px 0px 0px' }}></Row>
               <Row>
-                <Col xs={0} sm={6} md={5} lg={5} xl={4}><div style={{ width: '100%' }} /></Col>
-                <Col xs={24} sm={18} md={19} lg={19} xl={20}>
+                <Col xs={0} sm={0} md={5} lg={5} xl={4}><div style={{ width: '100%' }} /></Col>
+                <Col xs={24} sm={24} md={19} lg={19} xl={20}>
                   <Row gutter={20}>
-                    <Col xs={0} sm={12} md={12} lg={12} xl={12}><div style={{ width: '100%' }} /></Col>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                    <Col xs={0} sm={0} md={16} lg={16} xl={16}><div style={{ width: '100%' }} /></Col>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                       <SearchComponent data={eod_score_df}
                         set_select_stock={set_select_stock}
                         set_select_industry={set_select_industry}
@@ -373,7 +373,7 @@ export default function Page4() {
                 </Col>
                 <Col xs={16} sm={18} md={19} lg={19} xl={20}>
                   <Row gutter={20} style={{ height: '60px', marginBottom: '10px' }}>
-                    <Col span={12} style={{ display: 'flex', flexDirection: ww > 800 ? 'row' : 'column' }}>
+                    <Col span={16} style={{ display: 'flex', flexDirection: ww > 800 ? 'row' : 'column' }}>
                       {(thong_tin_cp === 'BD' || thong_tin_cp === 'PTKT') && (
                         <>
                           <Button type='text' style={{
@@ -417,7 +417,7 @@ export default function Page4() {
                         </>
                       )}
                     </Col>
-                    <Col span={12} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Col span={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
                       {ww > 768 && (
                         <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
                           <Radio.Group
@@ -425,7 +425,7 @@ export default function Page4() {
                             defaultValue={thong_tin_cp}
                             buttonStyle="solid"
                             onChange={onChangeChiSoThiTruong}
-                            style={{ display: 'flex', width: '100%', marginTop: '5px', height: '20px' }}
+                            style={{ display: 'flex', width: '100%', marginTop: '-10px', height: '20px' }}
                           >
                             <Radio.Button value="BD" className="custom-radio-button"
                               style={{
@@ -435,7 +435,7 @@ export default function Page4() {
                             <Radio.Button value="PTKT" className="custom-radio-button"
                               style={{
                                 fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                              }}>Phân tích kỹ thuật
+                              }}>PTKT
                             </Radio.Button>
                           </Radio.Group>
                           {thong_tin_cp === 'BD' && (
@@ -455,16 +455,6 @@ export default function Page4() {
                                 style={{
                                   fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
                                 }}>3M
-                              </Radio.Button>
-                              <Radio.Button value="6M" className="custom-radio-button"
-                                style={{
-                                  fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
-                                }}>6M
-                              </Radio.Button>
-                              <Radio.Button value="1Y" className="custom-radio-button"
-                                style={{
-                                  fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
-                                }}>1Y
                               </Radio.Button>
                             </Radio.Group>
                           )}
@@ -504,16 +494,6 @@ export default function Page4() {
                               style={{
                                 fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
                               }}>3M
-                            </Radio.Button>
-                            <Radio.Button value="6M" className="custom-radio-button"
-                              style={{
-                                fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
-                              }}>6M
-                            </Radio.Button>
-                            <Radio.Button value="1Y" className="custom-radio-button"
-                              style={{
-                                fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
-                              }}>1Y
                             </Radio.Button>
                           </Radio.Group>
                         )}

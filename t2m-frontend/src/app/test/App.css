@@ -70,17 +70,3 @@
   background-color: #333 !important;
   /* Màu của phần chưa trượt */
 }
-
-
-
-.custom-button {
-  background-color: transparent !important;
-  border: 1px solid #1677ff;
-  color: #dfdfdf !important;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.custom-button:hover {
-  background-color: #1677ff !important;
-  color: #dfdfdf !important;
-}

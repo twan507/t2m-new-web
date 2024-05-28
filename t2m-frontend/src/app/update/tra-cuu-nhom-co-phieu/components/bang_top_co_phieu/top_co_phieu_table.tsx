@@ -35,7 +35,7 @@ const GroupTopCoPhieuTable = (props: any) => {
                 ),
             },
             {
-                title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 768 ? 'Tên ngành' : 'Ngành'} </span>,
+                title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 768 ? 'Nhóm ngành' : 'Ngành'} </span>,
                 dataIndex: 'industry_name',
                 // width: '21%',
                 render: (text: string) => (

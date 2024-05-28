@@ -4,6 +4,7 @@ import { Button, Col, Menu, MenuProps, Radio, Row } from "antd";
 import { useEffect, useState } from "react";
 import './styles.css'
 import FilterStockTable from "./components/filter_table";
+import BasicSelector from "./components/basic_selector";
 
 const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
@@ -41,6 +42,8 @@ export default function Page1() {
     };
     fetchData();
 
+
+
     const interval = setInterval(fetchData, 5 * 1000); // Gọi lại mỗi x giây
     return () => clearInterval(interval); // Xóa interval khi component unmount
   }, []);
@@ -50,38 +53,43 @@ export default function Page1() {
   const [filter_stock_df, set_filter_stock_df] = useState<any[]>([]);
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
-  const [chi_so_thi_truong, set_chi_so_thi_truong] = useState('TQ');
-  const [switch_itd_eod, set_switch_itd_eod] = useState('eod');
-  const [switch_group, set_switch_group] = useState('D');
+  const [filter_nhom_nganh, set_filter_nhom_nganh] = useState<any[]>([]);
+  const [filter_hieu_suat, set_filter_hieu_suat] = useState<any[]>([]);
+  const [filter_von_hoa, set_filter_von_hoa] = useState<any[]>([]);
+  const [filter_t0, set_filter_t0] = useState<any[]>([]);
+  const [filter_t5, set_filter_t5] = useState<any[]>([]);
+  const [filter_liquid, set_filter_liquid] = useState<any[]>([]);
+  const [filter_rank, set_filter_rank] = useState<any[]>([]);
+
 
   const ww = useWindowWidth();
   const pixel = (ratio: number, min: number) => {
     return `${Math.max(ratio * ww, min)?.toFixed(0)}px`;
   }
 
-  const onChangeSwitchItdEod = (e: any) => {
-    set_switch_itd_eod(switch_itd_eod === 'eod' ? 'itd' : 'eod')
+  const clearFilter = (e: any) => {
+    console.log('clear filter')
   };
 
-  const onChangeGroup = (e: any) => {
-    const value = e.target.value;
-    set_switch_group(value)
-  };
+  // const onChangeGroup = (e: any) => {
+  //   const value = e.target.value;
+  //   set_switch_group(value)
+  // };
 
-  const switch_group_items: any = [
-    {
-      key: 'D',
-      label: 'Trong phiên',
-    },
-    {
-      key: 'M',
-      label: 'Trong tuần/tháng',
-    },
-  ];
+  // const switch_group_items: any = [
+  //   {
+  //     key: 'D',
+  //     label: 'Trong phiên',
+  //   },
+  //   {
+  //     key: 'M',
+  //     label: 'Trong tuần/tháng',
+  //   },
+  // ];
 
-  const onChangeGroupMobile: MenuProps['onClick'] = (e) => {
-    set_switch_group(e.key);
-  };
+  // const onChangeGroupMobile: MenuProps['onClick'] = (e) => {
+  //   set_switch_group(e.key);
+  // };
 
   const [checkAuth, setCheckAuth] = useState(true);
   useEffect(() => {
@@ -107,13 +115,99 @@ export default function Page1() {
                 </Col>
                 <Col xs={10} sm={10} md={10} lg={10} xl={10}>
                   <Button className="custom-button" block={true} size={ww > 768 ? 'large' : 'middle'}
-                    style={{ fontSize: pixel(0.013, 12) }} onClick={onChangeSwitchItdEod}
+                    style={{ fontSize: pixel(0.013, 12) }} onClick={clearFilter}
                   >Xoá bộ lọc
                   </Button>
                 </Col>
               </Row>
+              <Row gutter={10}>
+                <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                  <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px' }}>
+                    <Row>
+                      <p style={{
+                        color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                        margin: '0px 0px 5px 2px', padding: 0
+                      }}>
+                        Nhóm ngành
+                      </p>
+                      <BasicSelector name='industry_name' sort='industry_name' data={filter_stock_df} filter={set_filter_nhom_nganh} />
+                    </Row>
+                    <Row gutter={10}>
+                      <Col span={12}>
+                        <p style={{
+                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '10px 0px 5px 2px', padding: 0
+                        }}>
+                          Nhóm hiệu suất
+                        </p>
+                        <BasicSelector name='industry_perform' sort='industry_perform' data={filter_stock_df} filter={set_filter_hieu_suat} />
+                      </Col>
+                      <Col span={12}>
+                        <p style={{
+                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '10px 0px 5px 2px', padding: 0
+                        }}>
+                          Nhóm vốn hoá
+                        </p>
+                        <BasicSelector name='marketcap_group' sort='marketcap_group' data={filter_stock_df} filter={set_filter_von_hoa} />
+                      </Col>
+                    </Row>
+                  </div>
+                </Col>
+                <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                  <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px' }}>
+                    <Row gutter={10}>
+                      <Col span={12}>
+                        <p style={{
+                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '0px 0px 5px 2px', padding: 0
+                        }}>
+                          Dòng tiền trong phiên
+                        </p>
+                        <BasicSelector name='filter_t0' sort='filter_t0' data={filter_stock_df} filter={set_filter_t0} />
+                        <p style={{
+                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '10px 0px 5px 2px', padding: 0
+                        }}>
+                          Chỉ số thanh khoản
+                        </p>
+                        <BasicSelector name='filter_liquid' sort='order_filter_liquid' data={filter_stock_df} filter={set_filter_liquid} />
+                      </Col>
+                      <Col span={12}>
+                        <p style={{
+                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '0px 0px 5px 2px', padding: 0
+                        }}>
+                          Dòng tiền trong tuần
+                        </p>
+                        <BasicSelector name='filter_t5' sort='filter_t5' data={filter_stock_df} filter={set_filter_t5} />
+                        <p style={{
+                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '10px 0px 5px 2px', padding: 0
+                        }}>
+                          Xếp hạng hiện tại
+                        </p>
+                        <BasicSelector name='filter_rank' sort='order_filter_rank' data={filter_stock_df} filter={set_filter_rank} />
+                      </Col>
+                    </Row>
+                  </div>
+                </Col>
+              </Row>
+
+
+
+
               <Row>
-                <FilterStockTable data={filter_stock_df} ww={ww} fontSize={pixel(0.013, 11)} lineHeight='34px' />
+                <FilterStockTable
+                  data={filter_stock_df} ww={ww} fontSize={pixel(0.013, 11)} lineHeight='34px'
+                  filter_nhom_nganh={filter_nhom_nganh}
+                  filter_hieu_suat={filter_hieu_suat}
+                  filter_von_hoa={filter_von_hoa}
+                  filter_t0={filter_t0}
+                  filter_t5={filter_t5}
+                  filter_liquid={filter_liquid}
+                  filter_rank={filter_rank}
+                />
               </Row>
             </Col >
           </Row >
