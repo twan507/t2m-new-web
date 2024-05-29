@@ -1,12 +1,11 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { Option } from 'antd/es/mentions';
 import '../styles.css';
 
 const TaSelector = (props: any) => {
-  const [selectedValues, setSelectedValues] = useState<any[]>([]);
-  const [placeholder, setPlaceholder] = useState<string | undefined>('All');
+  const [placeholder, setPlaceholder] = useState<string | undefined>('Chọn chỉ số kĩ thuật');
 
   let options: any
   if (props?.name === 'filter_candle') {
@@ -50,11 +49,9 @@ const TaSelector = (props: any) => {
 
   const handleChange = (value: any) => {
     if (value.length === 0 || value.includes('all')) {
-      setSelectedValues([]);
       props?.filter([]);
-      setPlaceholder('All');
+      setPlaceholder('Chọn chỉ số kĩ thuật');
     } else {
-      setSelectedValues(value);
       props?.filter(value);
       setPlaceholder(undefined);
     }
@@ -65,14 +62,20 @@ const TaSelector = (props: any) => {
   };
 
   const handleBlur = () => {
-    if (selectedValues.length === 0) {
-      setPlaceholder('All');
+    if (props?.filter_value.length === 0) {
+      setPlaceholder('Chọn chỉ số kĩ thuật');
     }
   };
 
+  useEffect(() => {
+    if (props?.filter_value?.length === 0) {
+      setPlaceholder('Chọn chỉ số kĩ thuật');
+    }
+  }, [props?.filter_value]);
+
   return (
     <Select
-      className='custom-select'
+      className='ta-select'
       mode="multiple"
       showSearch
       placeholder={placeholder}
@@ -80,17 +83,17 @@ const TaSelector = (props: any) => {
       onChange={handleChange}
       onFocus={handleFocus}
       onBlur={handleBlur}
-      value={selectedValues}
+      value={props?.filter_value}
       filterOption={(input, option: any) =>
         option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }
-      style={{ width: '100%', color: '#dfdfdf', fontSize: parseInt(props?.fontSize) - 4 }}
+      style={{ width: '100%', color: '#dfdfdf' }}
     >
-      <Option value="all">Bỏ chọn tất cả</Option>
+      <Select.Option value="all">Bỏ chọn tất cả</Select.Option>
       {options.map((option: any) => (
-        <Option key={option.value} value={option.value}>
+        <Select.Option key={option.value} value={option.value}>
           {option.label}
-        </Option>
+        </Select.Option>
       ))}
     </Select>
   )

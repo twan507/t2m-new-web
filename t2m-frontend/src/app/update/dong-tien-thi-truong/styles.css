@@ -139,7 +139,7 @@
 
 /* -------------------------------------------------------------------------------------------------------------- */
 /* CSS cho các button */
-.custom-button {
+/* .custom-button {
     background-color: transparent !important;
     border: 1px solid #1677ff;
     color: #dfdfdf !important;
@@ -148,5 +148,11 @@
 
 .custom-button:hover {
     background-color: #1677ff !important;
+    color: #dfdfdf !important;
+} */
+
+.custom-button {
+    background-color: #161616 !important;
+    border: 0 !important;
     color: #dfdfdf !important;
 }

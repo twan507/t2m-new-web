@@ -373,7 +373,7 @@ export default function Page4() {
                 </Col>
                 <Col xs={16} sm={18} md={19} lg={19} xl={20}>
                   <Row gutter={20} style={{ height: '60px', marginBottom: '10px' }}>
-                    <Col span={16} style={{ display: 'flex', flexDirection: ww > 800 ? 'row' : 'column' }}>
+                    <Col xs={12} sm={12} md={16} lg={16} xl={16} style={{ display: 'flex', flexDirection: ww > 800 ? 'row' : 'column' }}>
                       {(thong_tin_cp === 'BD' || thong_tin_cp === 'PTKT') && (
                         <>
                           <Button type='text' style={{
@@ -417,7 +417,7 @@ export default function Page4() {
                         </>
                       )}
                     </Col>
-                    <Col span={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Col xs={12} sm={12} md={8} lg={8} xl={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
                       {ww > 768 && (
                         <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
                           <Radio.Group
@@ -430,7 +430,7 @@ export default function Page4() {
                             <Radio.Button value="BD" className="custom-radio-button"
                               style={{
                                 fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                              }}>Biểu đồ giá
+                              }}>{ww > 768 ? 'Biểu đồ giá' : 'Biểu đồ'}
                             </Radio.Button>
                             <Radio.Button value="PTKT" className="custom-radio-button"
                               style={{

@@ -1,11 +1,10 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { Option } from 'antd/es/mentions';
 import '../styles.css';
 
 const BasicSelector = (props: any) => {
-  const [selectedValues, setSelectedValues] = useState<any[]>([]);
   const [placeholder, setPlaceholder] = useState<string | undefined>('All');
 
   let sortedData: any
@@ -13,6 +12,11 @@ const BasicSelector = (props: any) => {
     sortedData = props?.data?.sort((a: any, b: any) =>
       ['LARGECAP', 'MIDCAP', 'SMALLCAP', 'PENNY'].indexOf(a[props?.sort]) -
       ['LARGECAP', 'MIDCAP', 'SMALLCAP', 'PENNY'].indexOf(b[props?.sort])
+    )
+  } else if (props?.sort === 'price_trend') {
+    sortedData = props?.data?.sort((a: any, b: any) =>
+      ['Tăng mạnh', 'Tăng', 'Trung lập', 'Giảm', 'Giảm mạnh'].indexOf(a[props?.sort]) -
+      ['Tăng mạnh', 'Tăng', 'Trung lập', 'Giảm', 'Giảm mạnh'].indexOf(b[props?.sort])
     )
   } else {
     sortedData = props?.data?.sort((a: any, b: any) => a[props?.sort].localeCompare(b[props?.sort]));
@@ -26,11 +30,9 @@ const BasicSelector = (props: any) => {
 
   const handleChange = (value: any) => {
     if (value.length === 0 || value.includes('all')) {
-      setSelectedValues([]);
       props?.filter([]);
       setPlaceholder('All');
     } else {
-      setSelectedValues(value);
       props?.filter(value);
       setPlaceholder(undefined);
     }
@@ -41,10 +43,16 @@ const BasicSelector = (props: any) => {
   };
 
   const handleBlur = () => {
-    if (selectedValues.length === 0) {
+    if (props?.filter_value?.length === 0) {
       setPlaceholder('All');
     }
   };
+
+  useEffect(() => {
+    if (props?.filter_value?.length === 0) {
+      setPlaceholder('All');
+    }
+  }, [props?.filter_value]);
 
   return (
     <Select
@@ -56,17 +64,17 @@ const BasicSelector = (props: any) => {
       onChange={handleChange}
       onFocus={handleFocus}
       onBlur={handleBlur}
-      value={selectedValues}
+      value={props?.filter_value}
       filterOption={(input, option: any) =>
         option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }
-      style={{ width: '100%', color: '#dfdfdf', fontSize: parseInt(props?.fontSize) - 4 }}
+      style={{ width: '100%', color: '#dfdfdf'}}
     >
-      <Option value="all">Chọn tất cả</Option>
+      <Select.Option value="all">Chọn tất cả</Select.Option>
       {options.map(option => (
-        <Option key={option.value} value={option.value}>
+        <Select.Option key={option.value} value={option.value}>
           {option.label}
-        </Option>
+        </Select.Option>
       ))}
     </Select>
   )

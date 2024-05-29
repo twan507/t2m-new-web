@@ -213,15 +213,9 @@
 
 /* -------------------------------------------------------------------------------------------------------------- */
 /* CSS cho các button */
-.custom-button {
-    background-color: transparent !important;
-    border: 1px solid #1677ff;
-    color: #dfdfdf !important;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.custom-button:hover {
-    background-color: #1677ff !important;
+.filter-button {
+    background-color: #161616;
+    border: 0;
     color: #dfdfdf !important;
 }
 
@@ -235,27 +229,27 @@
     cursor: pointer !important;
 }
 
-.custom-select .ant-select-single .ant-select-selector {
+.ant-select-single .ant-select-selector {
     color: #dfdfdf;
 }
 
-.custom-select .ant-select-selector {
+.ant-select-selector {
     border-color: #dfdfdf !important;
 }
 
-.custom-select .ant-select-arrow {
+.ant-select-arrow {
     color: #dfdfdf !important;
 }
 
-.custom-select .ant-select-dropdown {
+.ant-select-dropdown {
     background-color: black !important;
 }
 
-.custom-select .ant-select-item {
+.ant-select-item {
     color: #dfdfdf !important;
 }
 
-.custom-select .ant-select-selector {
+.ant-select-selector {
     background-color: transparent !important;
 }
 
@@ -278,16 +272,20 @@
     color: #dfdfdf !important;
 }
 
-.custom-select .ant-select-selection-placeholder {
-    color: #dfdfdf !important;
-}
-
 .ant-select-multiple .ant-select-selection-item {
     background-color: #1677ff !important;
 }
 
 .ant-select-multiple .ant-select-selection-item-remove {
     color: #dfdfdf !important;
+}
+
+.custom-select .ant-select-selection-placeholder {
+    color: #dfdfdf !important;
+}
+
+.ta-select .ant-select-selection-placeholder {
+    color: #555 !important;
 }
 
 /* --------------------------------------------------------------------------------------------------------------- */
@@ -300,5 +298,3 @@
 .ant-slider-rail {
     background-color: #333 !important;
 }
-
-

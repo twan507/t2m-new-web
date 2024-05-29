@@ -44,6 +44,9 @@ const getColorTrend = (value: string) => {
 
 const FilterStockTable = (props: any) => {
 
+    const filter_ta_value = props?.filter_slider_value
+    const filter_ta_columns = props?.ta_filter_candle.concat(props?.ta_filter_ma_pivot).concat(props?.ta_filter_fibo)
+
     const filterData = (data: any) => {
         let filterData: any = data
 
@@ -67,6 +70,25 @@ const FilterStockTable = (props: any) => {
 
         if (props?.filter_rank?.length === 0) { filterData = filterData }
         else { filterData = filterData.filter((item: any) => props?.filter_rank?.includes(item.filter_rank)) };
+
+        if (props?.filter_month_trend?.length === 0) { filterData = filterData }
+        else { filterData = filterData.filter((item: any) => props?.filter_month_trend?.includes(item.month_trend)) };
+
+        if (props?.filter_quarter_trend?.length === 0) { filterData = filterData }
+        else { filterData = filterData.filter((item: any) => props?.filter_quarter_trend?.includes(item.quarter_trend)) };
+
+        if (props?.filter_year_trend?.length === 0) { filterData = filterData }
+        else { filterData = filterData.filter((item: any) => props?.filter_year_trend?.includes(item.year_trend)) };
+
+        if (filter_ta_columns.length === 0) { filterData = filterData }
+        else {
+            filterData = filterData.filter((item: any) => {
+                return filter_ta_columns.every((column: any) => {
+                    const value = item[column];
+                    return value >= filter_ta_value[0] && value <= filter_ta_value[1];
+                });
+            });
+        };
 
         return filterData
     };
@@ -741,9 +763,20 @@ const FilterStockTable = (props: any) => {
         },
     ];
 
+    const [columns, setColumns] = useState<any>(dt_columns(props, props?.ww));
+    useEffect(() => {
+        if (props?.table_type === 'dt') {
+            setColumns(dt_columns(props, props?.ww))
+        } else if (props?.table_type === 'kt' && props?.switch_ta_table === 'candle') {
+            setColumns(candle_columns)
+        }
+    }, [props?.table_type, props?.switch_ta_table]);
+
+    console.log(props?.table_type, props?.switch_ta_table)
+
+
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
-
     const [checkAuth, setCheckAuth] = useState(true);
     useEffect(() => {
         setCheckAuth(false)
@@ -756,8 +789,7 @@ const FilterStockTable = (props: any) => {
                     <Table
                         style={{ padding: '0px 10px 10px 10px' }}
                         className="custom-table"
-                        // columns={dt_columns(props, props?.ww)}
-                        columns={candle_columns}
+                        columns={columns}
                         dataSource={data_sets}
                         pagination={{
                             current: currentPage,

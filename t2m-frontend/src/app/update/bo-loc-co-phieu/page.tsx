@@ -7,6 +7,7 @@ import FilterStockTable from "./components/filter_table";
 import BasicSelector from "./components/basic_selector";
 import TaSlider from "./components/ta_slider";
 import TaSelector from "./components/ta_selector";
+import { ClearOutlined, PlusCircleOutlined } from "@ant-design/icons";
 
 const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
@@ -60,6 +61,7 @@ export default function Page5() {
   const [switch_ta_table, set_switch_ta_table] = useState('candle');
 
   //State lưu giữ trạng thái của các filter
+  const [placeholder, setPlaceholder] = useState<string | undefined>('All');
   const [filter_nhom_nganh, set_filter_nhom_nganh] = useState<any[]>([]);
   const [filter_hieu_suat, set_filter_hieu_suat] = useState<any[]>([]);
   const [filter_von_hoa, set_filter_von_hoa] = useState<any[]>([]);
@@ -67,9 +69,14 @@ export default function Page5() {
   const [filter_t5, set_filter_t5] = useState<any[]>([]);
   const [filter_liquid, set_filter_liquid] = useState<any[]>([]);
   const [filter_rank, set_filter_rank] = useState<any[]>([]);
+  const [filter_month_trend, set_filter_month_trend] = useState<any[]>([]);
+  const [filter_quarter_trend, set_filter_quarter_trend] = useState<any[]>([]);
+  const [filter_year_trend, set_filter_year_trend] = useState<any[]>([]);
+
   const [ta_filter_candle, set_ta_filter_candle] = useState<any[]>([]);
   const [ta_filter_ma_pivot, set_ta_filter_ma_pivot] = useState<any[]>([]);
   const [ta_filter_fibo, set_ta_filter_fibo] = useState<any[]>([]);
+  const [filter_slider_value, set_filter_slider_value] = useState<any[]>([-0.1, 0.1]);
 
   const ww = useWindowWidth();
   const pixel = (ratio: number, min: number) => {
@@ -77,7 +84,20 @@ export default function Page5() {
   }
 
   const clearFilter = (e: any) => {
-    console.log('clear filter')
+    set_filter_nhom_nganh([])
+    set_filter_hieu_suat([])
+    set_filter_von_hoa([])
+    set_filter_t0([])
+    set_filter_t5([])
+    set_filter_liquid([])
+    set_filter_rank([])
+    set_filter_month_trend([])
+    set_filter_quarter_trend([])
+    set_filter_year_trend([])
+    set_ta_filter_candle([])
+    set_ta_filter_ma_pivot([])
+    set_ta_filter_fibo([])
+    set_filter_slider_value([])
   };
 
   const toggleTaFilter = (e: any) => {
@@ -129,140 +149,169 @@ export default function Page5() {
         }}>
           <Row>
             <Col style={{ width: ww, margin: 0.03 * ww }}>
-              <Row gutter={25} style={{ marginTop: '0px', marginBottom: '10px' }}>
-                <Col xs={14} sm={14} md={18} lg={18} xl={18}>
+              <Row style={{ marginTop: '0px', marginBottom: '10px' }}>
+                <Col span={24}>
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
-                    Dòng tiền và thanh khoản nhóm cổ phiếu
+                    Bộ lọc cổ phiếu T2M
                   </p>
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
-                <Col xs={10} sm={10} md={6} lg={6} xl={6}>
-                  <Button className="custom-button" block={true} size={ww > 768 ? 'large' : 'middle'}
-                    style={{ fontSize: pixel(0.013, 12), marginTop: '12px' }} onClick={clearFilter}
-                  >Xoá bộ lọc
-                  </Button>
-                </Col>
               </Row>
               <Row gutter={10} style={{ marginTop: '20px' }}>
-                <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                   <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px' }}>
                     <Row>
                       <p style={{
-                        color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-                        margin: '0px 0px 5px 2px', padding: 0
+                        color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                        margin: '0px 0px 5px 2px', padding: 0, height: '20px'
                       }}>
                         Nhóm ngành
                       </p>
-                      <BasicSelector name='industry_name' sort='industry_name' data={filter_stock_df} filter={set_filter_nhom_nganh} />
+                      <BasicSelector name='industry_name' sort='industry_name' data={filter_stock_df} filter={set_filter_nhom_nganh} filter_value={filter_nhom_nganh} placeholder={placeholder} setPlaceholder={setPlaceholder} />
                     </Row>
                     <Row gutter={10}>
                       <Col span={12}>
                         <p style={{
-                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-                          margin: '10px 0px 5px 2px', padding: 0
+                          color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '10px 0px 5px 2px', padding: 0, height: '20px'
                         }}>
                           Nhóm hiệu suất
                         </p>
-                        <BasicSelector name='industry_perform' sort='industry_perform' data={filter_stock_df} filter={set_filter_hieu_suat} />
+                        <BasicSelector name='industry_perform' sort='industry_perform' data={filter_stock_df} filter={set_filter_hieu_suat} filter_value={filter_hieu_suat} placeholder={placeholder} setPlaceholder={setPlaceholder} />
                       </Col>
                       <Col span={12}>
                         <p style={{
-                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-                          margin: '10px 0px 5px 2px', padding: 0
+                          color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '10px 0px 5px 2px', padding: 0, height: '20px'
                         }}>
                           Nhóm vốn hoá
                         </p>
-                        <BasicSelector name='marketcap_group' sort='marketcap_group' data={filter_stock_df} filter={set_filter_von_hoa} />
+                        <BasicSelector name='marketcap_group' sort='marketcap_group' data={filter_stock_df} filter={set_filter_von_hoa} filter_value={filter_von_hoa} placeholder={placeholder} setPlaceholder={setPlaceholder} />
                       </Col>
                     </Row>
                   </div>
                 </Col>
-                <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                  <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px' }}>
+                <Col xs={20} sm={20} md={14} lg={14} xl={14}>
+                  <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px', marginTop: ww > 768 ? '0px' : '10px' }}>
                     <Row gutter={10}>
                       <Col span={12}>
                         <p style={{
-                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-                          margin: '0px 0px 5px 2px', padding: 0
+                          color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '0px 0px 5px 2px', padding: 0, height: '20px'
                         }}>
                           Dòng tiền trong phiên
                         </p>
-                        <BasicSelector name='filter_t0' sort='filter_t0' data={filter_stock_df} filter={set_filter_t0} />
+                        <BasicSelector name='filter_t0' sort='filter_t0' data={filter_stock_df} filter={set_filter_t0} filter_value={filter_t0} placeholder={placeholder} setPlaceholder={setPlaceholder} />
                         <p style={{
-                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-                          margin: '10px 0px 5px 2px', padding: 0
+                          color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '10px 0px 5px 2px', padding: 0, height: '20px'
                         }}>
                           Chỉ số thanh khoản
                         </p>
-                        <BasicSelector name='filter_liquid' sort='order_filter_liquid' data={filter_stock_df} filter={set_filter_liquid} />
+                        <BasicSelector name='filter_liquid' sort='order_filter_liquid' data={filter_stock_df} filter={set_filter_liquid} filter_value={filter_liquid} placeholder={placeholder} setPlaceholder={setPlaceholder} />
                       </Col>
                       <Col span={12}>
                         <p style={{
-                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-                          margin: '0px 0px 5px 2px', padding: 0
+                          color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '0px 0px 5px 2px', padding: 0, height: '20px'
                         }}>
                           Dòng tiền trong tuần
                         </p>
-                        <BasicSelector name='filter_t5' sort='filter_t5' data={filter_stock_df} filter={set_filter_t5} />
+                        <BasicSelector name='filter_t5' sort='filter_t5' data={filter_stock_df} filter={set_filter_t5} filter_value={filter_t5} placeholder={placeholder} setPlaceholder={setPlaceholder} />
                         <p style={{
-                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-                          margin: '10px 0px 5px 2px', padding: 0
+                          color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '10px 0px 5px 2px', padding: 0, height: '20px'
                         }}>
                           Xếp hạng hiện tại
                         </p>
-                        <BasicSelector name='filter_rank' sort='order_filter_rank' data={filter_stock_df} filter={set_filter_rank} />
+                        <BasicSelector name='filter_rank' sort='order_filter_rank' data={filter_stock_df} filter={set_filter_rank} filter_value={filter_rank} placeholder={placeholder} setPlaceholder={setPlaceholder} />
                       </Col>
                     </Row>
                   </div>
+                </Col >
+                <Col xs={4} sm={4} md={2} lg={2} xl={2}>
+                  <Button
+                    className="filter-button"
+                    icon={<ClearOutlined style={{ fontSize: pixel(0.02, 20) }} />}
+                    size={ww > 768 ? 'large' : 'middle'}
+                    style={{ width: '100%', height: '72px', border: 0, backgroundColor: '#161616', padding: 0, marginTop: ww > 768 ? '0px' : '10px' }}
+                    onClick={clearFilter}
+                  />
+                  <Button
+                    className="filter-button"
+                    icon={<PlusCircleOutlined style={{ fontSize: pixel(0.02, 20) }} />}
+                    size={ww > 768 ? 'large' : 'middle'}
+                    style={{ width: '100%', height: '72px', border: 0, backgroundColor: switch_ta_filter ? '#1677ff' : '#161616', padding: 0, marginTop: '9px' }}
+                    onClick={toggleTaFilter}
+                  />
                 </Col>
-              </Row>
-              <Row gutter={25} style={{ marginTop: '25px' }}>
-                <Col xs={14} sm={14} md={18} lg={18} xl={18}></Col>
-                <Col xs={10} sm={10} md={6} lg={6} xl={6}>
-                  <Button className="custom-button" block={true} size={ww > 768 ? 'large' : 'middle'}
-                    style={{ fontSize: pixel(0.013, 12) }} onClick={toggleTaFilter}
-                  >{switch_ta_filter ? 'Tắt bộ lọc kĩ thuật' : 'Bật bộ lọc kĩ thuật'}
-                  </Button>
-                </Col>
-              </Row>
+              </Row >
               {switch_ta_filter === true && (
                 <>
-                  <Row style={{ marginTop: '20px' }}>
-                    <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px', width: '100%' }}>
-                      <Col span={24}>
+                  <Row gutter={10} style={{ marginTop: '10px' }}>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                      <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px', width: '100%' }}>
+                        <p style={{
+                          color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '0px 0px 5px 2px', padding: 0, height: '20px'
+                        }}>
+                          Xu hướng giá tháng
+                        </p>
+                        <BasicSelector name='month_trend' sort='price_trend' data={filter_stock_df} filter={set_filter_month_trend} filter_value={filter_month_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
 
                         <p style={{
-                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-                          margin: '0px 0px 5px 2px', padding: 0
+                          color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '10px 0px 5px 2px', padding: 0, height: '20px'
+                        }}>
+                          Xu hướng giá quý
+                        </p>
+                        <BasicSelector name='quarter_trend' sort='price_trend' data={filter_stock_df} filter={set_filter_quarter_trend} filter_value={filter_quarter_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
+
+                        <p style={{
+                          color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '10px 0px 5px 2px', padding: 0, height: '20px'
+                        }}>
+                          Xu hướng giá năm
+                        </p>
+                        <BasicSelector name='year_trend' sort='price_trend' data={filter_stock_df} filter={set_filter_year_trend} filter_value={filter_year_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
+                      </div>
+                    </Col>
+                    <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                      <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px', width: '100%', marginTop: ww > 768 ? '0px' : '10px' }}>
+                        <p style={{
+                          color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '0px 0px 5px 2px', padding: 0, height: '20px'
                         }}>
                           Lọc theo biến động giá
                         </p>
-                        <TaSelector name='filter_candle' data={filter_stock_df} filter={set_ta_filter_candle} />
+                        <TaSelector name='filter_candle' data={filter_stock_df} filter={set_ta_filter_candle} filter_value={ta_filter_candle} />
 
                         <p style={{
-                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-                          margin: '10px 0px 5px 2px', padding: 0
+                          color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '10px 0px 5px 2px', padding: 0, height: '20px'
                         }}>
                           Lọc theo MA và Pivot
                         </p>
-                        <TaSelector name='filter_ma_pivot' data={filter_stock_df} filter={set_ta_filter_ma_pivot} />
+                        <TaSelector name='filter_ma_pivot' data={filter_stock_df} filter={set_ta_filter_ma_pivot} filter_value={ta_filter_ma_pivot} />
 
                         <p style={{
-                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-                          margin: '10px 0px 5px 2px', padding: 0
+                          color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '10px 0px 5px 2px', padding: 0, height: '20px'
                         }}>
                           Lọc theo mức giá Fibonacci
                         </p>
-                        <TaSelector name='filter_fibo' data={filter_stock_df} filter={set_ta_filter_fibo} />
-
-                        {(ta_filter_candle.length > 0 || ta_filter_ma_pivot.length > 0 || ta_filter_fibo.length > 0) && (
-                          <TaSlider fontSize={pixel(0.014, 13)} />
-                        )}
-
-                      </Col>
-                    </div>
+                        <TaSelector name='filter_fibo' data={filter_stock_df} filter={set_ta_filter_fibo} filter_value={ta_filter_fibo} />
+                      </div>
+                    </Col>
                   </Row>
-                  <Row style={{ marginTop: '20px' }}>
+                  {(ta_filter_candle.length > 0 || ta_filter_ma_pivot.length > 0 || ta_filter_fibo.length > 0) && (
+                    <Row>
+                      <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '0px 10px 20px 10px', width: '100%', marginTop: '10px' }}>
+                        <TaSlider fontSize={pixel(0.014, 13)} set_filter_slider_value={set_filter_slider_value} />
+                      </div>
+                    </Row>
+                  )}
+                  <Row gutter={10} style={{ marginTop: '20px' }}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                       <Radio.Group
                         className="custom-radio-group"
@@ -274,63 +323,66 @@ export default function Page5() {
                       >
                         <Radio.Button value="dt" className="custom-radio-button"
                           style={{
-                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>Bảng thông tin dòng tiền
+                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
+                          }}>{ww > 768 ? 'Bảng thông tin dòng tiền' : 'Thông tin'}
                         </Radio.Button>
-                        <Radio.Button value="ptkt" className="custom-radio-button"
+                        <Radio.Button value="kt" className="custom-radio-button"
                           style={{
-                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>Bảng chỉ số kĩ thuật
+                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
+                          }}>{ww > 768 ? 'Bảng chỉ số kĩ thuật' : 'Kĩ thuật'}
                         </Radio.Button>
                       </Radio.Group>
                     </Col>
                     <Col xs={4} sm={4} md={4} lg={4} xl={4}></Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                      <Radio.Group
-                        className="custom-radio-group"
-                        defaultValue={switch_ta_table}
-                        buttonStyle="solid"
-                        onChange={onChangeTaTable}
-                        style={{ display: 'flex', width: '100%', marginTop: '5px' }}
-                        size='small'
-                      >
-                        <Radio.Button value="candle" className="custom-radio-button"
-                          style={{
-                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>Biến động giá
-                        </Radio.Button>
-                        <Radio.Button value="ma_pivot" className="custom-radio-button"
-                          style={{
-                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>Đường MA và Pivot
-                        </Radio.Button>
-                        <Radio.Button value="fibo" className="custom-radio-button"
-                          style={{
-                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>Mức giá Fibonacci
-                        </Radio.Button>
-                      </Radio.Group>
+                      {table_type === 'kt' && (
+                        <Radio.Group
+                          className="custom-radio-group"
+                          defaultValue={switch_ta_table}
+                          buttonStyle="solid"
+                          onChange={onChangeTaTable}
+                          style={{ display: 'flex', width: '100%', marginTop: '5px' }}
+                          size='small'
+                        >
+                          <Radio.Button value="candle" className="custom-radio-button"
+                            style={{
+                              fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
+                            }}>{ww > 768 ? 'Biến động giá' : 'BĐ giá'}
+                          </Radio.Button>
+                          <Radio.Button value="ma_pivot" className="custom-radio-button"
+                            style={{
+                              fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
+                            }}>{ww > 768 ? 'Đường MA và Pivot' : 'MA Pivot'}
+                          </Radio.Button>
+                          <Radio.Button value="fibo" className="custom-radio-button"
+                            style={{
+                              fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
+                            }}>{ww > 768 ? 'Mức giá Fibonacci' : 'Fibonacci'}
+                          </Radio.Button>
+                        </Radio.Group>
+                      )}
                     </Col>
                   </Row>
                 </>
               )}
-
-
               <Row style={{ marginTop: '20px', position: 'relative' }}>
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '31%',
-                    height: 'calc(100% - 70px)',
-                    backgroundColor: '#161616',
-                    borderRadius: '5px',
-                    zIndex: 0,
-                  }}
-                />
+                {table_type === 'kt' && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '31%',
+                      height: 'calc(100% - 70px)',
+                      backgroundColor: '#161616',
+                      borderRadius: '5px',
+                      zIndex: 0,
+                    }}
+                  />
+                )}
                 <FilterStockTable
-                  data={filter_stock_df} ww={ww} fontSize={pixel(0.013, 11)} lineHeight='34px' type={table_type}
+                  data={filter_stock_df} ww={ww} fontSize={pixel(0.013, 11)} lineHeight='34px'
+                  table_type={table_type} switch_ta_table={switch_ta_table}
                   filter_nhom_nganh={filter_nhom_nganh}
                   filter_hieu_suat={filter_hieu_suat}
                   filter_von_hoa={filter_von_hoa}
@@ -338,6 +390,13 @@ export default function Page5() {
                   filter_t5={filter_t5}
                   filter_liquid={filter_liquid}
                   filter_rank={filter_rank}
+                  filter_month_trend={filter_month_trend}
+                  filter_quarter_trend={filter_quarter_trend}
+                  filter_year_trend={filter_year_trend}
+                  ta_filter_candle={ta_filter_candle}
+                  ta_filter_ma_pivot={ta_filter_ma_pivot}
+                  ta_filter_fibo={ta_filter_fibo}
+                  filter_slider_value={filter_slider_value}
                 />
               </Row>
             </Col >

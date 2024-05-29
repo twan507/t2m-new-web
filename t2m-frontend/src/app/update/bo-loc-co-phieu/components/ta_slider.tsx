@@ -6,9 +6,9 @@ import '../styles.css';
 const TaSlider = (props: any) => {
 
     const [value, setValue] = useState([-0.1, 0.1]);
-    const [disable, setDisable] = useState(true);
     const onSliderChange = (value: any) => {
         setValue(value);
+        props?.set_filter_slider_value(value)
     };
 
     const formatter: any = (value: number) => `${(value * 100).toFixed(2)}%`;
