@@ -1,10 +1,12 @@
 'use client'
 import { sendRequest } from "@/utlis/api"
-import { Button, Col, Menu, MenuProps, Radio, Row } from "antd";
+import { Button, Card, Col, Menu, MenuProps, Radio, Row } from "antd";
 import { useEffect, useState } from "react";
 import './styles.css'
 import FilterStockTable from "./components/filter_table";
 import BasicSelector from "./components/basic_selector";
+import TaSlider from "./components/ta_slider";
+import TaSelector from "./components/ta_selector";
 
 const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
@@ -65,7 +67,9 @@ export default function Page5() {
   const [filter_t5, set_filter_t5] = useState<any[]>([]);
   const [filter_liquid, set_filter_liquid] = useState<any[]>([]);
   const [filter_rank, set_filter_rank] = useState<any[]>([]);
-
+  const [ta_filter_candle, set_ta_filter_candle] = useState<any[]>([]);
+  const [ta_filter_ma_pivot, set_ta_filter_ma_pivot] = useState<any[]>([]);
+  const [ta_filter_fibo, set_ta_filter_fibo] = useState<any[]>([]);
 
   const ww = useWindowWidth();
   const pixel = (ratio: number, min: number) => {
@@ -224,7 +228,38 @@ export default function Page5() {
               {switch_ta_filter === true && (
                 <>
                   <Row style={{ marginTop: '20px' }}>
-                    <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px', height: '200px', width: '100%' }}>
+                    <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px', width: '100%' }}>
+                      <Col span={24}>
+
+                        <p style={{
+                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '0px 0px 5px 2px', padding: 0
+                        }}>
+                          Lọc theo biến động giá
+                        </p>
+                        <TaSelector name='filter_candle' data={filter_stock_df} filter={set_ta_filter_candle} />
+
+                        <p style={{
+                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '10px 0px 5px 2px', padding: 0
+                        }}>
+                          Lọc theo MA và Pivot
+                        </p>
+                        <TaSelector name='filter_ma_pivot' data={filter_stock_df} filter={set_ta_filter_ma_pivot} />
+
+                        <p style={{
+                          color: '#dfdfdf', fontSize: pixel(0.014, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                          margin: '10px 0px 5px 2px', padding: 0
+                        }}>
+                          Lọc theo mức giá Fibonacci
+                        </p>
+                        <TaSelector name='filter_fibo' data={filter_stock_df} filter={set_ta_filter_fibo} />
+
+                        {(ta_filter_candle.length > 0 || ta_filter_ma_pivot.length > 0 || ta_filter_fibo.length > 0) && (
+                          <TaSlider fontSize={pixel(0.014, 13)} />
+                        )}
+
+                      </Col>
                     </div>
                   </Row>
                   <Row style={{ marginTop: '20px' }}>

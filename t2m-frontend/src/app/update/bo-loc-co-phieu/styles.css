@@ -292,7 +292,13 @@
 
 /* --------------------------------------------------------------------------------------------------------------- */
 /* CSS cho slider */
+
+.ant-slider.ant-slider-disabled .ant-slider-track {
+    background-color: rgba(180, 171, 171, 0.739) !important;
+}
+
 .ant-slider-rail {
     background-color: #333 !important;
-    /* Màu của phần chưa trượt */
 }
+
+

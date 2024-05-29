@@ -2,47 +2,8 @@
 import React, { useState } from 'react';
 import { Button, Select, Slider } from 'antd';
 import './App.css';
-import { Option } from 'antd/es/mentions';
-import { CloseOutlined } from '@ant-design/icons';
-
-const onChange = (value: string) => {
-  console.log(`selected ${value}`);
-};
-
-const onSearch = (value: string) => {
-  console.log('search:', value);
-};
-
-// Filter `option.label` match the user type `input`
-const filterOption = (input: string, option?: { label: string; value: string }) =>
-  (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
 const App: React.FC = () => {
-
-  const [selectedValues, setSelectedValues] = useState<any[]>([]);
-
-  const options = [
-    {
-      value: 'jack',
-      label: 'Jack',
-    },
-    {
-      value: 'lucy',
-      label: 'Lucy',
-    },
-    {
-      value: 'tom',
-      label: 'Tom',
-    },
-  ];
-
-  const handleChange = (value: any) => {
-    if (value.includes('all')) {
-      setSelectedValues([]);
-    } else {
-      setSelectedValues(value);
-    }
-  };
 
   const [value, setValue] = useState([20, 50]); // Initial slider range
   const onSliderChange = (value: any) => {
@@ -51,45 +12,20 @@ const App: React.FC = () => {
   };
 
   return (
-    <>
-      <div style={{ height: '300px', background: 'black' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Select
-            className='custom-select'
-            mode="multiple"
-            showSearch
-            placeholder="All"
-            optionFilterProp="children"
-            onChange={handleChange}
-            value={selectedValues}
-            filterOption={(input, option: any) =>
-              option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-            style={{ width: '200px', color: 'white' }}
-          >
-            <Option value="all">Chọn tất cả</Option>
-            {options.map(option => (
-              <Option key={option.value} value={option.value}>
-                {option.label}
-              </Option>
-            ))}
-          </Select>
-        </div>
-        <div style={{ width: 300, margin: '0 auto', padding: '50px 0', color: 'white' }}>
-          <Slider
-            range
-            defaultValue={value}
-            onChange={onSliderChange}
-            min={0}
-            max={100}
-          />
-          <div>
-            Selected range: {value[0]} - {value[1]}
-          </div>
+    <div style={{ height: '300px', background: 'black' }}>
+      <div style={{ width: 300, margin: '0 auto', padding: '50px 0', color: 'white' }}>
+        <Slider
+          range
+          defaultValue={value}
+          onChange={onSliderChange}
+          min={0}
+          max={100}
+        />
+        <div>
+          Selected range: {value[0]} - {value[1]}
         </div>
       </div>
-    </>
-
+    </div>
   )
 }
 
