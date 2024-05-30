@@ -60,6 +60,20 @@ const NnTdHispory = (props: any) => {
                 },
                 color: '#dfdfdf' // Chỉnh sửa màu chữ
             },
+            tooltip: {
+                callbacks: {
+                    label: function (tooltipItem: any) {
+                        return `${tooltipItem?.dataset?.label}: ${Math.round(tooltipItem?.raw)} Tỷ`;
+                    }
+                },
+                displayColors: true,
+                usePointStyle: true,
+                bodyFontColor: '#dfdfdf',
+                bodyFontSize: parseInt(props?.fontSize) - 4,
+                bodyFontStyle: 'bold',
+                boxHeight: 8,
+                caretPadding: 20
+            },
             datalabels: {
                 display: props?.ww > 767 ? true : false,
                 anchor: (context: any) => {

@@ -13,7 +13,7 @@ const BasicSelector = (props: any) => {
       ['LARGECAP', 'MIDCAP', 'SMALLCAP', 'PENNY'].indexOf(a[props?.sort]) -
       ['LARGECAP', 'MIDCAP', 'SMALLCAP', 'PENNY'].indexOf(b[props?.sort])
     )
-  } else if (props?.sort === 'price_trend') {
+  } else if (props?.sort === 'month_trend' || props?.sort === 'quarter_trend' || props?.sort === 'year_trend') {
     sortedData = props?.data?.sort((a: any, b: any) =>
       ['Tăng mạnh', 'Tăng', 'Trung lập', 'Giảm', 'Giảm mạnh'].indexOf(a[props?.sort]) -
       ['Tăng mạnh', 'Tăng', 'Trung lập', 'Giảm', 'Giảm mạnh'].indexOf(b[props?.sort])

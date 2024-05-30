@@ -3,7 +3,7 @@ import { sendRequest } from "@/utlis/api"
 import { Button, Col, Menu, MenuProps, Radio, Row } from "antd";
 import { useEffect, useState } from "react";
 import './styles.css'
-import IndexGroupPriceChart from "./components/index_chart/index_price_chart";
+import IndexGroupPriceChart from "./components/thong_tin_nhom/index_price_chart";
 import DtVaTkTrongPhien from "./components/dien_bien_dong_tien/dt_va_tk_trong_phien";
 import GroupWeekScoreChart from "./components/dien_bien_dong_tien/score_week";
 import GroupMonthScoreChart from "./components/dien_bien_dong_tien/score_month";
@@ -11,6 +11,7 @@ import GroupRankingChart from "./components/suc_manh_dong_tien/group_ranking";
 import GroupLiquidityLineChart20p from "./components/suc_manh_dong_tien/thanh_khoan_20p";
 import GroupMarketStructureChart from "./components/cau_truc_song/cau_truc_song_chart";
 import GroupTopCoPhieuTable from "./components/bang_top_co_phieu/top_co_phieu_table";
+import MoneyFlowBreathChart from "./components/thong_tin_nhom/do_rong_dong_tien";
 
 
 const useWindowWidth = (): any => {
@@ -28,6 +29,29 @@ const useWindowWidth = (): any => {
   }, []);
 
   return windowWidth;
+};
+
+const getColorLiquidity = (value: number) => {
+  if (value < 60) return '#00cccc';
+  if (value < 90) return '#e14040';
+  if (value < 120) return '#D0be0f';
+  if (value < 150) return '#24B75E';
+  return '#C031C7';
+};
+
+const getColorGroupRank = (value: number) => {
+  if (value === 1) return '#C031C7';
+  if (value === 2) return '#025bc4';
+  if (value === 3) return '#D0be0f';
+  if (value === 4) return '#e14040';
+};
+
+const getColorIndustryRank = (value: number) => {
+  if (value < 5) return '#C031C7';
+  if (value < 10) return '#24B75E';
+  if (value < 15) return '#D0be0f';
+  if (value < 20) return '#e14040';
+  return '#00cccc';
 };
 
 export default function Page3() {
@@ -57,6 +81,10 @@ export default function Page3() {
       await set_market_ms(res.data)
     } else if (tableName === 'group_stock_top_10_df') {
       await set_group_stock_top_10_df(res.data)
+    } else if (tableName === 'market_breath_df') {
+      await set_market_breath_df(res.data)
+    } else if (tableName === 'itd_score_liquidity_last') {
+      await set_itd_score_liquidity_last(res.data)
     }
   }
   useEffect(() => {
@@ -70,6 +98,8 @@ export default function Page3() {
       getData('eod_score_liquidity_melted', 'group_name');
       getData('market_ms', 'name');
       getData('group_stock_top_10_df', 'name');
+      getData('market_breath_df', 'name');
+      getData('itd_score_liquidity_last', 'name');
     };
     fetchData();
 
@@ -87,6 +117,8 @@ export default function Page3() {
   const [eod_score_liquidity_melted, set_eod_score_liquidity_melted] = useState<any[]>([]);
   const [market_ms, set_market_ms] = useState<any[]>([]);
   const [group_stock_top_10_df, set_group_stock_top_10_df] = useState<any[]>([]);
+  const [market_breath_df, set_market_breath_df] = useState<any[]>([]);
+  const [itd_score_liquidity_last, set_itd_score_liquidity_last] = useState<any[]>([]);
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
   const [switch_group_industry, set_switch_group_industry] = useState('industry');
@@ -458,10 +490,10 @@ export default function Page3() {
                   </Row>
                 </>
               )}
-              <Row gutter={25} style={{ marginTop: '30px', marginBottom: '10px' }}>
+              <Row gutter={25} style={{ marginTop: '30px', marginBottom: '20px' }}>
                 <Col xs={12} sm={12} md={14} lg={14} xl={14}>
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
-                    {`Index nhóm ${select_group}`}
+                    {`Thông tin nhóm ${select_group}`}
                   </p>
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
@@ -492,8 +524,97 @@ export default function Page3() {
                   </Radio.Group>
                 </Col>
               </Row>
-              <Row>
-                <IndexGroupPriceChart data={group_stock_price_index} select_group={select_group} time_span={time_span} width='100%' height={ww > 767 ? '270px' : '215px'} />
+              <Row gutter={10}>
+                <Col xs={8} sm={6} md={5} lg={5} xl={4}>
+                  <Row>
+                    <Col span={24}>
+                      <div style={{
+                        width: '100%', height: '186px', background: '#161616',
+                        padding: '10px', borderRadius: '5px'
+                      }}>
+                        <p style={{
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '0px 0px 0px 2px', padding: 0
+                        }}>
+                          Dòng tiền trong phiên
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: itd_score_liquidity_last?.[0]?.score > 0 ? '#24B75E' :
+                            (itd_score_liquidity_last?.[0]?.score < 0 ? '#e14040' : '#D0be0f'),
+                          fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                        }}>
+                          {itd_score_liquidity_last?.[0]?.score.toFixed(2)}
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
+                        }}>
+                          Dòng tiền trong tuần
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: itd_score_liquidity_last?.[0]?.score_t5 > 0 ? '#24B75E' :
+                            (itd_score_liquidity_last?.[0]?.score_t5 < 0 ? '#e14040' : '#D0be0f'),
+                          fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                        }}>
+                          {itd_score_liquidity_last?.[0]?.score_t5.toFixed(2)}
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
+                        }}>
+                          Chỉ số thanh khoản
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: getColorLiquidity(itd_score_liquidity_last?.[0]?.liquidity * 100),
+                          fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                        }}>
+                          {`${(itd_score_liquidity_last?.[0]?.liquidity * 100).toFixed(2)}%`}
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
+                        }}>
+                          Xếp hạng
+                        </p>
+                        <p style={{
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color:
+                            ['hs', 'cap'].includes(itd_score_liquidity_last?.[0]?.group) ?
+                              getColorGroupRank(itd_score_liquidity_last?.[0]?.rank) :
+                              getColorIndustryRank(itd_score_liquidity_last?.[0]?.rank),
+                          fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                        }}>
+                          {`${Math.round(itd_score_liquidity_last?.[0]?.rank)}`}{['hs', 'cap'].includes(itd_score_liquidity_last?.[0]?.group) ? '/4' : '/23'}
+                        </p>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={24}>
+                      <div style={{
+                        width: '100%', height: '72px', background: '#161616',
+                        padding: '10px', borderRadius: '5px', marginTop: '10px'
+                      }}>
+                        <p style={{
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '-5px 0px 0px 2px', padding: 0
+                        }}>
+                          Độ rộng dòng tiền
+                        </p>
+                        <MoneyFlowBreathChart data={market_breath_df}
+                          ww={ww} fontSize={pixel(0.017, 17)}
+                          group='hs' height='50px' type='group'
+                        />
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col xs={16} sm={18} md={19} lg={19} xl={20}>
+                  <IndexGroupPriceChart data={group_stock_price_index} select_group={select_group} time_span={time_span} width='100%' height={ww > 767 ? '270px' : '215px'} />
+                </Col>
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
                 <Col>
@@ -557,7 +678,7 @@ export default function Page3() {
               </Row>
 
             </Col>
-          </Row>
+          </Row >
         </Col >
       </>
     )

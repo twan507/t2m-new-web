@@ -21,7 +21,7 @@ const IndexGroupPriceChart = (props: any) => {
 		labels: dateList || [],
 		datasets: [
 			{
-				label: 'Giá trị',
+				label: `${props?.select_group} Index`,
 				data: data_sets?.map((item: any) => item.value),
 				fill: true,
 				borderColor: '#C031C7',

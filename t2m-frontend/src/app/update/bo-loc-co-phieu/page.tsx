@@ -1,6 +1,6 @@
 'use client'
 import { sendRequest } from "@/utlis/api"
-import { Button, Card, Col, Menu, MenuProps, Radio, Row } from "antd";
+import { Button, Card, Col, Menu, MenuProps, Radio, Row, notification } from "antd";
 import { useEffect, useState } from "react";
 import './styles.css'
 import FilterStockTable from "./components/filter_table";
@@ -101,7 +101,13 @@ export default function Page5() {
   };
 
   const toggleTaFilter = (e: any) => {
-    set_switch_ta_filter(!switch_ta_filter)
+    if (ww > 767) {
+      set_switch_ta_filter(!switch_ta_filter)
+    } else {
+      notification.warning({
+        message: "Xoay ngang màn hình",
+      });
+    }
   };
 
   const onChangeTaTable = (e: any) => {
@@ -113,26 +119,6 @@ export default function Page5() {
     const value = e.target.value;
     set_table_type(value)
   };
-
-  // const onChangeGroup = (e: any) => {
-  //   const value = e.target.value;
-  //   set_switch_group(value)
-  // };
-
-  // const switch_group_items: any = [
-  //   {
-  //     key: 'D',
-  //     label: 'Trong phiên',
-  //   },
-  //   {
-  //     key: 'M',
-  //     label: 'Trong tuần/tháng',
-  //   },
-  // ];
-
-  // const onChangeGroupMobile: MenuProps['onClick'] = (e) => {
-  //   set_switch_group(e.key);
-  // };
 
   const [checkAuth, setCheckAuth] = useState(true);
   useEffect(() => {
@@ -257,7 +243,7 @@ export default function Page5() {
                         }}>
                           Xu hướng giá tháng
                         </p>
-                        <BasicSelector name='month_trend' sort='price_trend' data={filter_stock_df} filter={set_filter_month_trend} filter_value={filter_month_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
+                        <BasicSelector name='month_trend' sort='month_trend' data={filter_stock_df} filter={set_filter_month_trend} filter_value={filter_month_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
 
                         <p style={{
                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
@@ -265,7 +251,7 @@ export default function Page5() {
                         }}>
                           Xu hướng giá quý
                         </p>
-                        <BasicSelector name='quarter_trend' sort='price_trend' data={filter_stock_df} filter={set_filter_quarter_trend} filter_value={filter_quarter_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
+                        <BasicSelector name='quarter_trend' sort='quarter_trend' data={filter_stock_df} filter={set_filter_quarter_trend} filter_value={filter_quarter_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
 
                         <p style={{
                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
@@ -273,7 +259,7 @@ export default function Page5() {
                         }}>
                           Xu hướng giá năm
                         </p>
-                        <BasicSelector name='year_trend' sort='price_trend' data={filter_stock_df} filter={set_filter_year_trend} filter_value={filter_year_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
+                        <BasicSelector name='year_trend' sort='year_trend' data={filter_stock_df} filter={set_filter_year_trend} filter_value={filter_year_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
                       </div>
                     </Col>
                     <Col xs={24} sm={24} md={16} lg={16} xl={16}>
@@ -372,7 +358,7 @@ export default function Page5() {
                       position: 'absolute',
                       top: 0,
                       left: 0,
-                      width: '31%',
+                      width: 'calc(27% + 55px)',
                       height: 'calc(100% - 70px)',
                       backgroundColor: '#161616',
                       borderRadius: '5px',
@@ -381,7 +367,7 @@ export default function Page5() {
                   />
                 )}
                 <FilterStockTable
-                  data={filter_stock_df} ww={ww} fontSize={pixel(0.012, 13)} lineHeight='34px'
+                  data={filter_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
                   table_type={table_type} switch_ta_table={switch_ta_table}
                   filter_nhom_nganh={filter_nhom_nganh}
                   filter_hieu_suat={filter_hieu_suat}
