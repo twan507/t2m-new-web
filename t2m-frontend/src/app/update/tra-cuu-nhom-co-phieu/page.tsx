@@ -489,11 +489,6 @@ export default function Page3() {
                         fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
                       }}>6M
                     </Radio.Button>
-                    <Radio.Button value="1Y" className="custom-radio-button"
-                      style={{
-                        fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                      }}>1Y
-                    </Radio.Button>
                   </Radio.Group>
                 </Col>
               </Row>

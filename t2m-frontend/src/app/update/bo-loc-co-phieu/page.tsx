@@ -192,7 +192,7 @@ export default function Page5() {
                   </div>
                 </Col>
                 <Col xs={20} sm={20} md={14} lg={14} xl={14}>
-                  <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px', marginTop: ww > 768 ? '0px' : '10px' }}>
+                  <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px', marginTop: ww > 767 ? '0px' : '10px' }}>
                     <Row gutter={10}>
                       <Col span={12}>
                         <p style={{
@@ -233,14 +233,14 @@ export default function Page5() {
                   <Button
                     className="filter-button"
                     icon={<ClearOutlined style={{ fontSize: pixel(0.02, 20) }} />}
-                    size={ww > 768 ? 'large' : 'middle'}
-                    style={{ width: '100%', height: '72px', border: 0, backgroundColor: '#161616', padding: 0, marginTop: ww > 768 ? '0px' : '10px' }}
+                    size={ww > 767 ? 'large' : 'middle'}
+                    style={{ width: '100%', height: '72px', border: 0, backgroundColor: '#161616', padding: 0, marginTop: ww > 767 ? '0px' : '10px' }}
                     onClick={clearFilter}
                   />
                   <Button
                     className="filter-button"
                     icon={<PlusCircleOutlined style={{ fontSize: pixel(0.02, 20) }} />}
-                    size={ww > 768 ? 'large' : 'middle'}
+                    size={ww > 767 ? 'large' : 'middle'}
                     style={{ width: '100%', height: '72px', border: 0, backgroundColor: switch_ta_filter ? '#1677ff' : '#161616', padding: 0, marginTop: '9px' }}
                     onClick={toggleTaFilter}
                   />
@@ -277,7 +277,7 @@ export default function Page5() {
                       </div>
                     </Col>
                     <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                      <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px', width: '100%', marginTop: ww > 768 ? '0px' : '10px' }}>
+                      <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px', width: '100%', marginTop: ww > 767 ? '0px' : '10px' }}>
                         <p style={{
                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
                           margin: '0px 0px 5px 2px', padding: 0, height: '20px'
@@ -324,12 +324,12 @@ export default function Page5() {
                         <Radio.Button value="dt" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
-                          }}>{ww > 768 ? 'Bảng thông tin dòng tiền' : 'Thông tin'}
+                          }}>{ww > 767 ? 'Bảng thông tin chung' : 'Thông tin'}
                         </Radio.Button>
                         <Radio.Button value="kt" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
-                          }}>{ww > 768 ? 'Bảng chỉ số kĩ thuật' : 'Kĩ thuật'}
+                          }}>{ww > 767 ? 'Bảng chỉ số kĩ thuật' : 'Kĩ thuật'}
                         </Radio.Button>
                       </Radio.Group>
                     </Col>
@@ -347,17 +347,17 @@ export default function Page5() {
                           <Radio.Button value="candle" className="custom-radio-button"
                             style={{
                               fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
-                            }}>{ww > 768 ? 'Biến động giá' : 'BĐ giá'}
+                            }}>{ww > 767 ? 'Biến động giá' : 'BĐ giá'}
                           </Radio.Button>
                           <Radio.Button value="ma_pivot" className="custom-radio-button"
                             style={{
                               fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
-                            }}>{ww > 768 ? 'Đường MA và Pivot' : 'MA Pivot'}
+                            }}>{ww > 767 ? 'Đường MA và Pivot' : 'MA Pivot'}
                           </Radio.Button>
                           <Radio.Button value="fibo" className="custom-radio-button"
                             style={{
                               fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
-                            }}>{ww > 768 ? 'Mức giá Fibonacci' : 'Fibonacci'}
+                            }}>{ww > 767 ? 'Mức giá Fibonacci' : 'Fibonacci'}
                           </Radio.Button>
                         </Radio.Group>
                       )}
@@ -381,7 +381,7 @@ export default function Page5() {
                   />
                 )}
                 <FilterStockTable
-                  data={filter_stock_df} ww={ww} fontSize={pixel(0.013, 11)} lineHeight='34px'
+                  data={filter_stock_df} ww={ww} fontSize={pixel(0.012, 13)} lineHeight='34px'
                   table_type={table_type} switch_ta_table={switch_ta_table}
                   filter_nhom_nganh={filter_nhom_nganh}
                   filter_hieu_suat={filter_hieu_suat}
