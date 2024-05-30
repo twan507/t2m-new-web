@@ -167,11 +167,11 @@ export default function Page2() {
                   <div style={{ height: '100%', width: '100%' }}></div>
                 </Col>
                 <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                  <Button className="custom-button" block={true} size={ww > 768 ? 'large' : 'middle'}
+                  <Button className="custom-button" block={true} size={ww > 767 ? 'large' : 'middle'}
                     style={{ fontSize: pixel(0.013, 12) }} onClick={onChangeSwitchItdEod}
                   >
-                    {switch_itd_eod === 'eod' ? (ww > 768 ? 'Xem diễn biến trong phiên' : 'Diễn biến trong phiên')
-                      : (ww > 768 ? 'Quay lại' : 'Quay lại')}
+                    {switch_itd_eod === 'eod' ? (ww > 767 ? 'Xem diễn biến trong phiên' : 'Diễn biến trong phiên')
+                      : (ww > 767 ? 'Quay lại' : 'Quay lại')}
                   </Button>
                 </Col>
               </Row>
@@ -184,7 +184,7 @@ export default function Page2() {
                 </Col>
                 {switch_itd_eod === 'eod' && (
                   <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                    {ww > 768 && (
+                    {ww > 767 && (
                       <Radio.Group
                         className="custom-radio-group"
                         defaultValue={switch_group}
@@ -204,7 +204,7 @@ export default function Page2() {
                         </Radio.Button>
                       </Radio.Group>
                     )}
-                    {ww <= 768 && (
+                    {ww <= 767 && (
                       <Menu
                         theme='dark'
                         onClick={onChangeGroupMobile}
@@ -223,56 +223,56 @@ export default function Page2() {
                 <>
                   {switch_group === 'D' && (
                     <>
-                      <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='hs' height={ww > 768 ? '200px' : '150px'} type='group' />
+                            group='hs' height={ww > 767 ? '200px' : '150px'} type='group' />
                         </Col>
                         <Col xs={5} sm={5} md={6} lg={6} xl={6}>
                           <MoneyFlowBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='hs' height={ww > 768 ? '200px' : '150px'} type='group' />
+                            group='hs' height={ww > 767 ? '200px' : '150px'} type='group' />
                         </Col>
                         <Col xs={7} sm={7} md={8} lg={8} xl={8}>
                           <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='hs' height={ww > 768 ? '200px' : '150px'} type='group' />
+                            group='hs' height={ww > 767 ? '200px' : '150px'} type='group' />
                         </Col>
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='cap' height={ww > 768 ? '200px' : '150px'} type='group' />
+                            group='cap' height={ww > 767 ? '200px' : '150px'} type='group' />
                         </Col>
                         <Col xs={5} sm={5} md={6} lg={6} xl={6}>
                           <MoneyFlowBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='cap' height={ww > 768 ? '200px' : '150px'} type='group' />
+                            group='cap' height={ww > 767 ? '200px' : '150px'} type='group' />
                         </Col>
                         <Col xs={7} sm={7} md={8} lg={8} xl={8}>
                           <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='cap' height={ww > 768 ? '200px' : '150px'} type='group' />
+                            group='cap' height={ww > 767 ? '200px' : '150px'} type='group' />
                         </Col>
                       </Row>
                     </>
                   )}
                   {switch_group === 'M' && (
                     <>
-                      <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='hs' height={ww > 768 ? '250px' : '150px'} type='group' />
+                            group='hs' height={ww > 767 ? '250px' : '150px'} type='group' />
                         </Col>
                         <Col xs={12} sm={12} md={14} lg={14} xl={14}>
                           <NhomHsRanking data={group_score_ranking} ww={ww} fontSize={pixel(0.017, 17)}
-                            height={ww > 768 ? '250px' : '150px'} type='group' />
+                            height={ww > 767 ? '250px' : '150px'} type='group' />
                         </Col>
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='cap' height={ww > 768 ? '250px' : '150px'} type='group' />
+                            group='cap' height={ww > 767 ? '250px' : '150px'} type='group' />
                         </Col>
                         <Col xs={12} sm={12} md={14} lg={14} xl={14}>
                           <NhomVhRanking data={group_score_ranking} ww={ww} fontSize={pixel(0.017, 17)}
-                            height={ww > 768 ? '250px' : '150px'} type='group' />
+                            height={ww > 767 ? '250px' : '150px'} type='group' />
                         </Col>
                       </Row>
                     </>
@@ -281,24 +281,24 @@ export default function Page2() {
               )}
               {switch_itd_eod === 'itd' && (
                 <>
-                  <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NhomHsScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
-                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                        height={ww > 767 ? '300px' : '200px'} type='group' />
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NhomHsLiquidItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
-                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                        height={ww > 767 ? '300px' : '200px'} type='group' />
                     </Col>
                   </Row>
-                  <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NhomVhScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
-                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                        height={ww > 767 ? '300px' : '200px'} type='group' />
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NhomVhLiquidItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
-                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                        height={ww > 767 ? '300px' : '200px'} type='group' />
                     </Col>
                   </Row>
                 </>
@@ -312,7 +312,7 @@ export default function Page2() {
                 </Col>
                 {switch_itd_eod === 'eod' && (
                   <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                    {ww > 768 && (
+                    {ww > 767 && (
                       <Radio.Group
                         className="custom-radio-group"
                         defaultValue={switch_industry}
@@ -332,7 +332,7 @@ export default function Page2() {
                         </Radio.Button>
                       </Radio.Group>
                     )}
-                    {ww <= 768 && (
+                    {ww <= 767 && (
                       <Menu
                         theme='dark'
                         onClick={onChangeIndustryMobile}
@@ -351,60 +351,60 @@ export default function Page2() {
                 <>
                   {switch_industry === 'D' && (
                     <>
-                      <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='A' height={ww > 768 ? '300px' : '150px'} type='industry' />
+                            group='A' height={ww > 767 ? '300px' : '150px'} type='industry' />
                         </Col>
                         <Col xs={5} sm={5} md={6} lg={6} xl={6}>
                           <MoneyFlowBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='A' height={ww > 768 ? '300px' : '150px'} type='industry' />
+                            group='A' height={ww > 767 ? '300px' : '150px'} type='industry' />
                         </Col>
                         <Col xs={7} sm={7} md={8} lg={8} xl={8}>
                           <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='A' height={ww > 768 ? '300px' : '150px'} type='industry' />
+                            group='A' height={ww > 767 ? '300px' : '150px'} type='industry' />
                         </Col>
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='B' height={ww > 768 ? '250px' : '150px'} type='industry' />
+                            group='B' height={ww > 767 ? '250px' : '150px'} type='industry' />
                         </Col>
                         <Col xs={5} sm={5} md={6} lg={6} xl={6}>
                           <MoneyFlowBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='B' height={ww > 768 ? '250px' : '150px'} type='industry' />
+                            group='B' height={ww > 767 ? '250px' : '150px'} type='industry' />
                         </Col>
                         <Col xs={7} sm={7} md={8} lg={8} xl={8}>
                           <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='B' height={ww > 768 ? '250px' : '150px'} type='industry' />
+                            group='B' height={ww > 767 ? '250px' : '150px'} type='industry' />
                         </Col>
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='C' height={ww > 768 ? '250px' : '150px'} type='industry' />
+                            group='C' height={ww > 767 ? '250px' : '150px'} type='industry' />
                         </Col>
                         <Col xs={5} sm={5} md={6} lg={6} xl={6}>
                           <MoneyFlowBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='C' height={ww > 768 ? '250px' : '150px'} type='industry' />
+                            group='C' height={ww > 767 ? '250px' : '150px'} type='industry' />
                         </Col>
                         <Col xs={7} sm={7} md={8} lg={8} xl={8}>
                           <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='C' height={ww > 768 ? '250px' : '150px'} type='industry' />
+                            group='C' height={ww > 767 ? '250px' : '150px'} type='industry' />
                         </Col>
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='D' height={ww > 768 ? '200px' : '110px'} type='industry' />
+                            group='D' height={ww > 767 ? '200px' : '110px'} type='industry' />
                         </Col>
                         <Col xs={5} sm={5} md={6} lg={6} xl={6}>
                           <MoneyFlowBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='D' height={ww > 768 ? '200px' : '110px'} type='industry' />
+                            group='D' height={ww > 767 ? '200px' : '110px'} type='industry' />
                         </Col>
                         <Col xs={7} sm={7} md={8} lg={8} xl={8}>
                           <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='D' height={ww > 768 ? '200px' : '110px'} type='industry' />
+                            group='D' height={ww > 767 ? '200px' : '110px'} type='industry' />
                         </Col>
                       </Row>
                     </>
@@ -414,44 +414,44 @@ export default function Page2() {
                       <Row style={{ marginTop: '30px' }}>
                         <TopIndustryChart data={full_industry_ranking} ww={ww} fontSize={pixel(0.017, 17)} />
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='A' height={ww > 768 ? '370px' : '200px'} type='group' />
+                            group='A' height={ww > 767 ? '370px' : '200px'} type='group' />
                         </Col>
                         <Col xs={12} sm={12} md={14} lg={14} xl={14}>
                           <NganhHsARanking data={group_score_ranking} ww={ww} fontSize={pixel(0.017, 17)}
-                            height={ww > 768 ? '370px' : '200px'} type='group' />
+                            height={ww > 767 ? '370px' : '200px'} type='group' />
                         </Col>
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='B' height={ww > 768 ? '320px' : '150px'} type='group' />
+                            group='B' height={ww > 767 ? '320px' : '150px'} type='group' />
                         </Col>
                         <Col xs={12} sm={12} md={14} lg={14} xl={14}>
                           <NganhHsBRanking data={group_score_ranking} ww={ww} fontSize={pixel(0.017, 17)}
-                            height={ww > 768 ? '320px' : '150px'} type='group' />
+                            height={ww > 767 ? '320px' : '150px'} type='group' />
                         </Col>
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='C' height={ww > 768 ? '320px' : '150px'} type='group' />
+                            group='C' height={ww > 767 ? '320px' : '150px'} type='group' />
                         </Col>
                         <Col xs={12} sm={12} md={14} lg={14} xl={14}>
                           <NganhHsCRanking data={group_score_ranking} ww={ww} fontSize={pixel(0.017, 17)}
-                            height={ww > 768 ? '320px' : '150px'} type='group' />
+                            height={ww > 767 ? '320px' : '150px'} type='group' />
                         </Col>
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='D' height={ww > 768 ? '250px' : '150px'} type='group' />
+                            group='D' height={ww > 767 ? '250px' : '150px'} type='group' />
                         </Col>
                         <Col xs={12} sm={12} md={14} lg={14} xl={14}>
                           <NganhHsDRanking data={group_score_ranking} ww={ww} fontSize={pixel(0.017, 17)}
-                            height={ww > 768 ? '250px' : '150px'} type='group' />
+                            height={ww > 767 ? '250px' : '150px'} type='group' />
                         </Col>
                       </Row>
                     </>
@@ -460,44 +460,44 @@ export default function Page2() {
               )}
               {switch_itd_eod === 'itd' && (
                 <>
-                  <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NganhHsAScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
-                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                        height={ww > 767 ? '300px' : '200px'} type='group' />
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NganhHsALiquidItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
-                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                        height={ww > 767 ? '300px' : '200px'} type='group' />
                     </Col>
                   </Row>
-                  <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NganhHsBScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
-                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                        height={ww > 767 ? '300px' : '200px'} type='group' />
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NganhHsBLiquidItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
-                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                        height={ww > 767 ? '300px' : '200px'} type='group' />
                     </Col>
                   </Row>
-                  <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NganhHsCScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
-                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                        height={ww > 767 ? '300px' : '200px'} type='group' />
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NganhHsCLiquidItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
-                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                        height={ww > 767 ? '300px' : '200px'} type='group' />
                     </Col>
                   </Row>
-                  <Row gutter={20} style={{ marginTop: ww > 768 ? '40px' : '30px' }}>
+                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NganhHsDScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
-                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                        height={ww > 767 ? '300px' : '200px'} type='group' />
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NganhHsDLiquidItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
-                        height={ww > 768 ? '300px' : '200px'} type='group' />
+                        height={ww > 767 ? '300px' : '200px'} type='group' />
                     </Col>
                   </Row>
                 </>

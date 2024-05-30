@@ -87,7 +87,7 @@ const MarketWeekScoreChart = (props: any) => {
                 color: '#dfdfdf' // Chỉnh sửa màu chữ
             },
             datalabels: {
-                display: props?.ww > 768 ? true : false,
+                display: props?.ww > 767 ? true : false,
                 anchor: (context: any) => {
                     const value = context.dataset.data[context.dataIndex];
                     return value > 0 ? 'end' : 'start';

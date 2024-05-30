@@ -17,7 +17,7 @@ const NhomHsRanking = (props: any) => {
         return `${day}-${month}`;
     });
 
-    const slice = props?.ww > 768 ? -20 : (props?.ww > 500 ? -13 : -7);
+    const slice = props?.ww > 767 ? -20 : (props?.ww > 500 ? -13 : -7);
 
     const lines = {
         labels: dateList?.slice(slice) || [],
@@ -30,7 +30,7 @@ const NhomHsRanking = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#24B75E',
                 tension: 0,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'Hiệu suất B',
@@ -41,7 +41,7 @@ const NhomHsRanking = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#025bc4',
                 tension: 0,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'Hiệu suất C',
@@ -52,7 +52,7 @@ const NhomHsRanking = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#D0be0f',
                 tension: 0,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'Hiệu suất D',
@@ -63,7 +63,7 @@ const NhomHsRanking = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#e14040',
                 tension: 0,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
         ],
     };
@@ -73,7 +73,7 @@ const NhomHsRanking = (props: any) => {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                display: props?.ww > 768 ? true : false,
+                display: props?.ww > 767 ? true : false,
                 position: 'top',
                 labels: {
                     boxWidth: 20,
@@ -103,7 +103,7 @@ const NhomHsRanking = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Sức mạnh dòng tiền nhóm hiệu suất' : 'Sức mạnh nhóm hiệu suất',
+                text: props?.ww > 767 ? 'Sức mạnh dòng tiền nhóm hiệu suất' : 'Sức mạnh nhóm hiệu suất',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',

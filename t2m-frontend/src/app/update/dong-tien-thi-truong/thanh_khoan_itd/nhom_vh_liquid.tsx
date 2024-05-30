@@ -22,46 +22,46 @@ const NhomVhLiquidItd = (props: any) => {
         datasets: [
             {
                 label: 'LARGECAP',
-                data: data_sets?.map((item: any) =>item.liquid_large === null ? null : item.liquid_large * 100),
+                data: data_sets?.map((item: any) => item.liquid_large === null ? null : item.liquid_large * 100),
                 borderColor: '#24B75E',
                 pointRadius: 0,
                 hoverRadius: 5,
                 pointBackgroundColor: '#24B75E',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'MIDCAP',
-                data: data_sets?.map((item: any) => item.liquid_mid === null ? null :item.liquid_mid * 100),
+                data: data_sets?.map((item: any) => item.liquid_mid === null ? null : item.liquid_mid * 100),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 0,
                 hoverRadius: 5,
                 pointBackgroundColor: '#025bc4',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'SMALLCAP',
-                data: data_sets?.map((item: any) => item.liquid_small === null ? null :item.liquid_small * 100),
+                data: data_sets?.map((item: any) => item.liquid_small === null ? null : item.liquid_small * 100),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 0,
                 hoverRadius: 5,
                 pointBackgroundColor: '#D0be0f',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'PENNY',
-                data: data_sets?.map((item: any) => item.liquid_penny === null ? null :item.liquid_penny * 100),
+                data: data_sets?.map((item: any) => item.liquid_penny === null ? null : item.liquid_penny * 100),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 0,
                 hoverRadius: 5,
                 pointBackgroundColor: '#e14040',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
         ],
     };
@@ -71,7 +71,7 @@ const NhomVhLiquidItd = (props: any) => {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                display: props?.ww > 768 ? true : false,
+                display: props?.ww > 767 ? true : false,
                 position: 'top',
                 labels: {
                     boxWidth: 20,
@@ -102,7 +102,7 @@ const NhomVhLiquidItd = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến thanh khoản nhóm vốn hoá' : 'TK nhóm vốn hoá',
+                text: props?.ww > 767 ? 'Diễn biến thanh khoản nhóm vốn hoá' : 'TK nhóm vốn hoá',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',

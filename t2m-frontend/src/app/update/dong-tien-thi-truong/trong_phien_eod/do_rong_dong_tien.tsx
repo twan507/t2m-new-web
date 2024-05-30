@@ -64,7 +64,7 @@ const MoneyFlowBreathChart = (props: any): any => {
         indexAxis: 'y', // Chuyển đổi biểu đồ cột thành biểu đồ cột ngang
         plugins: {
             legend: {
-                display: props?.ww > 768 ? true : false,
+                display: props?.ww > 767 ? true : false,
                 position: 'top',
                 labels: {
                     boxWidth: 20, // Độ rộng của hộp màu trong legend
@@ -81,9 +81,9 @@ const MoneyFlowBreathChart = (props: any): any => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? `Độ rộng ${name_dict[props?.group]}` : `Độ rộng`,
+                text: props?.ww > 767 ? `Độ rộng ${name_dict[props?.group]}` : `Độ rộng`,
                 padding: {
-                    bottom: props?.ww > 768 ? 0 : 15
+                    bottom: props?.ww > 767 ? 0 : 15
                 },
                 font: {
                     family: 'Calibri, sans-serif',
@@ -95,7 +95,7 @@ const MoneyFlowBreathChart = (props: any): any => {
             tooltip: {
                 callbacks: {
                     label: function (tooltipItem: any) {
-                        if (props?.ww > 768) {
+                        if (props?.ww > 767) {
                             return `${tooltipItem?.dataset.label}: ${tooltipItem?.raw?.toFixed(1)}%`;
                         } else {
                             return `${tooltipItem?.raw?.toFixed(1)}%`;
@@ -110,7 +110,7 @@ const MoneyFlowBreathChart = (props: any): any => {
                 boxWidth: 10, // Kích thước của ô màu
             },
             datalabels: {
-                display: props?.ww > 768 ? true : false,
+                display: props?.ww > 767 ? true : false,
                 anchor: 'center',
                 align: 'center',
                 formatter: (value: any) => value > 20 ? (value.toFixed(1) + '%') : '', // Định dạng giá trị hiển thị
@@ -153,7 +153,7 @@ const MoneyFlowBreathChart = (props: any): any => {
     if (!checkAuth) {
         return (
             <>
-                <div style={{ height: props?.height, width: '100%', marginLeft: props?.ww > 768 ? '-20px' : '-10px' }}>
+                <div style={{ height: props?.height, width: '100%', marginLeft: props?.ww > 767 ? '-20px' : '-10px' }}>
                     <Bar data={data} options={options} />
                 </div>
             </>

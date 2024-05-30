@@ -28,7 +28,7 @@ const NganhHsDLiquidItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#24B75E',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'Du lịch và DV',
@@ -39,7 +39,7 @@ const NganhHsDLiquidItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#025bc4',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'DV hạ tầng',
@@ -50,7 +50,7 @@ const NganhHsDLiquidItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#D0be0f',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'Y tế',
@@ -61,7 +61,7 @@ const NganhHsDLiquidItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#e14040',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             }
         ],
     };
@@ -71,7 +71,7 @@ const NganhHsDLiquidItd = (props: any) => {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                display: props?.ww > 768 ? true : false,
+                display: props?.ww > 767 ? true : false,
                 position: 'top',
                 labels: {
                     boxWidth: 20,
@@ -102,7 +102,7 @@ const NganhHsDLiquidItd = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến thanh khoản nhóm ngành D' : 'TK nhóm ngành D',
+                text: props?.ww > 767 ? 'Diễn biến thanh khoản nhóm ngành D' : 'TK nhóm ngành D',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',

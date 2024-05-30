@@ -17,7 +17,7 @@ const NhomVhRanking = (props: any) => {
         return `${day}-${month}`;
     });
 
-    const slice = props?.ww > 768 ? -20 : (props?.ww > 500 ? -13 : -7);
+    const slice = props?.ww > 767 ? -20 : (props?.ww > 500 ? -13 : -7);
 
     const lines = {
         labels: dateList?.slice(slice) || [],
@@ -30,7 +30,7 @@ const NhomVhRanking = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#24B75E',
                 tension: 0,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'MIDCAP',
@@ -41,7 +41,7 @@ const NhomVhRanking = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#025bc4',
                 tension: 0,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'SMALLCAP',
@@ -52,7 +52,7 @@ const NhomVhRanking = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#D0be0f',
                 tension: 0,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'PENNY',
@@ -63,7 +63,7 @@ const NhomVhRanking = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#e14040',
                 tension: 0,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
         ],
     };
@@ -73,7 +73,7 @@ const NhomVhRanking = (props: any) => {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                display: props?.ww > 768 ? true : false,
+                display: props?.ww > 767 ? true : false,
                 position: 'top',
                 labels: {
                     boxWidth: 20,
@@ -104,7 +104,7 @@ const NhomVhRanking = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Sức mạnh dòng tiền nhóm vốn hoá' : 'Sức mạnh nhóm vốn hoá',
+                text: props?.ww > 767 ? 'Sức mạnh dòng tiền nhóm vốn hoá' : 'Sức mạnh nhóm vốn hoá',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',

@@ -29,7 +29,7 @@ const IndexGroupPriceChart = (props: any) => {
 				hoverRadius: 4, // Tăng kích thước khi di chuột tới
 				pointBackgroundColor: '#C031C7', // Màu nền cho các điểm
 				tension: 0.4, // Đường cong mượt
-				borderWidth: props?.ww > 768 ? 3 : 2, // Độ rộng của đường
+				borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
 			},
 		],
 	};
@@ -54,8 +54,8 @@ const IndexGroupPriceChart = (props: any) => {
 				caretPadding: 20, // Kéo ô tooltip ra xa khỏi điểm dữ liệu một chút
 				callbacks: {
 					title: function (tooltipItems: any) {
-                        return `Ngày ${tooltipItems[0].label}`;
-                    },
+						return `Ngày ${tooltipItems[0].label}`;
+					},
 					label: function (tooltipItem: any) {
 						return ` ${tooltipItem?.dataset.label}: ${tooltipItem?.raw?.toFixed(2)}`;
 					}

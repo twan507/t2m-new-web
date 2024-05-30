@@ -64,7 +64,7 @@ const StockRankingChart = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#C031C7',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
                 yAxisID: 'y',
             },
             {
@@ -72,7 +72,7 @@ const StockRankingChart = (props: any) => {
                 type: 'bar',
                 data: data_sets?.map((item: any) => item.top_rank_check),
                 backgroundColor: hexToRgba('#24B75E', 0.5),
-                barPercentage: props?.ww > 768 ? 0.4 : 0.8,
+                barPercentage: props?.ww > 767 ? 0.4 : 0.8,
                 yAxisID: 'y1',
             },
             {
@@ -80,7 +80,7 @@ const StockRankingChart = (props: any) => {
                 type: 'bar',
                 data: data_sets?.map((item: any) => item.bot_rank_check),
                 backgroundColor: hexToRgba('#e14040', 0.5),
-                barPercentage: props?.ww > 768 ? 0.4 : 0.8,
+                barPercentage: props?.ww > 767 ? 0.4 : 0.8,
                 yAxisID: 'y2',
             },
         ],
@@ -137,7 +137,7 @@ const StockRankingChart = (props: any) => {
             title: {
                 display: true,
                 padding: {},
-                text: props?.ww > 768 ? 'Diễn biến sức mạnh dòng tiền' : 'Diễn biến SMDT',
+                text: props?.ww > 767 ? 'Diễn biến sức mạnh dòng tiền' : 'Diễn biến SMDT',
                 font: {
                     family: 'Calibri, sans-serif',
                     size: parseInt(props?.fontSize) - 2,

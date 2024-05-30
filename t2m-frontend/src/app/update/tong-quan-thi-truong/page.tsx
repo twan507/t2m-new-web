@@ -444,7 +444,7 @@ export default function Page1() {
                   </Button>
                 </Col>
                 <Col xs={16} sm={18} md={19} lg={19} xl={20}>
-                  <Row gutter={20} style={{ height: ww > 768 ? '60px' : '100px', marginBottom: '10px' }}>
+                  <Row gutter={20} style={{ height: ww > 767 ? '60px' : '100px', marginBottom: '10px' }}>
                     <Col span={12} style={{ display: 'flex', flexDirection: ww > 800 ? 'row' : 'column' }}>
                       {chi_so_thi_truong === 'TQ' && (
                         <>
@@ -510,7 +510,7 @@ export default function Page1() {
                       )}
                     </Col>
                     <Col span={12} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      {ww > 768 && (
+                      {ww > 767 && (
                         <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
                           <Radio.Group
                             className="custom-radio-group"
@@ -562,7 +562,7 @@ export default function Page1() {
                           )}
                         </div>
                       )}
-                      {ww <= 768 && (
+                      {ww <= 767 && (
                         <Menu
                           theme='dark'
                           onClick={onChangeChiSoThiTruongMobile}
@@ -589,7 +589,7 @@ export default function Page1() {
                     )}
                     {chi_so_thi_truong === 'BD' && (
                       <>
-                        {ww < 768 && (
+                        {ww < 767 && (
                           <Radio.Group
                             className="custom-radio-group" size="small"
                             defaultValue={time_span}
@@ -619,13 +619,13 @@ export default function Page1() {
                             </Radio.Button>
                           </Radio.Group>
                         )}
-                        <IndexPriceChart data={index_price_chart_df} index_name={index_name} time_span={time_span} width='100%' height={ww > 768 ? '270px' : '215px'} />
+                        <IndexPriceChart data={index_price_chart_df} index_name={index_name} time_span={time_span} width='100%' height={ww > 767 ? '270px' : '215px'} />
                       </>
                     )}
                     {chi_so_thi_truong === 'PTKT' && (
                       <>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                          {ww < 768 && (
+                          {ww < 767 && (
                             <Radio.Group
                               className="custom-radio-group" size="small"
                               defaultValue={mobile_ta_mode}
@@ -650,63 +650,63 @@ export default function Page1() {
                               </Radio.Button>
                             </Radio.Group>
                           )}
-                          <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0, marginTop: ww > 768 ? '0px' : '15px' }}>
+                          <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0, marginTop: ww > 767 ? '0px' : '15px' }}>
                             <p style={{
                               fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
-                              marginTop: '1px', margin: 0, height: ww > 768 ? '32px' : '22px'
-                            }}>Chỉ số {ww > 768 ? 'tháng' : (mobile_ta_mode === 'month' ? 'tháng' : (mobile_ta_mode === 'quarter' ? 'quý' : 'năm'))}</p>
-                            <TaTable data={ta_index_df} index_name={index_name} id={ww > 768 ? 'month' : mobile_ta_mode} ta_name={['candle']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '0px' : '0px'}
+                              marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
+                            }}>Chỉ số {ww > 767 ? 'tháng' : (mobile_ta_mode === 'month' ? 'tháng' : (mobile_ta_mode === 'quarter' ? 'quý' : 'năm'))}</p>
+                            <TaTable data={ta_index_df} index_name={index_name} id={ww > 767 ? 'month' : mobile_ta_mode} ta_name={['candle']}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '15px'}
+                              width='100%' height={ww > 767 ? '70px' : '50px'} marginTop={ww > 767 ? '0px' : '0px'}
                             />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
-                            <TaTable data={ta_index_df} index_name={index_name} id={ww > 768 ? 'month' : mobile_ta_mode} ta_name={['ma', 'pivot']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '8px' : '8px'} />
+                            <TaTable data={ta_index_df} index_name={index_name} id={ww > 767 ? 'month' : mobile_ta_mode} ta_name={['ma', 'pivot']}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '15px'}
+                              width='100%' height={ww > 767 ? '70px' : '50px'} marginTop={ww > 767 ? '8px' : '8px'} />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
-                            <TaTable data={ta_index_df} index_name={index_name} id={ww > 768 ? 'month' : mobile_ta_mode} ta_name={['fibo']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '8px' : '8px'} />
+                            <TaTable data={ta_index_df} index_name={index_name} id={ww > 767 ? 'month' : mobile_ta_mode} ta_name={['fibo']}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '15px'}
+                              width='100%' height={ww > 767 ? '70px' : '50px'} marginTop={ww > 767 ? '8px' : '8px'} />
                           </div>
                         </Col>
                         <Col xs={0} sm={0} md={8} lg={8} xl={8}>
-                          <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0, marginTop: ww > 768 ? '0px' : '15px' }}>
+                          <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0, marginTop: ww > 767 ? '0px' : '15px' }}>
                             <p style={{
                               fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
-                              marginTop: '1px', margin: 0, height: ww > 768 ? '32px' : '22px'
+                              marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
                             }}>Chỉ số quý</p>
                             <TaTable data={ta_index_df} index_name={index_name} id='quarter' ta_name={['candle']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '0px' : '0px'}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '15px'}
+                              width='100%' height={ww > 767 ? '70px' : '50px'} marginTop={ww > 767 ? '0px' : '0px'}
                             />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
                             <TaTable data={ta_index_df} index_name={index_name} id='quarter' ta_name={['ma', 'pivot']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '8px' : '8px'} />
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '15px'}
+                              width='100%' height={ww > 767 ? '70px' : '50px'} marginTop={ww > 767 ? '8px' : '8px'} />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
                             <TaTable data={ta_index_df} index_name={index_name} id='quarter' ta_name={['fibo']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '8px' : '8px'} />
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '15px'}
+                              width='100%' height={ww > 767 ? '70px' : '50px'} marginTop={ww > 767 ? '8px' : '8px'} />
                           </div>
                         </Col>
                         <Col xs={0} sm={0} md={8} lg={8} xl={8}>
-                          <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0, marginTop: ww > 768 ? '0px' : '15px' }}>
+                          <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0, marginTop: ww > 767 ? '0px' : '15px' }}>
                             <p style={{
                               fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
-                              marginTop: '1px', margin: 0, height: ww > 768 ? '32px' : '22px'
+                              marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
                             }}>Chỉ số năm</p>
                             <TaTable data={ta_index_df} index_name={index_name} id='year' ta_name={['candle']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '0px' : '0px'}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '15px'}
+                              width='100%' height={ww > 767 ? '70px' : '50px'} marginTop={ww > 767 ? '0px' : '0px'}
                             />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
                             <TaTable data={ta_index_df} index_name={index_name} id='year' ta_name={['ma', 'pivot']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '8px' : '8px'} />
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '15px'}
+                              width='100%' height={ww > 767 ? '70px' : '50px'} marginTop={ww > 767 ? '8px' : '8px'} />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
                             <TaTable data={ta_index_df} index_name={index_name} id='year' ta_name={['fibo']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '15px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '8px' : '8px'} />
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '15px'}
+                              width='100%' height={ww > 767 ? '70px' : '50px'} marginTop={ww > 767 ? '8px' : '8px'} />
                           </div>
                         </Col>
                       </>
@@ -722,7 +722,7 @@ export default function Page1() {
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
                 <Col xs={8} sm={9} md={10} lg={10} xl={10}>
-                  {ww > 768 && (
+                  {ww > 767 && (
                     <Radio.Group
                       className="custom-radio-group"
                       defaultValue={switch_kntd}
@@ -746,7 +746,7 @@ export default function Page1() {
               </Row>
               <Row gutter={10}>
                 <Col xs={12} sm={10} md={6} lg={6} xl={6}>
-                  {ww <= 768 && (
+                  {ww <= 767 && (
                     <Radio.Group
                       className="custom-radio-group" size='small'
                       defaultValue={switch_kntd}
@@ -771,7 +771,7 @@ export default function Page1() {
                     defaultValue={id_kntd}
                     buttonStyle="solid"
                     onChange={onChangeKntdId}
-                    style={{ display: 'flex', width: '100%', marginTop: ww > 768 ? '10px' : '5px', height: '40px' }}
+                    style={{ display: 'flex', width: '100%', marginTop: ww > 767 ? '10px' : '5px', height: '40px' }}
                   >
                     <Radio.Button value="HSX" className="custom-radio-button"
                       style={{
@@ -790,7 +790,7 @@ export default function Page1() {
                     </Radio.Button>
                   </Radio.Group>
                   <NnTdBuySellTable data={nn_td_buy_sell_df} id={id_kntd} switch_kntd={switch_kntd}
-                    fontSize={pixel(0.013, 11)} lineHeight={ww > 768 ? '34px' : '23px'} width='100%' height={ww > 768 ? '145px' : '115px'} marginTop={ww > 768 ? '0px' : '5px'} />
+                    fontSize={pixel(0.013, 11)} lineHeight={ww > 767 ? '34px' : '23px'} width='100%' height={ww > 767 ? '145px' : '115px'} marginTop={ww > 767 ? '0px' : '5px'} />
                 </Col>
                 <Col xs={12} sm={14} md={18} lg={18} xl={18}>
                   <NnTdHispory data={nn_td_20p_df} id={id_kntd} switch_kntd={switch_kntd} ww={ww} fontSize={pixel(0.015, 17)} />
@@ -943,7 +943,7 @@ export default function Page1() {
                     <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0 }}>
                       <p style={{
                         fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
-                        marginTop: '1px', margin: 0, height: ww > 768 ? '32px' : '22px'
+                        marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
                       }}>Top cổ phiếu dòng tiền vào mạnh</p>
                       <TopCoPhieuTable data={market_top_stock} type='top' ww={ww}
                         fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
@@ -953,7 +953,7 @@ export default function Page1() {
                     <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0 }}>
                       <p style={{
                         fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
-                        marginTop: '1px', margin: 0, height: ww > 768 ? '32px' : '22px'
+                        marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
                       }}>Top cổ phiếu dòng tiền ra mạnh</p>
                       <TopCoPhieuTable data={market_top_stock} type='bottom' ww={ww}
                         fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
@@ -964,7 +964,7 @@ export default function Page1() {
                   <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0 }}>
                     <p style={{
                       fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
-                      marginTop: '1px', margin: 0, height: ww > 768 ? '32px' : '22px'
+                      marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
                     }}>Top cổ phiếu dòng tiền ra mạnh</p>
                     <TopCoPhieuTable data={market_top_stock} type='bottom' ww={ww}
                       fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />

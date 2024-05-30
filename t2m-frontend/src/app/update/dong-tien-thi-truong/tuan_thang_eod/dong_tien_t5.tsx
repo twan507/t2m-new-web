@@ -38,7 +38,7 @@ const MoneyFlowT5Chart = (props: any) => {
     const maxIndustryScore = industry_data_sets?.reduce((max: any, current: any) => current?.score > max ? current?.score : max, industry_data_sets?.[0]?.score);
 
     const data = {
-        labels: data_sets?.map((item: any) => props?.ww > 768 ? (item.name + '        ') : item.name),
+        labels: data_sets?.map((item: any) => props?.ww > 767 ? (item.name + '        ') : item.name),
         datasets: [
             {
                 label: 'T-0',
@@ -79,12 +79,12 @@ const MoneyFlowT5Chart = (props: any) => {
         indexAxis: 'y',
         layout: {
             padding: {
-                right: props?.ww > 768 ? 40 : 0,
+                right: props?.ww > 767 ? 40 : 0,
             }
         },
         plugins: {
             legend: {
-                display: props?.ww > 768 ? true : false,
+                display: props?.ww > 767 ? true : false,
                 position: 'top',
                 labels: {
                     boxWidth: 20, // Width of the color box in legend
@@ -102,7 +102,7 @@ const MoneyFlowT5Chart = (props: any) => {
             tooltip: {
                 callbacks: {
                     label: function (tooltipItem: any) {
-                        if (props?.ww > 768) {
+                        if (props?.ww > 767) {
                             return `${tooltipItem?.dataset.label}: ${tooltipItem?.raw?.toFixed(2)}`;
                         } else {
                             return `${tooltipItem?.raw?.toFixed(2)}`;
@@ -118,9 +118,9 @@ const MoneyFlowT5Chart = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? `Dòng tiền ${name_dict[props?.group]}` : `DT ${name_dict[props?.group]}`,
+                text: props?.ww > 767 ? `Dòng tiền ${name_dict[props?.group]}` : `DT ${name_dict[props?.group]}`,
                 padding: {
-                    bottom: props?.ww > 768 ? 0 : 15
+                    bottom: props?.ww > 767 ? 0 : 15
                 },
                 font: {
                     family: 'Calibri, sans-serif',

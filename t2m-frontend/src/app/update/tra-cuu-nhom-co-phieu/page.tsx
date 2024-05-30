@@ -165,11 +165,11 @@ export default function Page3() {
                   <div style={{ height: '100%', width: '100%' }}></div>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                  <Button className="custom-button" block={true} size={ww > 768 ? 'large' : 'middle'}
+                  <Button className="custom-button" block={true} size={ww > 767 ? 'large' : 'middle'}
                     style={{ fontSize: pixel(0.013, 12) }} onClick={onChangeSwitchGroupIndustry}
                   >
-                    {switch_group_industry === 'industry' ? (ww > 768 ? 'Chi tiết các nhóm cổ phiếu lớn' : 'Chi tiết nhóm cổ phiếu lớn')
-                      : (ww > 768 ? 'Chi tiết các nhóm ngành' : 'Chi tiết nhóm ngành')}
+                    {switch_group_industry === 'industry' ? (ww > 767 ? 'Chi tiết các nhóm cổ phiếu lớn' : 'Chi tiết nhóm cổ phiếu lớn')
+                      : (ww > 767 ? 'Chi tiết các nhóm ngành' : 'Chi tiết nhóm ngành')}
                   </Button>
                 </Col>
               </Row>
@@ -177,12 +177,12 @@ export default function Page3() {
                 <>
                   <Row>
                     <Radio.Group
-                      size={ww > 768 ? 'middle' : 'small'}
+                      size={ww > 767 ? 'middle' : 'small'}
                       className="custom-radio-group"
                       defaultValue={switch_hs_cap}
                       buttonStyle="solid"
                       onChange={onChangeHsCap}
-                      style={{ display: 'flex', width: '100%', marginTop: ww > 768 ? '20px' : '10px', height: '50px' }}
+                      style={{ display: 'flex', width: '100%', marginTop: ww > 767 ? '20px' : '10px', height: '50px' }}
                     >
                       <Radio.Button value="hs" className="custom-radio-button"
                         style={{
@@ -199,12 +199,12 @@ export default function Page3() {
                   <Row>
                     {switch_hs_cap === 'hs' && (
                       <Radio.Group
-                        size={ww > 768 ? 'middle' : 'small'}
+                        size={ww > 767 ? 'middle' : 'small'}
                         className="custom-radio-group"
                         defaultValue={select_group}
                         buttonStyle="solid"
                         onChange={onChangeSelectGroup}
-                        style={{ display: 'flex', width: '100%', marginTop: ww > 768 ? '0px' : '-15px', height: '50px' }}
+                        style={{ display: 'flex', width: '100%', marginTop: ww > 767 ? '0px' : '-15px', height: '50px' }}
                       >
                         <Radio.Button value="Hiệu suất A" className="custom-radio-button"
                           style={{
@@ -230,12 +230,12 @@ export default function Page3() {
                     )}
                     {switch_hs_cap === 'cap' && (
                       <Radio.Group
-                        size={ww > 768 ? 'middle' : 'small'}
+                        size={ww > 767 ? 'middle' : 'small'}
                         className="custom-radio-group"
                         defaultValue={select_group}
                         buttonStyle="solid"
                         onChange={onChangeSelectGroup}
-                        style={{ display: 'flex', width: '100%', marginTop: ww > 768 ? '0px' : '-15px', height: '50px' }}
+                        style={{ display: 'flex', width: '100%', marginTop: ww > 767 ? '0px' : '-15px', height: '50px' }}
                       >
                         <Radio.Button value="LARGECAP" className="custom-radio-button"
                           style={{
@@ -266,44 +266,44 @@ export default function Page3() {
                 <>
                   <Row>
                     <Radio.Group
-                      size={ww > 768 ? 'middle' : 'small'}
+                      size={ww > 767 ? 'middle' : 'small'}
                       className="custom-radio-group"
                       defaultValue={switch_nhom_nganh_hs}
                       buttonStyle="solid"
                       onChange={onChangeNhomNganhHs}
-                      style={{ display: 'flex', width: '100%', marginTop: ww > 768 ? '20px' : '10px', height: '50px' }}
+                      style={{ display: 'flex', width: '100%', marginTop: ww > 767 ? '20px' : '10px', height: '50px' }}
                     >
                       <Radio.Button value="A" className="custom-radio-button"
                         style={{
                           fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                        }}>{ww > 768 ? 'Ngành hiệu suất A' : 'Ngành HS A'}
+                        }}>{ww > 767 ? 'Ngành hiệu suất A' : 'Ngành HS A'}
                       </Radio.Button>
                       <Radio.Button value="B" className="custom-radio-button"
                         style={{
                           fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                        }}>{ww > 768 ? 'Ngành hiệu suất B' : 'Ngành HS B'}
+                        }}>{ww > 767 ? 'Ngành hiệu suất B' : 'Ngành HS B'}
                       </Radio.Button>
                       <Radio.Button value="C" className="custom-radio-button"
                         style={{
                           fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                        }}>{ww > 768 ? 'Ngành hiệu suất C' : 'Ngành HS C'}
+                        }}>{ww > 767 ? 'Ngành hiệu suất C' : 'Ngành HS C'}
                       </Radio.Button>
                       <Radio.Button value="D" className="custom-radio-button"
                         style={{
                           fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                        }}>{ww > 768 ? 'Ngành hiệu suất D' : 'Ngành HS D'}
+                        }}>{ww > 767 ? 'Ngành hiệu suất D' : 'Ngành HS D'}
                       </Radio.Button>
                     </Radio.Group>
                   </Row>
                   <Row>
                     {switch_nhom_nganh_hs === 'A' && (
                       <Radio.Group
-                        size={ww > 768 ? 'middle' : 'small'}
+                        size={ww > 767 ? 'middle' : 'small'}
                         className="custom-radio-group"
                         defaultValue={select_group}
                         buttonStyle="solid"
                         onChange={onChangeSelectGroup}
-                        style={{ display: 'flex', width: '100%', marginTop: ww > 768 ? '0px' : '-15px', height: '50px' }}
+                        style={{ display: 'flex', width: '100%', marginTop: ww > 767 ? '0px' : '-15px', height: '50px' }}
                       >
                         <Radio.Button value="Bán lẻ" className="custom-radio-button"
                           style={{
@@ -313,17 +313,17 @@ export default function Page3() {
                         <Radio.Button value="Bất động sản" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 768 ? 'Bất động sản' : 'BĐS'}
+                          }}>{ww > 767 ? 'Bất động sản' : 'BĐS'}
                         </Radio.Button>
                         <Radio.Button value="Chứng khoán" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 768 ? 'Chứng khoán' : 'CK'}
+                          }}>{ww > 767 ? 'Chứng khoán' : 'CK'}
                         </Radio.Button>
                         <Radio.Button value="Công ty tài chính" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 768 ? 'Công ty tài chính' : 'CTTC'}
+                          }}>{ww > 767 ? 'Công ty tài chính' : 'CTTC'}
                         </Radio.Button>
                         <Radio.Button value="Thép" className="custom-radio-button"
                           style={{
@@ -333,28 +333,28 @@ export default function Page3() {
                         <Radio.Button value="Vật liệu xây dựng" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 768 ? 'Vật liệu xây dựng' : 'VLXD'}
+                          }}>{ww > 767 ? 'Vật liệu xây dựng' : 'VLXD'}
                         </Radio.Button>
                         <Radio.Button value="Xây dựng" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 768 ? 'Xây dựng' : 'XD'}
+                          }}>{ww > 767 ? 'Xây dựng' : 'XD'}
                         </Radio.Button>
                       </Radio.Group>
                     )}
                     {switch_nhom_nganh_hs === 'B' && (
                       <Radio.Group
-                        size={ww > 768 ? 'middle' : 'small'}
+                        size={ww > 767 ? 'middle' : 'small'}
                         className="custom-radio-group"
                         defaultValue={select_group}
                         buttonStyle="solid"
                         onChange={onChangeSelectGroup}
-                        style={{ display: 'flex', width: '100%', marginTop: ww > 768 ? '0px' : '-15px', height: '50px' }}
+                        style={{ display: 'flex', width: '100%', marginTop: ww > 767 ? '0px' : '-15px', height: '50px' }}
                       >
                         <Radio.Button value="Công nghiệp" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 768 ? 'Công nghiệp' : 'C nghiệp'}
+                          }}>{ww > 767 ? 'Công nghiệp' : 'C nghiệp'}
                         </Radio.Button>
                         <Radio.Button value="Dầu khí" className="custom-radio-button"
                           style={{
@@ -374,7 +374,7 @@ export default function Page3() {
                         <Radio.Button value="Khoáng sản" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 768 ? 'Khoáng sản' : 'K sản'}
+                          }}>{ww > 767 ? 'Khoáng sản' : 'K sản'}
                         </Radio.Button>
                         <Radio.Button value="Thuỷ sản" className="custom-radio-button"
                           style={{
@@ -385,37 +385,37 @@ export default function Page3() {
                     )}
                     {switch_nhom_nganh_hs === 'C' && (
                       <Radio.Group
-                        size={ww > 768 ? 'middle' : 'small'}
+                        size={ww > 767 ? 'middle' : 'small'}
                         className="custom-radio-group"
                         defaultValue={select_group}
                         buttonStyle="solid"
                         onChange={onChangeSelectGroup}
-                        style={{ display: 'flex', width: '100%', marginTop: ww > 768 ? '0px' : '-15px', height: '50px' }}
+                        style={{ display: 'flex', width: '100%', marginTop: ww > 767 ? '0px' : '-15px', height: '50px' }}
                       >
                         <Radio.Button value="BĐS KCN" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 768 ? 'BĐS KCN' : 'BĐS KCN'}
+                          }}>{ww > 767 ? 'BĐS KCN' : 'BĐS KCN'}
                         </Radio.Button>
                         <Radio.Button value="Công nghệ" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 768 ? 'Công nghệ' : 'C nghệ'}
+                          }}>{ww > 767 ? 'Công nghệ' : 'C nghệ'}
                         </Radio.Button>
                         <Radio.Button value="Hàng tiêu dùng" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 768 ? 'Hàng tiêu dùng' : 'HTD'}
+                          }}>{ww > 767 ? 'Hàng tiêu dùng' : 'HTD'}
                         </Radio.Button>
                         <Radio.Button value="Ngân hàng" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 768 ? 'Ngân hàng' : 'NH'}
+                          }}>{ww > 767 ? 'Ngân hàng' : 'NH'}
                         </Radio.Button>
                         <Radio.Button value="Thực phẩm" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 768 ? 'Thực phẩm' : 'TP'}
+                          }}>{ww > 767 ? 'Thực phẩm' : 'TP'}
                         </Radio.Button>
                         <Radio.Button value="Vận tải" className="custom-radio-button"
                           style={{
@@ -426,12 +426,12 @@ export default function Page3() {
                     )}
                     {switch_nhom_nganh_hs === 'D' && (
                       <Radio.Group
-                        size={ww > 768 ? 'middle' : 'small'}
+                        size={ww > 767 ? 'middle' : 'small'}
                         className="custom-radio-group"
                         defaultValue={select_group}
                         buttonStyle="solid"
                         onChange={onChangeSelectGroup}
-                        style={{ display: 'flex', width: '100%', marginTop: ww > 768 ? '0px' : '-15px', height: '50px' }}
+                        style={{ display: 'flex', width: '100%', marginTop: ww > 767 ? '0px' : '-15px', height: '50px' }}
                       >
                         <Radio.Button value="Bảo hiểm" className="custom-radio-button"
                           style={{
@@ -472,7 +472,7 @@ export default function Page3() {
                     defaultValue={time_span}
                     buttonStyle="solid"
                     onChange={onChangeIndexPriceChartTimeSpan}
-                    style={{ display: 'flex', width: '100%', marginTop: ww > 768 ? '30px' : '10px', height: '20px' }}
+                    style={{ display: 'flex', width: '100%', marginTop: ww > 767 ? '30px' : '10px', height: '20px' }}
                   >
                     <Radio.Button value="1M" className="custom-radio-button"
                       style={{
@@ -493,7 +493,7 @@ export default function Page3() {
                 </Col>
               </Row>
               <Row>
-                <IndexGroupPriceChart data={group_stock_price_index} select_group={select_group} time_span={time_span} width='100%' height={ww > 768 ? '270px' : '215px'} />
+                <IndexGroupPriceChart data={group_stock_price_index} select_group={select_group} time_span={time_span} width='100%' height={ww > 767 ? '270px' : '215px'} />
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
                 <Col>
@@ -522,11 +522,11 @@ export default function Page3() {
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
               </Row>
-              <Row style={{ marginTop: ww > 768 ? '30px' : '20px' }}>
+              <Row style={{ marginTop: ww > 767 ? '30px' : '20px' }}>
                 <GroupRankingChart data={group_score_ranking_melted} ww={ww} select_group={select_group}
                   switch_group_industry={switch_group_industry} fontSize={pixel(0.017, 17)} />
               </Row>
-              <Row style={{ marginTop: ww > 768 ? '20px' : '10px' }}>
+              <Row style={{ marginTop: ww > 767 ? '20px' : '10px' }}>
                 <GroupLiquidityLineChart20p data={eod_score_liquidity_melted} select_group={select_group} fontSize={pixel(0.017, 17)} />
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>

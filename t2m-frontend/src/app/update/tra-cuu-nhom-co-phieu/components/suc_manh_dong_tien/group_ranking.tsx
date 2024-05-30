@@ -29,7 +29,7 @@ const GroupRankingChart = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#C031C7',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
         ],
     };
@@ -57,7 +57,7 @@ const GroupRankingChart = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến sức mạnh dòng tiền' : 'Diễn biến sức mạnh dòng tiền',
+                text: props?.ww > 767 ? 'Diễn biến sức mạnh dòng tiền' : 'Diễn biến sức mạnh dòng tiền',
                 font: {
                     family: 'Calibri, sans-serif',
                     size: parseInt(props?.fontSize) - 2,

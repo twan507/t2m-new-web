@@ -59,12 +59,12 @@ const MoneyFlowLiquidityChart = (props: any) => {
         indexAxis: 'y', // Chuyển đổi biểu đồ cột thành biểu đồ cột ngang
         layout: {
             padding: {
-                right: props?.ww > 768 ? 60 : 0
+                right: props?.ww > 767 ? 60 : 0
             }
         },
         plugins: {
             legend: {
-                display: props?.ww > 768 ? true : false,
+                display: props?.ww > 767 ? true : false,
                 position: 'top',
                 labels: {
                     boxWidth: 0, // Độ rộng của hộp màu trong legend
@@ -84,7 +84,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
             tooltip: {
                 callbacks: {
                     label: function (tooltipItem: any) {
-                        if (props?.ww > 768) {
+                        if (props?.ww > 767) {
                             return `${tooltipItem?.dataset.label}: ${(tooltipItem?.raw * 100)?.toFixed(1)}%`;
                         } else {
                             return `${(tooltipItem?.raw * 100)?.toFixed(1)}%`;
@@ -100,9 +100,9 @@ const MoneyFlowLiquidityChart = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? `Thanh khoản ${name_dict[props?.group]}` : `Thanh khoản`,
+                text: props?.ww > 767 ? `Thanh khoản ${name_dict[props?.group]}` : `Thanh khoản`,
                 padding: {
-                    bottom: props?.ww > 768 ? 0 : 15
+                    bottom: props?.ww > 767 ? 0 : 15
                 },
                 font: {
                     family: 'Calibri, sans-serif',
@@ -112,7 +112,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
                 color: '#dfdfdf' // Chỉnh sửa màu chữ
             },
             datalabels: {
-                display: props?.ww > 768 ? true : false,
+                display: props?.ww > 767 ? true : false,
                 anchor: (context: any) => {
                     const value = context.dataset.data[context.dataIndex];
                     return value > 0 ? 'end' : 'start';

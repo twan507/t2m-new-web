@@ -17,7 +17,7 @@ const GroupMarketStructureChart = (props: any) => {
         return `${day}-${month}`;
     });
 
-    const slice = props?.ww > 768 ? -60 : (props?.ww > 500 ? -40 : -25);
+    const slice = props?.ww > 767 ? -60 : (props?.ww > 500 ? -40 : -25);
 
     const lines = {
         labels: dateList?.slice(slice) || [],
@@ -30,7 +30,7 @@ const GroupMarketStructureChart = (props: any) => {
                 hoverRadius: 7, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#C031C7', // Màu nền cho các điểm
                 tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 768 ? 3 : 2, // Độ rộng của đường
+                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
             },
             {
                 label: 'Tháng',
@@ -41,7 +41,7 @@ const GroupMarketStructureChart = (props: any) => {
                 hoverRadius: 7, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#24B75E', // Màu nền cho các điểm
                 tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 768 ? 3 : 2, // Độ rộng của đường
+                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
             },
             {
                 label: 'Quý',
@@ -52,7 +52,7 @@ const GroupMarketStructureChart = (props: any) => {
                 hoverRadius: 7, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#025bc4', // Màu nền cho các điểm
                 tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 768 ? 3 : 2, // Độ rộng của đường
+                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
             },
             {
                 label: 'Bán niên',
@@ -63,7 +63,7 @@ const GroupMarketStructureChart = (props: any) => {
                 hoverRadius: 7, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#D0be0f', // Màu nền cho các điểm
                 tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 768 ? 3 : 2, // Độ rộng của đường
+                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
             },
             {
                 label: '1 Năm',
@@ -74,7 +74,7 @@ const GroupMarketStructureChart = (props: any) => {
                 hoverRadius: 7, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#e14040', // Màu nền cho các điểm
                 tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 768 ? 3 : 2, // Độ rộng của đường
+                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
             },
             {
                 label: '2 Năm',
@@ -85,7 +85,7 @@ const GroupMarketStructureChart = (props: any) => {
                 hoverRadius: 7, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#b3b3b3', // Màu nền cho các điểm
                 tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 768 ? 3 : 2, // Độ rộng của đường
+                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
             },
         ],
     };

@@ -22,18 +22,18 @@ const DtVaTkTrongPhien = (props: any) => {
         labels: timeList || [],
         datasets: [
             {
-                label: props?.ww > 768 ? 'Dòng tiền trong phiên' : 'Dòng tiền',
+                label: props?.ww > 767 ? 'Dòng tiền trong phiên' : 'Dòng tiền',
                 data: data_sets?.map((item: any) => item.score === null ? null : item.score),
                 borderColor: '#C031C7',
                 pointRadius: 0,
                 hoverRadius: 5,
                 pointBackgroundColor: '#C031C7',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
                 yAxisID: 'y',
             },
             {
-                label: props?.ww > 768 ? 'Chỉ số thanh khoản' : 'Thanh khoản',
+                label: props?.ww > 767 ? 'Chỉ số thanh khoản' : 'Thanh khoản',
                 data: data_sets?.map((item: any) => item.liquidity === null ? null : item.liquidity * 100),
                 fill: 'origin',
                 borderColor: '#025bc4',
@@ -41,7 +41,7 @@ const DtVaTkTrongPhien = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#025bc4',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
                 yAxisID: 'y1',
             },
         ],
@@ -52,7 +52,7 @@ const DtVaTkTrongPhien = (props: any) => {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                display: props?.ww > 768 ? true : false,
+                display: props?.ww > 767 ? true : false,
                 position: 'top',
                 labels: {
                     boxWidth: 20,
@@ -87,7 +87,7 @@ const DtVaTkTrongPhien = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Diễn biến dòng tiền và thanh khoản trong phiên' : 'Diễn biến dòng tiền và thanh khoản',
+                text: props?.ww > 767 ? 'Diễn biến dòng tiền và thanh khoản trong phiên' : 'Diễn biến dòng tiền và thanh khoản',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',

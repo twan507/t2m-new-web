@@ -19,7 +19,7 @@ const GroupTopCoPhieuTable = (props: any) => {
     const columns = (props: any, ww: any): TableProps<any>['columns'] => {
         const baseColumns = [
             {
-                title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 768 ? 'Cổ phiếu' : 'Mã'} </span>,
+                title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 767 ? 'Cổ phiếu' : 'Mã'} </span>,
                 dataIndex: 'stock',
                 // width: '8%',
                 render: (text: string) => (
@@ -35,7 +35,7 @@ const GroupTopCoPhieuTable = (props: any) => {
                 ),
             },
             {
-                title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 768 ? 'Nhóm ngành' : 'Ngành'} </span>,
+                title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 767 ? 'Nhóm ngành' : 'Ngành'} </span>,
                 dataIndex: 'industry_name',
                 // width: '21%',
                 render: (text: string) => (
@@ -50,7 +50,7 @@ const GroupTopCoPhieuTable = (props: any) => {
                 ),
             },
             {
-                title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}>{ww > 768 ? 'Nhóm hiệu suất' : 'Hiệu suất'} </span>,
+                title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}>{ww > 767 ? 'Nhóm hiệu suất' : 'Hiệu suất'} </span>,
                 dataIndex: 'industry_perform',
                 // width: '16%',
                 render: (text: string) => (
@@ -65,7 +65,7 @@ const GroupTopCoPhieuTable = (props: any) => {
                 ),
             },
             {
-                title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 768 ? 'Nhóm vốn hoá' : 'Vốn hoá'} </span>,
+                title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 767 ? 'Nhóm vốn hoá' : 'Vốn hoá'} </span>,
                 dataIndex: 'marketcap_group',
                 // width: '11%',
                 render: (text: string) => (
@@ -95,7 +95,7 @@ const GroupTopCoPhieuTable = (props: any) => {
                 ),
             },
             {
-                title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 768 ? 'Dòng tiền trong phiên' : 'Dòng tiền'} </span>,
+                title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 767 ? 'Dòng tiền trong phiên' : 'Dòng tiền'} </span>,
                 dataIndex: `t0_score`,
                 // width: '11%',
                 render: (value: number) => (
@@ -110,7 +110,7 @@ const GroupTopCoPhieuTable = (props: any) => {
                 ),
             },
             {
-                title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 768 ? 'Chỉ số thanh khoản' : 'Thanh khoản'} </span>,
+                title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 767 ? 'Chỉ số thanh khoản' : 'Thanh khoản'} </span>,
                 dataIndex: `liquid_ratio`,
                 // width: '16%',
                 render: (value: number) => (
@@ -126,10 +126,10 @@ const GroupTopCoPhieuTable = (props: any) => {
             },
         ];
 
-        if (ww >= 768) {
+        if (ww >= 767) {
             baseColumns.splice(4, 0,
                 {
-                    title: <span style={{ display: 'flex', justifyContent: 'center', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 768 ? 'Giá hiện tại' : 'Giá'} </span>,
+                    title: <span style={{ display: 'flex', justifyContent: 'center', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 767 ? 'Giá hiện tại' : 'Giá'} </span>,
                     dataIndex: 'close',
                     // width: '8%',
                     render: (value: number) => (

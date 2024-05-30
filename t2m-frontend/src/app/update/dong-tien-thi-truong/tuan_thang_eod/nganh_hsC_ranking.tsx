@@ -17,7 +17,7 @@ const NganhHsCRanking = (props: any) => {
         return `${day}-${month}`;
     });
 
-    const slice = props?.ww > 768 ? -20 : (props?.ww > 500 ? -13 : -7);
+    const slice = props?.ww > 767 ? -20 : (props?.ww > 500 ? -13 : -7);
 
     const lines = {
         labels: dateList?.slice(slice) || [],
@@ -30,7 +30,7 @@ const NganhHsCRanking = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#C031C7',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'Công nghệ',
@@ -41,7 +41,7 @@ const NganhHsCRanking = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#24B75E',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'Hàng tiêu dùng',
@@ -52,7 +52,7 @@ const NganhHsCRanking = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#025bc4',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'Ngân hàng',
@@ -63,7 +63,7 @@ const NganhHsCRanking = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#D0be0f',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'Thực phẩm',
@@ -74,7 +74,7 @@ const NganhHsCRanking = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#e14040',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'Vận tải',
@@ -85,7 +85,7 @@ const NganhHsCRanking = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#00cccc',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
         ],
     };
@@ -95,7 +95,7 @@ const NganhHsCRanking = (props: any) => {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                display: props?.ww > 768 ? true : false,
+                display: props?.ww > 767 ? true : false,
                 position: 'top',
                 labels: {
                     boxWidth: 20,
@@ -126,7 +126,7 @@ const NganhHsCRanking = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 768 ? 'Sức mạnh dòng tiền ngành hiệu suất C' : 'Sức mạnh ngành hiệu suất C',
+                text: props?.ww > 767 ? 'Sức mạnh dòng tiền ngành hiệu suất C' : 'Sức mạnh ngành hiệu suất C',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',

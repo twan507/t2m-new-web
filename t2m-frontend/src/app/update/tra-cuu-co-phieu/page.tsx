@@ -418,7 +418,7 @@ export default function Page4() {
                       )}
                     </Col>
                     <Col xs={12} sm={12} md={8} lg={8} xl={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      {ww > 768 && (
+                      {ww > 767 && (
                         <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
                           <Radio.Group
                             className="custom-radio-group"
@@ -430,7 +430,7 @@ export default function Page4() {
                             <Radio.Button value="BD" className="custom-radio-button"
                               style={{
                                 fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                              }}>{ww > 768 ? 'Biểu đồ giá' : 'Biểu đồ'}
+                              }}>{ww > 767 ? 'Biểu đồ giá' : 'Biểu đồ'}
                             </Radio.Button>
                             <Radio.Button value="PTKT" className="custom-radio-button"
                               style={{
@@ -460,7 +460,7 @@ export default function Page4() {
                           )}
                         </div>
                       )}
-                      {ww <= 768 && (
+                      {ww <= 767 && (
                         <Menu
                           theme='dark'
                           onClick={onChangeChiSoThiTruongMobile}
@@ -477,7 +477,7 @@ export default function Page4() {
                   <Row gutter={10}>
                     {thong_tin_cp === 'BD' && (
                       <>
-                        {ww < 768 && (
+                        {ww < 767 && (
                           <Radio.Group
                             className="custom-radio-group" size="small"
                             defaultValue={time_span}
@@ -497,13 +497,13 @@ export default function Page4() {
                             </Radio.Button>
                           </Radio.Group>
                         )}
-                        <StockPriceChart data={stock_price_chart_df} select_stock={select_stock} time_span={time_span} width='100%' height={ww > 768 ? '270px' : '255px'} />
+                        <StockPriceChart data={stock_price_chart_df} select_stock={select_stock} time_span={time_span} width='100%' height={ww > 767 ? '270px' : '255px'} />
                       </>
                     )}
                     {thong_tin_cp === 'PTKT' && (
                       <>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                          {ww < 768 && (
+                          {ww < 767 && (
                             <Radio.Group
                               className="custom-radio-group" size="small"
                               defaultValue={mobile_ta_mode}
@@ -528,63 +528,63 @@ export default function Page4() {
                               </Radio.Button>
                             </Radio.Group>
                           )}
-                          <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0, marginTop: ww > 768 ? '0px' : '15px' }}>
+                          <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0, marginTop: ww > 767 ? '0px' : '15px' }}>
                             <p style={{
                               fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
-                              marginTop: '1px', margin: 0, height: ww > 768 ? '32px' : '22px'
-                            }}>Chỉ số {ww > 768 ? 'tháng' : (mobile_ta_mode === 'month' ? 'tháng' : (mobile_ta_mode === 'quarter' ? 'quý' : 'năm'))}</p>
-                            <StockTaTable data={stock_ta_df} select_stock={select_stock} id={ww > 768 ? 'month' : mobile_ta_mode} ta_name={['candle']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
-                              width='100%' height={ww > 768 ? '70px' : '64px'} marginTop={ww > 768 ? '0px' : '0px'}
+                              marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
+                            }}>Chỉ số {ww > 767 ? 'tháng' : (mobile_ta_mode === 'month' ? 'tháng' : (mobile_ta_mode === 'quarter' ? 'quý' : 'năm'))}</p>
+                            <StockTaTable data={stock_ta_df} select_stock={select_stock} id={ww > 767 ? 'month' : mobile_ta_mode} ta_name={['candle']}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '19px'}
+                              width='100%' height={ww > 767 ? '70px' : '64px'} marginTop={ww > 767 ? '0px' : '0px'}
                             />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
-                            <StockTaTable data={stock_ta_df} select_stock={select_stock} id={ww > 768 ? 'month' : mobile_ta_mode} ta_name={['ma', 'pivot']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
-                              width='100%' height={ww > 768 ? '70px' : '64px'} marginTop={ww > 768 ? '8px' : '8px'} />
+                            <StockTaTable data={stock_ta_df} select_stock={select_stock} id={ww > 767 ? 'month' : mobile_ta_mode} ta_name={['ma', 'pivot']}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '19px'}
+                              width='100%' height={ww > 767 ? '70px' : '64px'} marginTop={ww > 767 ? '8px' : '8px'} />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
-                            <StockTaTable data={stock_ta_df} select_stock={select_stock} id={ww > 768 ? 'month' : mobile_ta_mode} ta_name={['fibo']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
-                              width='100%' height={ww > 768 ? '70px' : '62px'} marginTop={ww > 768 ? '8px' : '8px'} />
+                            <StockTaTable data={stock_ta_df} select_stock={select_stock} id={ww > 767 ? 'month' : mobile_ta_mode} ta_name={['fibo']}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '19px'}
+                              width='100%' height={ww > 767 ? '70px' : '62px'} marginTop={ww > 767 ? '8px' : '8px'} />
                           </div>
                         </Col>
                         <Col xs={0} sm={0} md={8} lg={8} xl={8}>
-                          <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0, marginTop: ww > 768 ? '0px' : '15px' }}>
+                          <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0, marginTop: ww > 767 ? '0px' : '15px' }}>
                             <p style={{
                               fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
-                              marginTop: '1px', margin: 0, height: ww > 768 ? '32px' : '22px'
+                              marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
                             }}>Chỉ số quý</p>
                             <StockTaTable data={stock_ta_df} select_stock={select_stock} id='quarter' ta_name={['candle']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '0px' : '0px'}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '19px'}
+                              width='100%' height={ww > 767 ? '70px' : '50px'} marginTop={ww > 767 ? '0px' : '0px'}
                             />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
                             <StockTaTable data={stock_ta_df} select_stock={select_stock} id='quarter' ta_name={['ma', 'pivot']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '8px' : '8px'} />
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '19px'}
+                              width='100%' height={ww > 767 ? '70px' : '50px'} marginTop={ww > 767 ? '8px' : '8px'} />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
                             <StockTaTable data={stock_ta_df} select_stock={select_stock} id='quarter' ta_name={['fibo']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '8px' : '8px'} />
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '19px'}
+                              width='100%' height={ww > 767 ? '70px' : '50px'} marginTop={ww > 767 ? '8px' : '8px'} />
                           </div>
                         </Col>
                         <Col xs={0} sm={0} md={8} lg={8} xl={8}>
-                          <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0, marginTop: ww > 768 ? '0px' : '15px' }}>
+                          <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0, marginTop: ww > 767 ? '0px' : '15px' }}>
                             <p style={{
                               fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
-                              marginTop: '1px', margin: 0, height: ww > 768 ? '32px' : '22px'
+                              marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
                             }}>Chỉ số năm</p>
                             <StockTaTable data={stock_ta_df} select_stock={select_stock} id='year' ta_name={['candle']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '0px' : '0px'}
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '19px'}
+                              width='100%' height={ww > 767 ? '70px' : '50px'} marginTop={ww > 767 ? '0px' : '0px'}
                             />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
                             <StockTaTable data={stock_ta_df} select_stock={select_stock} id='year' ta_name={['ma', 'pivot']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '8px' : '8px'} />
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '19px'}
+                              width='100%' height={ww > 767 ? '70px' : '50px'} marginTop={ww > 767 ? '8px' : '8px'} />
                             <hr style={{ border: 0, height: '1px', backgroundColor: '#dfdfdf', margin: 0 }} />
                             <StockTaTable data={stock_ta_df} select_stock={select_stock} id='year' ta_name={['fibo']}
-                              fontSize={pixel(0.012, 12)} lineHeight={ww > 768 ? '20px' : '19px'}
-                              width='100%' height={ww > 768 ? '70px' : '50px'} marginTop={ww > 768 ? '8px' : '8px'} />
+                              fontSize={pixel(0.012, 12)} lineHeight={ww > 767 ? '20px' : '19px'}
+                              width='100%' height={ww > 767 ? '70px' : '50px'} marginTop={ww > 767 ? '8px' : '8px'} />
                           </div>
                         </Col>
                       </>
@@ -619,7 +619,7 @@ export default function Page4() {
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
               </Row>
-              <Row style={{ marginTop: ww > 768 ? '30px' : '20px' }}>
+              <Row style={{ marginTop: ww > 767 ? '30px' : '20px' }}>
                 <Col span={12}>
                   <StockRankingChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 17)} stock_count={eod_score_df?.length} />
                 </Col>
@@ -627,7 +627,7 @@ export default function Page4() {
                   <ScorePriceCorrelationChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 17)} />
                 </Col>
               </Row>
-              <Row style={{ marginTop: ww > 768 ? '20px' : '10px' }}>
+              <Row style={{ marginTop: ww > 767 ? '20px' : '10px' }}>
                 <StockLiquidityLineChart20p data={stock_score_power_df} select_stock={select_stock} fontSize={pixel(0.017, 17)} />
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>

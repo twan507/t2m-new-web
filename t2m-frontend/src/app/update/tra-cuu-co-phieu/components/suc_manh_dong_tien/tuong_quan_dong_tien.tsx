@@ -56,7 +56,7 @@ const ScorePriceCorrelationChart = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#C031C7',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: '% biến động giá',
@@ -66,7 +66,7 @@ const ScorePriceCorrelationChart = (props: any) => {
                 hoverRadius: 7,
                 pointBackgroundColor: '#025bc4',
                 tension: 0.4,
-                borderWidth: props?.ww > 768 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
         ],
     };
@@ -111,7 +111,7 @@ const ScorePriceCorrelationChart = (props: any) => {
             title: {
                 display: true,
                 padding: {},
-                text: props?.ww > 768 ? 'Tương quan biến động giá và dòng tiền' : 'Tương quan giá và dòng tiền',
+                text: props?.ww > 767 ? 'Tương quan biến động giá và dòng tiền' : 'Tương quan giá và dòng tiền',
                 font: {
                     family: 'Calibri, sans-serif',
                     size: parseInt(props?.fontSize) - 2,
