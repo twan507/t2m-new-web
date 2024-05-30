@@ -92,10 +92,10 @@ const MoneyFlowBreathChart = (props: any): any => {
                 boxWidth: 10, // Kích thước của ô màu
             },
             datalabels: {
-                display: props?.ww > 767 ? true : false,
+                display: true,
                 anchor: 'center',
                 align: 'center',
-                formatter: (value: any) => value > 20 ? (value.toFixed(1) + '%') : '', // Định dạng giá trị hiển thị
+                formatter: (value: any) => value > ( props?.ww > 768 ? 20 : 35) ? (value.toFixed(1) + '%') : '', // Định dạng giá trị hiển thị
                 font: {
                     family: 'Helvetica, sans-serif',
                     size: parseInt(props?.fontSize) - 7, // Chỉnh sửa cỡ chữ

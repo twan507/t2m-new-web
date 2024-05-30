@@ -491,13 +491,13 @@ export default function Page3() {
                 </>
               )}
               <Row gutter={25} style={{ marginTop: '30px', marginBottom: '20px' }}>
-                <Col xs={12} sm={12} md={14} lg={14} xl={14}>
+                <Col xs={24} sm={24} md={14} lg={14} xl={14}>
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
                     {`Thông tin nhóm ${select_group}`}
                   </p>
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
-                <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+                <Col xs={0} sm={0} md={10} lg={10} xl={10}>
                   <Radio.Group
                     size='small'
                     className="custom-radio-group"
@@ -613,7 +613,35 @@ export default function Page3() {
                   </Row>
                 </Col>
                 <Col xs={16} sm={18} md={19} lg={19} xl={20}>
-                  <IndexGroupPriceChart data={group_stock_price_index} select_group={select_group} time_span={time_span} width='100%' height={ww > 767 ? '270px' : '215px'} />
+                  {ww < 767 && (
+                    <>
+                      <Radio.Group
+                        size='small'
+                        className="custom-radio-group"
+                        defaultValue={time_span}
+                        buttonStyle="solid"
+                        onChange={onChangeIndexPriceChartTimeSpan}
+                        style={{ display: 'flex', width: '100%', marginTop: ww > 767 ? '30px' : '10px', height: '20px' }}
+                      >
+                        <Radio.Button value="1M" className="custom-radio-button"
+                          style={{
+                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
+                          }}>1M
+                        </Radio.Button>
+                        <Radio.Button value="3M" className="custom-radio-button"
+                          style={{
+                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
+                          }}>3M
+                        </Radio.Button>
+                        <Radio.Button value="6M" className="custom-radio-button"
+                          style={{
+                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
+                          }}>6M
+                        </Radio.Button>
+                      </Radio.Group>
+                    </>
+                  )}
+                  <IndexGroupPriceChart data={group_stock_price_index} select_group={select_group} time_span={time_span} width='100%' height={ww > 767 ? '270px' : '235px'} />
                 </Col>
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>

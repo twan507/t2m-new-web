@@ -103,6 +103,9 @@ export default function Page5() {
   const toggleTaFilter = (e: any) => {
     if (ww > 767) {
       set_switch_ta_filter(!switch_ta_filter)
+      if (switch_ta_filter) {
+        set_table_type('dt')
+      }
     } else {
       notification.warning({
         message: "Xoay ngang màn hình",

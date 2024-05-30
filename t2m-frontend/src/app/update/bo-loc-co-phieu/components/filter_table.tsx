@@ -20,20 +20,6 @@ const getColorTopRankCount = (value: number) => {
   return '#C031C7';
 };
 
-const getColorIndustryPerform = (value: string) => {
-  if (value === 'Hiệu suất A') return '#24B75E';
-  if (value === 'Hiệu suất B') return '#025bc4';
-  if (value === 'Hiệu suất C') return '#D0be0f';
-  if (value === 'Hiệu suất D') return '#e14040';
-};
-
-const getColorMarketCap = (value: string) => {
-  if (value === 'LARGECAP') return '#24B75E';
-  if (value === 'MIDCAP') return '#025bc4';
-  if (value === 'SMALLCAP') return '#D0be0f';
-  if (value === 'PENNY') return '#e14040';
-};
-
 const getColorTrend = (value: string) => {
   if (value === 'Tăng mạnh') return '#C031C7';
   if (value === 'Tăng') return '#24B75E';
@@ -43,7 +29,6 @@ const getColorTrend = (value: string) => {
 };
 
 const orderTrend = ['Tăng mạnh', 'Tăng', 'Trung lập', 'Giảm', 'Giảm mạnh'];
-
 
 const FilterStockTable = (props: any) => {
 
@@ -203,7 +188,7 @@ const FilterStockTable = (props: any) => {
               display: 'flex', justifyContent: ww > 1210 ? 'flex-start' : 'center',
               fontSize: parseInt(props?.fontSize) - 3,
             }}>
-            {ww > 1250 ? (<>Hiệu suất<br />cổ phiếu</>) : (ww > 1210 ? (<>HS<br />cổ phiếu</>) : (ww > 767 ? (<>HS<br />CP</>) : (<>HS</>)))}
+            {ww > 1210 ? (<>HS<br />cổ phiếu</>) : (ww > 767 ? (<>HS<br />CP</>) : (<>HS</>))}
           </span>,
         dataIndex: 'stock_perform',
         width: '6%',
