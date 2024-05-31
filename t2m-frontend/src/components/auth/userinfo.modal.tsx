@@ -12,7 +12,26 @@ interface IProps {
     setUserInfoModalOpen: (v: boolean) => void
 }
 
+const useWindowWidth = (): any => {
+    const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(Math.min(window.innerWidth, 1250));
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    return windowWidth;
+};
+
 const UserInfoModal = (props: IProps) => {
+
+    const ww = useWindowWidth();
 
     const [form] = Form.useForm()
     const router = useRouter();
@@ -198,7 +217,7 @@ const UserInfoModal = (props: IProps) => {
                             {authState ? getAvatarName(authInfo.user.name) : ''}
                         </Avatar>
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', marginTop: authState ? '-4px' : '3px', marginLeft: authState ? '0px' : '12px' }}>
-                            <div style={{ fontSize: 20, color: 'white' }}>{authState ? getUserName(authInfo.user.name) : ''}</div>
+                            <div style={{ fontSize: ww > 768 ? 20 : 15, color: 'white' }}>{authState ? getUserName(authInfo.user.name) : ''}</div>
                             {authState && (
                                 <div style={{ display: 'flex', marginTop: -3 }} >
                                     <div style={{
@@ -224,7 +243,7 @@ const UserInfoModal = (props: IProps) => {
                                 </div>
                             )}
                         </div>
-                        {authInfo?.user?.role === "T2M ADMIN" && (
+                        {(authInfo?.user?.role === "T2M ADMIN" && ww > 767) && (
                             <Button type='primary' style={{ marginLeft: '70px' }}>
                                 <a href="/admin" onClick={(e) => {
                                     e.preventDefault();

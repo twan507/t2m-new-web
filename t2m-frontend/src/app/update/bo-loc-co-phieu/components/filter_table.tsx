@@ -5,8 +5,8 @@ import type { TableProps } from 'antd';
 import '../styles.css';
 
 const getColorLiquidity = (value: number) => {
-  if (value < 60) return '#00cccc';
-  if (value < 90) return '#e14040';
+  if (value < 50) return '#00cccc';
+  if (value < 80) return '#e14040';
   if (value < 120) return '#D0be0f';
   if (value < 150) return '#24B75E';
   return '#C031C7';
@@ -78,12 +78,44 @@ const FilterStockTable = (props: any) => {
       });
     };
 
+    //Phần thêm vào
+    filterData = filterData
+      .sort((a: any, b: any) => a.stock.localeCompare(b.stock))
+      .map((item: any, stt: any) => ({ ...item, stt: stt + 1 }));
+
     return filterData
   };
 
-  const data_sets = filterData(props?.data)
-    ?.sort((a: any, b: any) => a.stock.localeCompare(b.stock))
-    ?.map((item: any, stt: any) => ({ ...item, stt: stt + 1 }));
+  // const data_sets = filterData(props?.data)
+  //   ?.sort((a: any, b: any) => a.stock.localeCompare(b.stock))
+  //   ?.map((item: any, stt: any) => ({ ...item, stt: stt + 1 }));
+
+  const [data_sets, set_data_sets] = useState(filterData(props?.data));
+
+  useEffect(() => {
+    set_data_sets(filterData(props?.data))
+  }, [props?.data]);
+
+  const onTableChange = (sorter: any) => {
+    let sortedData = [...data_sets];
+
+    if (sorter.order) {
+      sortedData = sortedData.sort((a, b) => {
+        const aValue = a[sorter.field];
+        const bValue = b[sorter.field];
+        if (aValue < bValue) {
+          return sorter.order === 'ascend' ? -1 : 1;
+        }
+        if (aValue > bValue) {
+          return sorter.order === 'ascend' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+
+    sortedData = sortedData.map((item, index) => ({ ...item, stt: index + 1 }));
+    set_data_sets(sortedData);
+  };
 
   const dt_columns = (props: any, ww: any): TableProps<any>['columns'] => {
     const baseColumns = [
@@ -625,10 +657,10 @@ const FilterStockTable = (props: any) => {
       sorter: (a: any, b: any) => {
         const aValue = a.month_trend;
         const bValue = b.month_trend;
-  
+
         const aIndex = orderTrend.indexOf(aValue);
         const bIndex = orderTrend.indexOf(bValue);
-  
+
         return aIndex - bIndex;
       },
     },
@@ -657,10 +689,10 @@ const FilterStockTable = (props: any) => {
       sorter: (a: any, b: any) => {
         const aValue = a.quarter_trend;
         const bValue = b.quarter_trend;
-  
+
         const aIndex = orderTrend.indexOf(aValue);
         const bIndex = orderTrend.indexOf(bValue);
-  
+
         return aIndex - bIndex;
       },
     },
@@ -689,10 +721,10 @@ const FilterStockTable = (props: any) => {
       sorter: (a: any, b: any) => {
         const aValue = a.year_trend;
         const bValue = b.year_trend;
-  
+
         const aIndex = orderTrend.indexOf(aValue);
         const bIndex = orderTrend.indexOf(bValue);
-  
+
         return aIndex - bIndex;
       },
     },
@@ -1045,10 +1077,10 @@ const FilterStockTable = (props: any) => {
       sorter: (a: any, b: any) => {
         const aValue = a.month_trend;
         const bValue = b.month_trend;
-  
+
         const aIndex = orderTrend.indexOf(aValue);
         const bIndex = orderTrend.indexOf(bValue);
-  
+
         return aIndex - bIndex;
       },
     },
@@ -1077,10 +1109,10 @@ const FilterStockTable = (props: any) => {
       sorter: (a: any, b: any) => {
         const aValue = a.quarter_trend;
         const bValue = b.quarter_trend;
-  
+
         const aIndex = orderTrend.indexOf(aValue);
         const bIndex = orderTrend.indexOf(bValue);
-  
+
         return aIndex - bIndex;
       },
     },
@@ -1109,10 +1141,10 @@ const FilterStockTable = (props: any) => {
       sorter: (a: any, b: any) => {
         const aValue = a.year_trend;
         const bValue = b.year_trend;
-  
+
         const aIndex = orderTrend.indexOf(aValue);
         const bIndex = orderTrend.indexOf(bValue);
-  
+
         return aIndex - bIndex;
       },
     },
@@ -1465,10 +1497,10 @@ const FilterStockTable = (props: any) => {
       sorter: (a: any, b: any) => {
         const aValue = a.month_trend;
         const bValue = b.month_trend;
-  
+
         const aIndex = orderTrend.indexOf(aValue);
         const bIndex = orderTrend.indexOf(bValue);
-  
+
         return aIndex - bIndex;
       },
     },
@@ -1497,10 +1529,10 @@ const FilterStockTable = (props: any) => {
       sorter: (a: any, b: any) => {
         const aValue = a.quarter_trend;
         const bValue = b.quarter_trend;
-  
+
         const aIndex = orderTrend.indexOf(aValue);
         const bIndex = orderTrend.indexOf(bValue);
-  
+
         return aIndex - bIndex;
       },
     },
@@ -1529,10 +1561,10 @@ const FilterStockTable = (props: any) => {
       sorter: (a: any, b: any) => {
         const aValue = a.year_trend;
         const bValue = b.year_trend;
-  
+
         const aIndex = orderTrend.indexOf(aValue);
         const bIndex = orderTrend.indexOf(bValue);
-  
+
         return aIndex - bIndex;
       },
     },
@@ -1828,7 +1860,9 @@ const FilterStockTable = (props: any) => {
             style={{ padding: '0px 10px 10px 10px' }}
             className="custom-table"
             columns={columns}
+            // dataSource={data_sets}
             dataSource={data_sets}
+            onChange={onTableChange}
             pagination={{
               current: currentPage,
               pageSize: pageSize,

@@ -80,7 +80,9 @@ const SentimentGaugeChart = (props: any) => {
 
   return (
     <div className="ta-gauge-chart-container" style={{ height: props?.height, width: props?.width }}>
-      <Doughnut data={data} options={options} />
+      {props?.openState && (
+        <Doughnut data={data} options={options} />
+      )}
     </div>
   );
 };

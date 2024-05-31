@@ -73,6 +73,8 @@ const LiquidityLineChart = (props: any) => {
                 },
             },
             y: {
+                min: props?.openState ? undefined : 0,
+                max: props?.openState ? undefined : 100,
                 position: 'right',
                 ticks: {
                     stepSize: 20,

@@ -27,12 +27,26 @@ const NdTdTopStockChart = (props: any) => {
     if (!checkAuth) {
         return (
             <>
-                <div style={{ marginTop: '10px', height: '115px', width: '100%' }}>
-                    <Treemap data={top_data} ww={props.ww} pixel={props.pixel} type='nntd' />
-                </div>
-                <div style={{ marginTop: '-3px', height: '115px', width: '100%' }}>
-                    <Treemap data={bottom_data} ww={props.ww} pixel={props.pixel} type='nntd' />
-                </div>
+                {(top_data.children.length === 20 && bottom_data.children.length === 20) && (
+                    <>
+                        <div style={{ marginTop: '10px', height: '115px', width: '100%' }}>
+                            <Treemap data={top_data} ww={props.ww} pixel={props.pixel} type='nntd' />
+                        </div>
+                        <div style={{ marginTop: '-3px', height: '115px', width: '100%' }}>
+                            <Treemap data={bottom_data} ww={props.ww} pixel={props.pixel} type='nntd' />
+                        </div>
+                    </>
+                )}
+                {(top_data.children.length !== 20 && bottom_data.children.length !== 20) && (
+                    <div style={{
+                        marginTop: '10px', height: '230px', width: '100%',
+                        backgroundColor: '#161616', borderRadius: '5px',
+                        display: 'flex', justifyContent: 'center', alignItems: 'center',
+                        color:'#dfdfdf'
+                    }}>
+                        Giá trị nước ngoài mua/bán ròng
+                    </div>
+                )}
             </>
         )
     }

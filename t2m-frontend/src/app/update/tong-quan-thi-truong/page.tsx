@@ -38,7 +38,30 @@ const useWindowWidth = (): any => {
   return windowWidth;
 };
 
+const getUpdateTime = (timeString: any) => {
+  if (timeString) {
+    const [hours, minutes, seconds] = timeString.split(":").map(Number);
+    const now = new Date();
+    now.setHours(hours);
+    now.setMinutes(minutes);
+    now.setSeconds(seconds);
+    now.setMilliseconds(0);
+    return now
+  } else {
+    const now = new Date();
+    now.setHours(9, 0, 0, 0);
+    return now
+  }
+}
+
+const getOpenTime = () => {
+  const openTime = new Date();
+  openTime.setHours(9, 15, 0, 0);
+  return openTime
+}
+
 export default function Page1() {
+
   const getData = async (tableName: string) => {
     const res = await sendRequest<IBackendRes<any>>({
       url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
@@ -131,6 +154,10 @@ export default function Page1() {
   const [switch_kntd, set_switch_kntd] = useState('NN');
   const [switch_top_mobile, set_switch_top_mobile] = useState('top');
 
+  const currentTime = getUpdateTime(update_time?.[0]?.date?.slice(-8))
+  const openTime = getOpenTime()
+  const openState = currentTime > openTime
+
   const ww = useWindowWidth();
   const pixel = (ratio: number, min: number) => {
     return `${Math.max(ratio * ww, min)?.toFixed(0)}px`;
@@ -215,7 +242,8 @@ export default function Page1() {
     set_switch_top_mobile(e.key);
   };
 
-  const getColorSentiment = (value: number) => {
+  const getColorSentiment = (value: any) => {
+    if (value === '') return '#B3B3B3';
     if (value < 20) return '#00cccc';
     if (value < 40) return '#e14040';
     if (value < 60) return '#D0be0f';
@@ -223,9 +251,10 @@ export default function Page1() {
     return '#C031C7';
   };
 
-  const getColorLiquidity = (value: number) => {
-    if (value < 60) return '#00cccc';
-    if (value < 90) return '#e14040';
+  const getColorLiquidity = (value: any) => {
+    if (value === '') return '#B3B3B3';
+    if (value < 50) return '#00cccc';
+    if (value < 80) return '#e14040';
     if (value < 120) return '#D0be0f';
     if (value < 150) return '#24B75E';
     return '#C031C7';
@@ -850,15 +879,15 @@ export default function Page1() {
                           color: 'white', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
                         }}> Trạng thái tâm lý
                         </p>
-                        <SentimentGaugeChart data={market_sentiment} width='100%' height='150px' ww={ww} />
+                        <SentimentGaugeChart openState={openState} data={market_sentiment} width='100%' height='150px' ww={ww} />
                       </div>
                       <div style={{
-                        background: getColorSentiment(market_sentiment?.[0]?.last_ratio),
+                        background: getColorSentiment(openState ? market_sentiment?.[0]?.last_ratio : ''),
                         padding: '10px', borderRadius: '5px', margin: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: '10px', height: '30px'
                       }}>
                         <p style={{
                           color: 'white', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
-                        }}> {market_sentiment?.[0]?.last_sentiment}
+                        }}> {openState ? market_sentiment?.[0]?.last_sentiment : ''}
                         </p>
                       </div>
                     </Col>
@@ -873,20 +902,20 @@ export default function Page1() {
                           color: 'white', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
                         }}> Chỉ số thanh khoản
                         </p>
-                        <LiquidityGaugeChart data={itd_score_liquidity_last} width='100%' height='150px' ww={ww} />
+                        <LiquidityGaugeChart openState={openState} data={itd_score_liquidity_last} width='100%' height='150px' ww={ww} />
                       </div>
                       <div style={{
-                        background: getColorLiquidity(itd_score_liquidity_last?.filter((item: any) => item.name === 'Thị trường')[0]?.liquidity * 100),
+                        background: getColorLiquidity(openState ? (itd_score_liquidity_last?.filter((item: any) => item.name === 'Thị trường')[0]?.liquidity * 100) : ''),
                         padding: '10px', borderRadius: '5px', margin: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: '10px', height: '30px'
                       }}>
                         <p style={{
                           color: 'white', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
-                        }}> {itd_score_liquidity_last?.filter((item: any) => item.name === 'Thị trường')[0]?.liquid_state}
+                        }}> {openState ? itd_score_liquidity_last?.filter((item: any) => item.name === 'Thị trường')[0]?.liquid_state : ''}
                         </p>
                       </div>
                     </Col>
                     <Col xs={16} sm={17} md={19} lg={19} xl={20}>
-                      <LiquidityLineChart data={itd_score_liquidity_df} width='100%' height='250px' />
+                      <LiquidityLineChart openState={openState} data={itd_score_liquidity_df} width='100%' height='250px' />
                     </Col>
                   </Row>
                 </>

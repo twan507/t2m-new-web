@@ -100,6 +100,20 @@ export default function Page5() {
     set_filter_slider_value([])
   };
 
+  useEffect(() => {
+    if (ww < 767) {
+      set_table_type('dt')
+      set_switch_ta_filter(false)
+      set_filter_month_trend([])
+      set_filter_quarter_trend([])
+      set_filter_year_trend([])
+      set_ta_filter_candle([])
+      set_ta_filter_ma_pivot([])
+      set_ta_filter_fibo([])
+      set_filter_slider_value([])
+    }
+  }, [ww]);
+
   const toggleTaFilter = (e: any) => {
     if (ww > 767) {
       set_switch_ta_filter(!switch_ta_filter)

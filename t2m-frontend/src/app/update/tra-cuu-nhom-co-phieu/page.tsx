@@ -32,8 +32,8 @@ const useWindowWidth = (): any => {
 };
 
 const getColorLiquidity = (value: number) => {
-  if (value < 60) return '#00cccc';
-  if (value < 90) return '#e14040';
+  if (value < 50) return '#00cccc';
+  if (value < 80) return '#e14040';
   if (value < 120) return '#D0be0f';
   if (value < 150) return '#24B75E';
   return '#C031C7';

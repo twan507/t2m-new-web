@@ -166,47 +166,36 @@
 
 .custom-search .ant-input::placeholder {
     color: #B3B3B3;
-    /* Thay đổi màu chữ của placeholder */
     opacity: 1;
-    /* Đảm bảo độ trong suốt của màu */
 }
 
 .custom-search .ant-input-affix-wrapper input::placeholder {
     color: #B3B3B3;
-    /* Thay đổi màu chữ của placeholder */
     opacity: 1;
-    /* Đảm bảo độ trong suốt của màu */
 }
 
 .custom-search .ant-input-affix-wrapper input {
     color: white;
-    /* Thay đổi màu chữ khi gõ vào */
 }
 
-.custom-search .ant-select-dropdown {
-    background-color: #000000 !important;
-    color: #B3B3B3 !important;
-    max-height: 100px;
-    /* Giới hạn chiều cao của danh sách gợi ý */
-    overflow-y: auto;
-    /* Thêm cuộn dọc khi danh sách dài hơn 200px */
-}
-
-.custom-search .ant-select-dropdown .ant-select-item {
-    color: #B3B3B3 !important;
-}
-
-.custom-search .ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
-    background-color: #333333 !important;
-}
-
-/* Thay đổi màu của biểu tượng thành màu trắng */
 .custom-search .custom-search-icon {
     color: #B3B3B3 !important;
 }
 
-/* Thay đổi màu của biểu tượng khi ô input được focus */
 .custom-search .ant-input-affix-wrapper-focused .anticon {
     color: #1677ff !important;
-    /* Thay đổi màu biểu tượng khi input được focus */
+}
+
+.ant-select-dropdown {
+    background-color: #000000 !important;
+    color: #B3B3B3 !important;
+    overflow-y: auto;
+}
+
+.ant-select-dropdown .ant-select-item {
+    color: #B3B3B3 !important;
+}
+
+.ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+    background-color: #333333 !important;
 }

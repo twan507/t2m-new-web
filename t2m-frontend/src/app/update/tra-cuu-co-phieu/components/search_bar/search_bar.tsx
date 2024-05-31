@@ -2,6 +2,7 @@
 import React, { useRef, useState } from 'react';
 import { AutoComplete, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import '../../styles.css'
 
 const SearchComponent = (props: any) => {
     const [options, setOptions] = useState<any[]>([]);
@@ -52,6 +53,7 @@ const SearchComponent = (props: any) => {
     return (
         <AutoComplete
             className="custom-search"
+            dropdownClassName="custom-search"
             options={options}
             onSearch={onSearch}
             style={{ width: '100%' }}
