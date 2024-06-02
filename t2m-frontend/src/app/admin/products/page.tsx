@@ -225,9 +225,9 @@ const PageProducts: React.FC = () => {
       ...getColumnSearchProps('name'),
       render: (value, record) => {
         const tagColor = value === 'FREE' ? '#404040' :
-          record.accessLevel === 1 ? '#1E7607' :
-            record.accessLevel === 2 ? '#1777ff' :
-              record.accessLevel === 3 ? '#7539B7' : '#98217c';
+          record.accessLevel === 1 ? '#1777ff' :
+            record.accessLevel === 2 ? '#1E7607' :
+              record.accessLevel === 3 ? '#D0be0f' : '#98217c';
         return (
           <Tag color={tagColor}>
             {value}

@@ -1,0 +1,16 @@
+/* CSS cho Ant Design Notification */
+.ant-notification-notice {
+  background-color: #161616 !important;
+  color: #fff !important;
+  border-radius: 7px !important; /* Tùy chỉnh border radius */
+  border: 1px solid #161616
+}
+
+.ant-notification-notice-close {
+  color: #fff !important;
+}
+
+.ant-notification-notice-message,
+.ant-notification-notice-description {
+  color: #fff !important;
+}

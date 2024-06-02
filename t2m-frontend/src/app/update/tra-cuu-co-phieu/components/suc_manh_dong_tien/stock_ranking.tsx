@@ -162,13 +162,19 @@ const StockRankingChart = (props: any) => {
             },
             y: {
                 type: 'linear',
-                min: 0,
+                min: 1,
                 max: props?.stock_count,
                 position: 'right',
                 reverse: true,
                 ticks: {
-                    stepSize: 10,
+                    stepSize: 5,
                     color: '#dfdfdf',
+                    callback: function (value: any) {
+                        if (value >= 1) {
+                            return value;
+                        }
+                        return '';
+                    }
                 },
                 grid: {
                     display: false,

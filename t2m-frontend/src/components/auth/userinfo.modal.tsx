@@ -225,9 +225,9 @@ const UserInfoModal = (props: IProps) => {
                                         background:
                                             authInfo.user.role === "T2M ADMIN" ? '#98217c' : (
                                                 !authInfo.user.licenseInfo?.accessLevel ? '#404040' : (
-                                                    authInfo.user.licenseInfo?.accessLevel === 1 ? '#1E7607' : (
-                                                        authInfo.user.licenseInfo?.accessLevel === 2 ? '#1777ff' : (
-                                                            authInfo.user.licenseInfo?.accessLevel === 3 ? '#642198' : '#98217c'
+                                                    authInfo.user.licenseInfo?.accessLevel === 1 ? '#1777ff' : (
+                                                        authInfo.user.licenseInfo?.accessLevel === 2 ? '#1E7607' : (
+                                                            authInfo.user.licenseInfo?.accessLevel === 3 ? '#D0be0f' : '#98217c'
                                                         )))),
                                         borderRadius: 5, width: 'fit-content'
                                     }}
@@ -282,10 +282,10 @@ const UserInfoModal = (props: IProps) => {
                         style={{ marginBottom: '30px' }}
                     >
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Input disabled style={{ background: '#333333', border: '0px', color: '#dfdfdf', width: '60%' }} size='large' value='•••••••••••' />
+                            <Input disabled style={{ background: '#333333', border: '0px', color: '#dfdfdf', width: '65%', marginRight: '10px' }} size='large' value='•••••••••••' />
                             <Button
                                 type='primary'
-                                style={{ fontSize: 16, marginRight: '10px' }}
+                                style={{ fontSize: 16 }}
                                 onClick={() => {
                                     setIsChangePasswordOpen(true)
                                     setUserInfoModalOpen(false)

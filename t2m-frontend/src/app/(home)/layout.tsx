@@ -236,9 +236,9 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
                         background:
                           authInfo.user.role === "T2M ADMIN" ? '#98217c' : (
                             !authInfo.user.licenseInfo?.accessLevel ? '#404040' : (
-                              authInfo.user.licenseInfo?.accessLevel === 1 ? '#1E7607' : (
-                                authInfo.user.licenseInfo?.accessLevel === 2 ? '#1777ff' : (
-                                  authInfo.user.licenseInfo?.accessLevel === 3 ? '#642198' : '#98217c'
+                              authInfo.user.licenseInfo?.accessLevel === 1 ? '#1777ff' : (
+                                authInfo.user.licenseInfo?.accessLevel === 2 ? '#1E7607' : (
+                                  authInfo.user.licenseInfo?.accessLevel === 3 ? '#D0be0f' : '#98217c'
                                 )))),
                         borderRadius: 5, width: 'fit-content'
                       }}
