@@ -45,8 +45,8 @@ const SubScribesModaOpen = (props: IProps) => {
                 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minWidth: '80%' }}
             >
                 <Row>
-                    <div style={{ width: '100%', backgroundColor: '#161616', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '5px', marginTop: '-100px' }}>
-                        <Col span={24}>
+                    <div style={{ width: '100%', backgroundColor: '#161616', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '5px' }}>
+                        <Col span={24} style={{ maxWidth: '900px' }}>
                             <a href="https://zalo.me/0338662238" target="_blank" rel="noopener noreferrer">
                                 <AntdImage
                                     preview={false}

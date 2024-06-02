@@ -47,9 +47,10 @@ const LockSection = (props: any) => {
                         flexDirection: 'column',
                         backgroundColor: 'rgba(22, 22, 22, 0.3)',
                         color: 'white',
-                        backdropFilter: 'blur(20px)',
                         cursor: 'pointer',
                         zIndex: 10,
+                        WebkitBackdropFilter: 'blur(20px)', // Sử dụng tiền tố -webkit- để hỗ trợ Safari
+                        backdropFilter: 'blur(20px)', // Kích hoạt hiệu ứng mờ
                     }}
                 >
                     <LockOutlined style={{ fontSize: pixel(0.03, 20) }} />

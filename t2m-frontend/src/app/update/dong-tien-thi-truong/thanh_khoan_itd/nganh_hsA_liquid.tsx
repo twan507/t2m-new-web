@@ -113,7 +113,7 @@ const NganhHsALiquidItd = (props: any) => {
                     pointStyle: 'circle',
                     usePointStyle: true,
                     font: {
-                        size: parseInt(props?.fontSize) - 4,
+                        size: parseInt(props?.fontSize) - 6,
                         family: 'Calibri',
                     },
                     color: '#dfdfdf'
@@ -128,7 +128,7 @@ const NganhHsALiquidItd = (props: any) => {
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
-                bodyFontSize: parseInt(props?.fontSize) - 4,
+                bodyFontSize: parseInt(props?.fontSize) - 6,
                 bodyFontStyle: 'bold',
                 boxHeight: 8,
                 caretPadding: 20
