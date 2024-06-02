@@ -3,11 +3,14 @@ import { sendRequest } from "@/utlis/api"
 import { Button, Card, Col, Menu, MenuProps, Radio, Row, notification } from "antd";
 import { useEffect, useState } from "react";
 import './styles.css'
-import FilterStockTable from "./components/filter_table";
 import BasicSelector from "./components/basic_selector";
 import TaSlider from "./components/ta_slider";
 import TaSelector from "./components/ta_selector";
 import { ClearOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import DtFilterTable from "./components/dt_filter_table";
+import KtCandleTable from "./components/kt_candle_table";
+import KtMaPivotTable from "./components/kt_ma_pivot_table";
+import KtFiboTable from "./components/kt_fibo_table";
 
 const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
@@ -45,8 +48,6 @@ export default function Page5() {
     };
     fetchData();
 
-
-
     const interval = setInterval(fetchData, 5 * 1000); // Gọi lại mỗi x giây
     return () => clearInterval(interval); // Xóa interval khi component unmount
   }, []);
@@ -59,6 +60,8 @@ export default function Page5() {
   const [table_type, set_table_type] = useState('dt');
   const [switch_ta_filter, set_switch_ta_filter] = useState(false);
   const [switch_ta_table, set_switch_ta_table] = useState('candle');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   //State lưu giữ trạng thái của các filter
   const [placeholder, setPlaceholder] = useState<string | undefined>('All');
@@ -383,24 +386,87 @@ export default function Page5() {
                     }}
                   />
                 )}
-                <FilterStockTable
-                  data={filter_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
-                  table_type={table_type} switch_ta_table={switch_ta_table}
-                  filter_nhom_nganh={filter_nhom_nganh}
-                  filter_hieu_suat={filter_hieu_suat}
-                  filter_von_hoa={filter_von_hoa}
-                  filter_t0={filter_t0}
-                  filter_t5={filter_t5}
-                  filter_liquid={filter_liquid}
-                  filter_rank={filter_rank}
-                  filter_month_trend={filter_month_trend}
-                  filter_quarter_trend={filter_quarter_trend}
-                  filter_year_trend={filter_year_trend}
-                  ta_filter_candle={ta_filter_candle}
-                  ta_filter_ma_pivot={ta_filter_ma_pivot}
-                  ta_filter_fibo={ta_filter_fibo}
-                  filter_slider_value={filter_slider_value}
-                />
+                {table_type === 'dt' && (
+                  <DtFilterTable
+                    data={filter_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
+                    currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}
+                    filter_nhom_nganh={filter_nhom_nganh}
+                    filter_hieu_suat={filter_hieu_suat}
+                    filter_von_hoa={filter_von_hoa}
+                    filter_t0={filter_t0}
+                    filter_t5={filter_t5}
+                    filter_liquid={filter_liquid}
+                    filter_rank={filter_rank}
+                    filter_month_trend={filter_month_trend}
+                    filter_quarter_trend={filter_quarter_trend}
+                    filter_year_trend={filter_year_trend}
+                    ta_filter_candle={ta_filter_candle}
+                    ta_filter_ma_pivot={ta_filter_ma_pivot}
+                    ta_filter_fibo={ta_filter_fibo}
+                    filter_slider_value={filter_slider_value}
+                  />
+                )}
+                {table_type === 'kt' && switch_ta_table === 'candle' && (
+                  <KtCandleTable
+                    data={filter_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
+                    currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}
+                    filter_nhom_nganh={filter_nhom_nganh}
+                    filter_hieu_suat={filter_hieu_suat}
+                    filter_von_hoa={filter_von_hoa}
+                    filter_t0={filter_t0}
+                    filter_t5={filter_t5}
+                    filter_liquid={filter_liquid}
+                    filter_rank={filter_rank}
+                    filter_month_trend={filter_month_trend}
+                    filter_quarter_trend={filter_quarter_trend}
+                    filter_year_trend={filter_year_trend}
+                    ta_filter_candle={ta_filter_candle}
+                    ta_filter_ma_pivot={ta_filter_ma_pivot}
+                    ta_filter_fibo={ta_filter_fibo}
+                    filter_slider_value={filter_slider_value}
+                  />
+                )}
+                {table_type === 'kt' && switch_ta_table === 'ma_pivot' && (
+                  <KtMaPivotTable
+                    data={filter_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
+                    currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}
+                    filter_nhom_nganh={filter_nhom_nganh}
+                    filter_hieu_suat={filter_hieu_suat}
+                    filter_von_hoa={filter_von_hoa}
+                    filter_t0={filter_t0}
+                    filter_t5={filter_t5}
+                    filter_liquid={filter_liquid}
+                    filter_rank={filter_rank}
+                    filter_month_trend={filter_month_trend}
+                    filter_quarter_trend={filter_quarter_trend}
+                    filter_year_trend={filter_year_trend}
+                    ta_filter_candle={ta_filter_candle}
+                    ta_filter_ma_pivot={ta_filter_ma_pivot}
+                    ta_filter_fibo={ta_filter_fibo}
+                    filter_slider_value={filter_slider_value}
+                  />
+                )}
+                {table_type === 'kt' && switch_ta_table === 'fibo' && (
+                  <KtFiboTable
+                    data={filter_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
+                    table_type={table_type} switch_ta_table={switch_ta_table}
+                    currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}
+                    filter_nhom_nganh={filter_nhom_nganh}
+                    filter_hieu_suat={filter_hieu_suat}
+                    filter_von_hoa={filter_von_hoa}
+                    filter_t0={filter_t0}
+                    filter_t5={filter_t5}
+                    filter_liquid={filter_liquid}
+                    filter_rank={filter_rank}
+                    filter_month_trend={filter_month_trend}
+                    filter_quarter_trend={filter_quarter_trend}
+                    filter_year_trend={filter_year_trend}
+                    ta_filter_candle={ta_filter_candle}
+                    ta_filter_ma_pivot={ta_filter_ma_pivot}
+                    ta_filter_fibo={ta_filter_fibo}
+                    filter_slider_value={filter_slider_value}
+                  />
+                )}
               </Row>
             </Col >
           </Row >
