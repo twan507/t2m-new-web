@@ -26,6 +26,10 @@ import NganhHsCScoreItd from "./dong_tien_itd/nganh_hsC_score";
 import NganhHsCLiquidItd from "./thanh_khoan_itd/nganh_hsC_liquid";
 import NganhHsDScoreItd from "./dong_tien_itd/nganh_hsD_score";
 import NganhHsDLiquidItd from "./thanh_khoan_itd/nganh_hsD_liquid";
+import LockSection from "@/components/subscribers/blurComponents";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { sessionLimit } from "@/utlis/sessionLimit";
+import { resetAuthState } from "@/redux/authSlice";
 
 const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
@@ -45,6 +49,20 @@ const useWindowWidth = (): any => {
 };
 
 export default function Page2() {
+
+  const [limitState, setLimitState] = useState(false);
+  const dispatch = useAppDispatch();
+  const authInfo = useAppSelector((state) => state.auth)
+  useEffect(() => {
+    (async () => {
+      const limitState = await sessionLimit(authInfo?.user?.email, authInfo?.access_token);
+      if (!limitState) { dispatch(resetAuthState()) }
+      setLimitState(limitState);
+    })()
+  }, [authInfo?.user?.email, authInfo?.access_token]);
+  const authState = !!authInfo?.user?._id && limitState
+  const accessLevel = authInfo?.user?.role === 'T2M ADMIN' ? 4 : authInfo?.user?.licenseInfo?.accessLevel
+
   const getData = async (tableName: string) => {
     const res = await sendRequest<IBackendRes<any>>({
       url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
@@ -168,7 +186,7 @@ export default function Page2() {
                 </Col>
                 <Col xs={10} sm={10} md={10} lg={10} xl={10}>
                   <Button className="custom-button" block={true} size={ww > 767 ? 'large' : 'middle'}
-                    style={{ fontSize: pixel(0.013, 12) }} onClick={onChangeSwitchItdEod}
+                    style={{ fontSize: pixel(0.013, 11) }} onClick={onChangeSwitchItdEod}
                   >
                     {switch_itd_eod === 'eod' ? (ww > 767 ? 'Xem diễn biến trong phiên' : 'Diễn biến trong phiên')
                       : (ww > 767 ? 'Quay lại' : 'Quay lại')}
@@ -223,8 +241,12 @@ export default function Page2() {
                 <>
                   {switch_group === 'D' && (
                     <>
-                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                        <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+                          {authState && (
+                            < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='95%' />
+                          )}
                           <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
                             group='hs' height={ww > 767 ? '200px' : '150px'} type='group' />
                         </Col>
@@ -237,8 +259,12 @@ export default function Page2() {
                             group='hs' height={ww > 767 ? '200px' : '150px'} type='group' />
                         </Col>
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                        <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+                          {authState && (
+                            < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='95%' />
+                          )}
                           <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
                             group='cap' height={ww > 767 ? '200px' : '150px'} type='group' />
                         </Col>
@@ -255,7 +281,8 @@ export default function Page2() {
                   )}
                   {switch_group === 'M' && (
                     <>
-                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                        < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
                             group='hs' height={ww > 767 ? '250px' : '150px'} type='group' />
@@ -265,7 +292,8 @@ export default function Page2() {
                             height={ww > 767 ? '250px' : '150px'} type='group' />
                         </Col>
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                        < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
                             group='cap' height={ww > 767 ? '250px' : '150px'} type='group' />
@@ -281,7 +309,8 @@ export default function Page2() {
               )}
               {switch_itd_eod === 'itd' && (
                 <>
-                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                    < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NhomHsScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
                         height={ww > 767 ? '300px' : '200px'} type='group' />
@@ -291,7 +320,8 @@ export default function Page2() {
                         height={ww > 767 ? '300px' : '200px'} type='group' />
                     </Col>
                   </Row>
-                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                    < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NhomVhScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
                         height={ww > 767 ? '300px' : '200px'} type='group' />
@@ -351,8 +381,12 @@ export default function Page2() {
                 <>
                   {switch_industry === 'D' && (
                     <>
-                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                        <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+                          {authState && (
+                            < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='95%' />
+                          )}
                           <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
                             group='A' height={ww > 767 ? '300px' : '150px'} type='industry' />
                         </Col>
@@ -365,8 +399,12 @@ export default function Page2() {
                             group='A' height={ww > 767 ? '300px' : '150px'} type='industry' />
                         </Col>
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                        <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+                          {authState && (
+                            < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='95%' />
+                          )}
                           <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
                             group='B' height={ww > 767 ? '250px' : '150px'} type='industry' />
                         </Col>
@@ -379,8 +417,12 @@ export default function Page2() {
                             group='B' height={ww > 767 ? '250px' : '150px'} type='industry' />
                         </Col>
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                        <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+                          {authState && (
+                            < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='95%' />
+                          )}
                           <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
                             group='C' height={ww > 767 ? '250px' : '150px'} type='industry' />
                         </Col>
@@ -393,8 +435,12 @@ export default function Page2() {
                             group='C' height={ww > 767 ? '250px' : '150px'} type='industry' />
                         </Col>
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                        <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+                          {authState && (
+                            < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='95%' />
+                          )}
                           <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.017, 17)}
                             group='D' height={ww > 767 ? '200px' : '110px'} type='industry' />
                         </Col>
@@ -414,7 +460,8 @@ export default function Page2() {
                       <Row style={{ marginTop: '30px' }}>
                         <TopIndustryChart data={full_industry_ranking} ww={ww} fontSize={pixel(0.017, 17)} />
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                        < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
                             group='A' height={ww > 767 ? '370px' : '200px'} type='group' />
@@ -424,7 +471,8 @@ export default function Page2() {
                             height={ww > 767 ? '370px' : '200px'} type='group' />
                         </Col>
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                        < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
                             group='B' height={ww > 767 ? '320px' : '150px'} type='group' />
@@ -434,7 +482,8 @@ export default function Page2() {
                             height={ww > 767 ? '320px' : '150px'} type='group' />
                         </Col>
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                        < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
                             group='C' height={ww > 767 ? '320px' : '150px'} type='group' />
@@ -444,7 +493,8 @@ export default function Page2() {
                             height={ww > 767 ? '320px' : '150px'} type='group' />
                         </Col>
                       </Row>
-                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                      <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                        < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
                             group='D' height={ww > 767 ? '250px' : '150px'} type='group' />
@@ -460,7 +510,8 @@ export default function Page2() {
               )}
               {switch_itd_eod === 'itd' && (
                 <>
-                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                    < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NganhHsAScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
                         height={ww > 767 ? '300px' : '200px'} type='group' />
@@ -470,7 +521,8 @@ export default function Page2() {
                         height={ww > 767 ? '300px' : '200px'} type='group' />
                     </Col>
                   </Row>
-                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                    < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NganhHsBScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
                         height={ww > 767 ? '300px' : '200px'} type='group' />
@@ -480,7 +532,8 @@ export default function Page2() {
                         height={ww > 767 ? '300px' : '200px'} type='group' />
                     </Col>
                   </Row>
-                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                    < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NganhHsCScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
                         height={ww > 767 ? '300px' : '200px'} type='group' />
@@ -490,7 +543,8 @@ export default function Page2() {
                         height={ww > 767 ? '300px' : '200px'} type='group' />
                     </Col>
                   </Row>
-                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px' }}>
+                  <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
+                    < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                       <NganhHsDScoreItd data={itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 17)}
                         height={ww > 767 ? '300px' : '200px'} type='group' />

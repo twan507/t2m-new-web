@@ -11,6 +11,10 @@ import DtFilterTable from "./components/dt_filter_table";
 import KtCandleTable from "./components/kt_candle_table";
 import KtMaPivotTable from "./components/kt_ma_pivot_table";
 import KtFiboTable from "./components/kt_fibo_table";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { sessionLimit } from "@/utlis/sessionLimit";
+import { resetAuthState } from "@/redux/authSlice";
+import LockSection from "@/components/subscribers/blurComponents";
 
 const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
@@ -30,6 +34,20 @@ const useWindowWidth = (): any => {
 };
 
 export default function Page5() {
+
+  const [limitState, setLimitState] = useState(false);
+  const dispatch = useAppDispatch();
+  const authInfo = useAppSelector((state) => state.auth)
+  useEffect(() => {
+    (async () => {
+      const limitState = await sessionLimit(authInfo?.user?.email, authInfo?.access_token);
+      if (!limitState) { dispatch(resetAuthState()) }
+      setLimitState(limitState);
+    })()
+  }, [authInfo?.user?.email, authInfo?.access_token]);
+  const authState = !!authInfo?.user?._id && limitState
+  const accessLevel = authInfo?.user?.role === 'T2M ADMIN' ? 4 : authInfo?.user?.licenseInfo?.accessLevel
+
   const getData = async (tableName: string) => {
     const res = await sendRequest<IBackendRes<any>>({
       url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
@@ -163,7 +181,8 @@ export default function Page5() {
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
               </Row>
-              <Row gutter={10} style={{ marginTop: '20px' }}>
+              <Row gutter={10} style={{ marginTop: '20px', position: 'relative' }}>
+                <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                   <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px' }}>
                     <Row>
@@ -372,6 +391,7 @@ export default function Page5() {
                 </>
               )}
               <Row style={{ marginTop: '20px', position: 'relative' }}>
+                <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 {table_type === 'kt' && (
                   <div
                     style={{

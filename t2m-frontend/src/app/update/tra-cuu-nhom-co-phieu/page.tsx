@@ -12,6 +12,10 @@ import GroupLiquidityLineChart20p from "./components/suc_manh_dong_tien/thanh_kh
 import GroupMarketStructureChart from "./components/cau_truc_song/cau_truc_song_chart";
 import GroupTopCoPhieuTable from "./components/bang_top_co_phieu/top_co_phieu_table";
 import MoneyFlowBreathChart from "./components/thong_tin_nhom/do_rong_dong_tien";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { sessionLimit } from "@/utlis/sessionLimit";
+import { resetAuthState } from "@/redux/authSlice";
+import LockSection from "@/components/subscribers/blurComponents";
 
 
 const useWindowWidth = (): any => {
@@ -55,6 +59,20 @@ const getColorIndustryRank = (value: number) => {
 };
 
 export default function Page3() {
+
+  const [limitState, setLimitState] = useState(false);
+  const dispatch = useAppDispatch();
+  const authInfo = useAppSelector((state) => state.auth)
+  useEffect(() => {
+    (async () => {
+      const limitState = await sessionLimit(authInfo?.user?.email, authInfo?.access_token);
+      if (!limitState) { dispatch(resetAuthState()) }
+      setLimitState(limitState);
+    })()
+  }, [authInfo?.user?.email, authInfo?.access_token]);
+  const authState = !!authInfo?.user?._id && limitState
+  const accessLevel = authInfo?.user?.role === 'T2M ADMIN' ? 4 : authInfo?.user?.licenseInfo?.accessLevel
+
   const [select_group, set_select_group] = useState('Bán lẻ');
 
   const getData = async (tableName: string, columnName: any) => {
@@ -652,10 +670,12 @@ export default function Page3() {
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
               </Row>
-              <Row style={{ marginTop: '30px' }}>
+              <Row style={{ marginTop: '30px', position: 'relative' }}>
+                <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <DtVaTkTrongPhien data={itd_score_liquidity_melted} select_group={select_group} ww={ww} fontSize={pixel(0.017, 17)} />
               </Row>
-              <Row gutter={10} style={{ marginTop: '20px' }}>
+              <Row gutter={10} style={{ marginTop: '20px', position: 'relative' }}>
+                <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <Col xs={12} sm={10} md={8} lg={8} xl={8}>
                   <GroupWeekScoreChart data={group_score_week} ww={ww} select_group={select_group} fontSize={pixel(0.015, 17)} />
                 </Col>
@@ -671,11 +691,13 @@ export default function Page3() {
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
               </Row>
-              <Row style={{ marginTop: ww > 767 ? '30px' : '20px' }}>
+              <Row style={{ marginTop: ww > 767 ? '30px' : '20px', position: 'relative' }}>
+                <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <GroupRankingChart data={group_score_ranking_melted} ww={ww} select_group={select_group}
                   switch_group_industry={switch_group_industry} fontSize={pixel(0.017, 17)} />
               </Row>
-              <Row style={{ marginTop: ww > 767 ? '20px' : '10px' }}>
+              <Row style={{ marginTop: ww > 767 ? '20px' : '10px', position: 'relative' }}>
+                <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <GroupLiquidityLineChart20p data={eod_score_liquidity_melted} select_group={select_group} fontSize={pixel(0.017, 17)} />
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
@@ -686,7 +708,8 @@ export default function Page3() {
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
               </Row>
-              <Row>
+              <Row style={{ position: 'relative' }}>
+                <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <GroupMarketStructureChart data={market_ms} ww={ww} fontSize={pixel(0.015, 17)} select_group={select_group} />
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
@@ -697,14 +720,14 @@ export default function Page3() {
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
               </Row>
-              <Row>
+              <Row style={{ position: 'relative' }}>
+                <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <Col span={24}>
                   <div style={{ background: '#161616', padding: '10px 10px 10px 10px', borderRadius: '5px', margin: 0 }}>
                     <GroupTopCoPhieuTable data={group_stock_top_10_df} ww={ww} fontSize={pixel(0.013, 11)} lineHeight='34px' />
                   </div>
                 </Col>
               </Row>
-
             </Col>
           </Row >
         </Col >

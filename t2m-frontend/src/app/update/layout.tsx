@@ -78,6 +78,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
   const [collapsed, setCollapsed] = useState(true);
 
   const [limitState, setLimitState] = useState(false);
+  const dispatch = useAppDispatch();
   const authInfo = useAppSelector((state) => state.auth)
   useEffect(() => {
     (async () => {
@@ -87,8 +88,6 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
     })()
   }, [authInfo?.user?.email, authInfo?.access_token]);
   const authState = !!authInfo?.user?._id && limitState
-
-  const dispatch = useAppDispatch();
 
   const showLogout = authState ? true : false
 
@@ -122,16 +121,18 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
       router.push('/update/tong-quan-thi-truong')
       setPath(key)
     } else {
-      if (authState) {
-        router.push(`/update/${key}`)
-        setPath(key)
-      } else {
-        setSignInModalOpen(true)
-        notification.warning({
-          message: "Không có quyền truy cập",
-          description: "Bạn cần đăng nhập để xem nội dung này"
-        })
-      }
+      router.push(`/update/${key}`)
+      setPath(key)
+      // if (authState) {
+      //   router.push(`/update/${key}`)
+      //   setPath(key)
+      // } else {
+      //   setSignInModalOpen(true)
+      //   notification.warning({
+      //     message: "Không có quyền truy cập",
+      //     description: "Bạn cần đăng nhập để xem nội dung này"
+      //   })
+      // }
     }
   }
 

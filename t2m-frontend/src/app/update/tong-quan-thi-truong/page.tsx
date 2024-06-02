@@ -20,6 +20,12 @@ import MarketMonthScoreChart from "./components/dong_tien_thanh_khoan/score_mont
 import LiquidityLineChart20p from "./components/dong_tien_thanh_khoan/thanh_khoan_20p";
 import MarketStructureChart from "./components/cau_truc_song_va_top_cp/cau_truc_song_chart";
 import TopCoPhieuTable from "./components/cau_truc_song_va_top_cp/top_co_phieu_table";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { resetAuthState } from "@/redux/authSlice";
+import { sessionLimit } from "@/utlis/sessionLimit";
+import { LockOutlined } from "@ant-design/icons";
+import Link from "next/link";
+import LockSection from "@/components/subscribers/blurComponents";
 
 const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
@@ -61,6 +67,19 @@ const getOpenTime = () => {
 }
 
 export default function Page1() {
+
+  const [limitState, setLimitState] = useState(false);
+  const dispatch = useAppDispatch();
+  const authInfo = useAppSelector((state) => state.auth)
+  useEffect(() => {
+    (async () => {
+      const limitState = await sessionLimit(authInfo?.user?.email, authInfo?.access_token);
+      if (!limitState) { dispatch(resetAuthState()) }
+      setLimitState(limitState);
+    })()
+  }, [authInfo?.user?.email, authInfo?.access_token]);
+  const authState = !!authInfo?.user?._id && limitState
+  const accessLevel = authInfo?.user?.role === 'T2M ADMIN' ? 4 : authInfo?.user?.licenseInfo?.accessLevel
 
   const getData = async (tableName: string) => {
     const res = await sendRequest<IBackendRes<any>>({
@@ -653,6 +672,7 @@ export default function Page1() {
                     )}
                     {chi_so_thi_truong === 'PTKT' && (
                       <>
+                        <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height={ww > 767 ? '270px' : '240px'} width='100%' marginTop={ww > 767 ? '0px' : '-10px'} />
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                           {ww < 767 && (
                             <Radio.Group
@@ -679,7 +699,7 @@ export default function Page1() {
                               </Radio.Button>
                             </Radio.Group>
                           )}
-                          <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0, marginTop: ww > 767 ? '0px' : '15px' }}>
+                          <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0, marginTop: ww > 767 ? '0px' : '15px', display: 'relative' }}>
                             <p style={{
                               fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
                               marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
@@ -892,6 +912,7 @@ export default function Page1() {
                       </div>
                     </Col>
                     <Col xs={16} sm={17} md={19} lg={19} xl={20}>
+                      <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width={ww > 767 ? '100%' : '96%'} />
                       <SentimentLineChart data={market_sentiment} width='100%' height='250px' />
                     </Col>
                   </Row>
@@ -915,6 +936,7 @@ export default function Page1() {
                       </div>
                     </Col>
                     <Col xs={16} sm={17} md={19} lg={19} xl={20}>
+                      <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width={ww > 767 ? '100%' : '96%'} />
                       <LiquidityLineChart openState={openState} data={itd_score_liquidity_df} width='100%' height='250px' />
                     </Col>
                   </Row>
@@ -922,7 +944,8 @@ export default function Page1() {
               )}
               {tttt_dttk === 'DTTK' && (
                 <>
-                  <Row gutter={10} style={{ marginTop: '20px' }}>
+                  <Row gutter={10} style={{ marginTop: '20px', position: 'relative' }}>
+                    <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='95%' width='100%' />
                     <Col xs={12} sm={10} md={8} lg={8} xl={8}>
                       <MarketWeekScoreChart data={group_score_week} ww={ww} fontSize={pixel(0.015, 17)} />
                     </Col>
@@ -930,7 +953,8 @@ export default function Page1() {
                       <MarketMonthScoreChart data={group_score_month} ww={ww} fontSize={pixel(0.015, 17)} />
                     </Col>
                   </Row>
-                  <Row style={{ marginTop: '30px' }}>
+                  <Row gutter={10} style={{ marginTop: '30px', position: 'relative' }}>
+                    <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='270px' width='100%' marginTop='-30px' />
                     <LiquidityLineChart20p data={eod_group_liquidity_df} fontSize={pixel(0.015, 17)} width='100%' height='250px' />
                   </Row>
                 </>
@@ -943,7 +967,8 @@ export default function Page1() {
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
               </Row>
-              <Row>
+              <Row style={{ position: 'relative' }}>
+                <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <MarketStructureChart data={market_ms} ww={ww} fontSize={pixel(0.015, 17)} />
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '20px' }}>
@@ -966,7 +991,8 @@ export default function Page1() {
                   />
                 </Col>
               </Row>
-              <Row gutter={10}>
+              <Row gutter={10} style={{ position: 'relative' }}>
+                <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   {switch_top_mobile === 'top' && (
                     <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0 }}>

@@ -14,6 +14,10 @@ import StockRankingChart from "./components/suc_manh_dong_tien/stock_ranking";
 import StockLiquidityLineChart20p from "./components/suc_manh_dong_tien/thanh_khoan_20p";
 import ScorePriceCorrelationChart from "./components/suc_manh_dong_tien/tuong_quan_dong_tien";
 import GroupRankingChart from "./components/dong_tien_nhom_phu_thuoc/group_ranking";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { sessionLimit } from "@/utlis/sessionLimit";
+import { resetAuthState } from "@/redux/authSlice";
+import LockSection from "@/components/subscribers/blurComponents";
 
 
 const useWindowWidth = (): any => {
@@ -34,6 +38,20 @@ const useWindowWidth = (): any => {
 };
 
 export default function Page4() {
+
+  const [limitState, setLimitState] = useState(false);
+  const dispatch = useAppDispatch();
+  const authInfo = useAppSelector((state) => state.auth)
+  useEffect(() => {
+    (async () => {
+      const limitState = await sessionLimit(authInfo?.user?.email, authInfo?.access_token);
+      if (!limitState) { dispatch(resetAuthState()) }
+      setLimitState(limitState);
+    })()
+  }, [authInfo?.user?.email, authInfo?.access_token]);
+  const authState = !!authInfo?.user?._id && limitState
+  const accessLevel = authInfo?.user?.role === 'T2M ADMIN' ? 4 : authInfo?.user?.licenseInfo?.accessLevel
+
   const [select_stock, set_select_stock] = useState('AAA');
   const [select_industry, set_select_industry] = useState('Hoá chất');
   const [select_perform, set_select_perform] = useState('Hiệu suất B');
@@ -502,6 +520,7 @@ export default function Page4() {
                     )}
                     {thong_tin_cp === 'PTKT' && (
                       <>
+                        <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height={ww > 767 ? '270px' : '280px'} width='100%' marginTop={ww > 767 ? '0px' : '-10px'} />
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                           {ww < 767 && (
                             <Radio.Group
@@ -600,10 +619,12 @@ export default function Page4() {
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
               </Row>
-              <Row style={{ marginTop: '30px' }}>
+              <Row style={{ marginTop: '30px', position: 'relative' }}>
+                <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <DtVaTkTrongPhien data={stock_liquidty_score_t0} select_stock={select_stock} ww={ww} fontSize={pixel(0.017, 17)} />
               </Row>
-              <Row gutter={10} style={{ marginTop: '20px' }}>
+              <Row gutter={10} style={{ marginTop: '20px', position: 'relative' }}>
+                <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <Col xs={12} sm={10} md={8} lg={8} xl={8}>
                   <StockWeekScoreChart data={stock_score_week} ww={ww} select_stock={select_stock} fontSize={pixel(0.015, 17)} />
                 </Col>
@@ -619,7 +640,8 @@ export default function Page4() {
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
               </Row>
-              <Row style={{ marginTop: ww > 767 ? '30px' : '20px' }}>
+              <Row style={{ marginTop: ww > 767 ? '30px' : '20px', position: 'relative' }}>
+                <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <Col span={12}>
                   <StockRankingChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 17)} stock_count={eod_score_df?.length} />
                 </Col>
@@ -627,7 +649,8 @@ export default function Page4() {
                   <ScorePriceCorrelationChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 17)} />
                 </Col>
               </Row>
-              <Row style={{ marginTop: ww > 767 ? '20px' : '10px' }}>
+              <Row style={{ marginTop: ww > 767 ? '20px' : '10px', position: 'relative' }}>
+                <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <StockLiquidityLineChart20p data={stock_score_power_df} select_stock={select_stock} fontSize={pixel(0.017, 17)} />
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
@@ -638,7 +661,8 @@ export default function Page4() {
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
               </Row>
-              <Row gutter={10}>
+              <Row gutter={10} style={{ position: 'relative' }}>
+                <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <Col span={8}>
                   <GroupRankingChart data={group_score_ranking_melted} ww={ww} select_group={select_industry}
                     switch_group_industry='industry' fontSize={pixel(0.017, 17)} />
