@@ -107,7 +107,7 @@ export default function AdminDashboard() {
     }, 0);
     setRevenue(totalRevenue)
 
-    const totalPaidUsers = filteredOrders?.filter((item: any) => item.type === "Tạo mới").length;
+    const totalPaidUsers = filteredOrders?.filter((item: any) => item.type === "Tạo mới")?.length;
     setPaidUsers(totalPaidUsers)
 
   }, [filteredOrders])

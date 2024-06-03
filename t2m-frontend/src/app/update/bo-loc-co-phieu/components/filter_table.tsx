@@ -68,7 +68,7 @@ const FilterStockTable = (props: any) => {
     if (props?.filter_year_trend?.length === 0) { filterData = filterData }
     else { filterData = filterData.filter((item: any) => props?.filter_year_trend?.includes(item.year_trend)) };
 
-    if (filter_ta_columns.length === 0) { filterData = filterData }
+    if (filter_ta_columns?.length === 0) { filterData = filterData }
     else {
       filterData = filterData.filter((item: any) => {
         return filter_ta_columns.every((column: any) => {

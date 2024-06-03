@@ -40,7 +40,7 @@ export class PermissionsService {
 
     let offset = (+currentPage - 1) * (+limit)
     let defaultLimit = +limit ? +limit : 10
-    const totalItems = (await this.permissionModel.find(filter)).length
+    const totalItems = (await this.permissionModel.find(filter))?.length
     const totalPages = Math.ceil(totalItems / defaultLimit)
 
     const result = await this.permissionModel.find(filter)

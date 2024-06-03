@@ -76,14 +76,14 @@ const UserInfoModal = (props: IProps) => {
     function getAvatarName(name: string) {
         const words = name?.split(' ').filter(Boolean);
         if (words) {
-            if (words.length === 0) return '';
+            if (words?.length === 0) return '';
 
-            if (words.length === 1) {
+            if (words?.length === 1) {
                 return words[0][0].toUpperCase();
             }
 
             const firstInitial = words[0][0];
-            const lastInitial = words[words.length - 1][0];
+            const lastInitial = words[words?.length - 1][0];
             return (firstInitial + lastInitial).toUpperCase();
         }
     }
@@ -96,9 +96,9 @@ const UserInfoModal = (props: IProps) => {
         const words = name?.split(' ').filter(Boolean).map(capitalizeFirstLetter);
 
         if (words) {
-            if (words.length === 0) return '';
-            if (words.length === 1) return words[0];
-            if (words.length > 4) {
+            if (words?.length === 0) return '';
+            if (words?.length === 1) return words[0];
+            if (words?.length > 4) {
                 // Bỏ từ thứ hai và lấy 3 từ còn lại
                 return `${words[0]} ${words[2]} ${words[3]}`;
             }

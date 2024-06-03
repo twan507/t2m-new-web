@@ -330,7 +330,7 @@ export default function Page5() {
                       </div>
                     </Col>
                   </Row>
-                  {(ta_filter_candle.length > 0 || ta_filter_ma_pivot.length > 0 || ta_filter_fibo.length > 0) && (
+                  {(ta_filter_candle?.length > 0 || ta_filter_ma_pivot?.length > 0 || ta_filter_fibo?.length > 0) && (
                     <Row>
                       <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '0px 10px 20px 10px', width: '100%', marginTop: '10px' }}>
                         <TaSlider fontSize={pixel(0.014, 13)} set_filter_slider_value={set_filter_slider_value} />

@@ -184,7 +184,7 @@ export class LicensesService {
 
   async undoExtend(id: string, user) {
     const foundLicense = await this.licenseModel.findOne({ _id: new mongoose.Types.ObjectId(id) })
-    const logLength = foundLicense.durationLog.length
+    const logLength = foundLicense.durationLog?.length
     const lastExtend: any = foundLicense.durationLog[logLength - 1]
 
     if (logLength > 1) {
@@ -225,7 +225,7 @@ export class LicensesService {
 
     let offset = (+currentPage - 1) * (+limit)
     let defaultLimit = +limit ? +limit : 10
-    const totalItems = (await this.licenseModel.find(filter)).length
+    const totalItems = (await this.licenseModel.find(filter))?.length
     const totalPages = Math.ceil(totalItems / defaultLimit)
 
     const result = await this.licenseModel.find(filter)

@@ -77,7 +77,7 @@ export class AuthService {
 
         //logic check số lượng đăng nhập
         const devices_number = process.env.MAX_DEVICES as unknown as number
-        if (tokens.length >= devices_number) {
+        if (tokens?.length >= devices_number) {
             this.usersService.updateTokensArray(_id);
         }
 

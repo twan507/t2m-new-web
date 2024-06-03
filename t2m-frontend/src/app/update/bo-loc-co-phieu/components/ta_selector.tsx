@@ -48,7 +48,7 @@ const TaSelector = (props: any) => {
 
 
   const handleChange = (value: any) => {
-    if (value.length === 0 || value.includes('all')) {
+    if (value?.length === 0 || value.includes('all')) {
       props?.filter([]);
       setPlaceholder('Chọn chỉ số kĩ thuật');
     } else {
@@ -62,7 +62,7 @@ const TaSelector = (props: any) => {
   };
 
   const handleBlur = () => {
-    if (props?.filter_value.length === 0) {
+    if (props?.filter_value?.length === 0) {
       setPlaceholder('Chọn chỉ số kĩ thuật');
     }
   };

@@ -79,7 +79,7 @@ export class ProductsService {
 
     let offset = (+currentPage - 1) * (+limit)
     let defaultLimit = +limit ? +limit : 10
-    const totalItems = (await this.productModel.find(filter)).length
+    const totalItems = (await this.productModel.find(filter))?.length
     const totalPages = Math.ceil(totalItems / defaultLimit)
 
     const result = await this.productModel.find(filter)

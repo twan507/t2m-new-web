@@ -27,7 +27,7 @@ const SearchComponent = (props: any) => {
     };
 
     const onPressEnter = () => {
-        if (options.length > 0) {
+        if (options?.length > 0) {
             setInputValue(options[0].value);
             props.set_select_stock(options[0].value)
             props.set_select_industry(options[0].industry_name)
@@ -40,6 +40,12 @@ const SearchComponent = (props: any) => {
     const onSelect = (value: string) => {
         setInputValue(value);
         props.set_select_stock(value)
+
+        const options = allOptions.filter((item: any) => item.value === value)
+        props.set_select_industry(options[0].industry_name)
+        props.set_select_perform(options[0].industry_perform)
+        props.set_select_cap(options[0].marketcap_group)
+
         if (inputRef.current) {
             inputRef.current.blur();
         }

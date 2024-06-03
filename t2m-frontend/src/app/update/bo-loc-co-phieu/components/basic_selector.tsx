@@ -29,7 +29,7 @@ const BasicSelector = (props: any) => {
   }));
 
   const handleChange = (value: any) => {
-    if (value.length === 0 || value.includes('all')) {
+    if (value?.length === 0 || value.includes('all')) {
       props?.filter([]);
       setPlaceholder('All');
     } else {
@@ -68,7 +68,7 @@ const BasicSelector = (props: any) => {
       filterOption={(input, option: any) =>
         option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }
-      style={{ width: '100%', color: '#dfdfdf'}}
+      style={{ width: '100%', color: '#dfdfdf' }}
     >
       <Select.Option value="all">Chọn tất cả</Select.Option>
       {options.map(option => (
