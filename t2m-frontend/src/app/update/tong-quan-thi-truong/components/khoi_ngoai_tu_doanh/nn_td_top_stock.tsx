@@ -20,6 +20,10 @@ const NdTdTopStockChart = (props: any) => {
                 props?.data?.filter((item: any) => item.id === props?.id).map((item: any) => ({ name: item.td_sell_stock, value: item.td_sell_value }))
     };
 
+    function isArrayValid(array: any[]): boolean {
+        return array.every(item => item.name !== null && item.value !== null);
+    }
+
     const [checkAuth, setCheckAuth] = useState(true);
     useEffect(() => {
         setCheckAuth(false)
@@ -27,7 +31,7 @@ const NdTdTopStockChart = (props: any) => {
     if (!checkAuth) {
         return (
             <>
-                {(top_data.children.length === 20 && bottom_data.children.length === 20) && (
+                {(isArrayValid(top_data.children) && isArrayValid(bottom_data.children)) && (
                     <>
                         <div style={{ marginTop: '10px', height: '115px', width: '100%' }}>
                             <Treemap data={top_data} ww={props.ww} pixel={props.pixel} type='nntd' />
@@ -37,12 +41,12 @@ const NdTdTopStockChart = (props: any) => {
                         </div>
                     </>
                 )}
-                {(top_data.children.length !== 20 && bottom_data.children.length !== 20) && (
+                {(!isArrayValid(top_data.children) && !isArrayValid(bottom_data.children)) && (
                     <div style={{
                         marginTop: '10px', height: '230px', width: '100%',
                         backgroundColor: '#161616', borderRadius: '5px',
                         display: 'flex', justifyContent: 'center', alignItems: 'center',
-                        color:'#dfdfdf'
+                        color: '#dfdfdf'
                     }}>
                         Giá trị nước ngoài mua/bán ròng
                     </div>

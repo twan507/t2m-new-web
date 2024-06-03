@@ -15,6 +15,10 @@ const MarketTopStockChart = (props: any) => {
         children: props?.data?.filter((item: any) => item.t0_score < 0).map((item: any) => ({ name: item.stock, value: item.t0_score, change: item.price_change }))
     };
 
+    function isArrayValid(array: any[]): boolean {
+        return array.every(item => item.name !== null && item.value !== null);
+    }
+
     const [checkAuth, setCheckAuth] = useState(true);
     useEffect(() => {
         setCheckAuth(false)
@@ -22,7 +26,7 @@ const MarketTopStockChart = (props: any) => {
     if (!checkAuth) {
         return (
             <>
-                {(top_data.children.length === 10 && bottom_data.children.length === 10) && (
+                {(isArrayValid(top_data.children) && isArrayValid(bottom_data.children)) && (
                     <>
                         <div style={{ marginTop: '40px', height: '115px', width: '100%' }}>
                             <Treemap data={top_data} ww={props.ww} pixel={props.pixel} type='market' />
@@ -32,7 +36,7 @@ const MarketTopStockChart = (props: any) => {
                         </div>
                     </>
                 )}
-                {(top_data.children.length !== 10 && bottom_data.children.length !== 10) && (
+                {(!isArrayValid(top_data.children) && !isArrayValid(bottom_data.children)) && (
                     <div style={{
                         marginTop: '10px', height: '230px', width: '100%',
                         backgroundColor: '#161616', borderRadius: '5px',
