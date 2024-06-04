@@ -21,7 +21,7 @@ const NdTdTopStockChart = (props: any) => {
     };
 
     function isArrayValid(array: any[]): boolean {
-        return array.every(item => item.name !== null && item.value !== null);
+        return array.some(item => item.name !== null && item.value !== null);
     }
 
     const [checkAuth, setCheckAuth] = useState(true);
