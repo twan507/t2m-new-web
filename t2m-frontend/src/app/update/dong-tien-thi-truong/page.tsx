@@ -6,7 +6,7 @@ import './styles.css'
 import MoneyFlowValueChart from "./trong_phien_eod/gia_tri_dong_tien";
 import MoneyFlowBreathChart from "./trong_phien_eod/do_rong_dong_tien";
 import MoneyFlowLiquidityChart from "./trong_phien_eod/chi_so_thanh_khoan_eod";
-import TopIndustryChart from "./trong_phien_eod/xep_hang_nganh";
+import TopIndustryChart from "./tuan_thang_eod/xep_hang_nganh";
 import MoneyFlowT5Chart from "./tuan_thang_eod/dong_tien_t5";
 import NhomVhRanking from "./tuan_thang_eod/nhom_vh_ranking";
 import NhomHsRanking from "./tuan_thang_eod/nhom_hs_ranking";
@@ -457,14 +457,11 @@ export default function Page2() {
                   )}
                   {switch_industry === 'M' && (
                     <>
-                      <Row style={{ marginTop: '30px' }}>
-                        <TopIndustryChart data={full_industry_ranking} ww={ww} fontSize={pixel(0.017, 17)} />
-                      </Row>
                       <Row gutter={20} style={{ marginTop: ww > 767 ? '40px' : '30px', position: 'relative' }}>
                         < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='A' height={ww > 767 ? '370px' : '200px'} type='group' />
+                            group='A' height={ww > 767 ? '370px' : '200px'} type='industry' />
                         </Col>
                         <Col xs={12} sm={12} md={14} lg={14} xl={14}>
                           <NganhHsARanking data={group_score_ranking} ww={ww} fontSize={pixel(0.017, 17)}
@@ -475,7 +472,7 @@ export default function Page2() {
                         < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='B' height={ww > 767 ? '320px' : '150px'} type='group' />
+                            group='B' height={ww > 767 ? '320px' : '150px'} type='industry' />
                         </Col>
                         <Col xs={12} sm={12} md={14} lg={14} xl={14}>
                           <NganhHsBRanking data={group_score_ranking} ww={ww} fontSize={pixel(0.017, 17)}
@@ -486,7 +483,7 @@ export default function Page2() {
                         < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='C' height={ww > 767 ? '320px' : '150px'} type='group' />
+                            group='C' height={ww > 767 ? '320px' : '150px'} type='industry' />
                         </Col>
                         <Col xs={12} sm={12} md={14} lg={14} xl={14}>
                           <NganhHsCRanking data={group_score_ranking} ww={ww} fontSize={pixel(0.017, 17)}
@@ -497,12 +494,15 @@ export default function Page2() {
                         < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_df_5p} ww={ww} fontSize={pixel(0.017, 17)}
-                            group='D' height={ww > 767 ? '250px' : '150px'} type='group' />
+                            group='D' height={ww > 767 ? '250px' : '150px'} type='industry' />
                         </Col>
                         <Col xs={12} sm={12} md={14} lg={14} xl={14}>
                           <NganhHsDRanking data={group_score_ranking} ww={ww} fontSize={pixel(0.017, 17)}
                             height={ww > 767 ? '250px' : '150px'} type='group' />
                         </Col>
+                      </Row>
+                      <Row style={{ marginTop: '50px' }}>
+                        <TopIndustryChart data={full_industry_ranking} ww={ww} fontSize={pixel(0.017, 17)} />
                       </Row>
                     </>
                   )}
