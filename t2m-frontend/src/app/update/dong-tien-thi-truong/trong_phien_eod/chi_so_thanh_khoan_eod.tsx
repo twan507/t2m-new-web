@@ -43,8 +43,8 @@ const MoneyFlowLiquidityChart = (props: any) => {
                 data: data_sets?.map((item: any) => item.liquidity), // Sử dụng nn_value từ sample data
                 backgroundColor: function (context: any) {
                     const value = context.dataset.data[context.dataIndex] * 100;
-                    if (value < 60) return '#00cccc';
-                    if (value < 90) return '#e14040';
+                    if (value < 50) return '#00cccc';
+                    if (value < 80) return '#e14040';
                     if (value < 120) return '#D0be0f';
                     if (value < 150) return '#24B75E';
                     return '#C031C7';

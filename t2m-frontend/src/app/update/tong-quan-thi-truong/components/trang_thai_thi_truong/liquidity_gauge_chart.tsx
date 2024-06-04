@@ -7,8 +7,8 @@ import './gauge.css';
 Chart.register(ArcElement, Tooltip, Legend);
 
 const getColor = (value: number) => {
-  if (value < 60) return '#00cccc'; // Đỏ
-  if (value < 90) return '#e14040'; // Cam
+  if (value < 50) return '#00cccc'; // Đỏ
+  if (value < 80) return '#e14040'; // Cam
   if (value < 120) return '#D0be0f'; // Vàng
   if (value < 150) return '#24B75E'; // Xanh lá cây
   return '#C031C7'; // Xanh đậm
