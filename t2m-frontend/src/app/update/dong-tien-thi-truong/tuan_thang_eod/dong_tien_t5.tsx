@@ -135,18 +135,19 @@ const MoneyFlowT5Chart = (props: any) => {
         scales: {
             x: {
                 stacked: true,
-                min: props?.type === 'industry' ? minIndustryScore : null,
-                max: props?.type === 'industry' ? maxIndustryScore : null,
+                min: props?.type === 'industry' ? Math.round(minIndustryScore) : null,
+                max: props?.type === 'industry' ? Math.round(maxIndustryScore) : null,
                 grid: {
                     display: true,
                     color: '#dfdfdf',
                     drawTicks: false,
                     drawBorder: false,
                     lineWidth: function (context: any) {
-                        return context.tick.value === 0 ? 2 : 0; // Draw grid line only at value 0
+                        return context.tick.value === 0 ? 2 : 0;
                     },
                 },
                 ticks: {
+                    stepSize: 1,
                     display: true,
                     color: '#dfdfdf'
                 },
