@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import {
   DoubleLeftOutlined,
@@ -12,9 +12,14 @@ import {
   BarChartOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  UsergroupAddOutlined
+  UsergroupAddOutlined,
+  AppstoreOutlined,
+  ReloadOutlined,
+  PieChartOutlined,
+  FileSearchOutlined,
+  ExportOutlined
 } from '@ant-design/icons';
-import { Layout, Menu, Button, Avatar, notification } from 'antd';
+import { Layout, Menu, Button, Avatar, notification, Image, Col } from 'antd';
 import { useRouter } from 'next/navigation';
 import AuthSignInModal from '@/components/auth/signin.modal';
 import AuthSignUpModal from '@/components/auth/signup.modal';
@@ -24,6 +29,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { signOut } from '@/utlis/signOut';
 import { resetAuthState } from '@/redux/authSlice';
 import { sessionLimit } from '@/utlis/sessionLimit';
+import './styles.css'
 
 const { Header, Footer, Content } = Layout;
 
@@ -62,7 +68,26 @@ function getUserName(name: string) {
 
 }
 
+const useWindowWidth = (): any => {
+  const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(Math.min(window.innerWidth, 1250));
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return windowWidth;
+};
+
 const Homelayout = ({ children }: React.PropsWithChildren) => {
+
+  const ww = useWindowWidth();
 
   //@ts-ignore
   const [path, setPath] = useState(children.props.childProp.segment === "__PAGE__" ? "tong-quan-thi-truong" : children.props.childProp.segment)
@@ -74,6 +99,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
   const [collapsed, setCollapsed] = useState(true);
 
   const [limitState, setLimitState] = useState(false);
+  const dispatch = useAppDispatch();
   const authInfo = useAppSelector((state) => state.auth)
   useEffect(() => {
     (async () => {
@@ -83,8 +109,6 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
     })()
   }, [authInfo?.user?.email, authInfo?.access_token]);
   const authState = !!authInfo?.user?._id && limitState
-
-  const dispatch = useAppDispatch();
 
   const showLogout = authState ? true : false
 
@@ -112,61 +136,101 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
   }, [path]);
 
   const handleSelect = ({ key }: { key: string }) => {
-    if (key === path) {
-      window.location.reload()
-    } else if (key === 'tong-quan-thi-truong') {
-      router.push('/tong-quan-thi-truong')
+    if (key !== '#') {
+      router.push(`/${key}`)
       setPath(key)
-    } else {
-      if (authState) {
-        router.push(`/${key}`)
-        setPath(key)
-      } else {
-        setSignInModalOpen(true)
-        notification.warning({
-          message: "Không có quyền truy cập",
-          description: "Bạn cần đăng nhập để xem nội dung này"
-        })
-      }
     }
   }
 
   const sider_menu = [
     {
       label: (
-        <Link href="/tong-quan-thi-truong" onClick={(e) => { e.preventDefault() }}>
+        <Link href="#" onClick={(e) => {
+          e.preventDefault()
+          setCollapsed(true)
+        }}>
           Tổng quan thị trường
         </Link>
       ),
       key: 'tong-quan-thi-truong',
-      icon: <FundViewOutlined style={{ fontSize: '20px', marginLeft: '-1px' }} />
+      icon: <PieChartOutlined style={{ fontSize: '20px', marginLeft: '-01px', marginTop: collapsed ? '11px' : '0px' }} />
     },
     {
       label: (
-        <Link href="/dong-tien-thi-truong" onClick={(e) => { e.preventDefault() }} >
+        <Link href="#" onClick={(e) => {
+          e.preventDefault()
+          setCollapsed(true)
+        }}>
           Dòng tiền thị trường
         </Link>
       ),
       key: 'dong-tien-thi-truong',
-      icon: <LineChartOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
+      icon: <BarChartOutlined style={{ fontSize: '18px', marginLeft: '0px', marginTop: collapsed ? '11px' : '0px' }} />,
     },
     {
       label: (
-        <Link href="/dong-tien-nhom-nganh" onClick={(e) => { e.preventDefault() }} >
-          Dòng tiền ngành
+        <Link href="#" onClick={(e) => {
+          e.preventDefault()
+          setCollapsed(true)
+        }}>
+          Tra cứu nhóm CP
         </Link>
       ),
-      key: 'dong-tien-nhom-nganh',
-      icon: <BarChartOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
+      key: 'tra-cuu-nhom-co-phieu',
+      icon: <FileSearchOutlined style={{ fontSize: '18px', marginLeft: '0px', marginTop: collapsed ? '11.5px' : '0px' }} />,
     },
     {
       label: (
-        <Link href="/bo-loc-co-phieu" onClick={(e) => { e.preventDefault() }} >
+        <Link href="#" onClick={(e) => {
+          e.preventDefault()
+          setCollapsed(true)
+        }}>
+          Tra cứu cổ phiếu
+        </Link>
+      ),
+      key: 'tra-cuu-co-phieu',
+      icon: <SearchOutlined style={{ fontSize: '18px', marginLeft: '-1px', marginTop: collapsed ? '11px' : '0px' }} />,
+    },
+    {
+      label: (
+        <Link href="#" onClick={(e) => {
+          e.preventDefault()
+          setCollapsed(true)
+        }}>
           Bộ lọc cổ phiếu
         </Link>
       ),
       key: 'bo-loc-co-phieu',
-      icon: <SearchOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
+      icon: <FundViewOutlined style={{ fontSize: '18px', marginLeft: '0px', marginTop: '12px' }} />,
+    }
+  ]
+
+  const bottom_sider_menu = [
+    ...((authInfo?.user?.role === "T2M ADMIN") ? [
+      {
+        label: (
+          <Link href="/report" onClick={(e) => {
+            e.preventDefault()
+            setCollapsed(true)
+          }}>
+            Xuất báo cáo
+          </Link>
+        ),
+        key: 'report',
+        icon: <ExportOutlined />,
+      }] : []),
+    {
+      label: (
+        <Link href="#" onClick={async (e) => {
+          e.preventDefault()
+          dispatch(resetAuthState())
+          signOut(authInfo.access_token)
+        }}>
+          Đăng xuất
+        </Link>
+      ),
+      key: '#',
+      icon: <LogoutOutlined />,
     }
   ]
 
@@ -199,104 +263,99 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
               background: '#000000',
               borderRight: '2px solid #303030',
               height: '100vh',
-              display: 'flex',
-              flexDirection: 'column',
               position: 'sticky',
               top: 0,
-              zIndex: 101
+              zIndex: 101,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
             }}>
-            <Button
-              type="text"
-              onClick={() => {
-                authState ? setUserInfoModalOpen(true) : setSignInModalOpen(true)
-              }}
-              block={true}
-              style={{
-                marginTop: '10px',
-                height: "50px",
-                color: '#dfdfdf',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'middle'
-              }}
-            >
-              <Avatar
-                icon={authState ? null : <UserOutlined />}
-                style={{ backgroundColor: authState ? '#7265e6' : '#404040', marginLeft: '-8px', marginRight: '10px', marginBottom: '5px', minWidth: '36px', height: '36px', paddingTop: '2px' }}
-              >
-                {authState ? getAvatarName(authInfo.user.name) : ''}
-              </Avatar>
-              {!collapsed && (
-                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', marginTop: authState ? '-4px' : '3px', marginLeft: authState ? '0px' : '12px' }}>
-                  <div style={{ fontSize: 15, marginTop: -5 }}>{collapsed ? '' : (authState ? getUserName(authInfo.user.name) : 'Đăng nhập')}</div>
-                  {authState && (
-                    <div style={{ display: 'flex', marginTop: -3 }} >
-                      <div style={{
-                        fontSize: 12, marginTop: 4, padding: '0px 5px 0px 5px',
-                        background:
-                          authInfo.user.role === "T2M ADMIN" ? '#98217c' : (
-                            !authInfo.user.licenseInfo?.accessLevel ? '#404040' : (
-                              authInfo.user.licenseInfo?.accessLevel === 1 ? '#1777ff' : (
-                                authInfo.user.licenseInfo?.accessLevel === 2 ? '#1E7607' : (
-                                  authInfo.user.licenseInfo?.accessLevel === 3 ? '#D0be0f' : '#98217c'
-                                )))),
-                        borderRadius: 5, width: 'fit-content'
-                      }}
-                      >
-                        {collapsed ? null : authInfo.user.role === "T2M ADMIN" ? "ADMIN" : authInfo.user.licenseInfo?.product ?? 'FREE'}
-                      </div>
-                      {(authInfo.user.licenseInfo?.daysLeft && authInfo.user.licenseInfo?.daysLeft < 370) && (
-                        //@ts-ignore
-                        <div style={{ fontSize: 12, marginTop: 4, marginLeft: '5px', padding: '0px 5px 0px 5px', background: '#A20D0D', borderRadius: 5, width: 'fit-content' }}>
-                          {collapsed ? null : `${authInfo.user.licenseInfo?.daysLeft} days`}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              )}
-            </Button>
-            <Button
-              type="text"
-              icon={collapsed ? <DoubleRightOutlined /> : <DoubleLeftOutlined />}
-              onClick={() => setCollapsed(!collapsed)}
-              block={true}
-              style={{
-                fontSize: '16px',
-                height: "50px",
-                color: '#dfdfdf',
-              }}
-            />
-            <Menu
-              style={{ background: '#000000' }}
-              theme="dark"
-              mode="inline"
-              selectedKeys={[path]}
-              onClick={handleSelect}
-              items={sider_menu}
-            />
             <div>
-              {showLogout && (
-                <Button
-                  type="text"
-                  icon={<LogoutOutlined />}
-                  onClick={async () => {
-                    dispatch(resetAuthState())
-                    handleSelect({ key: 'tong-quan-thi-truong' })
-                    signOut(authInfo.access_token)
-                  }}
-                  style={{
-                    fontSize: '14px',
-                    height: "50px",
-                    color: '#dfdfdf',
-                    marginLeft: collapsed ? '8px' : '13px',
-                    marginTop: `calc(100vh - 120px - ${4 * 55}px`
-                  }}
+              <Button
+                type="text"
+                onClick={() => {
+                  authState ? setUserInfoModalOpen(true) : setSignInModalOpen(true)
+                }}
+                block={true}
+                style={{
+                  marginTop: '10px',
+                  height: "50px",
+                  color: '#dfdfdf',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'middle'
+                }}
+              >
+                <Avatar
+                  icon={authState ? null : <UserOutlined />}
+                  style={{ backgroundColor: authState ? '#7265e6' : '#404040', marginLeft: '-8px', marginRight: '10px', marginBottom: '5px', minWidth: '36px', height: '36px', paddingTop: '2px' }}
                 >
-                  {collapsed ? '' : 'Đăng xuất'}
-                </Button>
-              )}
+                  {authState ? getAvatarName(authInfo.user.name) : ''}
+                </Avatar>
+                {!collapsed && (
+                  <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', marginTop: authState ? '-4px' : '3px', marginLeft: authState ? '0px' : '12px' }}>
+                    <div style={{ fontSize: 15, marginTop: -5 }}>{collapsed ? '' : (authState ? getUserName(authInfo.user.name) : 'Đăng nhập')}</div>
+                    {authState && (
+                      <div style={{ display: 'flex', marginTop: -3 }} >
+                        <div style={{
+                          fontSize: 12, marginTop: 4, padding: '0px 5px 0px 5px',
+                          background:
+                            authInfo.user.role === "T2M ADMIN" ? '#98217c' : (
+                              !authInfo.user.licenseInfo?.accessLevel ? '#404040' : (
+                                authInfo.user.licenseInfo?.accessLevel === 1 ? '#1777ff' : (
+                                  authInfo.user.licenseInfo?.accessLevel === 2 ? '#1E7607' : (
+                                    authInfo.user.licenseInfo?.accessLevel === 3 ? '#D0be0f' : '#98217c'
+                                  )))),
+                          borderRadius: 5, width: 'fit-content'
+                        }}
+                        >
+                          {collapsed ? null : authInfo.user.role === "T2M ADMIN" ? "ADMIN" : authInfo.user.licenseInfo?.product ?? 'FREE'}
+                        </div>
+                        {(authInfo.user.licenseInfo?.daysLeft && authInfo.user.licenseInfo?.daysLeft < 370) && (
+                          //@ts-ignore
+                          <div style={{ fontSize: 12, marginTop: 4, marginLeft: '5px', padding: '0px 5px 0px 5px', background: '#A20D0D', borderRadius: 5, width: 'fit-content' }}>
+                            {collapsed ? null : `${authInfo.user.licenseInfo?.daysLeft} days`}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </Button>
+              <Button
+                type="text"
+                icon={collapsed ? <DoubleRightOutlined /> : <DoubleLeftOutlined />}
+                onClick={() => setCollapsed(!collapsed)}
+                block={true}
+                style={{
+                  fontSize: '16px',
+                  height: "50px",
+                  color: '#dfdfdf',
+                }}
+              />
+              <Menu
+                style={{ background: '#000000' }}
+                theme="dark"
+                mode="inline"
+                selectedKeys={[path]}
+                onClick={handleSelect}
+                items={sider_menu}
+              />
             </div>
+            {showLogout && (
+              <Menu
+                style={{
+                  // 110 là chiều cao 2 nút trên cùng, 46 là chiều cao mỗi nút đổi trang, 50 hoặc 100 là chiều cao bản thân nút này
+                  marginTop: authInfo.user.role === "T2M ADMIN" ? `calc(100vh - 110px - ${5 * 46}px - 100px` : `calc(100vh - 110px - ${5 * 46}px - 50px`,
+                  background: '#000000'
+                }}
+                theme="dark"
+                mode="inline"
+                selectedKeys={[]}
+                onClick={handleSelect}
+                items={bottom_sider_menu}
+              />
+            )}
           </Sider>
           <Layout style={{ background: '#000000' }}>
             <Header style={{
@@ -306,74 +365,73 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
               top: 0,
               zIndex: 101
             }}>
-              <Menu
-                style={{
-                  background: '#000000',
-                  height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', width: mobileLayout ? '100%' : '1300px'
-                  // borderBottom: '2px solid #303030',
-                }}
-                theme='dark'
-                mode="horizontal"
-                selectedKeys={[]}
-                items={[
-                  // Kiểm tra điều kiện mobileLayout ngay ở đầu để quyết định phần tử hiển thị
-                  ...(mobileLayout ? [
-                    {
-                      label: <Button ghost
-                        icon={collapsed ? <MenuUnfoldOutlined style={{ fontSize: '20px', padding: '0px', margin: '0px' }} /> : <MenuFoldOutlined style={{ fontSize: '20px', padding: '0px', margin: '0px' }} />}
-                        onClick={() => setCollapsed(!collapsed)}
-                        style={{ border: '0px', padding: '0px', margin: '0px' }}
-                      />,
-                      key: 'home-mobile', // Sử dụng một key khác biệt cho mobile layout
-                    },
-                    {
-                      label: collapsed ? <Link onClick={() => { window.location.href = "/" }} href='/' /> : null,
-                      key: 'home',
-                      icon: collapsed ? <img src="/photo/text-logo.png" alt="Home Icon" style={{ width: '120px', height: '65px', paddingTop: '40px', marginBottom: '16px' }} /> : null
-                    }
-                  ] : [
-                    {
-                      label: <Link onClick={() => { window.location.href = "/" }} href='/' />,
-                      key: 'home',
-                      icon: <img src="/photo/header-logo.png" alt="Home Icon" style={{ width: '160px', height: 'auto', paddingTop: '25px', marginLeft: '10px' }} />
-                    }]),
-                  ...(!authState ? [
-                    {
-                      label: mobileLayout && !collapsed ? null :
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: ww, padding: '0px 20px' }}>
+                {ww > 767 && (
+                  <Image
+                    preview={false}
+                    style={{ width: 'auto', height: '45px' }}
+                    src="/photo/header-logo.png"
+                    alt="Home Icon"
+                    onClick={() => { window.location.href = '/' }}
+                  />
+                )}
+                {ww <= 767 && (
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Button ghost
+                      icon={collapsed ?
+                        <MenuUnfoldOutlined style={{ fontSize: '20px', padding: '0px', margin: '0px', marginTop: '3px' }} /> :
+                        <MenuFoldOutlined style={{ fontSize: '20px', padding: '0px', margin: '0px', marginTop: '3px' }} />}
+                      onClick={() => setCollapsed(!collapsed)}
+                      style={{ border: '0px', padding: '0px', margin: '0px' }}
+                    />
+                    {collapsed && (
+                      <Image
+                        preview={false}
+                        style={{ width: 'auto', height: '30px', marginLeft: '10px' }}
+                        src="/photo/text-logo.png"
+                        alt="Home Icon"
+                        onClick={() => { window.location.href = '/' }}
+                      />
+                    )}
+                  </div>
+                )}
+                {((collapsed && ww <= 767) || ww > 767) && (
+                  <>
+                    {!authState && (
+                      <div>
                         <Button ghost type='primary' onClick={() => setSignInModalOpen(true)}
-                          icon={mobileLayout ? <UserOutlined /> : null}
+                          icon={ww < 767 ? <UserOutlined /> : null}
                           style={{
-                            width: mobileLayout ? '40px' : '120px',
-                            marginLeft: mobileLayout ? 'calc(100vw - 360px)' : '790px',
+                            width: ww < 767 ? '40px' : '120px',
                             fontWeight: 'bold',
                             fontFamily: 'Helvetica Neue, sans-serif'
                           }}>
-                          {mobileLayout ? "" : "Đăng nhập"}
-                        </Button>,
-                      key: 'signin',
-                    },
-                    {
-                      label: mobileLayout && !collapsed ? null :
+                          {ww < 767 ? "" : "Đăng nhập"}
+                        </Button>
                         <Button type='primary' onClick={() => setSignUpModalOpen(true)}
-                          icon={mobileLayout ? <UsergroupAddOutlined /> : null}
+                          icon={ww < 767 ? <UsergroupAddOutlined /> : null}
                           style={{
-                            width: mobileLayout ? '40px' : '120px',
-                            marginLeft: '-20px',
+                            width: ww < 767 ? '40px' : '120px',
+                            marginLeft: '10px',
                             fontWeight: 'bold',
                             fontFamily: 'Helvetica Neue, sans-serif'
                           }}>
-                          {mobileLayout ? "" : "Đăng ký"}
+                          {ww < 767 ? "" : "Đăng ký"}
                         </Button>,
-                      key: 'signup',
-                    }
-                  ] : []),
-                ]}
-              />
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
             </Header>
-            <Content>
-              {children}
-            </Content>
-            <FooterComponent />
+            {((collapsed && ww <= 600) || ww > 600) && (
+              <>
+                <Content>
+                  {children}
+                </Content>
+                <FooterComponent />
+              </>
+            )}
           </Layout>
         </Layout >
       </>

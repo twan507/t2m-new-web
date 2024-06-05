@@ -131,10 +131,8 @@ const MoneyFlowLiquidityChart = (props: any) => {
         },
         scales: {
             x: {
-                // min: props?.type === 'industry' ? 0 : null,
-                // max: props?.type === 'industry' ? maxIndustryLiquidity : null,
                 min: 0,
-                max: maxIndustryLiquidity,
+                max: props?.type === 'industry' ? maxIndustryLiquidity : null,
                 grid: {
                     display: false, // Loại bỏ grid dọc
                 },

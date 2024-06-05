@@ -34,7 +34,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/components/ThemeToggle.jsx",
-    "src/app/update/bo-loc-co-phieu/components/test.jsx",
+    "src/app/(home)/bo-loc-co-phieu/components/test.jsx",
     "src/app/test/testapp.tsx"
   ],
   "exclude": [
