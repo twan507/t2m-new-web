@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
   DoubleLeftOutlined,
@@ -12,11 +12,7 @@ import {
   BarChartOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  UsergroupAddOutlined,
-  AppstoreOutlined,
-  ReloadOutlined,
-  PieChartOutlined,
-  FileSearchOutlined
+  UsergroupAddOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, Button, Avatar, notification } from 'antd';
 import { useRouter } from 'next/navigation';
@@ -28,7 +24,6 @@ import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { signOut } from '@/utlis/signOut';
 import { resetAuthState } from '@/redux/authSlice';
 import { sessionLimit } from '@/utlis/sessionLimit';
-import './styles.css'
 
 const { Header, Footer, Content } = Layout;
 
@@ -79,7 +74,6 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
   const [collapsed, setCollapsed] = useState(true);
 
   const [limitState, setLimitState] = useState(false);
-  const dispatch = useAppDispatch();
   const authInfo = useAppSelector((state) => state.auth)
   useEffect(() => {
     (async () => {
@@ -89,6 +83,8 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
     })()
   }, [authInfo?.user?.email, authInfo?.access_token]);
   const authState = !!authInfo?.user?._id && limitState
+
+  const dispatch = useAppDispatch();
 
   const showLogout = authState ? true : false
 
@@ -119,84 +115,58 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
     if (key === path) {
       window.location.reload()
     } else if (key === 'tong-quan-thi-truong') {
-      router.push('/update/tong-quan-thi-truong')
+      router.push('/tong-quan-thi-truong')
       setPath(key)
     } else {
-      router.push(`/update/${key}`)
-      setPath(key)
-      // if (authState) {
-      //   router.push(`/update/${key}`)
-      //   setPath(key)
-      // } else {
-      //   setSignInModalOpen(true)
-      //   notification.warning({
-      //     message: "Không có quyền truy cập",
-      //     description: "Bạn cần đăng nhập để xem nội dung này"
-      //   })
-      // }
+      if (authState) {
+        router.push(`/${key}`)
+        setPath(key)
+      } else {
+        setSignInModalOpen(true)
+        notification.warning({
+          message: "Không có quyền truy cập",
+          description: "Bạn cần đăng nhập để xem nội dung này"
+        })
+      }
     }
   }
 
   const sider_menu = [
     {
       label: (
-        <Link href="/update/tong-quan-thi-truong" onClick={(e) => {
-          e.preventDefault()
-          setCollapsed(true)
-        }}>
+        <Link href="/tong-quan-thi-truong" onClick={(e) => { e.preventDefault() }}>
           Tổng quan thị trường
         </Link>
       ),
       key: 'tong-quan-thi-truong',
-      icon: <PieChartOutlined style={{ fontSize: '20px', marginLeft: '-1px' }} />
+      icon: <FundViewOutlined style={{ fontSize: '20px', marginLeft: '-1px' }} />
     },
     {
       label: (
-        <Link href="/update/dong-tien-thi-truong" onClick={(e) => {
-          e.preventDefault()
-          setCollapsed(true)
-        }}>
+        <Link href="/dong-tien-thi-truong" onClick={(e) => { e.preventDefault() }} >
           Dòng tiền thị trường
         </Link>
       ),
       key: 'dong-tien-thi-truong',
+      icon: <LineChartOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
+    },
+    {
+      label: (
+        <Link href="/dong-tien-nhom-nganh" onClick={(e) => { e.preventDefault() }} >
+          Dòng tiền ngành
+        </Link>
+      ),
+      key: 'dong-tien-nhom-nganh',
       icon: <BarChartOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
     },
     {
       label: (
-        <Link href="/update/tra-cuu-nhom-co-phieu" onClick={(e) => {
-          e.preventDefault()
-          setCollapsed(true)
-        }}>
-          Tra cứu nhóm CP
-        </Link>
-      ),
-      key: 'tra-cuu-nhom-co-phieu',
-      icon: <FileSearchOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
-    },
-    {
-      label: (
-        <Link href="/update/tra-cuu-co-phieu" onClick={(e) => {
-          e.preventDefault()
-          setCollapsed(true)
-        }}>
-          Tra cứu cổ phiếu
-        </Link>
-      ),
-      key: 'tra-cuu-co-phieu',
-      icon: <SearchOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
-    },
-    {
-      label: (
-        <Link href="/update/bo-loc-co-phieu" onClick={(e) => {
-          e.preventDefault()
-          setCollapsed(true)
-        }}>
+        <Link href="/bo-loc-co-phieu" onClick={(e) => { e.preventDefault() }} >
           Bộ lọc cổ phiếu
         </Link>
       ),
       key: 'bo-loc-co-phieu',
-      icon: <FundViewOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
+      icon: <SearchOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />,
     }
   ]
 
@@ -305,29 +275,26 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
               onClick={handleSelect}
               items={sider_menu}
             />
-            <div style={{
-              marginTop: `calc(100vh - 110px - ${5 * 55}px`
-            }}
-            >
+            <div>
               {showLogout && (
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-                  <Button
-                    type="text"
-                    icon={<LogoutOutlined />}
-                    onClick={async () => {
-                      dispatch(resetAuthState())
-                      signOut(authInfo.access_token)
-                    }}
-                    style={{
-                      fontSize: '14px',
-                      height: "50px",
-                      color: '#dfdfdf',
-                      marginLeft: collapsed ? '11px' : '40px',
-                    }}
-                  >
-                    {collapsed ? '' : 'Đăng xuất'}
-                  </Button>
-                </div>
+                <Button
+                  type="text"
+                  icon={<LogoutOutlined />}
+                  onClick={async () => {
+                    dispatch(resetAuthState())
+                    handleSelect({ key: 'tong-quan-thi-truong' })
+                    signOut(authInfo.access_token)
+                  }}
+                  style={{
+                    fontSize: '14px',
+                    height: "50px",
+                    color: '#dfdfdf',
+                    marginLeft: collapsed ? '8px' : '13px',
+                    marginTop: `calc(100vh - 120px - ${4 * 55}px`
+                  }}
+                >
+                  {collapsed ? '' : 'Đăng xuất'}
+                </Button>
               )}
             </div>
           </Sider>
@@ -362,8 +329,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
                     {
                       label: collapsed ? <Link onClick={() => { window.location.href = "/" }} href='/' /> : null,
                       key: 'home',
-                      icon: collapsed ? <div style={{ padding: 0, margin: 0 }}><img src="/photo/text-logo.png" alt="Home Icon" style={{ width: '120px', height: 'auto', marginTop: '24px', marginLeft: '-15px' }} /> </div> : null
-
+                      icon: collapsed ? <img src="/photo/text-logo.png" alt="Home Icon" style={{ width: '120px', height: '65px', paddingTop: '40px', marginBottom: '16px' }} /> : null
                     }
                   ] : [
                     {
