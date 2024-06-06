@@ -24,6 +24,7 @@ const CreatLicenseModal = (props: IProps) => {
 
     const handleClose = () => {
         form.resetFields()
+        setLoading(false)
         setIsCreateModalOpen(false)
         setMaxDiscount(0)
         setFinalPrice(0)
@@ -176,10 +177,12 @@ const CreatLicenseModal = (props: IProps) => {
         const data = { userEmail, product, discountCode, discountPercent, finalPrice }
 
         if (uploadCheck === false) {
-            return notification.error({
-                message: "Có lỗi xảy ra",
-                description: "Chưa tải lên hình ảnh xác thực"
-            })
+            if (product !== 'TRIAL') {
+                return notification.error({
+                    message: "Có lỗi xảy ra",
+                    description: "Chưa tải lên hình ảnh xác thực"
+                })
+            }
         }
 
         const res = await sendRequest<IBackendRes<any>>({
@@ -238,8 +241,11 @@ const CreatLicenseModal = (props: IProps) => {
                 title="Tạo mới License"
                 open={isCreateModalOpen}
                 onOk={() => {
-                    setLoading(true)
                     form.submit()
+                    setLoading(true)
+                    setTimeout(() => {
+                        setLoading(false)
+                    }, 2000)
                 }}
                 onCancel={handleClose}
                 maskClosable={false}
@@ -336,7 +342,7 @@ const CreatLicenseModal = (props: IProps) => {
                         valuePropName="fileList"
                         style={{ marginTop: '10px' }}
                     >
-                        <Upload customRequest={uploadImage} listType="picture"
+                        <Upload customRequest={uploadImage} listType="picture" onRemove={() => { setUploadCheck(false) }}
                         >
                             {!uploadCheck ? (
                                 <Button type="dashed" style={{ height: '35px', width: '470px' }} icon={<UploadOutlined />}>Tải lên hình ảnh</Button>

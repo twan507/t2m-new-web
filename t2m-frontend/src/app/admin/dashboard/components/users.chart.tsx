@@ -67,7 +67,7 @@ const UsersChart: React.FC<LineChartProps> = ({ width, height, data }) => {
         labels: sortedDates,
         plugins: {
             datalabels: {
-                display: false, // Tắt các số tại các data label
+                display: false,
             },
         },
         datasets: [

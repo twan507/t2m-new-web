@@ -152,7 +152,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
   const sider_menu = [
     {
       label: (
-        <Link href="#" onClick={(e) => {
+        <Link href="/tong-quan-thi-truong" onClick={(e) => {
           e.preventDefault()
           setCollapsed(true)
         }}>
@@ -164,7 +164,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
     },
     {
       label: (
-        <Link href="#" onClick={(e) => {
+        <Link href="/dong-tien-thi-truong" onClick={(e) => {
           e.preventDefault()
           setCollapsed(true)
         }}>
@@ -176,7 +176,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
     },
     {
       label: (
-        <Link href="#" onClick={(e) => {
+        <Link href="/tra-cuu-nhom-co-phieu" onClick={(e) => {
           e.preventDefault()
           setCollapsed(true)
         }}>
@@ -188,7 +188,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
     },
     {
       label: (
-        <Link href="#" onClick={(e) => {
+        <Link href="/tra-cuu-co-phieu" onClick={(e) => {
           e.preventDefault()
           setCollapsed(true)
         }}>
@@ -200,7 +200,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
     },
     {
       label: (
-        <Link href="#" onClick={(e) => {
+        <Link href="/bo-loc-co-phieu" onClick={(e) => {
           e.preventDefault()
           setCollapsed(true)
         }}>

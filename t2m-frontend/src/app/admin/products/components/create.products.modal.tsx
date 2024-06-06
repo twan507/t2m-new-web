@@ -140,9 +140,9 @@ const CreatProductModal = (props: IProps) => {
                     >
                         <InputNumber
                             style={{ width: '100%' }}
-                            min={100000}
+                            min={0}
                             step={100000}
-                            placeholder="Tối thiểu 100,000" />
+                            placeholder="Mỗi bước giá 100,000" />
                     </Form.Item>
                 </Form>
             </Modal>
