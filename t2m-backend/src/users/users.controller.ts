@@ -64,17 +64,7 @@ export class UsersController {
   }
 
   @Get()
-  @ResponseMessage("Fetch list user with paginate")
-  findAll(
-    @Query("current") currentPage: string,
-    @Query("pageSize") limit: string,
-    @Query() qs: string
-  ) {
-    return this.usersService.findAll(+currentPage, +limit, qs);
-  }
-
-  @Get('all')
-  @ResponseMessage("Fetch all Orders")
+  @ResponseMessage("Fetch all Users")
   getAll() { return this.usersService.getAll() }
 
   @Get('dependent')

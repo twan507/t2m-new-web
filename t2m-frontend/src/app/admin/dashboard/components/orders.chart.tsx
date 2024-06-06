@@ -41,7 +41,7 @@ interface LineChartProps {
 const OrdersChart: React.FC<LineChartProps> = ({ width, height, data }) => {
 
     // Chuyển đổi và gom nhóm dữ liệu
-    const groupedData = data.reduce((acc, item) => {
+    const groupedData = data?.reduce((acc, item) => {
         const date = new Date(item.createdAt).toISOString().split('T')[0];
         if (!acc[date]) {
             acc[date] = 0;

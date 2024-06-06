@@ -20,14 +20,8 @@ export class ProductsController {
   }
 
   @Get()
-  @ResponseMessage("Fetch list Product with paginate")
-  findAll(
-    @Query("current") current: string,
-    @Query("pageSize") pageSize: string,
-    @Query() qs: string
-  ) {
-    return this.productsService.findAll(+current, +pageSize, qs);
-  }
+  @ResponseMessage("Fetch all Products")
+  getAll() { return this.productsService.getAll() }
 
   @SkipCheckPermission()
   @Get('active-list')

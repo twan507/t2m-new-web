@@ -20,34 +20,6 @@ export class OrdersService {
     return 'This action adds a new order';
   }
 
-  async findAll(currentPage: number, limit: number, qs: string) {
-    const { filter, sort, population } = aqp(qs);
-    delete filter.current
-    delete filter.pageSize
-
-    let offset = (+currentPage - 1) * (+limit)
-    let defaultLimit = +limit ? +limit : 10
-    const totalItems = (await this.orderModel.find(filter))?.length
-    const totalPages = Math.ceil(totalItems / defaultLimit)
-
-    const result = await this.orderModel.find(filter)
-      .skip(offset)
-      .limit(defaultLimit)
-      .sort(sort as any)
-      .populate(population)
-      .exec()
-
-    return {
-      meta: {
-        current: currentPage,
-        pageSize: limit,
-        pages: totalPages,
-        total: totalItems
-      },
-      result
-    }
-  }
-
   async getAll() {
     return await this.orderModel.find()
   }

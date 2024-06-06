@@ -45,40 +45,18 @@ const PageOrders: React.FC = () => {
     const searchInput = useRef<any>(null);
 
     const [listUsers, setListUsers] = useState([])
+    const [current, setCurrent] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
 
-    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
-    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
-    const [updateDiscountCodeRecord, setUpdateDiscountCodeRecord] = useState()
-
-    const [meta, setMeta] = useState({
-        current: 1,
-        pageSize: 10,
-        pages: 0,
-        total: 0,
-    })
 
     const getData = async () => {
         const res = await sendRequest<IBackendRes<any>>({
             url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/orders`,
             method: "GET",
-            queryParams: { current: meta.current, pageSize: meta.pageSize },
             headers: { 'Authorization': `Bearer ${authInfo.access_token}` }
         })
-        try { setListUsers(res.data.result) } catch (error) { }
-        try { setMeta(res.data.meta) } catch (error) { }
+        try { setListUsers(res.data) } catch (error) { }
     }
-
-    const handleOnChange = async (current: number, pageSize: number) => {
-        const res = await sendRequest<IBackendRes<any>>({
-            url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/orders`,
-            method: "GET",
-            queryParams: { current: current, pageSize: pageSize },
-            headers: { 'Authorization': `Bearer ${authInfo.access_token}` }
-        })
-        try { setListUsers(res.data.result) } catch (error) { }
-        try { setMeta(res.data.meta) } catch (error) { }
-    }
-
 
     useEffect(() => {
         getData()
@@ -238,9 +216,8 @@ const PageOrders: React.FC = () => {
         return (
             <>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
                     <h1> Danh sách đơn hàng</h1>
-                    <Button icon={<PlusCircleOutlined />} onClick={() => setIsCreateModalOpen(true)} type={'primary'} style={{ fontSize: 16, height: 'auto' }}>Tạo mới</Button>
                 </div>
 
                 <style>
@@ -258,13 +235,18 @@ const PageOrders: React.FC = () => {
                     dataSource={listUsers}
                     rowKey={"_id"}
                     pagination={{
-                        current: meta.current,
-                        pageSize: meta.pageSize,
-                        total: meta.total,
-                        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
-                        onChange: (current: number, pageSize: number) => { handleOnChange(current, pageSize) },
-                        showSizeChanger: true,
-                        pageSizeOptions: ['10', `${meta.total}`],
+                        current: current,
+                        pageSize: pageSize,
+                        total: listUsers?.length,
+                        showSizeChanger: true, // Hiển thị bộ chọn số lượng hàng trên mỗi trang
+                        pageSizeOptions: ['10', '20', '50', '100'], // Các lựa chọn số lượng hàng trên mỗi trang
+                        onChange: (page, size) => {
+                            setCurrent(page);
+                            setPageSize(size);
+                        },
+                        onShowSizeChange: (current, size) => {
+                            setPageSize(size);
+                        },
                     }}
                 />
             </>

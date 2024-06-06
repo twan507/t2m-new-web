@@ -41,7 +41,7 @@ interface LineChartProps {
 const UsersChart: React.FC<LineChartProps> = ({ width, height, data }) => {
 
     // Chuyển đổi và gom nhóm dữ liệu
-    const groupedData = data.reduce((acc, item) => {
+    const groupedData = data?.reduce((acc, item) => {
         const date = new Date(item.createdAt).toISOString().split('T')[0];
         if (!acc[date]) {
             acc[date] = 0;
@@ -50,7 +50,7 @@ const UsersChart: React.FC<LineChartProps> = ({ width, height, data }) => {
         return acc;
     }, {} as Record<string, number>);
 
-    const sortedDates = Object.keys(groupedData).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+    const sortedDates = Object?.keys(groupedData).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
 
     const cumulativeData = sortedDates.reduce((acc, date, index) => {
         if (index === 0) {

@@ -92,7 +92,7 @@ const UpdateDiscountCodeModal = (props: IProps) => {
 
         return (
             <Modal
-                title="Chỉnh sửa thông tin mã giảm giá"
+                title="Chính sửa mã giảm giá"
                 open={isUpdateModalOpen}
                 onOk={() => form.submit()}
                 onCancel={handleClose}

@@ -18,14 +18,8 @@ export class DiscountcodesController {
   }
 
   @Get()
-  @ResponseMessage("Fetch list discount codes with paginate")
-  findAll(
-    @Query("current") currentPage: string,
-    @Query("pageSize") limit: string,
-    @Query() qs: string
-  ) {
-    return this.discountcodesService.findAll(+currentPage, +limit, qs);
-  }
+  @ResponseMessage("Fetch all DiscountCodes")
+  getAll() { return this.discountcodesService.getAll() }
 
   @Get('sponsorcode')
   @Public()

@@ -42,7 +42,7 @@ export default function AdminDashboard() {
 
   const getUsers = async () => {
     const res = await sendRequest<IBackendRes<any>>({
-      url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/all`,
+      url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users`,
       method: "GET",
       headers: { 'Authorization': `Bearer ${authInfo.access_token}` }
     })
@@ -51,7 +51,7 @@ export default function AdminDashboard() {
 
   const getOrders = async () => {
     const res = await sendRequest<IBackendRes<any>>({
-      url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/orders/all`,
+      url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/orders`,
       method: "GET",
       headers: { 'Authorization': `Bearer ${authInfo.access_token}` }
     })

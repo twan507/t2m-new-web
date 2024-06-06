@@ -14,17 +14,6 @@ export class OrdersController {
   }
 
   @Get()
-  @ResponseMessage("Fetch list Orders with paginate")
-  findAll(
-    @Query("current") current: string,
-    @Query("pageSize") pageSize: string,
-    @Query() qs: string
-  ) {
-    return this.ordersService.findAll(+current, +pageSize, qs);
-  }
-
-
-  @Get('all')
   @ResponseMessage("Fetch all Orders")
   getAll() { return this.ordersService.getAll() }
 

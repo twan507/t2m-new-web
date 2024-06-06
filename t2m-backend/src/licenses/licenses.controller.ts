@@ -42,14 +42,8 @@ export class LicensesController {
   }
 
   @Get()
-  @ResponseMessage("Fetch list License with paginate")
-  findAll(
-    @Query("current") current: string,
-    @Query("pageSize") pageSize: string,
-    @Query() qs: string
-  ) {
-    return this.licensesService.findAll(+current, +pageSize, qs);
-  }
+  @ResponseMessage("Fetch all Licenses")
+  getAll() { return this.licensesService.getAll() }
 
   @Get(':id')
   findOne(@Param('id') id: string) {

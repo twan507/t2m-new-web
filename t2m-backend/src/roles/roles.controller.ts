@@ -15,14 +15,8 @@ export class RolesController {
   }
 
   @Get()
-  @ResponseMessage("Fetch list Role with paginate")
-  findAll(
-    @Query("current") current: string,
-    @Query("pageSize") pageSize: string,
-    @Query() qs: string
-  ) {
-    return this.rolesService.findAll(+current, +pageSize, qs);
-  }
+  @ResponseMessage("Fetch all Users")
+  getAll() { return this.rolesService.getAll() }
 
   @Get(':id')
   findOne(@Param('id') id: string) {

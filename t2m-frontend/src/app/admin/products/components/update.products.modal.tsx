@@ -79,7 +79,7 @@ const UpdateProductModal = (props: IProps) => {
     if (!checkAuth) {
         return (
             <Modal
-                title="Chỉnh sửa thông tin sản phẩm"
+                title="Chính sửa sản phẩm"
                 open={isUpdateModalOpen}
                 onOk={() => form.submit()}
                 onCancel={handleClose}

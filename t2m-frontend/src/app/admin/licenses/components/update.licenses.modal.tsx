@@ -160,7 +160,7 @@ const UpdateLicenseModal = (props: IProps) => {
                 `}
                 </style>
                 <Modal
-                    title="Chỉnh sửa thông tin License"
+                    title="Chính sửa License"
                     open={isUpdateModalOpen}
                     onOk={() => form.submit()}
                     onCancel={handleClose}
@@ -225,7 +225,7 @@ const UpdateLicenseModal = (props: IProps) => {
                             style={{ marginBottom: "5px" }}
                             label="Điều chỉnh số tháng"
                             name="monthAdjust"
-                            rules={[{ required: true, type: 'number', min: -99, max: 99,  message: 'Số tháng điều chỉnh không được để trống!' }]}
+                            rules={[{ required: true, type: 'number', min: -99, max: 99, message: 'Số tháng điều chỉnh không được để trống!' }]}
                         >
                             <InputNumber placeholder="Nhập chính xác giá sau chiết khấu" />
                         </Form.Item>
