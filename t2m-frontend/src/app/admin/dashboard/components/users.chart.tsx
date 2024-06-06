@@ -12,6 +12,7 @@ import {
     Legend,
     LineController,
 } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 // Đăng ký các thành phần cần thiết từ chart.js
 ChartJS.register(
@@ -23,7 +24,8 @@ ChartJS.register(
     BarElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    ChartDataLabels
 );
 
 interface ChartData {
@@ -67,8 +69,12 @@ const UsersChart: React.FC<LineChartProps> = ({ width, height, data }) => {
         labels: sortedDates,
         plugins: {
             datalabels: {
-                display: false,
+                display: false, // Tắt các số tại các data label
             },
+        },
+        interaction: {
+            mode: 'nearest',
+            intersect: false,
         },
         datasets: [
             {
@@ -77,6 +83,7 @@ const UsersChart: React.FC<LineChartProps> = ({ width, height, data }) => {
                 data: cumulativeData,
                 borderColor: '#98217c',
                 backgroundColor: '#98217c',
+                fill: false,
             },
             {
                 type: 'bar',
@@ -88,7 +95,7 @@ const UsersChart: React.FC<LineChartProps> = ({ width, height, data }) => {
         ],
     };
 
-    const options = {
+    const options: any = {
         responsive: true, // Make sure the chart is responsive
         maintainAspectRatio: false, // Allows you to set custom width and height without maintaining the aspect ratio
         scales: {
@@ -100,6 +107,27 @@ const UsersChart: React.FC<LineChartProps> = ({ width, height, data }) => {
                     display: false, // This will remove the vertical grid lines
                 }
             }
+        },
+        plugins: {
+            datalabels: {
+                display: false, // Tắt các số tại các data label
+            },
+            tooltip: {
+                enabled: true, // Always enable tooltips
+                mode: 'index',
+                intersect: false,
+                position: 'nearest', // Position the tooltip near the nearest data point
+                external: (context: any) => {
+                    // Code to create an always-visible tooltip
+                    const tooltipEl = document.getElementById('chartjs-tooltip');
+                    if (!tooltipEl) {
+                        const newTooltipEl = document.createElement('div');
+                        newTooltipEl.id = 'chartjs-tooltip';
+                        newTooltipEl.innerHTML = '<table></table>';
+                        document.body.appendChild(newTooltipEl);
+                    }
+                }
+            },
         },
     };
 
