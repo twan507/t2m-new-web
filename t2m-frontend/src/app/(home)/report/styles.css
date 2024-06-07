@@ -1,0 +1,316 @@
+.ant-table-placeholder {
+    display: none !important;
+    /* Ẩn toàn bộ placeholder của bảng */
+}
+
+/* -------------------------------------------------------------------------------------------------------------- */
+/* Đặt màu nền của nút radio khi không được chọn thành màu đen */
+.ant-radio-button-wrapper:not(.ant-radio-button-wrapper-checked) {
+    background-color: black;
+    color: #dfdfdf;
+}
+
+/* Đặt màu chữ của nút radio khi không được chọn thành màu trắng */
+.ant-radio-button-wrapper:not(.ant-radio-button-wrapper-checked)::before {
+    background-color: black;
+}
+
+.ant-radio-button-wrapper:not(.ant-radio-button-wrapper-checked) span {
+    color: #dfdfdf;
+}
+
+/* Đảm bảo rằng nút radio được chọn giữ nguyên màu sắc mặc định */
+.ant-radio-button-wrapper-checked {
+    color: #dfdfdf;
+}
+
+/* Thay đổi màu chữ của nút radio khi di chuột */
+.ant-radio-button-wrapper:not(.ant-radio-button-wrapper-checked):hover {
+    color: #dfdfdf;
+    border-color: #dfdfdf;
+}
+
+.custom-radio-button {
+    text-align: center;
+    flex: 1;
+    font-family: 'Calibri, sans-serif';
+    font-size: 16px;
+    color: #dfdfdf;
+    display: flex;
+}
+
+/* -------------------------------------------------------------------------------------------------------------- */
+/* CSS cho phần menu mobile mục trạng thái thì trường */
+.page2-menu .ant-menu-item {
+    text-align: center;
+    /* Căn giữa chữ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page2-menu .ant-menu-item,
+.page2-menu .ant-menu-submenu-title {
+    height: 24px !important;
+    line-height: 24px !important;
+}
+
+
+/* -------------------------------------------------------------------------------------------------------------- */
+/* CSS cho bảng phân tích kĩ thuật */
+.taindex-table {
+    width: 100%;
+    height: 100%;
+    background-color: transparent !important;
+}
+
+.taindex-table .ant-table {
+    background-color: transparent !important;
+}
+
+.taindex-table .ant-table-thead>tr>th,
+.taindex-table .ant-table-tbody>tr>td {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.taindex-table .ant-table-thead>tr>th,
+.taindex-table .ant-table-tbody>tr>td {
+    padding: 0px !important;
+}
+
+/* -------------------------------------------------------------------------------------------------------------- */
+/* CSS cho các bảng khác không phải bảng phân tích kĩ thuật */
+.custom-table .ant-table {
+    width: 100%;
+    height: 100%;
+    background-color: transparent !important;
+}
+
+.custom-table .ant-table-thead>tr>th,
+.custom-table .ant-table-tbody>tr>td {
+    color: white;
+}
+
+.custom-table .ant-table-tbody>tr:hover>td {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.custom-table .ant-table-thead>tr>th,
+.custom-table .ant-table-thead>tr>td {
+    background: transparent !important;
+    color: #B3B3B3 !important;
+    transition: background-color 0.3s;
+}
+
+.custom-table .ant-table-thead>tr>td:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+    background-color: transparent !important;
+}
+
+.custom-table .ant-table-thead>tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+    background-color: transparent !important;
+}
+
+.custom-table td.ant-table-column-sort {
+    background: transparent !important;
+}
+
+.custom-table .ant-table-thead>tr>th,
+.custom-table .ant-table-tbody>tr>td {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.custom-table .ant-table-thead>tr>th:hover {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.custom-table .ant-table-column-sorters:hover::after {
+    display: none !important;
+}
+
+.custom-table .ant-table-tbody>tr>td {
+    padding: 0px !important;
+}
+
+.custom-table .ant-table-thead>tr>th {
+    padding: 10px 0px 5px !important;
+}
+
+
+.custom-table .ant-pagination .ant-pagination-next button,
+.custom-table .ant-pagination .ant-pagination-prev button {
+    color: #dfdfdf;
+}
+
+.custom-table .ant-pagination .ant-pagination-item a {
+    color: #dfdfdf;
+}
+
+.custom-table .ant-pagination .ant-pagination-item-active {
+    background-color: #161616;
+}
+
+.custom-table .ant-pagination .ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-ellipsis,
+.custom-table .ant-pagination .ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-ellipsis {
+    color: #666666;
+}
+
+.custom-table .ant-pagination .ant-pagination-item-active {
+    border-color: #dfdfdf;
+}
+
+/* Các phần này là cho select */
+.custom-table .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    background-color: #161616;
+}
+
+.custom-table .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    cursor: pointer !important;
+}
+
+.custom-table .ant-select-single .ant-select-selector {
+    color: #dfdfdf;
+}
+
+.custom-table .ant-select-selector {
+    border-color: #dfdfdf !important;
+}
+
+.custom-table .ant-select-arrow {
+    color: #dfdfdf !important;
+}
+
+.custom-table .ant-select-dropdown {
+    background-color: black !important;
+}
+
+.custom-table .ant-select-item {
+    color: #dfdfdf !important;
+}
+
+.custom-table .ant-select-item-option-active,
+.custom-table .ant-select-item-option-selected {
+    background-color: #333 !important;
+}
+
+/* Các phần này cho cho sort */
+.custom-table .ant-table-column-sorters {
+    pointer-events: none;
+}
+
+.left-sort .ant-table-column-sorters {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+}
+
+.left-sort .ant-table-column-title {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+/* -------------------------------------------------------------------------------------------------------------- */
+/* CSS cho các button */
+.filter-button {
+    background-color: #161616;
+    border: 0;
+    color: #dfdfdf !important;
+}
+
+/* --------------------------------------------------------------------------------------------------------------- */
+/* CSS cho select */
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    cursor: pointer !important;
+}
+
+.ant-select-show-search.ant-select:not(.ant-select-customize-input) .ant-select-selector input {
+    cursor: pointer !important;
+}
+
+.ant-select-single .ant-select-selector {
+    color: #dfdfdf;
+}
+
+.ant-select-selector {
+    border-color: #dfdfdf !important;
+}
+
+.ant-select-arrow {
+    color: #dfdfdf !important;
+}
+
+.ant-select-dropdown {
+    background-color: black !important;
+}
+
+.ant-select-item {
+    color: #dfdfdf !important;
+}
+
+.ant-select-selector {
+    background-color: transparent !important;
+}
+
+.ant-select-dropdown {
+    background-color: #161616 !important;
+    color: #dfdfdf
+}
+
+.ant-select-item-option:hover {
+    background-color: #333 !important;
+    /* Thay đổi màu nền khi hover */
+}
+
+.ant-select-item-option-selected {
+    background-color: #333 !important;
+    /* Thay đổi màu nền khi được chọn */
+}
+
+.ant-select-dropdown .ant-select-item {
+    color: #dfdfdf !important;
+}
+
+.ant-select-multiple .ant-select-selection-item {
+    background-color: #1677ff !important;
+}
+
+.ant-select-multiple .ant-select-selection-item-remove {
+    color: #dfdfdf !important;
+}
+
+.custom-select .ant-select-selection-placeholder {
+    color: #dfdfdf !important;
+}
+
+.ta-select .ant-select-selection-placeholder {
+    color: #555 !important;
+}
+
+/* --------------------------------------------------------------------------------------------------------------- */
+/* CSS cho slider */
+
+.ant-slider.ant-slider-disabled .ant-slider-track {
+    background-color: rgba(180, 171, 171, 0.739) !important;
+}
+
+.ant-slider-rail {
+    background-color: #333 !important;
+}
+
+/* --------------------------------------------------------------------------------------------------------------- */
+span.span-right {
+    text-align: right;
+    word-break: break-word;
+    white-space: normal;
+}
+
+.five-column-layout {
+    display: flex;
+}
+
+.five-column {
+    flex: 1;
+    /* Optional: Adds some padding for better spacing */
+}
