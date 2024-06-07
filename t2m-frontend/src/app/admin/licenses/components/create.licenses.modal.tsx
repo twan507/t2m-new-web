@@ -38,12 +38,13 @@ const CreatLicenseModal = (props: IProps) => {
     const [validEmailList, setValidEmailList] = useState(tempInitial)
     const [validProduct, setValidProduct] = useState(tempInitial)
     const [maxDiscount, setMaxDiscount] = useState(0)
+    const [productPrice, setProductPrice] = useState(0)
     const [finalPrice, setFinalPrice] = useState(0)
     const [discountPercent, setDiscountPercent] = useState(0)
 
     const handleDiscountPrice = (discountPercent: number) => {
         setDiscountPercent(discountPercent)
-        setFinalPrice(finalPrice - (finalPrice * discountPercent / 100))
+        setFinalPrice(productPrice - (productPrice * discountPercent / 100))
     }
 
     const getSponsorsCodeList = async () => {
@@ -73,13 +74,14 @@ const CreatLicenseModal = (props: IProps) => {
         try { setMaxDiscount(res.data.maxDiscount) } catch (error) { }
     }
 
-    const getFinalPrice = async (name: string) => {
+    const getProductPrice = async (name: string) => {
         const res = await sendRequest<IBackendRes<any>>({
             url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/products/find-by-product`,
             method: "POST",
             headers: { 'Authorization': `Bearer ${authInfo.access_token}` },
             body: { name: name }
         })
+        try { setProductPrice(res.data.price - (res.data.price * discountPercent / 100)) } catch (error) { }
         try { setFinalPrice(res.data.price - (res.data.price * discountPercent / 100)) } catch (error) { }
     }
 
@@ -289,7 +291,7 @@ const CreatLicenseModal = (props: IProps) => {
                             { validator: validateProductName }
                         ]}
                     >
-                        <Input onChange={(e) => getFinalPrice(e.target.value)} placeholder="Nhập tên sản phẩm" />
+                        <Input onChange={(e) => getProductPrice(e.target.value)} placeholder="Nhập tên sản phẩm" />
                     </Form.Item>
 
                     <Form.Item

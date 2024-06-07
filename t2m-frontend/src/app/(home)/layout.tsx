@@ -387,7 +387,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
               top: 0,
               zIndex: 101
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: ww, padding: '0px 20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: ww }}>
                 {ww > 767 && (
                   <Image
                     preview={false}
