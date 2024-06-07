@@ -60,6 +60,9 @@ export class User {
     isDeleted: boolean;
 
     @Prop()
+    trialCheck: boolean;
+
+    @Prop()
     deletedAt: Date;
 
     @Prop()
@@ -67,6 +70,12 @@ export class User {
 
     @Prop({ type: Object })
     getPasswordToken: {
+        token: string
+        expiresAt: Date
+    }
+
+    @Prop({ type: Object })
+    trialToken: {
         token: string
         expiresAt: Date
     }

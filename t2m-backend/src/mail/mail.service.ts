@@ -51,6 +51,21 @@ export class MailService {
         });
     }
 
+    async trialEmail(customerName: string, token: string, mailTo: string) {
+        await this.mailerService.sendMail({
+            to: mailTo,
+            from: '"T2M Invest" <mail.t2minvest@gmail.com>', // override default from
+            subject: 'Xác nhận đăng kí dùng thử T2M Invest',
+            template: "trialConfirm", //Tên của file .hbs trong thư mục templates
+
+            //truyền các biến này sang file handlebar
+            context: {
+                customerName: customerName,
+                token: token
+            },
+        });
+    }
+
     async changePasswordEmail(customerName: string, mailTo: string) {
         await this.mailerService.sendMail({
             to: mailTo,

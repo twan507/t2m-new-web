@@ -17,7 +17,10 @@ import {
   ReloadOutlined,
   PieChartOutlined,
   FileSearchOutlined,
-  ExportOutlined
+  ExportOutlined,
+  CaretUpOutlined,
+  UpCircleOutlined,
+  PlusOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, Button, Avatar, notification, Image, Col } from 'antd';
 import { useRouter } from 'next/navigation';
@@ -30,6 +33,8 @@ import { signOut } from '@/utlis/signOut';
 import { resetAuthState } from '@/redux/authSlice';
 import { sessionLimit } from '@/utlis/sessionLimit';
 import './styles.css'
+import SubScribesModaOpen from '@/components/subscribers/subscribes.model';
+import TrialModal from '@/components/subscribers/trial.modal';
 
 const { Header, Footer, Content } = Layout;
 
@@ -122,6 +127,8 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
   const [isSignInModalOpen, setSignInModalOpen] = useState(false)
   const [isSignUpModalOpen, setSignUpModalOpen] = useState(false)
   const [isUserInfoModal, setUserInfoModalOpen] = useState(false)
+  const [isSubScribesModaOpen, setSubScribesModaOpen] = useState(false)
+  const [isTrialModalOpen, setIsTrialModalOpen] = useState(false)
   const [mobileLayout, setmMobileLayout] = useState(false);
 
   const toggleMobileLayout = () => {
@@ -261,6 +268,14 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
         <UserInfoModal
           isUserInfoModal={isUserInfoModal}
           setUserInfoModalOpen={setUserInfoModalOpen}
+        />
+        <SubScribesModaOpen
+          isSubScribesModaOpen={isSubScribesModaOpen}
+          setSubScribesModaOpen={setSubScribesModaOpen}
+        />
+        <TrialModal
+          isTrialModalOpen={isTrialModalOpen}
+          setIsTrialModalOpen={setIsTrialModalOpen}
         />
         <Layout>
           <Sider trigger={null} collapsible collapsed={collapsed}
@@ -426,6 +441,35 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
                           {ww < 767 ? "" : "Đăng ký"}
                         </Button>,
                       </div>
+                    )}
+                    {authInfo?.user?.role !== "T2M ADMIN" && (
+                      <>
+                        {authState && (
+                          <div>
+                            {!authInfo.user.trialCheck && (
+                              <Button ghost type='primary' onClick={() => setIsTrialModalOpen(true)}
+                                icon={ww < 767 ? <PlusOutlined style={{ fontSize: '18px', marginTop: '2px' }} /> : null}
+                                style={{
+                                  width: ww < 767 ? '40px' : '150px',
+                                  fontWeight: 'bold',
+                                  fontFamily: 'Helvetica Neue, sans-serif'
+                                }}>
+                                {ww < 767 ? "" : "Đăng kí dùng thử"}
+                              </Button>
+                            )}
+                            <Button type='primary' onClick={() => setSubScribesModaOpen(true)}
+                              icon={ww < 767 ? <UpCircleOutlined style={{ fontSize: '18px', marginTop: '2px' }} /> : null}
+                              style={{
+                                width: ww < 767 ? '40px' : '150px',
+                                marginLeft: '10px',
+                                fontWeight: 'bold',
+                                fontFamily: 'Helvetica Neue, sans-serif'
+                              }}>
+                              {ww < 767 ? "" : ((Object.keys(authInfo.user.licenseInfo).length === 0 || authInfo.user.licenseInfo.product === 'TRIAL') ? "Nâng cấp gói" : "Gia hạn gói")}
+                            </Button>,
+                          </div>
+                        )}
+                      </>
                     )}
                   </>
                 )}

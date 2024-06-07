@@ -22,6 +22,9 @@ export class CreateUserDto {
 
     @IsOptional()
     sponsorCode: string
+
+    @IsNotEmpty({ message: "trialCheck không được để trống" })
+    trialCheck: boolean
 }
 
 export class RegisterUserDto {
@@ -132,4 +135,21 @@ export class SendPasswordTokenDto {
     @IsEmail({}, { message: "Email không đúng định dạng" })
     @IsNotEmpty({ message: "Email không được để trống" })
     email: string
+}
+
+export class SendTrialTokenDto {
+
+    @IsEmail({}, { message: "Email không đúng định dạng" })
+    @IsNotEmpty({ message: "Email không được để trống" })
+    email: string
+}
+
+export class getTrialDto {
+
+    @IsEmail({}, { message: "Email không đúng định dạng" })
+    @IsNotEmpty({ message: "Email không được để trống" })
+    email: string
+    
+    @IsNotEmpty({ message: "Mã xác thực không được để trống" })
+    token: string
 }

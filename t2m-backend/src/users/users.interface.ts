@@ -17,5 +17,6 @@ export interface IUser {
     licenseInfo: {
         daysLeft: number,
         product: string,
-    }
+    },
+    trialCheck: boolean
 }

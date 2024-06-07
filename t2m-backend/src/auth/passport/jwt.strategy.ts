@@ -26,7 +26,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: IUser) {
-    const { _id, name, email, phoneNumber, role, affiliateCode, sponsorCode, license } = payload;
+    const { _id, name, email, phoneNumber, role, affiliateCode, sponsorCode, license, trialCheck } = payload;
 
     const userRole = role
     const tempRole = userRole ? await this.rolesService.findRoleByName(userRole) : { permissions: [] }
@@ -47,7 +47,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       role,
       affiliateCode,
       sponsorCode,
-      permissions: userPermissions
+      permissions: userPermissions,
+      trialCheck
     };
   }
 }

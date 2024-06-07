@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseInterceptors, UploadedFile, Put } from '@nestjs/common';
 import { CreateLicenseDto } from './dto/create-license.dto';
-import { Public, ResponseMessage, User } from 'src/decorator/customize';
+import { Public, ResponseMessage, SkipCheckPermission, User } from 'src/decorator/customize';
 import { IUser } from 'src/users/users.interface';
 import { LicensesService } from './licenses.service';
 import { Cron, CronExpression } from '@nestjs/schedule';
@@ -18,6 +18,7 @@ export class LicensesController {
   }
 
   @Post()
+  @SkipCheckPermission()
   create(
     @Body() createLicenseDto: CreateLicenseDto,
     @User() user: IUser,

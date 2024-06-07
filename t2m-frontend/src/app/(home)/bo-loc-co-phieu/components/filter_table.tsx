@@ -338,7 +338,7 @@ const FilterStockTable = (props: any) => {
                 display: 'flex', justifyContent: 'flex-end',
                 fontSize: parseInt(props?.fontSize) - 3,
               }}>
-              {ww > 767 ? (<>Chỉ só<br />thanh khoản</>) : (<>CSTK</>)}
+              {ww > 767 ? (<>Chỉ số<br />thanh khoản</>) : (<>CSTK</>)}
             </span>,
           dataIndex: `liquid_ratio`,
           className: 'left-sort',

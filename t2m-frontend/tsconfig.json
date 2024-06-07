@@ -33,7 +33,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/ThemeToggle.jsx",
   ],
   "exclude": [
     "node_modules"

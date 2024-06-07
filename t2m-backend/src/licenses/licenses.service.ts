@@ -144,7 +144,7 @@ export class LicensesService {
 
     const foundLicense = await this.licenseModel.findOne({ _id: new mongoose.Types.ObjectId(id) })
     const newEndDate = new Date(foundLicense.endDate.setMonth(foundLicense.endDate.getMonth() + monthExtend));
-    const newDaysLeft = (newEndDate.getTime() - foundLicense.startDate.getTime()) / (1000 * 60 * 60 * 24)
+    const newDaysLeft = (newEndDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
 
     const order = await this.orderModel.create({
       type: "Gia hạn",
@@ -189,7 +189,7 @@ export class LicensesService {
 
     if (logLength > 1) {
       const newEndDate = new Date(foundLicense.endDate.setMonth(foundLicense.endDate.getMonth() - lastExtend.monthExtend));
-      const newDaysLeft = (newEndDate.getTime() - foundLicense.startDate.getTime()) / (1000 * 60 * 60 * 24)
+      const newDaysLeft = (newEndDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
 
       //Xoá Order
       await this.orderModel.softDelete({ _id: new mongoose.Types.ObjectId(lastExtend.orderId) })
@@ -236,7 +236,7 @@ export class LicensesService {
 
     const foundLicense = await this.licenseModel.findOne({ _id: new mongoose.Types.ObjectId(id) })
     const newEndDate = new Date(foundLicense.endDate.setMonth(foundLicense.endDate.getMonth() + monthAdjust));
-    const newDaysLeft = (newEndDate.getTime() - foundLicense.startDate.getTime()) / (1000 * 60 * 60 * 24)
+    const newDaysLeft = (newEndDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
 
     return await this.licenseModel.updateOne(
       { _id: id },

@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Put, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { AdminChangePasswordDto, ChangePasswordDto, CreateUserDto, ForgetPasswordDto, SendPasswordTokenDto } from './dto/create-user.dto';
+import { AdminChangePasswordDto, ChangePasswordDto, CreateUserDto, ForgetPasswordDto, SendPasswordTokenDto, SendTrialTokenDto, getTrialDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Public, ResponseMessage, SkipCheckPermission, User } from 'src/decorator/customize';
 import { IUser } from './users.interface';
@@ -8,6 +8,13 @@ import { IUser } from './users.interface';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
+
+  @Post("update-trial-check")
+  @Public()
+  @ResponseMessage("Update users trial check")
+  updateTrialCheck() {
+    return this.usersService.updateTrialCheck()
+  }
 
   @Post()
   @ResponseMessage("Create a new user")
@@ -45,6 +52,22 @@ export class UsersController {
   @ResponseMessage("Gửi mã thành công")
   sendPasswordToken(@Body() sendPasswordTokenDto: SendPasswordTokenDto) {
     return this.usersService.sendPasswordToken(sendPasswordTokenDto)
+  }
+
+  @Post('get-trial')
+  @Public()
+  @ResponseMessage("Đăng kí dùng thử thành công")
+  getTrial(
+    @Body() getTrialDto: getTrialDto,
+  ) {
+    return this.usersService.getTrial(getTrialDto)
+  }
+
+  @Post('send-trial-token')
+  @Public()
+  @ResponseMessage("Gửi mã thành công")
+  sendTrialToken(@Body() sendTrialTokenDto: SendTrialTokenDto) {
+    return this.usersService.sendTrialToken(sendTrialTokenDto)
   }
 
   @Post('admin-change-password')

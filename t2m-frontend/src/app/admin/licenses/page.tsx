@@ -241,25 +241,25 @@ const PageLicenses: React.FC = () => {
       }
     },
     {
-      title: 'Ngày bắt đầu',
+      title: 'Bắt đầu',
       dataIndex: 'startDate',
       sorter: (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
       sortDirections: ['descend', 'ascend'],
       render: (value, record) => new Date(value).toLocaleDateString('en-GB'),
     },
     {
-      title: 'Ngày kết thúc',
+      title: 'Kết thúc',
       dataIndex: 'endDate',
       sorter: (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
       sortDirections: ['descend', 'ascend'],
       render: (value, record) => new Date(value).toLocaleDateString('en-GB'),
     },
     {
-      title: 'Ngày còn lại',
+      title: 'Còn lại',
       dataIndex: 'daysLeft',
       sorter: (a, b) => a.daysLeft - b.daysLeft,
       sortDirections: ['descend', 'ascend'],
-      render: (value) => Math.round(value),
+      render: (value) => `${Math.round(value)} ngày`,
     },
     {
       title: 'Người dùng',
@@ -305,6 +305,7 @@ const PageLicenses: React.FC = () => {
       title: 'Trạng thái',
       align: 'center',
       dataIndex: 'isActive',
+      width: '9%',
       sorter: (a, b) => {
         const aValue = a.isActive ? "Active" : "Inactive";
         const bValue = b.isActive ? "Active" : "Inactive";
@@ -327,6 +328,7 @@ const PageLicenses: React.FC = () => {
     {
       title: 'Chính sửa',
       align: 'center',
+      width: '7%',
       render: (value, record) => {
         return (
           <>

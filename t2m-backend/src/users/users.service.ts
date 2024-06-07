@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { AdminChangePasswordDto, ChangePasswordDto, CreateUserDto, ForgetPasswordDto, RegisterUserDto, SendPasswordTokenDto } from './dto/create-user.dto';
+import { AdminChangePasswordDto, ChangePasswordDto, CreateUserDto, ForgetPasswordDto, RegisterUserDto, SendPasswordTokenDto, SendTrialTokenDto, getTrialDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './schemas/user.schemas';
@@ -167,7 +167,8 @@ export class UsersService {
       createdBy: {
         _id: user._id,
         email: user.email
-      }
+      },
+      trialCheck: false
     })
     return newUser;
   }
@@ -350,7 +351,7 @@ export class UsersService {
         }
       } else if (token !== foundUser.getPasswordToken.token && foundUser.getPasswordToken.expiresAt > now) {
         throw new BadRequestException("Mã xác thực không đúng")
-      } else if (token === foundUser.getPasswordToken.token && foundUser.getPasswordToken.expiresAt <= now) {
+      } else {
         throw new BadRequestException("Mã xác thực đã hết hạn")
       }
     } else {
@@ -379,4 +380,65 @@ export class UsersService {
       throw new BadRequestException("Email không tồn tại")
     }
   }
+
+  async getTrial(getTrialDto: getTrialDto) {
+    const { email, token } = getTrialDto
+    const foundUser = await this.userModel.findOne({ email: email })
+
+    if (email === foundUser.email) {
+      const now = new Date()
+      if (token === foundUser.trialToken.token && foundUser.trialToken.expiresAt > now) {
+        await this.userModel.updateOne(
+          { email: email },
+          {
+            trialCheck: true
+          })
+      } else if (token !== foundUser.trialToken.token && foundUser.trialToken.expiresAt > now) {
+        throw new BadRequestException("Mã xác thực không đúng")
+      } else {
+        throw new BadRequestException("Mã xác thực đã hết hạn")
+      }
+    } else {
+      throw new BadRequestException("Email hoặc Số điện thoại không đúng")
+    }
+  }
+
+  async sendTrialToken(sendTrialTokenDto: SendTrialTokenDto) {
+    const token = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+    const expiresAt = new Date(new Date().getTime() + 60000 * 5);
+    const foundUser = await this.userModel.findOne({ email: sendTrialTokenDto.email })
+    if (foundUser) {
+      await this.userModel.updateOne(
+        { email: sendTrialTokenDto.email },
+        {
+          trialToken: {
+            token,
+            expiresAt
+          }
+        }
+      )
+      await this.mailService.trialEmail(foundUser.name, token, sendTrialTokenDto.email)
+      return 'ok'
+    } else {
+      throw new BadRequestException("Email không tồn tại")
+    }
+  }
+
+  async updateTrialCheck() {
+    const allUsers = await this.userModel.find();
+    for (const user of allUsers) {
+      if (user.license) {
+        await this.userModel.updateOne(
+          { _id: user._id },
+          { trialCheck: true }
+        )
+      } else {
+        await this.userModel.updateOne(
+          { _id: user._id },
+          { trialCheck: false }
+        )
+      }
+    }
+  }
+
 }

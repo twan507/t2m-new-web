@@ -6,17 +6,17 @@ import { FormInstance, RuleObject } from 'antd/es/form';
 import { useEffect, useState } from 'react';
 
 interface IProps {
-    isForgetPasswordOpen: boolean
-    setIsForgetPasswordOpen: (v: boolean) => void
+    isTrialModalOpen: boolean
+    setIsTrialModalOpen: (v: boolean) => void
 }
 
-const ForgetPasswordModal = (props: IProps) => {
+const TrialModal = (props: IProps) => {
 
     const authInfo = useAppSelector((state) => state.auth)
     const authState = !!authInfo?.user?._id
     const [form] = Form.useForm()
 
-    const { isForgetPasswordOpen, setIsForgetPasswordOpen } = props
+    const { isTrialModalOpen, setIsTrialModalOpen } = props
 
     useEffect(() => {
         if (authState) {
@@ -24,7 +24,7 @@ const ForgetPasswordModal = (props: IProps) => {
                 email: authInfo.user.email,
             })
         }
-    }, [isForgetPasswordOpen, authState])
+    }, [authState])
 
     //Hàm kiểm tra email
     const validateEmail = async (_: RuleObject, value: string) => {
@@ -34,43 +34,51 @@ const ForgetPasswordModal = (props: IProps) => {
         }
     };
 
-    //Hàm kiểm tra password
-    const validatePassword = async (_: RuleObject, value: string) => {
-        const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
-        if (value && !passwordRegex.test(value)) {
-            throw new Error('Mật khẩu tối thiểu 6 kí tự, bao gồm cả ký tự in hoa và chữ số.');
+    useEffect(() => {
+        if (authState) {
+            form.setFieldsValue({
+                email: authInfo?.user?.email,
+            })
         }
-    };
-
-    //Hàm kiểm tra confirm password
-    const validatePasswordsMatch = async (_: RuleObject, value: string) => {
-        if (form.getFieldValue('newPassword') !== value) {
-            throw new Error('Mật khẩu xác nhận chưa trùng khớp');
-        }
-    };
+    }, [isTrialModalOpen, authState])
 
 
     const handleClose = () => {
         form.resetFields()
-        setIsForgetPasswordOpen(false)
+        setIsTrialModalOpen(false)
     }
 
     const onFinish = async (values: any) => {
-        const { email, token, newPassword, confirmPassword } = values
-        const data = { email, token, newPassword, confirmPassword }
+        const { email, token } = values
+        const data = { email, token }
 
         const res = await sendRequest<IBackendRes<any>>({
-            url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/forget-password`,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/get-trial`,
             method: "POST",
-            headers: { 'Authorization': `Bearer ${authInfo.access_token}` },
             body: data
         })
 
         if (res.statusCode === 201) {
-            notification.success({
-                message: `Đổi mật khẩu thành công`
+            const data = { userEmail: email, product: "TRIAL", discountPercent: 0, finalPrice: 0 }
+            const res = await sendRequest<IBackendRes<any>>({
+                url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/licenses`,
+                method: "POST",
+                headers: { 'Authorization': `Bearer ${authInfo.access_token}` },
+                body: data
             })
-            handleClose()
+
+            if (res.data) {
+                notification.success({
+                    message: `Đăng ký dùng thử thành công`,
+                    description: 'Đăng xuất khỏi tài khoản sau đó đăng nhập lại để sử dụng đầy đủ các tính năng'
+                })
+                handleClose()
+            } else {
+                notification.error({
+                    message: "Có lỗi xảy ra",
+                    description: res.message
+                })
+            }
         } else {
             notification.error({
                 message: "Có lỗi xảy ra",
@@ -78,8 +86,6 @@ const ForgetPasswordModal = (props: IProps) => {
             })
         }
     }
-
-    form.getFieldValue('newPassword')
 
     const onSendToken = async () => {
         if (!form.getFieldValue('email')) {
@@ -90,7 +96,7 @@ const ForgetPasswordModal = (props: IProps) => {
         }
 
         const res = await sendRequest<IBackendRes<any>>({
-            url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/send-password-token`,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/send-trial-token`,
             method: "POST",
             headers: { 'Authorization': `Bearer ${authInfo.access_token}` },
             body: { email: form.getFieldValue('email') }
@@ -195,7 +201,7 @@ const ForgetPasswordModal = (props: IProps) => {
             </style>
             <Modal
                 className="custom-modal"
-                open={isForgetPasswordOpen}
+                open={isTrialModalOpen}
                 onOk={() => form.submit()}
                 onCancel={handleClose}
                 footer={null}
@@ -228,12 +234,12 @@ const ForgetPasswordModal = (props: IProps) => {
                         <h1
                             style={{ fontSize: 20, color: '#dfdfdf' }}
                         >
-                            Quên mật khẩu
+                            Đăng ký dùng thử T2M Invest
                         </h1>
                     </Form.Item>
 
                     <Form.Item
-                        style={{ marginBottom: "5px" }}
+                        style={{ marginBottom: "20px" }}
                         label={<span style={{ fontSize: 16, fontWeight: 'bold', color: '#dfdfdf' }}>Email</span>}
                         name="email"
                         rules={[
@@ -242,30 +248,6 @@ const ForgetPasswordModal = (props: IProps) => {
                         ]}
                     >
                         <Input placeholder="Nhập Email của bạn" />
-                    </Form.Item>
-
-                    <Form.Item
-                        style={{ marginBottom: "20px" }}
-                        label={<span style={{ fontSize: 16, fontWeight: 'bold', color: '#dfdfdf' }}>Mật khẩu mới</span>}
-                        name="newPassword"
-                        rules={[
-                            { required: true, message: 'Mật khẩu không được để trống!' },
-                            { validator: validatePassword }
-                        ]}
-                    >
-                        <Input.Password placeholder="Tối thiểu 6 kí tự, bao gồm cả ký tự in hoa và chữ số." />
-                    </Form.Item>
-
-                    <Form.Item
-                        style={{ marginBottom: "20px" }}
-                        label={<span style={{ fontSize: 16, fontWeight: 'bold', color: '#dfdfdf' }}>Xác nhận mật khẩu</span>}
-                        name="confirmPassword"
-                        rules={[
-                            { required: true, message: 'Xác nhận mật khẩu không được để trống!' },
-                            { validator: validatePasswordsMatch }
-                        ]}
-                    >
-                        <Input.Password placeholder="Xác nhận mật khẩu" />
                     </Form.Item>
 
                     <Form.Item
@@ -306,7 +288,7 @@ const ForgetPasswordModal = (props: IProps) => {
                                 marginBottom: '20px'
                             }}
                         >
-                            Đổi mật khẩu
+                            Đăng ký
                         </Button>
                     </Form.Item>
                 </Form>
@@ -315,4 +297,4 @@ const ForgetPasswordModal = (props: IProps) => {
     )
 }
 
-export default ForgetPasswordModal
+export default TrialModal
