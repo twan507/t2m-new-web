@@ -17,6 +17,7 @@ import MoneyFlowValueChart from "./components/dong_tien_thi_truong/gia_tri_dong_
 import MoneyFlowBreathChart from "./components/dong_tien_thi_truong/do_rong_dong_tien";
 import MoneyFlowLiquidityChart from "./components/dong_tien_thi_truong/chi_so_thanh_khoan_eod";
 import MarketStructureChart from "./components/dong_tien_thi_truong/cau_truc_song_chart";
+import DailyReport from "./components/report";
 
 
 const useWindowWidth = (): any => {
@@ -86,32 +87,18 @@ export default function Report() {
       await set_market_info_df(res.data)
     } else if (tableName === 'market_top_stock') {
       await set_market_top_stock(res.data)
-    } else if (tableName === 'index_price_chart_df') {
-      await set_index_price_chart_df(res.data)
-    } else if (tableName === 'ta_index_df') {
-      await set_ta_index_df(res.data)
     } else if (tableName === 'market_sentiment') {
       await set_market_sentiment(res.data)
     } else if (tableName === 'itd_score_liquidity_last') {
       await set_itd_score_liquidity_last(res.data)
     } else if (tableName === 'itd_score_liquidity_df') {
       await set_itd_score_liquidity_df(res.data)
-    } else if (tableName === 'nn_td_20p_df') {
-      await set_nn_td_20p_df(res.data)
-    } else if (tableName === 'nn_td_buy_sell_df') {
-      await set_nn_td_buy_sell_df(res.data)
-    } else if (tableName === 'nn_td_top_stock') {
-      await set_nn_td_top_stock(res.data)
-    } else if (tableName === 'group_score_week') {
-      await set_group_score_week(res.data)
-    } else if (tableName === 'group_score_month') {
-      await set_group_score_month(res.data)
-    } else if (tableName === 'eod_group_liquidity_df') {
-      await set_eod_group_liquidity_df(res.data)
     } else if (tableName === 'market_ms') {
       await set_market_ms(res.data)
     } else if (tableName === 'market_breath_df') {
       await set_market_breath_df(res.data)
+    } else if (tableName === 'daily_report_df') {
+      await set_daily_report_df(res.data)
     }
   }
   useEffect(() => {
@@ -120,19 +107,12 @@ export default function Report() {
       getData('index_card_df');
       getData('market_info_df');
       getData('market_top_stock');
-      getData('index_price_chart_df');
-      getData('ta_index_df');
       getData('market_sentiment');
       getData('itd_score_liquidity_last');
       getData('itd_score_liquidity_df');
-      getData('nn_td_20p_df');
-      getData('nn_td_buy_sell_df');
-      getData('nn_td_top_stock');
-      getData('group_score_week');
-      getData('group_score_month');
-      getData('eod_group_liquidity_df');
       getData('market_ms');
       getData('market_breath_df');
+      getData('daily_report_df');
     };
     fetchData();
 
@@ -145,19 +125,12 @@ export default function Report() {
   const [index_card_df, set_index_card_df] = useState<any[]>([]);
   const [market_info_df, set_market_info_df] = useState<any[]>([]);
   const [market_top_stock, set_market_top_stock] = useState<any[]>([]);
-  const [index_price_chart_df, set_index_price_chart_df] = useState<any[]>([]);
-  const [ta_index_df, set_ta_index_df] = useState<any[]>([]);
   const [market_sentiment, set_market_sentiment] = useState<any[]>([]);
   const [itd_score_liquidity_last, set_itd_score_liquidity_last] = useState<any[]>([]);
   const [itd_score_liquidity_df, set_itd_score_liquidity_df] = useState<any[]>([]);
-  const [nn_td_20p_df, set_nn_td_20p_df] = useState<any[]>([]);
-  const [nn_td_buy_sell_df, set_nn_td_buy_sell_df] = useState<any[]>([]);
-  const [nn_td_top_stock, set_nn_td_top_stock] = useState<any[]>([]);
-  const [group_score_week, set_group_score_week] = useState<any[]>([]);
-  const [group_score_month, set_group_score_month] = useState<any[]>([]);
-  const [eod_group_liquidity_df, set_eod_group_liquidity_df] = useState<any[]>([]);
   const [market_ms, set_market_ms] = useState<any[]>([]);
   const [market_breath_df, set_market_breath_df] = useState<any[]>([]);
+  const [daily_report_df, set_daily_report_df] = useState<any[]>([]);
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
 
@@ -203,6 +176,9 @@ export default function Report() {
         }}>
           <Row>
             <Col style={{ width: ww, margin: 0.03 * ww }}>
+              <Row>
+                <DailyReport data={daily_report_df} />
+              </Row>
               <Row style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px' }}>
                 <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>Tổng quan thị trường</p>
                 <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
@@ -530,7 +506,7 @@ export default function Report() {
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
               </Row>
-              <Row gutter={20} style={{ marginTop: '10px'}}>
+              <Row gutter={20} style={{ marginTop: '10px' }}>
                 <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                   <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
                     group='A' height='190px' type='industry' />
@@ -544,7 +520,7 @@ export default function Report() {
                     group='A' height='190px' type='industry' />
                 </Col>
               </Row>
-              <Row gutter={20} style={{ marginTop: '10px'}}>
+              <Row gutter={20} style={{ marginTop: '10px' }}>
                 <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                   <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
                     group='B' height='160px' type='industry' />
@@ -558,7 +534,7 @@ export default function Report() {
                     group='B' height='160px' type='industry' />
                 </Col>
               </Row>
-              <Row gutter={20} style={{ marginTop: '10px'}}>
+              <Row gutter={20} style={{ marginTop: '10px' }}>
                 <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                   <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
                     group='C' height='160px' type='industry' />
@@ -572,7 +548,7 @@ export default function Report() {
                     group='C' height='160px' type='industry' />
                 </Col>
               </Row>
-              <Row gutter={20} style={{ marginTop: '10px'}}>
+              <Row gutter={20} style={{ marginTop: '10px' }}>
                 <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                   <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
                     group='D' height='120px' type='industry' />

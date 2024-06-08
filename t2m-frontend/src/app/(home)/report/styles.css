@@ -306,11 +306,37 @@ span.span-right {
     white-space: normal;
 }
 
-.five-column-layout {
-    display: flex;
+span.daily-report {
+    font-family: 'Calibri', sans-serif;
+    color: white;
+    font-size: 18px;
+    margin: 0px;
+    padding: 0px;
+    line-height: 1.5;
 }
 
-.five-column {
-    flex: 1;
-    /* Optional: Adds some padding for better spacing */
+span.ul-daily-report {
+    font-family: 'Calibri', sans-serif;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: italic;
+    margin: 0px;
+    padding: 0px;
+    line-height: 1.5;
+}
+
+span.li-daily-report {
+    font-family: 'Calibri', sans-serif;
+    color: white;
+    font-size: 18px;
+    margin: 0px;
+    padding: 0px;
+    line-height: 1.5;
+}
+
+ul.daily-report {
+    margin-top: 5px;
+    padding-left: 18px;
+    line-height: 1.5;
 }
