@@ -391,7 +391,7 @@ export default function Page4() {
                 </Col>
                 <Col xs={16} sm={18} md={19} lg={19} xl={20}>
                   <Row gutter={20} style={{ height: '60px', marginBottom: '10px' }}>
-                    <Col xs={12} sm={12} md={16} lg={16} xl={16} style={{ display: 'flex', flexDirection: ww > 800 ? 'row' : 'column' }}>
+                    <Col xs={12} sm={12} md={14} lg={14} xl={14} style={{ display: 'flex', flexDirection: ww > 800 ? 'row' : 'column' }}>
                       {(thong_tin_cp === 'BD' || thong_tin_cp === 'PTKT') && (
                         <>
                           <Button type='text' style={{
@@ -435,7 +435,7 @@ export default function Page4() {
                         </>
                       )}
                     </Col>
-                    <Col xs={12} sm={12} md={8} lg={8} xl={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Col xs={12} sm={12} md={10} lg={10} xl={10} style={{ display: 'flex', justifyContent: 'flex-end' }}>
                       {ww > 767 && (
                         <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
                           <Radio.Group
@@ -453,7 +453,7 @@ export default function Page4() {
                             <Radio.Button value="PTKT" className="custom-radio-button"
                               style={{
                                 fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                              }}>PTKT
+                              }}>Phân tích kĩ thuật
                             </Radio.Button>
                           </Radio.Group>
                           {thong_tin_cp === 'BD' && (
@@ -473,6 +473,16 @@ export default function Page4() {
                                 style={{
                                   fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
                                 }}>3M
+                              </Radio.Button>
+                              <Radio.Button value="6M" className="custom-radio-button"
+                                style={{
+                                  fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
+                                }}>6M
+                              </Radio.Button>
+                              <Radio.Button value="1Y" className="custom-radio-button"
+                                style={{
+                                  fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
+                                }}>1Y
                               </Radio.Button>
                             </Radio.Group>
                           )}
@@ -513,6 +523,16 @@ export default function Page4() {
                                 fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
                               }}>3M
                             </Radio.Button>
+                            <Radio.Button value="6M" className="custom-radio-button"
+                                style={{
+                                  fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
+                                }}>6M
+                              </Radio.Button>
+                              <Radio.Button value="1Y" className="custom-radio-button"
+                                style={{
+                                  fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
+                                }}>1Y
+                              </Radio.Button>
                           </Radio.Group>
                         )}
                         <StockPriceChart data={stock_price_chart_df} select_stock={select_stock} time_span={time_span} width='100%' height={ww > 767 ? '270px' : '255px'} />

@@ -1,114 +1,131 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, Plugin } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import zoomPlugin from 'chartjs-plugin-zoom';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, ChartDataLabels);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, ChartDataLabels, zoomPlugin);
 
 const MarketStructureChart = (props: any) => {
+    const [zoomState, setZoomState] = useState({ x: { min: null, max: null }, y: { min: null, max: null } });
+    const [chartInstance, setChartInstance] = useState<any>(null);
 
     const data_sets = props?.data?.filter((item: any) => item.name === 'Thị trường')
         .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+    // Tạo một đối tượng dữ liệu fake với các giá trị là null
+    const fakeDataPoint = {
+        date: new Date().toISOString(),  // Ngày hiện tại hoặc ngày kế tiếp phù hợp với định dạng ngày của bạn
+        trend_5p: null,
+        trend_20p: null,
+        trend_60p: null,
+        trend_120p: null,
+        trend_240p: null,
+        trend_480p: null
+    };
+    data_sets.push(fakeDataPoint);
 
     const dateList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
         const month = ('0' + (date.getMonth() + 1)).slice(-2); // Lấy tháng và thêm số 0 nếu cần
         const day = ('0' + date.getDate()).slice(-2); // Lấy ngày và thêm số 0 nếu cần
-        return `${day}-${month}`;
+        const year = date.getFullYear(); // Lấy năm
+        return `${day}-${month}-${year}`; // Trả về định dạng ngày-tháng-năm
     });
 
-    const slice = props?.ww > 767 ? -60 : (props?.ww > 500 ? -40 : -25);
+    const datasetsForChart = data_sets.slice(0, -1)
+    const slice = props?.ww > 767 ? 60 : (props?.ww > 500 ? 40 : 25);
 
     const lines = {
-        labels: dateList?.slice(slice) || [],
+        labels: dateList,
         datasets: [
             {
                 label: 'Tuần',
-                data: data_sets?.map((item: any) => item.trend_5p * 100).slice(slice),
+                data: datasetsForChart?.map((item: any) => item.trend_5p * 100),
                 borderColor: '#C031C7',
-                pointRadius: 2, // Tắt các chấm màu xám ở các data label
-                hoverRadius: 7, // Tăng kích thước khi di chuột tới
-                pointBackgroundColor: '#C031C7', // Màu nền cho các điểm
-                tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
+                pointRadius: 2,
+                hoverRadius: 7,
+                pointBackgroundColor: '#C031C7',
+                tension: 0.4,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'Tháng',
-                data: data_sets?.map((item: any) => item.trend_20p * 100).slice(slice),
+                data: datasetsForChart?.map((item: any) => item.trend_20p * 100),
                 fill: 'origin',
                 borderColor: '#24B75E',
-                pointRadius: 2, // Tắt các chấm màu xám ở các data label
-                hoverRadius: 7, // Tăng kích thước khi di chuột tới
-                pointBackgroundColor: '#24B75E', // Màu nền cho các điểm
-                tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
+                pointRadius: 2,
+                hoverRadius: 7,
+                pointBackgroundColor: '#24B75E',
+                tension: 0.4,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'Quý',
-                data: data_sets?.map((item: any) => item.trend_60p * 100).slice(slice),
+                data: datasetsForChart?.map((item: any) => item.trend_60p * 100),
                 fill: 'origin',
                 borderColor: '#025bc4',
-                pointRadius: 2, // Tắt các chấm màu xám ở các data label
-                hoverRadius: 7, // Tăng kích thước khi di chuột tới
-                pointBackgroundColor: '#025bc4', // Màu nền cho các điểm
-                tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
+                pointRadius: 2,
+                hoverRadius: 7,
+                pointBackgroundColor: '#025bc4',
+                tension: 0.4,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: 'Bán niên',
-                data: data_sets?.map((item: any) => item.trend_120p * 100).slice(slice),
+                data: datasetsForChart?.map((item: any) => item.trend_120p * 100),
                 fill: 'origin',
                 borderColor: '#D0be0f',
-                pointRadius: 2, // Tắt các chấm màu xám ở các data label
-                hoverRadius: 7, // Tăng kích thước khi di chuột tới
-                pointBackgroundColor: '#D0be0f', // Màu nền cho các điểm
-                tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
+                pointRadius: 2,
+                hoverRadius: 7,
+                pointBackgroundColor: '#D0be0f',
+                tension: 0.4,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: '1 Năm',
-                data: data_sets?.map((item: any) => item.trend_240p * 100).slice(slice),
+                data: datasetsForChart?.map((item: any) => item.trend_240p * 100),
                 fill: 'origin',
                 borderColor: '#e14040',
-                pointRadius: 2, // Tắt các chấm màu xám ở các data label
-                hoverRadius: 7, // Tăng kích thước khi di chuột tới
-                pointBackgroundColor: '#e14040', // Màu nền cho các điểm
-                tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
+                pointRadius: 2,
+                hoverRadius: 7,
+                pointBackgroundColor: '#e14040',
+                tension: 0.4,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
             {
                 label: '2 Năm',
-                data: data_sets?.map((item: any) => item.trend_480p * 100).slice(slice),
+                data: datasetsForChart?.map((item: any) => item.trend_480p * 100),
                 fill: 'origin',
                 borderColor: '#b3b3b3',
-                pointRadius: 2, // Tắt các chấm màu xám ở các data label
-                hoverRadius: 7, // Tăng kích thước khi di chuột tới
-                pointBackgroundColor: '#b3b3b3', // Màu nền cho các điểm
-                tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
+                pointRadius: 2,
+                hoverRadius: 7,
+                pointBackgroundColor: '#b3b3b3',
+                tension: 0.4,
+                borderWidth: props?.ww > 767 ? 3 : 2,
             },
         ],
     };
 
     const options: any = {
         responsive: true,
-        maintainAspectRatio: false, // Đảm bảo biểu đồ sẽ điều chỉnh kích thước theo container
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 display: true,
                 position: 'top',
                 labels: {
-                    boxWidth: 20, // Độ rộng của hộp màu trong legend
+                    boxWidth: 20,
                     boxHeight: 6,
-                    padding: 10, // Khoảng cách giữa các mục trong legend
-                    pointStyle: 'circle', // Đặt kiểu điểm thành hình tròn
-                    usePointStyle: true, // Bảo đảm sử dụng pointStyle cho biểu tượng
+                    padding: 10,
+                    pointStyle: 'circle',
+                    usePointStyle: true,
                     font: {
-                        size: parseInt(props?.fontSize) - 4, // Điều chỉnh cỡ chữ của legend
-                        family: 'Calibri', // Điều chỉnh font chữ của legend
+                        size: parseInt(props?.fontSize) - 4,
+                        family: 'Calibri',
                     },
-                    color: '#dfdfdf' // Màu chữ của legend
-                }
+                    color: '#dfdfdf',
+                },
             },
             tooltip: {
                 callbacks: {
@@ -117,31 +134,65 @@ const MarketStructureChart = (props: any) => {
                     },
                     label: function (tooltipItem: any) {
                         return `${tooltipItem?.dataset?.label}: ${tooltipItem?.raw?.toFixed(2)}%`;
-                    }
+                    },
                 },
-                displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip
-                usePointStyle: true, // Sử dụng point style (hình dáng được định nghĩa trong datasets cho ô màu)
-                bodyFontColor: '#dfdfdf', // Màu chữ của tooltip
-                bodyFontSize: parseInt(props?.fontSize) - 4, // Cỡ chữ trong tooltip
-                bodyFontStyle: 'bold', // Kiểu chữ trong tooltip
-                boxHeight: 8, // Kích thước của ô màu
-                caretPadding: 20
+                displayColors: true,
+                usePointStyle: true,
+                bodyFontColor: '#dfdfdf',
+                bodyFontSize: parseInt(props?.fontSize) - 4,
+                bodyFontStyle: 'bold',
+                boxHeight: 8,
+                caretPadding: 20,
             },
             title: {
                 display: true,
                 text: '',
                 padding: {
-                    bottom: 0, // Giảm khoảng cách phía dưới tiêu đề
+                    bottom: 0,
                 },
                 font: {
                     family: 'Calibri, sans-serif',
-                    size: props?.fontSize, // Chỉnh sửa cỡ chữ
-                    weight: 'bold', // Chỉnh sửa kiểu chữ
+                    size: props?.fontSize,
+                    weight: 'bold',
                 },
-                color: '#dfdfdf' // Chỉnh sửa màu chữ
+                color: '#dfdfdf',
             },
             datalabels: {
-                display: false, // Tắt các số tại các data label
+                display: false,
+            },
+            zoom: {
+                pan: {
+                    enabled: true,
+                    mode: 'x',
+                    onZoom: ({ chart }: any) => {
+                        const { min, max } = chart.scales.x;
+                        setZoomState({ x: { min, max }, y: { min: chart.scales.y.min, max: chart.scales.y.max } });
+                    },
+                    onPan: ({ chart }: any) => {
+                        const { min, max } = chart.scales.x;
+                        setZoomState({ x: { min, max }, y: { min: chart.scales.y.min, max: chart.scales.y.max } });
+                    },
+                },
+                zoom: {
+                    wheel: {
+                        enabled: true,
+                    },
+                    pinch: {
+                        enabled: true,
+                    },
+                    mode: 'x',
+                    limits: {
+                        x: { min: dateList.length - 60, max: dateList.length },
+                    },
+                    onZoom: ({ chart }: any) => {
+                        const { min, max } = chart.scales.x;
+                        setZoomState({ x: { min, max }, y: { min: chart.scales.y.min, max: chart.scales.y.max } });
+                    },
+                    onPan: ({ chart }: any) => {
+                        const { min, max } = chart.scales.x;
+                        setZoomState({ x: { min, max }, y: { min: chart.scales.y.min, max: chart.scales.y.max } });
+                    },
+                },
             },
         },
         interaction: {
@@ -150,8 +201,10 @@ const MarketStructureChart = (props: any) => {
         },
         scales: {
             x: {
+                min: zoomState.x.min !== null ? zoomState.x.min : dateList.length - slice,
+                max: zoomState.x.max !== null ? zoomState.x.max : dateList.length + 1,
                 ticks: {
-                    color: '#dfdfdf', // Màu của các nhãn trên trục X
+                    color: '#dfdfdf',
                 },
             },
             y: {
@@ -160,16 +213,17 @@ const MarketStructureChart = (props: any) => {
                 max: 100,
                 ticks: {
                     stepSize: 20,
-                    color: '#dfdfdf', // Màu của các nhãn trên trục Y
+                    color: '#dfdfdf',
                     callback: function (value: number) {
-                        return `${value}%`; // Hiển thị dạng phần trăm
-                    }
+                        return `${value}%`;
+                    },
                 },
                 grid: {
                     display: true,
-                    color: '#dfdfdf', // Màu của grid line
-                    lineWidth: 0.5, // Độ dày của grid line
-                }
+                    drawTicks: false,
+                    color: '#dfdfdf',
+                    lineWidth: 0.6,
+                },
             },
         },
     };
@@ -179,13 +233,26 @@ const MarketStructureChart = (props: any) => {
         setCheckAuth(false);
     }, []);
 
-    if (!checkAuth) {
-        return (
-            <div style={{ width: '100%', height: '500px' }}>
-                <Line data={lines} options={options} />
-            </div>
-        );
-    }
+    useEffect(() => {
+        if (chartInstance) {
+            chartInstance.update('none');
+        }
+    }, [props.data]);
+
+    return (
+        <div style={{ width: '100%', height: '500px' }}>
+            <Line
+                data={lines}
+                options={options}
+                ref={(chart: any) => {
+                    if (chart && !chartInstance) {
+                        setChartInstance(chart.chartInstance);
+                    }
+                }}
+            />
+        </div>
+    );
 }
 
 export default MarketStructureChart;
+

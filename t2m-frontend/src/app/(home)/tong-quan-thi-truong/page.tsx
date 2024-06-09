@@ -18,14 +18,18 @@ import NdTdTopStockChart from "./components/khoi_ngoai_tu_doanh/nn_td_top_stock"
 import MarketWeekScoreChart from "./components/dong_tien_thanh_khoan/score_week";
 import MarketMonthScoreChart from "./components/dong_tien_thanh_khoan/score_month";
 import LiquidityLineChart20p from "./components/dong_tien_thanh_khoan/thanh_khoan_20p";
-import MarketStructureChart from "./components/cau_truc_song_va_top_cp/cau_truc_song_chart";
 import TopCoPhieuTable from "./components/cau_truc_song_va_top_cp/top_co_phieu_table";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { resetAuthState } from "@/redux/authSlice";
 import { sessionLimit } from "@/utlis/sessionLimit";
-import { LockOutlined } from "@ant-design/icons";
-import Link from "next/link";
 import LockSection from "@/components/subscribers/blurComponents";
+
+
+import dynamic from 'next/dynamic';
+const MarketStructureChart = dynamic(
+  () => import("./components/cau_truc_song_va_top_cp/cau_truc_song_chart"),
+  { ssr: false }
+);
 
 const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
@@ -81,10 +85,11 @@ export default function Page1() {
   const authState = !!authInfo?.user?._id && limitState
   const accessLevel = authInfo?.user?.role === 'T2M ADMIN' ? 4 : authInfo?.user?.licenseInfo?.accessLevel
 
-  const getData = async (tableName: string) => {
+  const getData = async (tableName: string, columnName: string | null = null) => {
     const res = await sendRequest<IBackendRes<any>>({
       url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
       method: "GET",
+      queryParams: { columnName: columnName, columnValue: 'Thị trường' },
     })
     if (tableName === 'update_time') {
       await set_update_time(res.data)
@@ -137,7 +142,7 @@ export default function Page1() {
       getData('group_score_week');
       getData('group_score_month');
       getData('eod_group_liquidity_df');
-      getData('market_ms');
+      getData('market_ms', 'name');
     };
     fetchData();
 
@@ -605,6 +610,11 @@ export default function Page1() {
                                 style={{
                                   fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
                                 }}>6M
+                              </Radio.Button>
+                              <Radio.Button value="1Y" className="custom-radio-button"
+                                style={{
+                                  fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
+                                }}>1Y
                               </Radio.Button>
                             </Radio.Group>
                           )}

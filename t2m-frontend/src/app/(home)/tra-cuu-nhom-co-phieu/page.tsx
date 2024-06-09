@@ -9,13 +9,18 @@ import GroupWeekScoreChart from "./components/dien_bien_dong_tien/score_week";
 import GroupMonthScoreChart from "./components/dien_bien_dong_tien/score_month";
 import GroupRankingChart from "./components/suc_manh_dong_tien/group_ranking";
 import GroupLiquidityLineChart20p from "./components/suc_manh_dong_tien/thanh_khoan_20p";
-import GroupMarketStructureChart from "./components/cau_truc_song/cau_truc_song_chart";
 import GroupTopCoPhieuTable from "./components/bang_top_co_phieu/top_co_phieu_table";
 import MoneyFlowBreathChart from "./components/thong_tin_nhom/do_rong_dong_tien";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { sessionLimit } from "@/utlis/sessionLimit";
 import { resetAuthState } from "@/redux/authSlice";
 import LockSection from "@/components/subscribers/blurComponents";
+
+import dynamic from 'next/dynamic';
+const GroupMarketStructureChart = dynamic(
+  () => import("./components/cau_truc_song/cau_truc_song_chart"),
+  { ssr: false }
+);
 
 
 const useWindowWidth = (): any => {
@@ -539,6 +544,11 @@ export default function Page3() {
                         fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
                       }}>6M
                     </Radio.Button>
+                    <Radio.Button value="1Y" className="custom-radio-button"
+                      style={{
+                        fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
+                      }}>1Y
+                    </Radio.Button>
                   </Radio.Group>
                 </Col>
               </Row>
@@ -653,8 +663,13 @@ export default function Page3() {
                         </Radio.Button>
                         <Radio.Button value="6M" className="custom-radio-button"
                           style={{
-                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
+                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
                           }}>6M
+                        </Radio.Button>
+                        <Radio.Button value="1Y" className="custom-radio-button"
+                          style={{
+                            fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
+                          }}>1Y
                         </Radio.Button>
                       </Radio.Group>
                     </>

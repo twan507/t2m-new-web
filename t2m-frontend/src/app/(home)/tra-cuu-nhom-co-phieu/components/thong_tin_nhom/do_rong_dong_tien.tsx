@@ -25,17 +25,12 @@ const name_dict: any = {
 
 const MoneyFlowBreathChart = (props: any): any => {
 
-    console.log(props?.data)
-
     let data_sets: any
     if (props?.type === 'industry') {
         data_sets = props?.data?.sort((a: any, b: any) => a.index - b.index)
     } else {
         data_sets = props?.data?.sort((a: any, b: any) => a.order - b.order)
     }
-
-    console.log(props?.data_sets)
-
 
     // Chuẩn hóa dữ liệu thành phần trăm
     const normalizedData = data_sets?.map((item: any) => {
