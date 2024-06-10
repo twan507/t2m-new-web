@@ -26,66 +26,66 @@ const MarketStructureChart = (props: any) => {
                 label: 'Tuần',
                 data: data_sets?.map((item: any) => item.trend_5p * 100).slice(slice),
                 borderColor: '#C031C7',
-                pointRadius: 2, // Tắt các chấm màu xám ở các data label
-                hoverRadius: 7, // Tăng kích thước khi di chuột tới
+                pointRadius: 1.4,
+                hoverRadius: 5, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#C031C7', // Màu nền cho các điểm
                 tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'Tháng',
                 data: data_sets?.map((item: any) => item.trend_20p * 100).slice(slice),
                 fill: 'origin',
                 borderColor: '#24B75E',
-                pointRadius: 2, // Tắt các chấm màu xám ở các data label
-                hoverRadius: 7, // Tăng kích thước khi di chuột tới
+                pointRadius: 1.4,
+                hoverRadius: 5, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#24B75E', // Màu nền cho các điểm
                 tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'Quý',
                 data: data_sets?.map((item: any) => item.trend_60p * 100).slice(slice),
                 fill: 'origin',
                 borderColor: '#025bc4',
-                pointRadius: 2, // Tắt các chấm màu xám ở các data label
-                hoverRadius: 7, // Tăng kích thước khi di chuột tới
+                pointRadius: 1.4,
+                hoverRadius: 5, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#025bc4', // Màu nền cho các điểm
                 tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'Bán niên',
                 data: data_sets?.map((item: any) => item.trend_120p * 100).slice(slice),
                 fill: 'origin',
                 borderColor: '#D0be0f',
-                pointRadius: 2, // Tắt các chấm màu xám ở các data label
-                hoverRadius: 7, // Tăng kích thước khi di chuột tới
+                pointRadius: 1.4,
+                hoverRadius: 5, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#D0be0f', // Màu nền cho các điểm
                 tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: '1 Năm',
                 data: data_sets?.map((item: any) => item.trend_240p * 100).slice(slice),
                 fill: 'origin',
                 borderColor: '#e14040',
-                pointRadius: 2, // Tắt các chấm màu xám ở các data label
-                hoverRadius: 7, // Tăng kích thước khi di chuột tới
+                pointRadius: 1.4,
+                hoverRadius: 5, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#e14040', // Màu nền cho các điểm
                 tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: '2 Năm',
                 data: data_sets?.map((item: any) => item.trend_480p * 100).slice(slice),
                 fill: 'origin',
                 borderColor: '#b3b3b3',
-                pointRadius: 2, // Tắt các chấm màu xám ở các data label
-                hoverRadius: 7, // Tăng kích thước khi di chuột tới
+                pointRadius: 1.4,
+                hoverRadius: 5, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#b3b3b3', // Màu nền cho các điểm
                 tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
         ],
     };

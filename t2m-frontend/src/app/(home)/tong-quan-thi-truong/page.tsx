@@ -23,13 +23,13 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { resetAuthState } from "@/redux/authSlice";
 import { sessionLimit } from "@/utlis/sessionLimit";
 import LockSection from "@/components/subscribers/blurComponents";
+import MarketStructureChart from "./components/cau_truc_song_va_top_cp/cau_truc_song_chart";
 
-
-import dynamic from 'next/dynamic';
-const MarketStructureChart = dynamic(
-  () => import("./components/cau_truc_song_va_top_cp/cau_truc_song_chart"),
-  { ssr: false }
-);
+// import dynamic from 'next/dynamic';
+// const MarketStructureChart = dynamic(
+//   () => import("./components/cau_truc_song_va_top_cp/cau_truc_song_chart"),
+//   { ssr: false }
+// );
 
 const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));

@@ -28,7 +28,7 @@ const NhomHsScoreItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#24B75E',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'Hiệu suất B',
@@ -39,7 +39,7 @@ const NhomHsScoreItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#025bc4',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'Hiệu suất C',
@@ -50,7 +50,7 @@ const NhomHsScoreItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#D0be0f',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'Hiệu suất D',
@@ -61,7 +61,7 @@ const NhomHsScoreItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#e14040',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
         ],
     };

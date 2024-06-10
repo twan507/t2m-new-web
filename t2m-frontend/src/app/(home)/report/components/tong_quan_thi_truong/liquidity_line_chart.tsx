@@ -26,10 +26,10 @@ const LiquidityLineChart = (props: any) => {
                 backgroundColor: 'rgba(2, 91, 196, 0.2)', // Thêm màu nền cho khu vực dưới đường biểu đồ
                 borderColor: '#025bc4',
                 pointRadius: 0, // Tắt các chấm màu xám ở các data label
-                hoverRadius: 4, // Tăng kích thước khi di chuột tới
+                hoverRadius: 5,
                 pointBackgroundColor: '#025bc4', // Màu nền cho các điểm
                 tension: 0.4, // Đường cong mượt
-                borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
         ],
     };

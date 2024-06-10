@@ -7,7 +7,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const IndexGroupPriceChart = (props: any) => {
 
-	const data_sets = props?.data?.filter((item: any) => item.group_name === props?.select_group && item.time_span === props?.time_span)
+	const data_sets = props?.data?.filter((item: any) => item.group_name === props?.select_group)
 		.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
 	const dateList: string[] = data_sets?.map((item: any) => {
@@ -17,19 +17,23 @@ const IndexGroupPriceChart = (props: any) => {
 		return `${day}-${month}`;
 	});
 
+	const slice = props?.time_span == '1M' ? -20 :
+		(props?.time_span == '3M' ? -50 :
+			(props?.time_span == '6M' ? -100 : -props?.time_span))
+
 	const lines = {
-		labels: dateList || [],
+		labels: dateList?.slice(slice) || [],
 		datasets: [
 			{
 				label: `${props?.select_group} Index`,
-				data: data_sets?.map((item: any) => item.value),
+				data: data_sets?.map((item: any) => item.value).slice(slice),
 				fill: true,
 				borderColor: '#C031C7',
 				pointRadius: 0, // Tắt các chấm màu xám ở các data label
 				hoverRadius: 4, // Tăng kích thước khi di chuột tới
 				pointBackgroundColor: '#C031C7', // Màu nền cho các điểm
 				tension: 0.4, // Đường cong mượt
-				borderWidth: props?.ww > 767 ? 3 : 2, // Độ rộng của đường
+				borderWidth: props?.ww > 767 ? 2.5 : 2,
 			},
 		],
 	};

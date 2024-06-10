@@ -15,13 +15,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { sessionLimit } from "@/utlis/sessionLimit";
 import { resetAuthState } from "@/redux/authSlice";
 import LockSection from "@/components/subscribers/blurComponents";
-
-import dynamic from 'next/dynamic';
-const GroupMarketStructureChart = dynamic(
-  () => import("./components/cau_truc_song/cau_truc_song_chart"),
-  { ssr: false }
-);
-
+import GroupMarketStructureChart from "./components/cau_truc_song/cau_truc_song_chart";
 
 const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));

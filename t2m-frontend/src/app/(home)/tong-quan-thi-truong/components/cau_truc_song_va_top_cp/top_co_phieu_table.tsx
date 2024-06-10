@@ -14,7 +14,7 @@ const TopCoPhieuTable = (props: any) => {
         return '#C031C7';
     };
 
-    const data_sets = props?.data?.filter((item: any) => props?.type === 'top' ? item.t0_score > 0 : item.t0_score <= 0)
+    const data_sets = props?.data?.filter((item: any) => props?.type === 'top' ? item.type === 'top' : item.type === 'bottom')
         .sort((a: any, b: any) => props?.type === 'bottom' ? (a.t0_score - b.t0_score) : (b.t0_score - a.t0_score))
 
     const columns = (props: any, ww: any): TableProps<any>['columns'] => {

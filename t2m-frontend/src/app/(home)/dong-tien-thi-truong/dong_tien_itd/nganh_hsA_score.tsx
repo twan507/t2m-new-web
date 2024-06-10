@@ -28,7 +28,7 @@ const NganhHsAScoreItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#C031C7',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'Bất động sản',
@@ -39,7 +39,7 @@ const NganhHsAScoreItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#24B75E',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'Chứng khoán',
@@ -50,7 +50,7 @@ const NganhHsAScoreItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#025bc4',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'Tài chính',
@@ -61,7 +61,7 @@ const NganhHsAScoreItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#D0be0f',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'Thép',
@@ -72,7 +72,7 @@ const NganhHsAScoreItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#e14040',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'VLXD',
@@ -83,7 +83,7 @@ const NganhHsAScoreItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#00cccc',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'Xây dựng',
@@ -94,7 +94,7 @@ const NganhHsAScoreItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#999999',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
         ],
     };

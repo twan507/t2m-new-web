@@ -29,7 +29,7 @@ const DtVaTkTrongPhien = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#C031C7',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
                 yAxisID: 'y',
             },
             {
@@ -41,7 +41,7 @@ const DtVaTkTrongPhien = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#025bc4',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
                 yAxisID: 'y1',
             },
         ],

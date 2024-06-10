@@ -28,7 +28,7 @@ const NganhHsCLiquidItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#C031C7',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'Công nghệ',
@@ -39,7 +39,7 @@ const NganhHsCLiquidItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#24B75E',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'Hàng tiêu dùng',
@@ -50,7 +50,7 @@ const NganhHsCLiquidItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#025bc4',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'Ngân hàng',
@@ -61,7 +61,7 @@ const NganhHsCLiquidItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#D0be0f',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'Thực phẩm',
@@ -72,7 +72,7 @@ const NganhHsCLiquidItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#e14040',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
                 label: 'Vận tải',
@@ -83,7 +83,7 @@ const NganhHsCLiquidItd = (props: any) => {
                 hoverRadius: 5,
                 pointBackgroundColor: '#00cccc',
                 tension: 0.4,
-                borderWidth: props?.ww > 767 ? 3 : 2,
+                borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
         ],
     };
