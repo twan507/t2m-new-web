@@ -48,7 +48,7 @@ const TermsAndConditions = () => (
                     T2M Invest nghiêm cấm mọi hình thức sử dụng không được phép đối với Website, bao gồm việc lạm dụng, ăn cắp bản quyền, sử dụng sai ý nghĩa của bất cứ sản phẩm nào đưa trên Website và các quy định về tính bảo mật mà không có sự đồng ý bằng văn bản của T2M Invest.
                 </p>
                 <p style={{ textAlign: 'justify', fontSize: '16px', fontFamily: 'Helvetica Neue, sans-serif' }}>
-                    Khách hàng khi mua các gói sản phẩm tại T2M được đảm bảo các quyền lợi sử dụng tuy theo chính sách bán hàng từng thời kỳ. Các gói sản phẩm sau khi được thanh toán sẽ không thể hoàn lại.
+                    Khách hàng khi mua các gói sản phẩm tại T2M Invest được đảm bảo các quyền lợi sử dụng tuy theo chính sách bán hàng từng thời kỳ. Các gói sản phẩm sau khi được thanh toán sẽ không thể hoàn lại.
                 </p>
                 <h3 style={{ textAlign: 'left', fontFamily: 'Helvetica Neue, sans-serif', marginTop: '0px', fontSize: '18px' }}>
                     Miễn trừ trách nhiệm
