@@ -18,14 +18,12 @@ const MarketStructureChart = (props: any) => {
         return `${day}-${month}-${year}`; // Trả về định dạng ngày-tháng-năm
     });
 
-    const slice = props?.ww > 767 ? -60 : (props?.ww > 500 ? -40 : -25);
-
     const lines = {
-        labels: dateList?.slice(slice) || [],
+        labels: dateList?.slice(props?.time_index - props?.slice, props?.time_index) || [],
         datasets: [
             {
                 label: 'Tuần',
-                data: data_sets?.map((item: any) => item.trend_5p * 100).slice(slice),
+                data: data_sets?.map((item: any) => item.trend_5p * 100).slice(props?.time_index - props?.slice, props?.time_index),
                 borderColor: '#C031C7',
                 pointRadius: 1.4,
                 hoverRadius: 5,
@@ -35,7 +33,7 @@ const MarketStructureChart = (props: any) => {
             },
             {
                 label: 'Tháng',
-                data: data_sets?.map((item: any) => item.trend_20p * 100).slice(slice),
+                data: data_sets?.map((item: any) => item.trend_20p * 100).slice(props?.time_index - props?.slice, props?.time_index),
                 fill: 'origin',
                 borderColor: '#24B75E',
                 pointRadius: 1.4,
@@ -46,7 +44,7 @@ const MarketStructureChart = (props: any) => {
             },
             {
                 label: 'Quý',
-                data: data_sets?.map((item: any) => item.trend_60p * 100).slice(slice),
+                data: data_sets?.map((item: any) => item.trend_60p * 100).slice(props?.time_index - props?.slice, props?.time_index),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 1.4,
@@ -57,7 +55,7 @@ const MarketStructureChart = (props: any) => {
             },
             {
                 label: 'Bán niên',
-                data: data_sets?.map((item: any) => item.trend_120p * 100).slice(slice),
+                data: data_sets?.map((item: any) => item.trend_120p * 100).slice(props?.time_index - props?.slice, props?.time_index),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 1.4,
@@ -68,7 +66,7 @@ const MarketStructureChart = (props: any) => {
             },
             {
                 label: '1 Năm',
-                data: data_sets?.map((item: any) => item.trend_240p * 100).slice(slice),
+                data: data_sets?.map((item: any) => item.trend_240p * 100).slice(props?.time_index - props?.slice, props?.time_index),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 1.4,
@@ -79,7 +77,7 @@ const MarketStructureChart = (props: any) => {
             },
             {
                 label: '2 Năm',
-                data: data_sets?.map((item: any) => item.trend_480p * 100).slice(slice),
+                data: data_sets?.map((item: any) => item.trend_480p * 100).slice(props?.time_index - props?.slice, props?.time_index),
                 fill: 'origin',
                 borderColor: '#b3b3b3',
                 pointRadius: 1.4,
@@ -151,8 +149,6 @@ const MarketStructureChart = (props: any) => {
         },
         scales: {
             x: {
-                min: 0,
-                max: 100,
                 ticks: {
                     color: '#dfdfdf', // Màu của các nhãn trên trục X
                 },

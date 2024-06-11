@@ -9,15 +9,15 @@ import { resetAuthState } from "@/redux/authSlice";
 import { sessionLimit } from "@/utlis/sessionLimit";
 import MarketBreathChart from "./components/tong_quan_thi_truong/market_breath";
 import MarketTopStockChart from "./components/tong_quan_thi_truong/market_top_stock";
-import SentimentGaugeChart from "./components/tong_quan_thi_truong/sentiment_gauge_chart";
-import SentimentLineChart from "./components/tong_quan_thi_truong/sentiment_line_chart";
-import LiquidityLineChart from "./components/tong_quan_thi_truong/liquidity_line_chart";
-import LiquidityGaugeChart from "./components/tong_quan_thi_truong/liquidity_gauge_chart";
 import MoneyFlowValueChart from "./components/dong_tien_thi_truong/gia_tri_dong_tien";
 import MoneyFlowBreathChart from "./components/dong_tien_thi_truong/do_rong_dong_tien";
 import MoneyFlowLiquidityChart from "./components/dong_tien_thi_truong/chi_so_thanh_khoan_eod";
 import MarketStructureChart from "./components/dong_tien_thi_truong/cau_truc_song_chart";
 import DailyReport from "./components/report";
+import ReportSentimentGaugeChart from "./components/tong_quan_thi_truong/sentiment_gauge_chart";
+import ReportSentimentLineChart from "./components/tong_quan_thi_truong/sentiment_line_chart";
+import ReportLiquidityLineChart from "./components/tong_quan_thi_truong/liquidity_line_chart";
+import ReportLiquidityGaugeChart from "./components/tong_quan_thi_truong/liquidity_gauge_chart";
 
 
 const useWindowWidth = (): any => {
@@ -414,7 +414,7 @@ export default function Report() {
                           color: '#B3B3B3', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
                         }}> Trạng thái tâm lý
                         </p>
-                        <SentimentGaugeChart openState={openState} data={market_sentiment} width='100%' height='100px' ww={ww} />
+                        <ReportSentimentGaugeChart openState={openState} data={market_sentiment} width='100%' height='100px' ww={ww} />
                         <div style={{
                           background: getColorSentiment(openState ? market_sentiment?.[0]?.last_ratio : ''),
                           padding: '0px', borderRadius: '5px', margin: '10px 0px 0px 0px', display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: '10px', height: '25px'
@@ -427,7 +427,7 @@ export default function Report() {
                       </div>
                     </Col>
                     <Col span={17}>
-                      <SentimentLineChart data={market_sentiment} width='99%' height='200px' />
+                      <ReportSentimentLineChart data={market_sentiment} width='99%' height='200px' />
                     </Col>
                   </Row>
                 </Col>
@@ -439,7 +439,7 @@ export default function Report() {
                           color: '#B3B3B3', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
                         }}> Chỉ số thanh khoản
                         </p>
-                        <LiquidityGaugeChart openState={openState} data={itd_score_liquidity_last} width='100%' height='100px' ww={ww} />
+                        <ReportLiquidityGaugeChart openState={openState} data={itd_score_liquidity_last} width='100%' height='100px' ww={ww} />
                         <div style={{
                           background: getColorLiquidity(openState ? (itd_score_liquidity_last?.filter((item: any) => item.name === 'Thị trường')[0]?.liquidity * 100) : ''),
                           padding: '0px', borderRadius: '5px', margin: '10px 0px 0px 0px', display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: '10px', height: '25px'
@@ -452,7 +452,7 @@ export default function Report() {
                       </div>
                     </Col>
                     <Col span={17}>
-                      <LiquidityLineChart openState={openState} data={itd_score_liquidity_df} width='99%' height='200px' />
+                      <ReportLiquidityLineChart openState={openState} data={itd_score_liquidity_df} width='99%' height='200px' />
                     </Col>
                   </Row>
                 </Col>

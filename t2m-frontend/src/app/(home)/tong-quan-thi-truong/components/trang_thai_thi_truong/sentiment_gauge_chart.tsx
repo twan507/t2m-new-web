@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
-import { Chart, ArcElement, Tooltip, Legend, ChartData, ChartOptions } from 'chart.js';
+import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 import './gauge.css';
 
 Chart.register(ArcElement, Tooltip, Legend);
@@ -14,30 +14,7 @@ const getColor = (value: number) => {
   return '#C031C7'; // Xanh đậm
 };
 
-const drawCenterText = {
-  id: 'drawCenterText',
-  beforeDraw: (chart: any) => {
-    const { width, height, ctx } = chart;
-    const text = chart.config.options?.plugins?.center?.text;
-    const color = chart.config.options?.plugins?.center?.color;
-    const ww = chart.config.options?.plugins?.center?.ww;
-    const fontStyle = 'Calibri';
-    ctx.save();
-    ctx.font = `bold ${Math.round(Math.sqrt((width as number) * 3))}px ${fontStyle}`;
-    ctx.textBaseline = 'middle';
-    ctx.textAlign = 'center';
-    const centerX = width / 1.95;
-    const centerY = 120 - 10000 / ww;
-    ctx.fillStyle = color;
-    ctx.fillText(text, centerX, centerY);
-    ctx.restore();
-  },
-};
-
-Chart.register(drawCenterText);
-
 const SentimentGaugeChart = (props: any) => {
-
   const value: any = (props?.data?.[0]?.last_ratio?.toFixed(2));
 
   const data: any = {
@@ -52,6 +29,26 @@ const SentimentGaugeChart = (props: any) => {
         weight: 1,
       },
     ],
+  };
+
+  const drawCenterText = {
+    id: 'drawCenterText',
+    beforeDraw: (chart: any) => {
+      const { width, height, ctx } = chart;
+      const text = chart.config.options?.plugins?.center?.text;
+      const color = chart.config.options?.plugins?.center?.color;
+      const ww = chart.config.options?.plugins?.center?.ww;
+      const fontStyle = 'Calibri';
+      ctx.save();
+      ctx.font = `bold ${Math.round(Math.sqrt((width as number) * 3))}px ${fontStyle}`;
+      ctx.textBaseline = 'middle';
+      ctx.textAlign = 'center';
+      const centerX = width / 1.95;
+      const centerY = 120 - 10000 / ww;
+      ctx.fillStyle = color;
+      ctx.fillText(text, centerX, centerY);
+      ctx.restore();
+    },
   };
 
   const options: any = {
@@ -71,8 +68,9 @@ const SentimentGaugeChart = (props: any) => {
       center: {
         text: `${value}`,
         color: getColor(value),
-        ww: props?.ww
+        ww: props?.ww,
       },
+      drawCenterText, // Register the plugin locally
     },
     responsive: true,
     maintainAspectRatio: false,
@@ -81,7 +79,7 @@ const SentimentGaugeChart = (props: any) => {
   return (
     <div className="ta-gauge-chart-container" style={{ height: props?.height, width: props?.width }}>
       {props?.openState && (
-        <Doughnut data={data} options={options} />
+        <Doughnut data={data} options={options} plugins={[drawCenterText]} />
       )}
     </div>
   );

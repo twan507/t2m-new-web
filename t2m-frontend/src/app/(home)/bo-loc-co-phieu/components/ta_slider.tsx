@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import { Button, Col, Row, Select, Slider, Statistic } from 'antd';
+import { Button, Col, Row, Slider, SliderSingleProps } from 'antd';
 import '../styles.css';
 
 const TaSlider = (props: any) => {
@@ -8,10 +8,52 @@ const TaSlider = (props: any) => {
   const [value, setValue] = useState([-0.1, 0.1]);
   const onSliderChange = (value: any) => {
     setValue(value);
-    props?.set_filter_slider_value(value)
+    props?.set_filter_slider_value(value);
   };
 
+  function getGradientColor(percentage: number) {
+    const startColor = [225, 64, 64]; // Red
+    const midColor = [208, 190, 15]; // Yellow
+    const endColor = [36, 183, 94]; // Green
+
+    let color;
+
+    if (percentage <= 0.5) {
+      // Interpolate between startColor and midColor
+      const adjustedPercentage = percentage * 2; // Scale percentage to [0, 1] for this range
+      color = startColor.map((start, i) => {
+        const mid = midColor[i];
+        const delta = mid - start;
+        return (start + delta * adjustedPercentage).toFixed(0);
+      });
+    } else {
+      // Interpolate between midColor and endColor
+      const adjustedPercentage = (percentage - 0.5) * 2; // Scale percentage to [0, 1] for this range
+      color = midColor.map((mid, i) => {
+        const end = endColor[i];
+        const delta = end - mid;
+        return (mid + delta * adjustedPercentage).toFixed(0);
+      });
+    }
+
+    return `rgb(${color.join(',')})`;
+  }
+
   const formatter: any = (value: number) => `${(value * 100).toFixed(2)}%`;
+
+  const marks: SliderSingleProps['marks'] = {
+    0: { style: { color: '#D0be0f', fontSize: props?.fontSize }, label: <strong>0%</strong> },
+  };
+
+  const start = value[0];
+  const end = value[value.length - 1];
+  const gradient = `linear-gradient(to right, ${getGradientColor((start + 0.1) / 0.2)} 0%, ${getGradientColor((end + 0.1) / 0.2)} 100%)`;
+
+  const startPercentage = (value[0] + 0.1) / 0.2;
+  const endPercentage = (value[1] + 0.1) / 0.2;
+
+  const startColor = getGradientColor(startPercentage);
+  const endColor = getGradientColor(endPercentage);
 
   return (
     <Row gutter={25} style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
@@ -21,13 +63,12 @@ const TaSlider = (props: any) => {
           fontFamily: 'Calibri, sans-serif',
           color: 'white',
           width: '100%',
+          height: '60%',
           fontWeight: 'bold',
-          margin: '0px',
+          margin: '2px 0px 0px 0px',
           padding: '0px 3px',
           borderRadius: '5px',
-          background: value[0] > 0.0001 ? '#24B75E' :
-            (value[0] >= -0.0001 &&
-              value[0] <= 0.0001 ? '#D0be0f' : '#e14040'),
+          background: startColor,
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center'
@@ -45,6 +86,8 @@ const TaSlider = (props: any) => {
           step={0.001}
           tipFormatter={formatter}
           style={{ width: '100%' }}
+          marks={marks}
+          trackStyle={[{ background: gradient }]}
         />
       </Col>
       <Col xs={6} sm={5} md={4} lg={3} xl={2} style={{ display: 'flex', justifyContent: 'center' }}>
@@ -53,13 +96,12 @@ const TaSlider = (props: any) => {
           fontFamily: 'Calibri, sans-serif',
           color: 'white',
           width: '100%',
+          height: '60%',
           fontWeight: 'bold',
-          margin: '0px',
+          margin: '2px 0px 0px 0px',
           padding: '0px 3px',
           borderRadius: '5px',
-          background: value[1] > 0.0001 ? '#24B75E' :
-            (value[1] >= -0.0001 &&
-              value[1] <= 0.0001 ? '#D0be0f' : '#e14040'),
+          background: endColor,
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center'
@@ -68,7 +110,7 @@ const TaSlider = (props: any) => {
         </p>
       </Col>
     </Row>
-  )
+  );
 }
 
 export default TaSlider;

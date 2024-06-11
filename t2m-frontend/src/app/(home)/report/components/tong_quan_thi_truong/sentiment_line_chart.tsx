@@ -5,7 +5,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ChartDataLabels);
 
-const SentimentLineChart = (props: any) => {
+const ReportSentimentLineChart = (props: any) => {
     const data_sets = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     const timeList: string[] = data_sets?.map((item: any) => {
@@ -127,4 +127,4 @@ const SentimentLineChart = (props: any) => {
     );
 };
 
-export default SentimentLineChart;
+export default ReportSentimentLineChart;

@@ -5,7 +5,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, ChartDataLabels);
 
-const LiquidityLineChart = (props: any) => {
+const ReportLiquidityLineChart = (props: any) => {
 
     const data_sets = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
@@ -94,4 +94,4 @@ const LiquidityLineChart = (props: any) => {
     );
 };
 
-export default LiquidityLineChart;
+export default ReportLiquidityLineChart;

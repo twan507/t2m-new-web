@@ -18,7 +18,7 @@ const GroupMarketStructureChart = (props: any) => {
         return `${day}-${month}-${year}`; // Trả về định dạng ngày-tháng-năm
     });
 
-    const slice = props?.ww > 767 ? -60 : (props?.ww > 500 ? -40 : -25);
+    const slice = props?.ww > 767 ? -60 : (props?.ww > 500 ? -40 : -20);
 
     const lines = {
         labels: dateList?.slice(slice) || [],

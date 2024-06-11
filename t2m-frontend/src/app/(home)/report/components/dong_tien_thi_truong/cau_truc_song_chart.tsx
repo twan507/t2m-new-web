@@ -17,7 +17,7 @@ const MarketStructureChart = (props: any) => {
         return `${day}-${month}`;
     });
 
-    const slice = props?.ww > 767 ? -60 : (props?.ww > 500 ? -40 : -25);
+    const slice = props?.ww > 767 ? -60 : (props?.ww > 500 ? -40 : -20);
 
     const lines = {
         labels: dateList?.slice(slice) || [],

@@ -102,10 +102,13 @@ const DailyReport = (props: any) => {
                     #t2minvest
                 </span>
                 <span className='daily-report'>
-                    {'>>> 🗒 Đăng kí sử dụng hệ thống T2M Invest tại: '} <Link href='https://t2m.vn'>https://t2m.vn</Link>
+                    {'>>> 🗒 Đăng kí sử dụng hệ thống T2M Invest: '} <Link href='https://t2m.vn'>https://t2m.vn</Link>
                 </span>
                 <span className='daily-report'>
-                    {'>>> ☘️ Tham gia ngay Cộng đồng T2M Invest tại: '} <Link href='https://zalo.me/g/fggvuq311'>https://zalo.me/g/fggvuq311</Link>
+                    {'>>> ☘️ Tham gia Zalo cộng đồng T2M Invest: '} <Link href='https://zalo.me/g/fggvuq311'>https://zalo.me/g/fggvuq311</Link>
+                </span>
+                <span className='daily-report'>
+                    {'>>> 📬 Tham gia Telegram cộng đồng T2M Invest: '} <Link href='https://zalo.me/g/fggvuq311'>https://t.me/+dfQWJsAaORljNzNl</Link>
                 </span>
             </div>
         )
