@@ -1,8 +1,12 @@
 'use client'
-import { useAppSelector } from '@/redux/store';
+import { resetAuthState } from '@/redux/authSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { sendRequest } from '@/utlis/api';
+import { sessionLimit } from '@/utlis/sessionLimit';
+import { signOut } from '@/utlis/signOut';
 import { Modal, Input, notification, Form, Button } from 'antd';
 import { FormInstance, RuleObject } from 'antd/es/form';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface IProps {
@@ -12,8 +16,19 @@ interface IProps {
 
 const TrialModal = (props: IProps) => {
 
+    const [limitState, setLimitState] = useState(false);
+    const dispatch = useAppDispatch();
     const authInfo = useAppSelector((state) => state.auth)
-    const authState = !!authInfo?.user?._id
+    useEffect(() => {
+        (async () => {
+            const limitState = await sessionLimit(authInfo?.user?.email, authInfo?.access_token);
+            if (!limitState) { dispatch(resetAuthState()) }
+            setLimitState(limitState);
+        })()
+    }, [authInfo?.user?.email, authInfo?.access_token]);
+    const authState = !!authInfo?.user?._id && limitState
+
+    const router = useRouter()
     const [form] = Form.useForm()
 
     const { isTrialModalOpen, setIsTrialModalOpen } = props
@@ -46,6 +61,10 @@ const TrialModal = (props: IProps) => {
     const handleClose = () => {
         form.resetFields()
         setIsTrialModalOpen(false)
+        router.push(`/tong-quan-thi-truong`)
+
+        dispatch(resetAuthState())
+        signOut(authInfo.access_token)
     }
 
     const onFinish = async (values: any) => {
@@ -70,7 +89,7 @@ const TrialModal = (props: IProps) => {
             if (res.data) {
                 notification.success({
                     message: `Đăng ký dùng thử thành công`,
-                    description: 'Đăng xuất khỏi tài khoản sau đó đăng nhập lại để sử dụng đầy đủ các tính năng'
+                    description: 'Đăng nhập lại để sử dụng đầy đủ các tính năng'
                 })
                 handleClose()
             } else {

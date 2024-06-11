@@ -85,7 +85,7 @@ const SalePage = () => {
         />
         <Header style={{
           margin: '0px', padding: '0px', height: '60px',
-          position: 'sticky', background: '#fff', borderBottom: '1px solid #999',
+          position: 'sticky', background: '#F8F8F8', borderBottom: '2px solid #F1F1F1',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           top: 0,
           zIndex: 101
@@ -146,7 +146,7 @@ const SalePage = () => {
                     fontFamily: 'Helvetica Neue, sans-serif'
                   }}>
                   {ww < 767 ? "" : "Đăng xuất"}
-                </Button>,
+                </Button>
               </div>
             )}
           </div>
