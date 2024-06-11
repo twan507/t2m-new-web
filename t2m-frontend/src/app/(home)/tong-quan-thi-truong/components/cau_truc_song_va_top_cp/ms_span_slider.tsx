@@ -17,34 +17,50 @@ const IntegerStep = (props: any) => {
 
     const formatter = (value?: number) => (value !== undefined ? `${value} Phiên` : '');
     const parser: any = (value?: string) => (value ? value.replace(' Phiên', '') : '');
-
+    // .centered-input-number .ant-input-number-input {
+    //     text-align: center;
+    // }
     return (
-        <Row>
-            <Col span={props?.ww > 767 ? 0 : 1}></Col>
-            <Col span={props?.ww > 767 ? 20 : 17}>
-                <Slider
-                    min={20}
-                    max={120}
-                    onChange={onChange}
-                    step={10}
-                    value={typeof inputValue === 'number' ? inputValue : 0}
-                    tooltip={{ formatter }}
-                />
-            </Col>
-            <Col span={props?.ww > 767 ? 4 : 5} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <InputNumber
-                    min={20}
-                    max={120}
-                    step={10}
-                    style={{ margin: props?.ww > 767 ? '0 18px' : '0px -17px 0px 0px', width: props?.ww > 767 ? '100px' : '78px' }}
-                    value={inputValue}
-                    onChange={onChange}
-                    formatter={formatter}
-                    parser={parser}
-                    disabled={true}
-                />
-            </Col>
-        </Row>
+        <>
+            <style>
+                {`
+    .centered-input-number .ant-input-number-input {
+        text-align: center;
+    }
+
+    `}
+            </style>
+            <Row>
+                {props?.ww < 767 && (
+                    <Col span={props?.ww > 767 ? 0 : 1}></Col>
+                )}
+                <Col xs={17} sm={18} md={17} lg={18} xl={19}>
+                    <Slider
+                        min={20}
+                        max={120}
+                        onChange={onChange}
+                        step={10}
+                        value={typeof inputValue === 'number' ? inputValue : 0}
+                        tooltip={{ formatter }}
+                    />
+                </Col>
+                <Col xs={6} sm={5} md={7} lg={6} xl={5} style={{ padding: props?.ww > 767 ? '0px 10px' : '0px 0px 0px 10px' }}>
+                    <InputNumber
+                        min={20}
+                        max={120}
+                        step={10}
+                        className="centered-input-number"
+                        style={{ margin: 0, width: '100%' }}
+                        value={inputValue}
+                        onChange={onChange}
+                        formatter={formatter}
+                        parser={parser}
+                        disabled={props?.ww > 767 ? false : true}
+                    />
+                </Col>
+            </Row >
+        </>
+
     );
 };
 
