@@ -391,10 +391,10 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
                 {ww > 767 && (
                   <Image
                     preview={false}
-                    style={{ width: 'auto', height: '45px' }}
+                    style={{ width: 'auto', height: '45px', cursor: 'pointer' }}
                     src="/photo/header-logo.png"
                     alt="Home Icon"
-                    onClick={() => { window.location.href = '/' }}
+                    onClick={() => { window.location.href = '/tong-quan-thi-truong' }}
                   />
                 )}
                 {ww <= 767 && (
@@ -409,10 +409,10 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
                     {collapsed && (
                       <Image
                         preview={false}
-                        style={{ width: 'auto', height: '30px', marginLeft: '10px' }}
+                        style={{ width: 'auto', height: '30px', marginLeft: '10px', cursor: 'pointer' }}
                         src="/photo/text-logo.png"
                         alt="Home Icon"
-                        onClick={() => { window.location.href = '/' }}
+                        onClick={() => { window.location.href = '/tong-quan-thi-truong' }}
                       />
                     )}
                   </div>

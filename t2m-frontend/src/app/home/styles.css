@@ -1,0 +1,42 @@
+.main-container {
+    padding: 20px;
+}
+
+.hero-section {
+    background-color: #f0f2f5;
+    padding: 40px 0;
+}
+
+.hero-image {
+    width: 100%;
+    height: auto;
+}
+
+.story-section {
+    margin: 40px 0;
+}
+
+.story-image {
+    width: 100%;
+    height: auto;
+}
+
+.reasons-section {
+    background-color: #f0f2f5;
+    padding: 40px 0;
+    margin: 40px 0;
+}
+
+.testimonial-section {
+    margin: 40px 0;
+}
+
+.stats-section {
+    background-color: #f0f2f5;
+    padding: 40px 0;
+    margin: 40px 0;
+}
+
+.footer-section {
+    margin: 40px 0;
+}
