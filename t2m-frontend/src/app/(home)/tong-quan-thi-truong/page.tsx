@@ -980,26 +980,40 @@ export default function Page1() {
                 </>
               )}
               <Row gutter={25} style={{ marginTop: '50px', marginBottom: '10px' }}>
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                <Col xs={20} sm={20} md={8} lg={8} xl={8}>
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
                     Cấu trúc sóng thị trường
                   </p>
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
-                <Col xs={22} sm={22} md={16} lg={16} xl={16} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  {switch_ms_filter && (
-                    <MsSpanSlider set_ms_slice={set_ms_slice} />
-                  )}
-                  <Tooltip title={!switch_ms_filter ? "Bật chế độ zoom biểu đồ" : "Tắt chế độ zoom biểu đồ"}>
+                {ww < 767 && (
+                  <Col xs={4} sm={4} md={0} lg={0} xl={0} style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Button
                       className="filter-button"
                       block={true}
                       icon={<ZoomInOutlined style={{ fontSize: pixel(0.02, 20) }} />}
                       size={ww > 767 ? 'large' : 'middle'}
-                      style={{ border: 0, backgroundColor: switch_ms_filter ? '#1677ff' : '#161616', marginTop: '16px' }}
+                      style={{ border: 0, backgroundColor: switch_ms_filter ? '#1677ff' : '#161616', marginTop: '0px' }}
                       onClick={toggleMsFilter}
                     />
-                  </Tooltip>
+                  </Col>
+                )}
+                <Col xs={24} sm={24} md={16} lg={16} xl={16} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  {switch_ms_filter && (
+                    <MsSpanSlider set_ms_slice={set_ms_slice} ww={ww} />
+                  )}
+                  {ww > 767 && (
+                    <Tooltip title={!switch_ms_filter ? "Bật chế độ zoom biểu đồ" : "Tắt chế độ zoom biểu đồ"}>
+                      <Button
+                        className="filter-button"
+                        block={true}
+                        icon={<ZoomInOutlined style={{ fontSize: pixel(0.02, 20) }} />}
+                        size={ww > 767 ? 'large' : 'middle'}
+                        style={{ border: 0, backgroundColor: switch_ms_filter ? '#1677ff' : '#161616', marginTop: '16px' }}
+                        onClick={toggleMsFilter}
+                      />
+                    </Tooltip>
+                  )}
                 </Col>
               </Row>
               <Row style={{ position: 'relative' }}>
