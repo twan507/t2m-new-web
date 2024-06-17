@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Card, Typography, Button, Image } from 'antd';
 import './styles.css'
-import { Header } from 'antd/es/layout/layout';
+import { Header, Content } from 'antd/es/layout/layout';
 import { LogoutOutlined, PlusOutlined, UpCircleOutlined, UserOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { sessionLimit } from '@/utlis/sessionLimit';
@@ -114,11 +114,12 @@ const SalePage = () => {
                   style={{
                     width: ww < 767 ? '40px' : '150px',
                     marginLeft: '10px',
+                    marginRight: '10px',
                     fontWeight: 'bold',
                     fontFamily: 'Helvetica Neue, sans-serif'
                   }}>
                   {ww < 767 ? "" : "Đăng ký"}
-                </Button>,
+                </Button>
               </div>
             )}
             {authState && (
@@ -142,6 +143,7 @@ const SalePage = () => {
                   style={{
                     width: ww < 767 ? '40px' : '150px',
                     marginLeft: '10px',
+                    marginRight: '10px',
                     fontWeight: 'bold',
                     fontFamily: 'Helvetica Neue, sans-serif'
                   }}>
@@ -151,6 +153,26 @@ const SalePage = () => {
             )}
           </div>
         </Header>
+        <Content style={{ display: 'flex'}}>
+          <Col span={24} style={{ position: 'relative' }}>
+            <Row>
+              <Col span={10} style={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                width: '100%',
+                height: '100%',
+                backgroundColor: '#f0f0f0',
+                borderTopLeftRadius: '20px',
+                zIndex: 1,
+              }}>
+              </Col>
+              <Col span={18} style={{ zIndex: 2 }}>
+                <Image src="photo/anh_bia_t2m_home.png" preview={false} style={{ borderTopRightRadius: '20px', marginTop: '30px' }} />
+              </Col>
+            </Row>
+          </Col>
+        </Content>
       </>
     )
   }

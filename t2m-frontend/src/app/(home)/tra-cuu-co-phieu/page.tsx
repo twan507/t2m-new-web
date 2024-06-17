@@ -236,18 +236,18 @@ export default function Page4() {
                 <Col xs={8} sm={6} md={5} lg={5} xl={4}>
                   <div style={{
                     width: '100%', height: '185px', background: '#161616',
-                    padding: '10px', borderRadius: '5px'
+                    padding: '5px', borderRadius: '5px'
                   }}>
                     <Row>
                       <Col>
                         <p style={{
-                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: '#B3B3B3', fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
                         }}>
                           Dòng tiền trong phiên
                         </p>
                         <p style={{
-                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.t0_score > 0 ? '#24B75E' :
                             (eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.t0_score < 0 ? '#e14040' : '#D0be0f'),
                           fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
@@ -255,13 +255,13 @@ export default function Page4() {
                           {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.t0_score.toFixed(2)}
                         </p>
                         <p style={{
-                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
                         }}>
                           Dòng tiền trong tuần
                         </p>
                         <p style={{
-                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.t5_score > 0 ? '#24B75E' :
                             (eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.t5_score < 0 ? '#e14040' : '#D0be0f'),
                           fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
@@ -269,13 +269,13 @@ export default function Page4() {
                           {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.t5_score.toFixed(2)}
                         </p>
                         <p style={{
-                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
                         }}>
                           Chỉ số thanh khoản
                         </p>
                         <p style={{
-                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: getColorLiquidity(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.liquid_ratio * 100),
                           fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
                         }}>
@@ -286,13 +286,13 @@ export default function Page4() {
                     <Row>
                       <Col span={12}>
                         <p style={{
-                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
                         }}>
                           Xếp hạng
                         </p>
                         <p style={{
-                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: getColorStockRank(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.rank),
                           fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
                         }}>
@@ -301,13 +301,13 @@ export default function Page4() {
                       </Col>
                       <Col span={12}>
                         <p style={{
-                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
                         }}>
                           Top 10%
                         </p>
                         <p style={{
-                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: getColorTopRankCount(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.top_count),
                           fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
                         }}>
@@ -319,18 +319,18 @@ export default function Page4() {
                   </div>
                   <div style={{
                     width: '100%', height: '145px', background: '#161616',
-                    padding: '10px', borderRadius: '5px', marginTop: '10px'
+                    padding: '5px', borderRadius: '5px', marginTop: '10px'
                   }}>
                     <Row>
                       <Col>
                         <p style={{
-                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: '#B3B3B3', fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
                         }}>
                           Hiệu suất cổ phiếu
                         </p>
                         <p style={{
-                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: 'white',
                           fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
                         }}>
@@ -341,13 +341,13 @@ export default function Page4() {
                           </span>
                         </p>
                         <p style={{
-                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
                         }}>
                           Nhóm ngành
                         </p>
                         <p style={{
-                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.014, 12), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: 'white',
                           fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
                         }}>
@@ -358,30 +358,30 @@ export default function Page4() {
                     <Row>
                       <Col span={13}>
                         <p style={{
-                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
                         }}>
                           Hiệu suất
                         </p>
                         <p style={{
-                          fontSize: pixel(0.014, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.0135, 9), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: getColorIndustryPerform(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.industry_perform),
-                          fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                          fontWeight: 'bold', margin: '5px 0px 0px 2px', padding: 0
                         }}>
                           {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.industry_perform}
                         </p>
                       </Col>
                       <Col span={11}>
                         <p style={{
-                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
                         }}>
                           Vốn hoá
                         </p>
                         <p style={{
-                          fontSize: pixel(0.014, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          fontSize: pixel(0.0135, 9), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: getColorMarketCap(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.marketcap_group),
-                          fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                          fontWeight: 'bold', margin: '5px 0px 0px 2px', padding: 0
                         }}>
                           {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.marketcap_group}
                         </p>

@@ -269,7 +269,7 @@ const ForgetPasswordModal = (props: IProps) => {
                     </Form.Item>
 
                     <Form.Item
-                        style={{ marginBottom: "20px" }}
+                        style={{ marginBottom: "0px" }}
                         label={<span style={{ fontSize: 16, fontWeight: 'bold', color: '#dfdfdf' }}>Mã xác thực</span>}
                         name="token"
                         rules={[
@@ -290,6 +290,12 @@ const ForgetPasswordModal = (props: IProps) => {
                                 Gửi mã
                             </Button>
                         </div>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <p style={{ color: '#B3B3B3', fontSize: 13, margin: 0, padding: 0 }}>
+                            Nếu không thấy email, hãy kiểm tra trong mục "Thư rác".
+                        </p>
                     </Form.Item>
 
                     <Form.Item style={{ marginBottom: '0px', marginTop: '30px' }}>

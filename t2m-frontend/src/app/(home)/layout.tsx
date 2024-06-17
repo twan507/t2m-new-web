@@ -435,6 +435,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
                           style={{
                             width: ww < 767 ? '40px' : '120px',
                             marginLeft: '10px',
+                            marginRight: '5px',
                             fontWeight: 'bold',
                             fontFamily: 'Helvetica Neue, sans-serif'
                           }}>
@@ -462,6 +463,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
                               style={{
                                 width: ww < 767 ? '40px' : '150px',
                                 marginLeft: '10px',
+                                marginRight: '5px',
                                 fontWeight: 'bold',
                                 fontFamily: 'Helvetica Neue, sans-serif'
                               }}>
