@@ -17,6 +17,26 @@ const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
 
   useEffect(() => {
+    // Add keyframe animation to the global styles
+    const styles = document.createElement('style');
+    styles.innerHTML = `
+      @keyframes move {
+        0% { transform: translate(0, 0); }
+        25% { transform: translate(5px, -5px); }
+        50% { transform: translate(-5px, 5px); }
+        75% { transform: translate(-5px, -5px); }
+        100% { transform: translate(5px, 5px); }
+      }
+    `;
+    document.head.appendChild(styles);
+
+    // Clean up the styles on component unmount
+    return () => {
+      document.head.removeChild(styles);
+    };
+  }, []);
+
+  useEffect(() => {
     // Check if the window object is available
     if (typeof window !== 'undefined') {
       setWindowWidth(Math.min(window.innerWidth, 1250));
@@ -57,7 +77,9 @@ const SalePage = () => {
   const [isTrialModalOpen, setIsTrialModalOpen] = useState(false)
 
   const ww = useWindowWidth();
-
+  const pixel = (ratio: number, min: number) => {
+    return `${Math.max(ratio * ww, min)?.toFixed(0)}px`;
+  }
   const [checkAuth, setCheckAuth] = useState(true);
 
   useEffect(() => {
@@ -85,7 +107,7 @@ const SalePage = () => {
         />
         <Header style={{
           margin: '0px', padding: '0px', height: '60px',
-          position: 'sticky', background: '#F8F8F8', borderBottom: '2px solid #F1F1F1',
+          position: 'sticky', background: '#000', borderBottom: '2px solid #161616',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           top: 0,
           zIndex: 101
@@ -153,25 +175,106 @@ const SalePage = () => {
             )}
           </div>
         </Header>
-        <Content style={{ display: 'flex'}}>
-          <Col span={24} style={{ position: 'relative' }}>
-            <Row>
-              <Col span={10} style={{
-                position: 'absolute',
-                top: 0,
-                right: 0,
+        <Content style={{ display: 'flex', justifyContent: 'center', background: '#000' }}>
+          <Row style={{ position: 'relative', background: 'black', width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <video
+              autoPlay loop muted style={{
+                position: 'absolute', top: 0, left: 0,
+                opacity: 0.5,
                 width: '100%',
-                height: '100%',
-                backgroundColor: '#f0f0f0',
-                borderTopLeftRadius: '20px',
-                zIndex: 1,
-              }}>
-              </Col>
-              <Col span={18} style={{ zIndex: 2 }}>
-                <Image src="photo/anh_bia_t2m_home.png" preview={false} style={{ borderTopRightRadius: '20px', marginTop: '30px' }} />
-              </Col>
-            </Row>
-          </Col>
+                height: '450px',
+                objectFit: 'cover',
+                objectPosition: 'center',
+                zIndex: 0
+              }}
+            >
+              <source src="/home-content/home_video.mp4" type="video/mp4" />
+            </video>
+            <Col style={{ width: ww }}>
+              <Row>
+                <Col xs={24} sm={24} md={15} lg={15} xl={15}>
+                  <div>
+                    <Image
+                      src="/photo/header-logo.png"
+                      preview={false}
+                      style={{
+                        width: ww > 767 ? '35%' : '50%',
+                        height: 'auto',
+                        marginTop: 0.08 * ww,
+                        marginLeft: ww > 767 ? '20px' : pixel(0.1, 30),
+                        animation: 'move 5s infinite alternate'
+                      }}
+                    />
+                    <p style={{
+                      fontSize: pixel(0.018, 13), color: '#f2f2f2',
+                      marginLeft: ww > 767 ? '30px' : pixel(0.11, 40),
+                      marginTop: ww > 767 ? '30px' : '10px',
+                      fontFamily: 'Montserrat, sans-serif',
+                      animation: 'move 5s infinite alternate'
+                    }}>
+                      Hệ thống định vị dòng tiền thị trường chứng khoán
+                    </p>
+                    <p style={{
+                      fontSize: pixel(0.04, 24), color: '#f2f2f2',
+                      marginLeft: ww > 767 ? '30px' : pixel(0.11, 40),
+                      marginTop: '-5px', marginBottom: '0px',
+                      fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold',
+                      animation: 'move 5s infinite alternate'
+                    }}>
+                      DUY NHẤT TẠI VIỆT NAM
+                    </p>
+                    <Button
+                      size='large'
+                      style={{
+                        marginLeft: ww > 767 ? '30px' : pixel(0.11, 40),
+                        marginTop: '20px',
+                        animation: 'move 5s infinite alternate',
+                        background: 'linear-gradient(45deg, #C031C7, #9C1AB1)',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '12px',
+                        fontSize: '16px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'background 0.3s ease, box-shadow 0.3s ease',
+                        boxShadow: '0 0 15px rgba(192, 49, 199, 0.6), 0 0 30px rgba(192, 49, 199, 0.4)', // Outer glow effect
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'linear-gradient(45deg, #9C1AB1, #C031C7)';
+                        e.currentTarget.style.boxShadow = '0 0 20px rgba(192, 49, 199, 0.8), 0 0 40px rgba(192, 49, 199, 0.6)'; // Enhanced glow effect on hover
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'linear-gradient(45deg, #C031C7, #9C1AB1)';
+                        e.currentTarget.style.boxShadow = '0 0 15px rgba(192, 49, 199, 0.6), 0 0 30px rgba(192, 49, 199, 0.4)'; // Original glow effect
+                      }}
+                    >
+                      TRUY CẬP NGAY
+                    </Button>
+                  </div>
+                </Col>
+                <Col xs={24} sm={24} md={9} lg={9} xl={9} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <Image
+                    src="/home-content/laptop_t2m_transparent.png"
+                    preview={false}
+                    style={{
+                      width: ww > 767 ? '130%' : '100%',
+                      height: 'auto',
+                      marginTop: ww > 767 ? '70px' : '30px',
+                      marginLeft: ww > 767 ? '-80px' : '0px',
+                      animation: 'move 5s infinite alternate'
+                    }}
+                  />
+                </Col>
+
+              </Row>
+            </Col>
+          </Row>
+          <Row>
+            <div style={{ height: "1000px" }}>
+              abc
+            </div>
+          </Row>
         </Content>
       </>
     )
