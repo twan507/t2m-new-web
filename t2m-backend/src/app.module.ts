@@ -17,6 +17,7 @@ import { FilesModule } from './files/files.module';
 import { OrdersModule } from './orders/orders.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { StockdataModule } from './stockdata/stockdata.module';
+import { SaleModule } from './sale/sale.module';
 require('dotenv').config()
 
 @Module({
@@ -42,6 +43,7 @@ require('dotenv').config()
     DiscountcodesModule,
     FilesModule,
     OrdersModule,
+    SaleModule,
 
     TypeOrmModule.forRoot({
       type: 'mysql',
