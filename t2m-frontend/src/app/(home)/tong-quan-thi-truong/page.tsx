@@ -45,26 +45,22 @@ const useWindowWidth = (): any => {
   return windowWidth;
 };
 
-const getUpdateTime = (timeString: any) => {
-  if (timeString) {
-    const [hours, minutes, seconds] = timeString.split(":").map(Number);
-    const now = new Date();
-    now.setHours(hours);
-    now.setMinutes(minutes);
-    now.setSeconds(seconds);
-    now.setMilliseconds(0);
-    return now
-  } else {
-    const now = new Date();
-    now.setHours(9, 0, 0, 0);
-    return now
-  }
-}
+function isInTimeFrame() {
+  const now = new Date();
 
-const getOpenTime = () => {
-  const openTime = new Date();
-  openTime.setHours(9, 15, 0, 0);
-  return openTime
+  // Lấy thông tin ngày và giờ hiện tại
+  const day = now.getDay();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+
+  // Kiểm tra nếu là ngày từ thứ 2 (1) đến thứ 6 (5)
+  const isWeekday = day >= 1 && day <= 5;
+
+  // Kiểm tra nếu trong khung giờ từ 9:00 đến 9:16
+  const isInTime = (hours === 9 && minutes >= 0 && minutes <= 16);
+
+  // Trả về kết quả kiểm tra
+  return !(isWeekday && isInTime);
 }
 
 export default function Page1() {
@@ -193,9 +189,7 @@ export default function Page1() {
     set_switch_ms_filter(!switch_ms_filter)
   };
 
-  const currentTime = getUpdateTime(update_time?.[0]?.date?.slice(-8))
-  const openTime = getOpenTime()
-  const openState = currentTime > openTime
+  const openState = isInTimeFrame()
 
   const onChangeChiSoThiTruong = (e: any) => {
     const value = e.target.value;
@@ -933,7 +927,7 @@ export default function Page1() {
                     </Col>
                     <Col xs={16} sm={17} md={19} lg={19} xl={20}>
                       <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width={ww > 767 ? '100%' : '96%'} />
-                      <SentimentLineChart data={market_sentiment} width='100%' height='250px' />
+                      <SentimentLineChart data={market_sentiment} openState={openState} width='100%' height='250px' />
                     </Col>
                   </Row>
                   <Row gutter={10} style={{ marginTop: '20px' }}>

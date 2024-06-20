@@ -394,7 +394,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
                     style={{ width: 'auto', height: '45px', cursor: 'pointer' }}
                     src="/photo/header-logo.png"
                     alt="Home Icon"
-                    onClick={() => { window.location.href = '/tong-quan-thi-truong' }}
+                    onClick={() => { window.location.href = '/' }}
                   />
                 )}
                 {ww <= 767 && (
@@ -412,7 +412,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
                         style={{ width: 'auto', height: '30px', marginLeft: '10px', cursor: 'pointer' }}
                         src="/photo/text-logo.png"
                         alt="Home Icon"
-                        onClick={() => { window.location.href = '/tong-quan-thi-truong' }}
+                        onClick={() => { window.location.href = '/' }}
                       />
                     )}
                   </div>
