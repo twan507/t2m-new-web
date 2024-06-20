@@ -119,22 +119,19 @@ const AuthSignUpModal = (props: IProps) => {
         })
 
         if (res.data) {
+            notification.destroy();
             notification.success({
                 message: "Đăng kí thành công"
             })
             handleClose()
         } else {
+            notification.destroy();
             notification.error({
                 message: "Có lỗi xảy ra",
                 description: res.message
             })
         }
     };
-
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
-    };
-
 
     const prefixSelector = (
         <Form.Item name="prefix" noStyle >
@@ -221,7 +218,6 @@ const AuthSignUpModal = (props: IProps) => {
 
                     }}
                     onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
                     autoComplete="off"
                     initialValues={{ prefix: "" }}
                 >
@@ -310,7 +306,7 @@ const AuthSignUpModal = (props: IProps) => {
                             Với việc bấm đăng ký, bạn đã đọc và đồng ý với &nbsp;
                             <Link
                                 href='/terms'
-                                onClick={() => { 
+                                onClick={() => {
                                     setSignUpModalOpen(false)
                                 }}
                                 style={{ fontSize: 14, background: 'transparent', border: 0, padding: 0, fontStyle: 'italic' }}

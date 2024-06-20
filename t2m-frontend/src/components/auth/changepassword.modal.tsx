@@ -55,11 +55,13 @@ const ChangePasswordModal = (props: IProps) => {
         })
 
         if (res.data) {
+            notification.destroy();
             notification.success({
                 message: `Đổi mật khẩu thành công`
             })
             handleClose()
         } else {
+            notification.destroy();
             notification.error({
                 message: "Có lỗi xảy ra",
                 description: res.message

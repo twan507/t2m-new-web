@@ -61,10 +61,8 @@ const TrialModal = (props: IProps) => {
     const handleClose = () => {
         form.resetFields()
         setIsTrialModalOpen(false)
-        router.push(`/tong-quan-thi-truong`)
 
-        dispatch(resetAuthState())
-        signOut(authInfo.access_token)
+
     }
 
     const onFinish = async (values: any) => {
@@ -87,18 +85,24 @@ const TrialModal = (props: IProps) => {
             })
 
             if (res.data) {
+                notification.destroy();
                 notification.success({
                     message: `Đăng ký dùng thử thành công`,
                     description: 'Đăng nhập lại để sử dụng đầy đủ các tính năng'
                 })
                 handleClose()
+                router.push(`/tong-quan-thi-truong`)
+                dispatch(resetAuthState())
+                signOut(authInfo.access_token)
             } else {
+                notification.destroy();
                 notification.error({
                     message: "Có lỗi xảy ra",
                     description: res.message
                 })
             }
         } else {
+            notification.destroy();
             notification.error({
                 message: "Có lỗi xảy ra",
                 description: res.message
@@ -108,9 +112,10 @@ const TrialModal = (props: IProps) => {
 
     const onSendToken = async () => {
         if (!form.getFieldValue('email')) {
+            notification.destroy();
             return notification.error({
                 message: "Có lỗi xảy ra",
-                description: `Email không tồn tại`
+                description: `Email không được để trống!`
             })
         }
 
@@ -122,10 +127,12 @@ const TrialModal = (props: IProps) => {
         })
 
         if (res.data) {
+            notification.destroy();
             notification.success({
                 message: `Gửi mã thành công`
             })
         } else {
+            notification.destroy();
             notification.error({
                 message: "Có lỗi xảy ra",
                 description: res.message

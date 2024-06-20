@@ -38,10 +38,12 @@ const DetailLicenseModal = (props: IProps) => {
         if (res.data) {
             await getData()
             setIsDetailModalOpen(false)
+            notification.destroy();
             notification.success({
                 message: "Xoá gia hạn License thành công"
             })
         } else {
+            notification.destroy();
             notification.error({
                 message: "Có lỗi xảy ra",
                 description: res.message

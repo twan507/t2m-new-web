@@ -134,6 +134,7 @@ const CreatLicenseModal = (props: IProps) => {
 
         if (!form.getFieldValue('userEmail')) {
             onError(new Error('Chưa điền Email người dùng'))
+            notification.destroy();
             return notification.error({
                 message: "Có lỗi xảy ra",
                 description: "Chưa điền Email người dùng"
@@ -180,6 +181,7 @@ const CreatLicenseModal = (props: IProps) => {
 
         if (uploadCheck === false) {
             if (product !== 'TRIAL') {
+                notification.destroy();
                 return notification.error({
                     message: "Có lỗi xảy ra",
                     description: "Chưa tải lên hình ảnh xác thực"
@@ -196,11 +198,13 @@ const CreatLicenseModal = (props: IProps) => {
 
         if (res.data) {
             await getData()
+            notification.destroy();
             notification.success({
                 message: "Tạo mới sản phẩm thành công"
             })
             handleClose()
         } else {
+            notification.destroy();
             notification.error({
                 message: "Có lỗi xảy ra",
                 description: res.message

@@ -139,6 +139,7 @@ export default function Page5() {
         set_table_type('dt')
       }
     } else {
+      notification.destroy();
       notification.warning({
         message: "Xoay ngang màn hình",
       });

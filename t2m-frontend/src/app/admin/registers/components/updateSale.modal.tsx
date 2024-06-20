@@ -8,24 +8,25 @@ const { Option } = Select;
 
 interface IProps {
     getData: any
-    isCreateModalOpen: boolean
-    setIsCreateModalOpen: (v: boolean) => void
+    isUpdateModalOpen: boolean
+    setIsUpdateModalOpen: (v: boolean) => void
+    updateSaleRecord: any
 }
 
-const CreatDiscountCodeModal = (props: IProps) => {
+const UpdateSaleModal = (props: IProps) => {
 
     const authInfo = useAppSelector((state) => state.auth)
     const authState = !!authInfo?.user?._id
 
-    const { getData, isCreateModalOpen, setIsCreateModalOpen } = props
+    const { getData, isUpdateModalOpen, setIsUpdateModalOpen, updateSaleRecord } = props
 
     const onFinish = async (values: any) => {
-        const { code, maxDiscount } = values
-        const data = { code, maxDiscount }
+        const { level, description } = values
+        const data = { level, description }
 
         const res = await sendRequest<IBackendRes<any>>({
-            url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/discountcodes`,
-            method: "POST",
+            url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/sales/${updateSaleRecord._id}`,
+            method: "PATCH",
             headers: { 'Authorization': `Bearer ${authInfo.access_token}` },
             body: data
         })
@@ -34,7 +35,7 @@ const CreatDiscountCodeModal = (props: IProps) => {
             await getData()
             notification.destroy();
             notification.success({
-                message: "Tạo mới sản phẩm thành công"
+                message: "Cập nhật thông tin thành công"
             })
             handleClose()
         } else {
@@ -48,17 +49,19 @@ const CreatDiscountCodeModal = (props: IProps) => {
 
     const [form] = Form.useForm()
 
+    useEffect(() => {
+        if (updateSaleRecord) {
+            form.setFieldsValue({
+                level: updateSaleRecord.level,
+                description: updateSaleRecord.description,
+            })
+        }
+    }, [isUpdateModalOpen])
+
     const handleClose = () => {
         form.resetFields()
-        setIsCreateModalOpen(false)
+        setIsUpdateModalOpen(false)
     }
-
-    const validateDiscountCode = async (_: RuleObject, value: string) => {
-        const DiscountCodeRegex = /^[A-Z0-9]{6}$/;
-        if (value && !DiscountCodeRegex.test(value.split('@')[0])) {
-            throw new Error('Mã không đúng định dạng, tối đa 6 kí tự bao gồm chữ in hoa hoặc số.');
-        }
-    };
 
     const [checkAuth, setCheckAuth] = useState(true);
 
@@ -67,11 +70,10 @@ const CreatDiscountCodeModal = (props: IProps) => {
     }, []);
 
     if (!checkAuth) {
-
         return (
             <Modal
-                title="Tạo mới mã giảm giá"
-                open={isCreateModalOpen}
+                title="Chỉnh sản phẩm"
+                open={isUpdateModalOpen}
                 onOk={() => form.submit()}
                 onCancel={handleClose}
                 maskClosable={false}>
@@ -91,35 +93,31 @@ const CreatDiscountCodeModal = (props: IProps) => {
 
                     <Form.Item
                         style={{ marginBottom: "5px" }}
-                        label="Mã giảm giá"
-                        name="code"
-                        rules={[
-                            { required: true, message: 'Mã giảm giá không được để trống!' },
-                            { validator: validateDiscountCode }
-                        ]}
-                    >
-                        <Input placeholder="Nhập mã giảm giá" />
+                        label="Mức độ quan tâm"
+                        name="level"
+                        rules={[{ required: true, message: 'Access Level không được để trống!' }]}>
+                        <Select
+                            placeholder="Chọn mức độ quan tâm của khách hàng"
+                        >
+                            <Option value={0}>Chưa liên hệ</Option>
+                            <Option value={1}>Không quan tâm</Option>
+                            <Option value={2}>Ít quan tâm</Option>
+                            <Option value={3}>Rất quan tâm</Option>
+                            <Option value={4}>Đã mua hàng</Option>
+                        </Select>
                     </Form.Item>
 
                     <Form.Item
                         style={{ marginBottom: "5px" }}
-                        label="Tỉ lệ chiết khấu"
-                        name="maxDiscount"
-                        rules={[
-                            { required: true, message: 'Thời hạn không được để trống!' },
-                        ]}
+                        label="Lịch sử chăm sóc"
+                        name="description"
                     >
-                        <Select placeholder="Chọn tỉ lệ chiết khấu tối đa cho mã">
-                            {
-                                Array.from({ length: 10 }, (_, i) => (i + 1) * 5).map(value => (
-                                    <Option key={value} value={value}>{value}%</Option>
-                                ))
-                            }
-                        </Select>
+                        <Input placeholder="Nhập lịch sử chăm sóc khách hàng" />
                     </Form.Item>
                 </Form>
             </Modal>
         )
     }
 }
-export default CreatDiscountCodeModal
+
+export default UpdateSaleModal

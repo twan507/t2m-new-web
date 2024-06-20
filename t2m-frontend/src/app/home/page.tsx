@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Card, Typography, Button, Image, Carousel } from 'antd';
+import { Row, Col, Card, Typography, Button, Image, Carousel, notification } from 'antd';
 import './styles.css'
 import { Header, Content } from 'antd/es/layout/layout';
 import { CheckSquareOutlined, LogoutOutlined, PlusOutlined, UpCircleOutlined, UserOutlined, UsergroupAddOutlined } from '@ant-design/icons';
@@ -86,26 +86,10 @@ const SalePage = () => {
 
   const scrollToBottom = () => {
     window.scrollTo({
-      top: document.documentElement.scrollHeight,
+      top: ww > 575 ? document.documentElement.scrollHeight - 990 : document.documentElement.scrollHeight,
       behavior: 'smooth'
     });
   };
-
-  const [contentLoaded, setContentLoaded] = useState(false);
-
-  useEffect(() => {
-    // Ensuring content is fully loaded before setting the flag to true
-    const handleLoad = () => {
-      setContentLoaded(true);
-    };
-
-    if (document.readyState === 'complete') {
-      handleLoad();
-    } else {
-      window.addEventListener('load', handleLoad);
-      return () => window.removeEventListener('load', handleLoad);
-    }
-  }, []);
 
   const [checkAuth, setCheckAuth] = useState(true);
   useEffect(() => {
@@ -250,22 +234,25 @@ const SalePage = () => {
                       </p>
                       {ww > 575 && (
                         <div style={{ display: 'flex' }}>
-                          <Button
-                            size={ww > 575 ? 'large' : 'middle'}
+                          <div
                             style={{
+                              animation: 'move 5s infinite alternate',
+                              width: ww > 767 ? '150px' : '120px',
+                              height: ww > 767 ? '40px' : '30px',
                               marginLeft: '30px',
                               marginTop: '20px',
-                              animation: 'move 5s infinite alternate',
                               background: 'linear-gradient(45deg, #C031C7, #9C1AB1)',
                               color: 'white',
                               border: 'none',
-                              borderRadius: '12px',
+                              borderRadius: '8px',
                               fontSize: pixel(0.013, 12),
                               display: 'flex',
                               alignItems: 'center',
                               justifyContent: 'center',
                               transition: 'background 0.3s ease, box-shadow 0.3s ease',
                               boxShadow: '0 0 15px rgba(192, 49, 199, 0.6), 0 0 30px rgba(192, 49, 199, 0.4)',
+                              cursor: 'pointer',
+                              textAlign: 'justify'
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.background = 'linear-gradient(45deg, #9C1AB1, #C031C7)';
@@ -275,25 +262,29 @@ const SalePage = () => {
                               e.currentTarget.style.background = 'linear-gradient(45deg, #C031C7, #9C1AB1)';
                               e.currentTarget.style.boxShadow = '0 0 15px rgba(192, 49, 199, 0.6), 0 0 30px rgba(192, 49, 199, 0.4)';
                             }}
+                            onClick={() => { window.location.href = '/tong-quan-thi-truong' }}
                           >
                             TRUY CẬP NGAY
-                          </Button>
-                          <Button
-                            size={ww > 575 ? 'large' : 'middle'}
+                          </div>
+                          <div
                             style={{
-                              marginLeft: '15px',
-                              marginTop: '20px',
                               animation: 'move 5s infinite alternate',
+                              width: ww > 767 ? '150px' : '120px',
+                              height: ww > 767 ? '40px' : '30px',
+                              marginLeft: ww > 767 ? '30px' : '20px',
+                              marginTop: '20px',
                               background: 'linear-gradient(45deg, #24B75E, #1E9D4F)',
                               color: 'white',
                               border: 'none',
-                              borderRadius: '12px',
+                              borderRadius: '8px',
                               fontSize: pixel(0.013, 12),
                               display: 'flex',
                               alignItems: 'center',
                               justifyContent: 'center',
                               transition: 'background 0.3s ease, box-shadow 0.3s ease',
                               boxShadow: '0 0 15px rgba(36, 183, 94, 0.6), 0 0 30px rgba(36, 183, 94, 0.4)',
+                              cursor: 'pointer',
+                              textAlign: 'justify'
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.background = 'linear-gradient(45deg, #1E9D4F, #24B75E)';
@@ -306,7 +297,7 @@ const SalePage = () => {
                             onClick={scrollToBottom}
                           >
                             NHẬN TƯ VẤN
-                          </Button>
+                          </div>
                         </div>
                       )}
                     </div>
@@ -325,22 +316,25 @@ const SalePage = () => {
                     />
                     {ww <= 575 && (
                       <div style={{ display: 'flex' }}>
-                        <Button
-                          size={ww > 575 ? 'large' : 'middle'}
+                        <div
                           style={{
-                            marginLeft: '55px',
-                            marginTop: '5px',
                             animation: 'move 5s infinite alternate',
+                            width: '120px',
+                            height: '30px',
+                            marginLeft: '45px',
+                            marginTop: '0px',
                             background: 'linear-gradient(45deg, #C031C7, #9C1AB1)',
                             color: 'white',
                             border: 'none',
-                            borderRadius: '12px',
+                            borderRadius: '8px',
                             fontSize: pixel(0.013, 12),
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             transition: 'background 0.3s ease, box-shadow 0.3s ease',
                             boxShadow: '0 0 15px rgba(192, 49, 199, 0.6), 0 0 30px rgba(192, 49, 199, 0.4)',
+                            cursor: 'pointer',
+                            textAlign: 'justify'
                           }}
                           onMouseEnter={(e) => {
                             e.currentTarget.style.background = 'linear-gradient(45deg, #9C1AB1, #C031C7)';
@@ -350,25 +344,29 @@ const SalePage = () => {
                             e.currentTarget.style.background = 'linear-gradient(45deg, #C031C7, #9C1AB1)';
                             e.currentTarget.style.boxShadow = '0 0 15px rgba(192, 49, 199, 0.6), 0 0 30px rgba(192, 49, 199, 0.4)';
                           }}
+                          onClick={() => { window.location.href = '/tong-quan-thi-truong' }}
                         >
                           TRUY CẬP NGAY
-                        </Button>
-                        <Button
-                          size={ww > 575 ? 'large' : 'middle'}
+                        </div>
+                        <div
                           style={{
-                            marginLeft: '15px',
-                            marginTop: '5px',
                             animation: 'move 5s infinite alternate',
+                            width: '120px',
+                            height: '30px',
+                            marginLeft: '20px',
+                            marginTop: '0px',
                             background: 'linear-gradient(45deg, #24B75E, #1E9D4F)',
                             color: 'white',
                             border: 'none',
-                            borderRadius: '12px',
+                            borderRadius: '8px',
                             fontSize: pixel(0.013, 12),
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             transition: 'background 0.3s ease, box-shadow 0.3s ease',
                             boxShadow: '0 0 15px rgba(36, 183, 94, 0.6), 0 0 30px rgba(36, 183, 94, 0.4)',
+                            cursor: 'pointer',
+                            textAlign: 'justify'
                           }}
                           onMouseEnter={(e) => {
                             e.currentTarget.style.background = 'linear-gradient(45deg, #1E9D4F, #24B75E)';
@@ -378,9 +376,10 @@ const SalePage = () => {
                             e.currentTarget.style.background = 'linear-gradient(45deg, #24B75E, #1E9D4F)';
                             e.currentTarget.style.boxShadow = '0 0 15px rgba(36, 183, 94, 0.6), 0 0 30px rgba(36, 183, 94, 0.4)';
                           }}
+                          onClick={scrollToBottom}
                         >
                           NHẬN TƯ VẤN
-                        </Button>
+                        </div>
                       </div>
                     )}
                   </Col>
@@ -683,8 +682,8 @@ const SalePage = () => {
                 {ww <= 767 && (
                   <>
                     <Row>
-                      <Col xs={0} sm={0} md={2} lg={2} xl={2}></Col>
-                      <Col xs={10} sm={10} md={10} lg={10} xl={10} style={{ padding: '0px 0px 0px 5px' }}>
+                      <Col xs={0} sm={1} md={2} lg={2} xl={2}></Col>
+                      <Col xs={10} sm={9} md={10} lg={10} xl={10} style={{ padding: '0px 0px 0px 10px' }}>
                         <Row style={{ height: '150px', marginTop: '20px', background: '#161616', borderRadius: '12px' }}>
                           <Col span={6} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Image
@@ -721,7 +720,7 @@ const SalePage = () => {
                         </Row>
                       </Col>
                       <Col xs={0} sm={0} md={2} lg={2} xl={2}></Col>
-                      <Col xs={14} sm={14} md={10} lg={10} xl={10}>
+                      <Col xs={14} sm={13} md={10} lg={10} xl={10}>
                         <Carousel autoplay style={{ height: '320px', marginTop: '20px' }}>
                           <div className='gallery'>
                             <Image
@@ -746,10 +745,11 @@ const SalePage = () => {
                           </div>
                         </Carousel>
                       </Col>
+                      <Col xs={0} sm={1} md={0} lg={0} xl={0}></Col>
                     </Row>
                     <Row>
                       <Col xs={0} sm={0} md={2} lg={2} xl={2}></Col>
-                      <Col xs={14} sm={14} md={10} lg={10} xl={10}>
+                      <Col xs={14} sm={13} md={10} lg={10} xl={10}>
                         <Carousel autoplay style={{ height: '320px', marginTop: '0px' }}>
                           <div className='gallery'>
                             <Image
@@ -774,8 +774,8 @@ const SalePage = () => {
                           </div>
                         </Carousel>
                       </Col>
-                      <Col xs={0} sm={0} md={2} lg={2} xl={2}></Col>
-                      <Col xs={10} sm={10} md={10} lg={10} xl={10} style={{ padding: '0px 5px 0px 0px' }}>
+                      <Col xs={0} sm={1} md={2} lg={2} xl={2}></Col>
+                      <Col xs={10} sm={9} md={10} lg={10} xl={10} style={{ padding: '0px 10px 0px 0px' }}>
                         <Row style={{ height: '140px', marginTop: '10px', background: '#161616', borderRadius: '12px' }}>
                           <Col span={6} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Image
@@ -811,6 +811,7 @@ const SalePage = () => {
                           </Col>
                         </Row>
                       </Col>
+                      <Col xs={0} sm={1} md={0} lg={0} xl={0}></Col>
                     </Row>
                   </>
                 )}
@@ -1005,7 +1006,7 @@ const SalePage = () => {
                     </Row>
                   </Col>
                   <Col xs={0} sm={0} md={2} lg={2} xl={2} />
-                  <Col xs={24} sm={14} md={12} lg={12} xl={12} style={{ padding: ww > 767 ? '0px 10px 0px 5px' : '0px 10px' }}>
+                  <Col xs={24} sm={14} md={12} lg={12} xl={12} style={{ padding: ww > 767 ? '0px 10px 0px 5px' : '0px 10px', marginBottom: ww > 767 ? 0 : 50 }}>
                     <HomeForm pixel={pixel} ww={ww} />
                   </Col>
                 </Row>

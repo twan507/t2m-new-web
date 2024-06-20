@@ -80,10 +80,12 @@ const PageLicenses: React.FC = () => {
 
     if (res.data) {
       await getData()
+      notification.destroy();
       notification.success({
         message: "Xoá License thành công"
       })
     } else {
+      notification.destroy();
       notification.error({
         message: "Có lỗi xảy ra",
         description: res.message
@@ -101,6 +103,7 @@ const PageLicenses: React.FC = () => {
     })
 
     if (res_user?.data.isDeleted) {
+      notification.destroy();
       notification.error({
         message: `Người dùng ${record.userEmail} đã bị xoá, không thể kích hoạt License này`
       })
@@ -117,10 +120,12 @@ const PageLicenses: React.FC = () => {
 
     if (res.data) {
       await getData()
+      notification.destroy();
       notification.success({
         message: `Điều chỉnh trạng thái thành công`
       })
     } else {
+      notification.destroy();
       notification.error({
         message: "Có lỗi xảy ra",
         description: res.message
@@ -326,7 +331,7 @@ const PageLicenses: React.FC = () => {
       },
     },
     {
-      title: 'Chính sửa',
+      title: 'Chỉnh',
       align: 'center',
       width: '7%',
       render: (value, record) => {

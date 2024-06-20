@@ -418,7 +418,6 @@ export class UsersService {
         }
       )
       await this.mailService.trialEmail(foundUser.name, token, sendTrialTokenDto.email)
-      return 'ok'
     } else {
       throw new BadRequestException("Email không tồn tại")
     }

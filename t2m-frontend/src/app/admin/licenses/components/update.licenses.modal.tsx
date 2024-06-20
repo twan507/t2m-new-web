@@ -75,11 +75,13 @@ const UpdateLicenseModal = (props: IProps) => {
 
         if (res.data) {
             await getData()
+            notification.destroy();
             notification.success({
                 message: "Cập nhật sản phẩm thành công"
             })
             handleClose()
         } else {
+            notification.destroy();
             notification.error({
                 message: "Có lỗi xảy ra",
                 description: res.message
@@ -160,7 +162,7 @@ const UpdateLicenseModal = (props: IProps) => {
                 `}
                 </style>
                 <Modal
-                    title="Chính sửa License"
+                    title="Chỉnh License"
                     open={isUpdateModalOpen}
                     onOk={() => form.submit()}
                     onCancel={handleClose}

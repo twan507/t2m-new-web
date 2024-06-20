@@ -121,20 +121,18 @@ const UserInfoModal = (props: IProps) => {
 
         if (res.data) {
             await getUser()
+            notification.destroy();
             notification.success({
                 message: `Cập nhật thông tin thành công`
             })
             handleClose()
         } else {
+            notification.destroy();
             notification.error({
                 message: "Có lỗi xảy ra",
                 description: res.message
             })
         }
-    };
-
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
     };
 
     return (
@@ -183,7 +181,6 @@ const UserInfoModal = (props: IProps) => {
                     }}
                     initialValues={{ remember: true }}
                     onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
                     autoComplete="off"
                 >
                     <Form.Item style={{ display: 'flex', justifyContent: 'left', margin: '0px' }}>

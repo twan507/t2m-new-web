@@ -67,11 +67,13 @@ const ForgetPasswordModal = (props: IProps) => {
         })
 
         if (res.statusCode === 201) {
+            notification.destroy();
             notification.success({
                 message: `Đổi mật khẩu thành công`
             })
             handleClose()
         } else {
+            notification.destroy();
             notification.error({
                 message: "Có lỗi xảy ra",
                 description: res.message
@@ -83,9 +85,10 @@ const ForgetPasswordModal = (props: IProps) => {
 
     const onSendToken = async () => {
         if (!form.getFieldValue('email')) {
+            notification.destroy();
             return notification.error({
                 message: "Có lỗi xảy ra",
-                description: `Email không tồn tại`
+                description: `Email không được để trống!`
             })
         }
 
@@ -97,10 +100,12 @@ const ForgetPasswordModal = (props: IProps) => {
         })
 
         if (res.data) {
+            notification.destroy();
             notification.success({
                 message: `Gửi mã thành công`
             })
         } else {
+            notification.destroy();
             notification.error({
                 message: "Có lỗi xảy ra",
                 description: res.message

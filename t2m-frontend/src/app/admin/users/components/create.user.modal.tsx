@@ -87,11 +87,13 @@ const CreateUserModal = (props: IProps) => {
 
         if (res.data) {
             await getData()
+            notification.destroy();
             notification.success({
                 message: "Tạo mới user thành công"
             })
             handleClose()
         } else {
+            notification.destroy();
             notification.error({
                 message: "Có lỗi xảy ra",
                 description: res.message

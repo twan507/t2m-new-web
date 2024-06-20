@@ -74,11 +74,13 @@ const ManageCTVModal = (props: IProps) => {
 
         if (res.data) {
             await getData()
+            notification.destroy();
             notification.success({
                 message: `Điều chỉnh quyền CTV thành công`
             })
             handleClose()
         } else {
+            notification.destroy();
             notification.error({
                 message: "Có lỗi xảy ra",
                 description: res.message

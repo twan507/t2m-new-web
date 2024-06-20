@@ -16,6 +16,15 @@ export class Sale {
     @Prop()
     phoneNumber: string;
 
+    @Prop()
+    note: string;
+
+    @Prop()
+    description: string;
+
+    @Prop()
+    level: number;
+
     @Prop({ type: Object })
     deletedBy: {
         _id: Types.ObjectId

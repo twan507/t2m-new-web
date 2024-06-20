@@ -84,11 +84,13 @@ const UpdateUserModal = (props: IProps) => {
 
         if (res.data) {
             await getData()
+            notification.destroy();
             notification.success({
                 message: `Cập nhật thông tin người dùng thành công`
             })
             handleClose()
         } else {
+            notification.destroy();
             notification.error({
                 message: "Có lỗi xảy ra",
                 description: res.message
@@ -112,7 +114,7 @@ const UpdateUserModal = (props: IProps) => {
     if (!checkAuth) {
         return (
             <Modal
-                title="Chính sửa người dùng"
+                title="Chỉnh người dùng"
                 open={isUpdateModalOpen}
                 onOk={() => form.submit()}
                 onCancel={handleClose}

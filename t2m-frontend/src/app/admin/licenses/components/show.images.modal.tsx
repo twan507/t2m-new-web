@@ -37,7 +37,6 @@ const ImageLicenseModal = (props: IProps) => {
     }
 
     const getImage = async () => {
-        console.log(`${updateLicenseRecord.userEmail}-${convertToDDMMYYYY(detailLicenseRecord.setDate)}`)
         const res: any = await sendRequest<IBackendRes<any>>({
             url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/files`,
             method: "GET",

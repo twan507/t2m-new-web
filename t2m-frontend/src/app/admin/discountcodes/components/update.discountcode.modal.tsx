@@ -47,11 +47,13 @@ const UpdateDiscountCodeModal = (props: IProps) => {
 
         if (res.data) {
             await getData()
+            notification.destroy();
             notification.success({
                 message: "Cập nhật thông tin mã giảm giá thành công"
             })
             handleClose()
         } else {
+            notification.destroy();
             notification.error({
                 message: "Có lỗi xảy ra",
                 description: res.message
@@ -92,7 +94,7 @@ const UpdateDiscountCodeModal = (props: IProps) => {
 
         return (
             <Modal
-                title="Chính sửa mã giảm giá"
+                title="Chỉnh mã giảm giá"
                 open={isUpdateModalOpen}
                 onOk={() => form.submit()}
                 onCancel={handleClose}

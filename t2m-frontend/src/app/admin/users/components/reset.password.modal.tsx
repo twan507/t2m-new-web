@@ -62,11 +62,13 @@ const ResetPasswordModal = (props: IProps) => {
 
         if (res.data) {
             await getData()
+            notification.destroy();
             notification.success({
                 message: `Đặt lại mật khẩu thành công cho ${updateUserRecord.email}`
             })
             handleClose()
         } else {
+            notification.destroy();
             notification.error({
                 message: "Có lỗi xảy ra",
                 description: res.message

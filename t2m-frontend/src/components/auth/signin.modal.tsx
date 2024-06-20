@@ -41,10 +41,6 @@ const AuthSignInModal = (props: IProps) => {
         }
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
-    };
-
     return (
         <>
             <style>
@@ -133,7 +129,6 @@ const AuthSignInModal = (props: IProps) => {
                     }}
                     initialValues={{ remember: true }}
                     onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
                     autoComplete="off"
                 >
                     <Form.Item style={{ display: 'flex', justifyContent: 'left', margin: '0px' }}>

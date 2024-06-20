@@ -72,10 +72,12 @@ const PageDiscountCodes: React.FC = () => {
 
     if (res.data) {
       await getData()
+      notification.destroy();
       notification.success({
         message: "Xoá mã giảm giá thành công"
       })
     } else {
+      notification.destroy();
       notification.error({
         message: "Có lỗi xảy ra",
         description: res.message
@@ -93,10 +95,12 @@ const PageDiscountCodes: React.FC = () => {
 
     if (res.data) {
       await getData()
+      notification.destroy();
       notification.success({
         message: `Điều chỉnh trạng thái thành công`
       })
     } else {
+      notification.destroy();
       notification.error({
         message: "Có lỗi xảy ra",
         description: res.message
@@ -271,7 +275,7 @@ const PageDiscountCodes: React.FC = () => {
       },
     },
     {
-      title: 'Chính sửa',
+      title: 'Chỉnh',
       align: 'center',
       render: (value, record) => {
         return (

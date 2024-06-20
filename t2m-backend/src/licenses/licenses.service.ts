@@ -280,7 +280,7 @@ export class LicensesService {
         }
       },
 
-      // Chính sửa xoá License ở User
+      // Chỉnh xoá License ở User
       await this.userModel.updateOne(
         { email: foundLicense.userEmail },
         { license: status ? foundLicense._id : '' }

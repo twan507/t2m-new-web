@@ -17,7 +17,7 @@ import { FilesModule } from './files/files.module';
 import { OrdersModule } from './orders/orders.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { StockdataModule } from './stockdata/stockdata.module';
-import { SaleModule } from './sale/sale.module';
+import { SaleModule } from './sales/sale.module';
 require('dotenv').config()
 
 @Module({

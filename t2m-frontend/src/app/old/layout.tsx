@@ -123,6 +123,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
         setPath(key)
       } else {
         setSignInModalOpen(true)
+        notification.destroy();
         notification.warning({
           message: "Không có quyền truy cập",
           description: "Bạn cần đăng nhập để xem nội dung này"

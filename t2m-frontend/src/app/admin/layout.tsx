@@ -10,7 +10,8 @@ import {
   ProductOutlined,
   FallOutlined,
   FundViewOutlined,
-  ShoppingCartOutlined
+  ShoppingCartOutlined,
+  MailOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, Button, Avatar, notification } from 'antd';
 import { useRouter } from 'next/navigation';
@@ -87,6 +88,7 @@ const AdminLayout = ({ children }: React.PropsWithChildren) => {
         setPath(key)
       } else {
         setSignInModalOpen(true)
+        notification.destroy();
         notification.warning({
           message: "Không có quyền truy cập",
           description: "Bạn cần đăng nhập để xem nội dung này"
@@ -149,6 +151,15 @@ const AdminLayout = ({ children }: React.PropsWithChildren) => {
       ),
       key: 'orders',
       icon: <ShoppingCartOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />
+    },
+    {
+      label: (
+        <Link href="/admin/registers" onClick={(e) => { e.preventDefault() }}>
+          Registers
+        </Link>
+      ),
+      key: 'registers',
+      icon: <MailOutlined style={{ fontSize: '18px', marginLeft: '-1px' }} />
     },
   ]
 
@@ -267,7 +278,7 @@ const AdminLayout = ({ children }: React.PropsWithChildren) => {
                     height: "50px",
                     color: '#dfdfdf',
                     marginLeft: collapsed ? '8px' : '13px',
-                    marginTop: `calc(100vh - 110px - ${6 * 55}px`
+                    marginTop: `calc(100vh - 130px - ${7 * 50}px`
                   }}
                 >
                   {collapsed ? '' : 'Đăng xuất'}

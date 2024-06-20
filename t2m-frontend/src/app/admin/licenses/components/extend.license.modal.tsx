@@ -27,6 +27,7 @@ const ExtendLicenseModal = (props: IProps) => {
         const data = { id: updateLicenseRecord._id, monthExtend, price }
 
         if (uploadCheck === false) {
+            notification.destroy();
             return notification.error({
                 message: "Có lỗi xảy ra",
                 description: "Chưa tải lên hình ảnh xác thực"
@@ -43,11 +44,13 @@ const ExtendLicenseModal = (props: IProps) => {
         if (res.data) {
             await getData()
             setIsDetailModalOpen(false)
+            notification.destroy();
             notification.success({
                 message: "Gia hạn License thành công"
             })
             handleClose()
         } else {
+            notification.destroy();
             notification.error({
                 message: "Có lỗi xảy ra",
                 description: res.message

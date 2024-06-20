@@ -79,4 +79,31 @@ export class MailService {
             },
         });
     }
+
+    async newRegisterEmail(name: string, email: string, phoneNumber: string, note: string) {
+        await this.mailerService.sendMail({
+            to: "mail.t2minvest@gmail.com",
+            from: '"T2M Invest" <mail.t2minvest@gmail.com>',
+            subject: 'Khách hàng mới đăng kí tư vấn!',
+            template: "newRegister",
+            context: {
+                name: name,
+                email: email,
+                phoneNumber: phoneNumber,
+                note: note
+            },
+        });
+    }
+
+    async confirmRegisterEmail(customerName: string, mailTo: string) {
+        await this.mailerService.sendMail({
+            to: mailTo,
+            from: '"T2M Invest" <mail.t2minvest@gmail.com>',
+            subject: 'T2M Invest cảm ơn!',
+            template: "confirmRegister",
+            context: {
+                customerName: customerName
+            },
+        });
+    }
 }

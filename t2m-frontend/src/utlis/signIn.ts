@@ -1,7 +1,12 @@
 import { sendRequest } from "./api";
 import { notification } from "antd";
 
+notification.config({
+    placement: 'bottomRight',
+});
+
 export async function signIn(form: any) {
+
     const res = await sendRequest<IBackendRes<any>>({
         url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
         method: "POST",
@@ -11,11 +16,13 @@ export async function signIn(form: any) {
         }
     })
     if (!res?.error) {
+        notification.destroy();
         notification.success({
             message: "Đăng nhập thành công"
         })
         return res.data
     } else {
+        notification.destroy();
         notification.error({
             message: res.message
         })

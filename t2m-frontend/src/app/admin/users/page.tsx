@@ -82,11 +82,13 @@ const PageUsers: React.FC = () => {
 
     if (res.data) {
       await getData()
+      notification.destroy();
       notification.success({
         message: "Xoá người dùng thành công"
       })
 
     } else {
+      notification.destroy();
       notification.error({
         message: "Có lỗi xảy ra",
         description: res.message
@@ -298,7 +300,7 @@ const PageUsers: React.FC = () => {
       }
     },
     {
-      title: 'Chính sửa',
+      title: 'Chỉnh',
       align: 'center',
       render: (value, record) => {
         return (
