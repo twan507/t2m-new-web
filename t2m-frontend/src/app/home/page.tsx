@@ -391,7 +391,7 @@ const SalePage = () => {
               <Col style={{ width: ww }}>
                 <Row style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
                   <h1 style={{ fontSize: pixel(0.035, 26), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: 0 }}>
-                    Khám phá
+                    Tính năng
                   </h1>
                   <hr style={{ border: 0, height: '1px', backgroundColor: '#C031C7', width: pixel(0.2, 150) }} />
                   <p style={{ fontSize: pixel(0.013, 10), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf' }}>
@@ -507,7 +507,7 @@ const SalePage = () => {
                         style={{ width: 'auto', height: ww > 767 ? '100px' : '50px', margin: '20px 0px 0px 0px' }}
                         src="/icons/icon_3.png"
                       />
-                      <span style={{ padding: 10 }}>Giải mã 05 thành tố trọng yếu của một cổ phiếu để xác nhận các điểm mua đạt hiệu quả lợi nhuận vượt trội.</span>
+                      <span style={{ padding: 10 }}>05 thành tố trọng yếu của một cổ phiếu để xác nhận các điểm mua đạt hiệu quả lợi nhuận vượt trội.</span>
                     </div>
                   </Col>
                   <Col xs={12} sm={12} md={6} lg={6} xl={6} style={{ padding: '0px 5px' }}>
