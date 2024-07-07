@@ -128,8 +128,8 @@ const MoneyFlowValueChart = (props: any) => {
         },
         scales: {
             x: {
-                min: props?.type === 'industry' ? minIndustryScore - 2 : null,
-                max: props?.type === 'industry' ? maxIndustryScore + 2 : null,
+                min: props?.type === 'industry' ? (props.ww > 767 ? minIndustryScore : minIndustryScore - 2) : null,
+                max: props?.type === 'industry' ? (props.ww > 767 ? maxIndustryScore : maxIndustryScore + 2) : null,
                 grid: {
                     display: false, // Loại bỏ grid dọc
                 },
