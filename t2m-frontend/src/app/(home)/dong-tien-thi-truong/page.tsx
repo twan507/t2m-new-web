@@ -481,7 +481,7 @@ export default function Page2() {
                             </Col>
                             <Col xs={9} sm={9} md={5} lg={5} xl={5}>
                               <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
-                                group='A' height={ww > 767 ? '300px' : '200px'} type='group' />
+                                group='A' height={ww > 767 ? '300px' : '200px'} type='industry' />
                             </Col>
                           </>
                         )}
@@ -511,7 +511,7 @@ export default function Page2() {
                             </Col>
                             <Col xs={9} sm={9} md={5} lg={5} xl={5}>
                               <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
-                                group='B' height={ww > 767 ? '250px' : '180px'} type='group' />
+                                group='B' height={ww > 767 ? '250px' : '180px'} type='industry' />
                             </Col>
                           </>
                         )}
@@ -541,7 +541,7 @@ export default function Page2() {
                             </Col>
                             <Col xs={9} sm={9} md={5} lg={5} xl={5}>
                               <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
-                                group='C' height={ww > 767 ? '250px' : '180px'} type='group' />
+                                group='C' height={ww > 767 ? '250px' : '180px'} type='industry' />
                             </Col>
                           </>
                         )}
@@ -571,7 +571,7 @@ export default function Page2() {
                             </Col>
                             <Col xs={9} sm={9} md={5} lg={5} xl={5}>
                               <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
-                                group='D' height={ww > 767 ? '200px' : '135px'} type='group' />
+                                group='D' height={ww > 767 ? '200px' : '135px'} type='industry' />
                             </Col>
                           </>
                         )}
