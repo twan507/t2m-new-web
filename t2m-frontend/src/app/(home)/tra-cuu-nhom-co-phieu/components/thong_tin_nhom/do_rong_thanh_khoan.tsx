@@ -23,22 +23,26 @@ const name_dict: any = {
     'D': 'ngành hiệu suất D',
 }
 
-const MoneyFlowBreathChart = (props: any): any => {
+const LiquidityBreathChart = (props: any): any => {
 
     let data_sets: any
     if (props?.type === 'industry') {
-        data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.index - b.index)
+        data_sets = props?.data?.sort((a: any, b: any) => a.index - b.index)
     } else {
-        data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.order - b.order)
+        data_sets = props?.data?.sort((a: any, b: any) => a.order - b.order)
     }
 
     // Chuẩn hóa dữ liệu thành phần trăm
+    // Chuẩn hóa dữ liệu thành phần trăm
     const normalizedData = data_sets?.map((item: any) => {
-        const total = parseInt(item.in_flow) + parseInt(item.out_flow);
+        const total_flow = parseInt(item.in_flow) + parseInt(item.out_flow);
+        const total_liquid = parseInt(item.liquid_up) + parseInt(item.liquid_down);
         return {
             name: item.name,
-            in_flow: (item.in_flow / total) * 100,
-            out_flow: (item.out_flow / total) * 100,
+            in_flow: (item.in_flow / total_flow) * 100,
+            out_flow: (item.out_flow / total_flow) * 100,
+            liquid_up: (item.liquid_up / total_liquid) * 100,
+            liquid_down: (item.liquid_down / total_liquid) * 100,
         };
     });
 
@@ -47,12 +51,12 @@ const MoneyFlowBreathChart = (props: any): any => {
         datasets: [
             {
                 label: 'Tiền vào',
-                data: normalizedData?.map((item: any) => item.in_flow), // Sử dụng in_flow từ sample data
+                data: normalizedData?.map((item: any) => item.liquid_up), // Sử dụng in_flow từ sample data
                 backgroundColor: '#24B75E',
             },
             {
                 label: 'Tiền ra',
-                data: normalizedData?.map((item: any) => item.out_flow), // Sử dụng out_flow từ sample data
+                data: normalizedData?.map((item: any) => item.liquid_down), // Sử dụng out_flow từ sample data
                 backgroundColor: '#e14040',
             },
         ],
@@ -65,32 +69,9 @@ const MoneyFlowBreathChart = (props: any): any => {
         plugins: {
             legend: {
                 display: false,
-                position: 'top',
-                labels: {
-                    boxWidth: 20, // Độ rộng của hộp màu trong legend
-                    boxHeight: 8,
-                    padding: 10, // Khoảng cách giữa các mục trong legend
-                    pointStyle: 'circle', // Đặt kiểu điểm thành hình tròn
-                    usePointStyle: true, // Bảo đảm sử dụng pointStyle cho biểu tượng
-                    font: {
-                        size: parseInt(props?.fontSize) - 4, // Điều chỉnh cỡ chữ của legend
-                        family: 'Calibri', // Điều chỉnh font chữ của legend
-                    },
-                    color: '#dfdfdf' // Màu chữ của legend
-                }
             },
             title: {
-                display: true,
-                text: `Độ rộng dòng tiền`,
-                padding: {
-                    bottom: props?.ww > 767 ? 0 : 15
-                },
-                font: {
-                    family: 'Calibri, sans-serif',
-                    size: parseInt(props?.fontSize) - 2, // Chỉnh sửa cỡ chữ
-                    weight: 'bold', // Chỉnh sửa kiểu chữ
-                },
-                color: '#dfdfdf' // Chỉnh sửa màu chữ
+                display: false,
             },
             tooltip: {
                 callbacks: {
@@ -110,10 +91,10 @@ const MoneyFlowBreathChart = (props: any): any => {
                 boxWidth: 10, // Kích thước của ô màu
             },
             datalabels: {
-                display: props?.ww > 767 ? true : false,
+                display: true,
                 anchor: 'center',
                 align: 'center',
-                formatter: (value: any) => value > 20 ? (value.toFixed(1) + '%') : '', // Định dạng giá trị hiển thị
+                formatter: (value: any) => value > (props?.ww > 768 ? 25 : 35) ? (value.toFixed(1) + '%') : '', // Định dạng giá trị hiển thị
                 font: {
                     family: 'Helvetica, sans-serif',
                     size: parseInt(props?.fontSize) - 7, // Chỉnh sửa cỡ chữ
@@ -153,7 +134,7 @@ const MoneyFlowBreathChart = (props: any): any => {
     if (!checkAuth) {
         return (
             <>
-                <div style={{ height: props?.height, width: '100%', marginLeft: props?.ww > 767 ? '-20px' : '-10px' }}>
+                <div style={{ height: props?.height, width: '100%', marginLeft: '-5px', marginTop: '4px' }}>
                     <Bar data={data} options={options} />
                 </div>
             </>
@@ -161,4 +142,4 @@ const MoneyFlowBreathChart = (props: any): any => {
     }
 };
 
-export default MoneyFlowBreathChart;
+export default LiquidityBreathChart;

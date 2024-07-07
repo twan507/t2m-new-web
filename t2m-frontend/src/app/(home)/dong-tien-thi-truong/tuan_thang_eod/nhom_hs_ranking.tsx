@@ -103,7 +103,7 @@ const NhomHsRanking = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 767 ? 'Sức mạnh dòng tiền nhóm hiệu suất' : 'Sức mạnh nhóm hiệu suất',
+                text: props?.ww > 767 ? 'Sức mạnh dòng tiền nhóm hiệu suất' : 'Sức mạnh dòng tiền',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',
@@ -123,6 +123,7 @@ const NhomHsRanking = (props: any) => {
         scales: {
             x: {
                 ticks: {
+                    display: props.ww > 767 ? true : false,
                     color: '#dfdfdf',
                 },
             },

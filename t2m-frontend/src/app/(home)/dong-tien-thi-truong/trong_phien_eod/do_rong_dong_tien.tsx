@@ -81,13 +81,13 @@ const MoneyFlowBreathChart = (props: any): any => {
             },
             title: {
                 display: true,
-                text: props?.ww > 767 ? `Độ rộng ${name_dict[props?.group]}` : `Độ rộng`,
+                text: props?.ww > 767 ? 'Độ rộng dòng tiền' : 'Độ rộng dòng tiền',
                 padding: {
                     bottom: props?.ww > 767 ? 0 : 15
                 },
                 font: {
                     family: 'Calibri, sans-serif',
-                    size: parseInt(props?.fontSize) - 2, // Chỉnh sửa cỡ chữ
+                    size: parseInt(props?.fontSize) - 4, // Chỉnh sửa cỡ chữ
                     weight: 'bold', // Chỉnh sửa kiểu chữ
                 },
                 color: '#dfdfdf' // Chỉnh sửa màu chữ
@@ -110,13 +110,13 @@ const MoneyFlowBreathChart = (props: any): any => {
                 boxWidth: 10, // Kích thước của ô màu
             },
             datalabels: {
-                display: props?.ww > 767 ? true : false,
+                display: true,
                 anchor: 'center',
                 align: 'center',
-                formatter: (value: any) => value > 20 ? (value.toFixed(1) + '%') : '', // Định dạng giá trị hiển thị
+                formatter: (value: any) => value > (props?.ww > 767 ? 20 : 30) ? (value.toFixed(1) + '%') : '', // Định dạng giá trị hiển thị
                 font: {
                     family: 'Helvetica, sans-serif',
-                    size: parseInt(props?.fontSize) - 7, // Chỉnh sửa cỡ chữ
+                    size: props?.ww > 767 ? parseInt(props?.fontSize) - 7 : parseInt(props?.fontSize) - 6, // Chỉnh sửa cỡ chữ
                 },
                 color: '#ffffff',
             },

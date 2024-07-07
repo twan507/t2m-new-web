@@ -684,38 +684,50 @@ const SalePage = () => {
                     <Row>
                       <Col xs={0} sm={1} md={2} lg={2} xl={2}></Col>
                       <Col xs={10} sm={9} md={10} lg={10} xl={10} style={{ padding: '0px 0px 0px 10px' }}>
-                        <Row style={{ height: '150px', marginTop: '20px', background: '#161616', borderRadius: '12px' }}>
-                          <Col span={6} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Image
-                              preview={false}
-                              style={{ width: 'auto', height: ww > 767 ? '70px' : '30px' }}
-                              src="/icons/icon_10.png"
-                            />
-                          </Col>
-                          <Col span={18} style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column' }}>
-                            <p style={{ fontSize: pixel(0.015, 10), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: '0px 0px 5px 0px', fontWeight: 'bold', paddingRight: ww > 767 ? '20px' : '10px' }}>
-                              Hệ thống định vị dòng tiền T2M Stock
-                            </p>
-                            <p style={{ fontSize: pixel(0.013, 9), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: 0, textAlign: 'justify', paddingRight: ww > 767 ? '20px' : '10px' }}>
-                              Website duy nhất trên thị trường cung cấp khả năng xác định nhanh chóng và chính xác về sự luân chuyển của dòng tiền và trạng thái của thị trường chứng khoán.
-                            </p>
+                        <Row style={{ height: '150px', marginTop: '20px', background: '#161616', borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                          <Col span={24}>
+                            <Row>
+                              <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <Image
+                                  preview={false}
+                                  style={{ width: 'auto', height: ww > 767 ? '70px' : '40px' }}
+                                  src="/icons/icon_10.png"
+                                />
+                              </Col>
+                              <Col span={16} style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column' }}>
+                                <p style={{ fontSize: pixel(0.015, 11), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: '0px 0px 5px 0px', fontWeight: 'bold', padding: '10px 10px 0px 10px' }}>
+                                  Hệ thống định vị dòng tiền T2M Stock
+                                </p>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <p style={{ fontSize: pixel(0.013, 10), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: 0, textAlign: 'justify', padding: '10px' }}>
+                                Website duy nhất trên thị trường cung cấp khả năng xác định nhanh chóng và chính xác về sự luân chuyển của dòng tiền và trạng thái của thị trường chứng khoán.
+                              </p>
+                            </Row>
                           </Col>
                         </Row>
-                        <Row style={{ height: '140px', marginTop: '10px', background: '#161616', borderRadius: '12px' }}>
-                          <Col span={6} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Image
-                              preview={false}
-                              style={{ width: 'auto', height: ww > 767 ? '70px' : '30px' }}
-                              src="/icons/icon_9.png"
-                            />
-                          </Col>
-                          <Col span={18} style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column' }}>
-                            <p style={{ fontSize: pixel(0.015, 10), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: '0px 0px 5px 0px', fontWeight: 'bold', paddingRight: ww > 767 ? '20px' : '10px' }}>
-                              Tín hiệu cổ phiếu và phái sinh T2M AI
-                            </p>
-                            <p style={{ fontSize: pixel(0.013, 9), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: 0, textAlign: 'justify', paddingRight: ww > 767 ? '20px' : '10px' }}>
-                              Trí tuệ nhân tạo mạnh mẽ giúp đưa ra các tín hiệu mua/bán cổ phiếu mang lại hiệu quả vượt trội
-                            </p>
+                        <Row style={{ height: '150px', marginTop: '10px', background: '#161616', borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                          <Col span={24}>
+                            <Row>
+                              <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <Image
+                                  preview={false}
+                                  style={{ width: 'auto', height: ww > 767 ? '70px' : '40px' }}
+                                  src="/icons/icon_9.png"
+                                />
+                              </Col>
+                              <Col span={16} style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column' }}>
+                                <p style={{ fontSize: pixel(0.015, 11), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: '0px 0px 5px 0px', fontWeight: 'bold', padding: '10px 10px 0px 10px' }}>
+                                  Tín hiệu cổ phiếu và phái sinh T2M AI
+                                </p>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <p style={{ fontSize: pixel(0.013, 10), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: 0, textAlign: 'justify', padding: '10px' }}>
+                                Trí tuệ nhân tạo mạnh mẽ giúp đưa ra các tín hiệu mua/bán cổ phiếu mang lại hiệu quả vượt trội.
+                              </p>
+                            </Row>
                           </Col>
                         </Row>
                       </Col>
@@ -776,38 +788,50 @@ const SalePage = () => {
                       </Col>
                       <Col xs={0} sm={1} md={2} lg={2} xl={2}></Col>
                       <Col xs={10} sm={9} md={10} lg={10} xl={10} style={{ padding: '0px 10px 0px 0px' }}>
-                        <Row style={{ height: '140px', marginTop: '10px', background: '#161616', borderRadius: '12px' }}>
-                          <Col span={6} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Image
-                              preview={false}
-                              style={{ width: 'auto', height: ww > 767 ? '70px' : '30px' }}
-                              src="/icons/icon_5.png"
-                            />
-                          </Col>
-                          <Col span={18} style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column' }}>
-                            <p style={{ fontSize: pixel(0.015, 10), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: '0px 0px 5px 0px', fontWeight: 'bold', paddingRight: ww > 767 ? '20px' : '10px' }}>
-                              Đào tạo T2M Leaning
-                            </p>
-                            <p style={{ fontSize: pixel(0.013, 9), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: 0, textAlign: 'justify', paddingRight: ww > 767 ? '20px' : '10px' }}>
-                              Mỗi tuần sẽ có một buổi đào tạo và chia sẻ của chuyên gia về phương pháp đầu tư theo dòng tiền T2M
-                            </p>
+                        <Row style={{ height: '150px', marginTop: '10px', background: '#161616', borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                          <Col span={24}>
+                            <Row>
+                              <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <Image
+                                  preview={false}
+                                  style={{ width: 'auto', height: ww > 767 ? '70px' : '40px' }}
+                                  src="/icons/icon_5.png"
+                                />
+                              </Col>
+                              <Col span={16} style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column' }}>
+                                <p style={{ fontSize: pixel(0.015, 11), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: '0px 0px 5px 0px', fontWeight: 'bold', padding: '10px 10px 0px 10px' }}>
+                                  Đào tạo T2M Leaning
+                                </p>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <p style={{ fontSize: pixel(0.013, 10), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: 0, textAlign: 'justify', padding: '10px' }}>
+                                Mỗi tuần sẽ có một buổi đào tạo và chia sẻ của chuyên gia về phương pháp đầu tư theo dòng tiền T2M
+                              </p>
+                            </Row>
                           </Col>
                         </Row>
-                        <Row style={{ height: '140px', marginTop: '10px', background: '#161616', borderRadius: '12px' }}>
-                          <Col span={6} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Image
-                              preview={false}
-                              style={{ width: 'auto', height: ww > 767 ? '70px' : '30px' }}
-                              src="/icons/icon_7.png"
-                            />
-                          </Col>
-                          <Col span={18} style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column' }}>
-                            <p style={{ fontSize: pixel(0.015, 10), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: '0px 0px 5px 0px', fontWeight: 'bold', paddingRight: ww > 767 ? '20px' : '10px' }}>
-                              Cộng đồng T2m Invest
-                            </p>
-                            <p style={{ fontSize: pixel(0.013, 9), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: 0, textAlign: 'justify', paddingRight: ww > 767 ? '20px' : '10px' }}>
-                              Cộng đồng Nhà Đầu Tư đông đảo dày dặn kinh nghiệm cùng nhau áp dụng  phương pháp đầu tư theo dòng tiền T2M.
-                            </p>
+                        <Row style={{ height: '150px', marginTop: '10px', background: '#161616', borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                          <Col span={24}>
+                            <Row>
+                              <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <Image
+                                  preview={false}
+                                  style={{ width: 'auto', height: ww > 767 ? '70px' : '40px' }}
+                                  src="/icons/icon_7.png"
+                                />
+                              </Col>
+                              <Col span={16} style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column' }}>
+                                <p style={{ fontSize: pixel(0.015, 11), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: '0px 0px 5px 0px', fontWeight: 'bold', padding: '10px 10px 0px 10px' }}>
+                                  Cộng đồng T2m Invest
+                                </p>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <p style={{ fontSize: pixel(0.013, 10), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: 0, textAlign: 'justify', padding: '10px' }}>
+                                Cộng đồng Nhà Đầu Tư đông đảo dày dặn kinh nghiệm cùng nhau áp dụng  phương pháp đầu tư theo dòng tiền T2M.
+                              </p>
+                            </Row>
                           </Col>
                         </Row>
                       </Col>
@@ -829,7 +853,7 @@ const SalePage = () => {
                     <div
                       style={{
                         width: '100%',
-                        height: ww > 767 ? '230px' : '200px',
+                        height: ww > 767 ? '230px' : '180px',
                         marginTop: '5px',
                         background: 'linear-gradient(45deg, #025bc4, #4690e5)',
                         color: 'white',
@@ -858,7 +882,7 @@ const SalePage = () => {
                         style={{ width: 'auto', height: ww > 767 ? '100px' : '50px', margin: '20px 0px 0px 0px' }}
                         src="/icons/icon_6.png"
                       />
-                      <span style={{ padding: '0px 10px', margin: '20px 0px 5px 0px', fontSize: pixel(0.02, 15), fontWeight: 'bold' }}> 5+ </span>
+                      <span style={{ padding: '0px 10px', margin: '20px 0px 5px 0px', fontSize: pixel(0.02, 15), fontWeight: 'bold' }}> 10+ </span>
                       <span style={{ padding: '0px 10px', margin: 0 }}>Năm kinh nghiệm đầu tư trên thị trường</span>
                     </div>
                   </Col>
@@ -866,7 +890,7 @@ const SalePage = () => {
                     <div
                       style={{
                         width: '100%',
-                        height: ww > 767 ? '230px' : '200px',
+                        height: ww > 767 ? '230px' : '180px',
                         marginTop: '5px',
                         background: 'linear-gradient(45deg, #EC8000, #FFA64D)',
                         color: 'white',
@@ -903,7 +927,7 @@ const SalePage = () => {
                     <div
                       style={{
                         width: '100%',
-                        height: ww > 767 ? '230px' : '200px',
+                        height: ww > 767 ? '230px' : '180px',
                         marginTop: '5px',
                         background: 'linear-gradient(45deg, #24B75E, #1E9D4F)',
                         color: 'white',
@@ -947,12 +971,13 @@ const SalePage = () => {
                   </p>
                 </Row>
                 <Row>
-                  <Col xs={24} sm={10} md={10} lg={10} xl={10} style={{ padding: ww > 767 ? '0px 10px 0px 5px' : '0px 10px' }}>
-                    <Row style={{ height: '100px', marginTop: '20px', background: '#161616', borderRadius: '12px' }}>
+                  <Col xs={0} sm={0} md={2} lg={2} xl={2} />
+                  <Col xs={24} sm={24} md={10} lg={10} xl={10} style={{ padding: ww > 767 ? '0px 10px 0px 5px' : '0px 10px' }}>
+                    <Row style={{ height: ww > 767 ? '100px' : '60px', marginTop: '20px', background: '#161616', borderRadius: '12px' }}>
                       <Col span={6} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Image
                           preview={false}
-                          style={{ width: 'auto', height: ww > 767 ? '70px' : '30px' }}
+                          style={{ width: 'auto', height: ww > 767 ? '60px' : '40px' }}
                           src="/icons/icon_12.png"
                         />
                       </Col>
@@ -962,11 +987,11 @@ const SalePage = () => {
                         </p>
                       </Col>
                     </Row>
-                    <Row style={{ height: '100px', marginTop: '10px', background: '#161616', borderRadius: '12px' }}>
+                    <Row style={{ height: ww > 767 ? '100px' : '60px', marginTop: '10px', background: '#161616', borderRadius: '12px' }}>
                       <Col span={6} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Image
                           preview={false}
-                          style={{ width: 'auto', height: ww > 767 ? '70px' : '30px' }}
+                          style={{ width: 'auto', height: ww > 767 ? '60px' : '40px' }}
                           src="/icons/icon_14.png"
                         />
                       </Col>
@@ -976,11 +1001,11 @@ const SalePage = () => {
                         </p>
                       </Col>
                     </Row>
-                    <Row style={{ height: '100px', marginTop: '10px', background: '#161616', borderRadius: '12px' }}>
+                    <Row style={{ height: ww > 767 ? '100px' : '60px', marginTop: '10px', background: '#161616', borderRadius: '12px' }}>
                       <Col span={6} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Image
                           preview={false}
-                          style={{ width: 'auto', height: ww > 767 ? '70px' : '30px' }}
+                          style={{ width: 'auto', height: ww > 767 ? '60px' : '40px' }}
                           src="/icons/icon_13.png"
                         />
                       </Col>
@@ -990,11 +1015,11 @@ const SalePage = () => {
                         </p>
                       </Col>
                     </Row>
-                    <Row style={{ height: '100px', marginTop: '10px', background: '#161616', borderRadius: '12px' }}>
+                    <Row style={{ height: ww > 767 ? '100px' : '60px', marginTop: '10px', background: '#161616', borderRadius: '12px' }}>
                       <Col span={6} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Image
                           preview={false}
-                          style={{ width: 'auto', height: ww > 767 ? '70px' : '30px' }}
+                          style={{ width: 'auto', height: ww > 767 ? '60px' : '40px' }}
                           src="/icons/icon_15.png"
                         />
                       </Col>
@@ -1006,7 +1031,7 @@ const SalePage = () => {
                     </Row>
                   </Col>
                   <Col xs={0} sm={0} md={2} lg={2} xl={2} />
-                  <Col xs={24} sm={14} md={12} lg={12} xl={12} style={{ padding: ww > 767 ? '0px 10px 0px 5px' : '0px 10px', marginBottom: ww > 767 ? 0 : 50 }}>
+                  <Col xs={24} sm={24} md={10} lg={10} xl={10} style={{ padding: ww > 767 ? '0px 10px 0px 5px' : '0px 10px', marginBottom: ww > 767 ? 0 : 50 }}>
                     <HomeForm pixel={pixel} ww={ww} />
                   </Col>
                 </Row>

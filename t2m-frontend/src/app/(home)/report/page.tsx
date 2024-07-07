@@ -18,6 +18,7 @@ import ReportSentimentGaugeChart from "./components/tong_quan_thi_truong/sentime
 import ReportSentimentLineChart from "./components/tong_quan_thi_truong/sentiment_line_chart";
 import ReportLiquidityLineChart from "./components/tong_quan_thi_truong/liquidity_line_chart";
 import ReportLiquidityGaugeChart from "./components/tong_quan_thi_truong/liquidity_gauge_chart";
+import LiquidityBreathChart from "./components/dong_tien_thi_truong/do_rong_thanh_khoan";
 
 
 const useWindowWidth = (): any => {
@@ -467,30 +468,38 @@ export default function Report() {
                 </Col>
               </Row>
               <Row gutter={20} style={{ marginTop: '20px' }}>
-                <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+                <Col xs={15} sm={15} md={7} lg={8} xl={8}>
                   <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
                     group='hs' height='120px' type='group' />
                 </Col>
-                <Col xs={5} sm={5} md={6} lg={6} xl={6}>
+                <Col xs={9} sm={9} md={6} lg={5} xl={5}>
                   <MoneyFlowBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='hs' height='120px' type='group' />
                 </Col>
-                <Col xs={7} sm={7} md={8} lg={8} xl={8}>
+                <Col xs={15} sm={15} md={6} lg={6} xl={6}>
                   <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
+                    group='hs' height='120px' type='group' />
+                </Col>
+                <Col xs={9} sm={9} md={5} lg={5} xl={5}>
+                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
                     group='hs' height='120px' type='group' />
                 </Col>
               </Row>
               <Row gutter={20} style={{ marginTop: '20px' }}>
-                <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+                <Col xs={15} sm={15} md={7} lg={8} xl={8}>
                   <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
                     group='cap' height='120px' type='group' />
                 </Col>
-                <Col xs={5} sm={5} md={6} lg={6} xl={6}>
+                <Col xs={9} sm={9} md={6} lg={5} xl={5}>
                   <MoneyFlowBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='cap' height='120px' type='group' />
                 </Col>
-                <Col xs={7} sm={7} md={8} lg={8} xl={8}>
+                <Col xs={15} sm={15} md={6} lg={6} xl={6}>
                   <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
+                    group='cap' height='120px' type='group' />
+                </Col>
+                <Col xs={9} sm={9} md={5} lg={5} xl={5}>
+                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
                     group='cap' height='120px' type='group' />
                 </Col>
               </Row>
@@ -507,59 +516,75 @@ export default function Report() {
                 </Col>
               </Row>
               <Row gutter={20} style={{ marginTop: '10px' }}>
-                <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+                <Col xs={15} sm={15} md={7} lg={8} xl={8}>
                   <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
                     group='A' height='190px' type='industry' />
                 </Col>
-                <Col xs={5} sm={5} md={6} lg={6} xl={6}>
+                <Col xs={9} sm={9} md={6} lg={5} xl={5}>
                   <MoneyFlowBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='A' height='190px' type='industry' />
                 </Col>
-                <Col xs={7} sm={7} md={8} lg={8} xl={8}>
+                <Col xs={15} sm={15} md={6} lg={6} xl={6}>
                   <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
                     group='A' height='190px' type='industry' />
                 </Col>
-              </Row>
-              <Row gutter={20} style={{ marginTop: '10px' }}>
-                <Col xs={12} sm={12} md={10} lg={10} xl={10}>
-                  <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
-                    group='B' height='160px' type='industry' />
-                </Col>
-                <Col xs={5} sm={5} md={6} lg={6} xl={6}>
-                  <MoneyFlowBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.015, 15)}
-                    group='B' height='160px' type='industry' />
-                </Col>
-                <Col xs={7} sm={7} md={8} lg={8} xl={8}>
-                  <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
-                    group='B' height='160px' type='industry' />
+                <Col xs={9} sm={9} md={5} lg={5} xl={5}>
+                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
+                    group='A' height='190px' type='group' />
                 </Col>
               </Row>
               <Row gutter={20} style={{ marginTop: '10px' }}>
-                <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+                <Col xs={15} sm={15} md={7} lg={8} xl={8}>
                   <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
-                    group='C' height='160px' type='industry' />
+                    group='B' height='160px' type='industry' />
                 </Col>
-                <Col xs={5} sm={5} md={6} lg={6} xl={6}>
+                <Col xs={9} sm={9} md={6} lg={5} xl={5}>
                   <MoneyFlowBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.015, 15)}
-                    group='C' height='160px' type='industry' />
+                    group='B' height='160px' type='industry' />
                 </Col>
-                <Col xs={7} sm={7} md={8} lg={8} xl={8}>
+                <Col xs={15} sm={15} md={6} lg={6} xl={6}>
                   <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
-                    group='C' height='160px' type='industry' />
+                    group='B' height='160px' type='industry' />
+                </Col>
+                <Col xs={9} sm={9} md={5} lg={5} xl={5}>
+                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
+                    group='B' height='160px' type='group' />
                 </Col>
               </Row>
               <Row gutter={20} style={{ marginTop: '10px' }}>
-                <Col xs={12} sm={12} md={10} lg={10} xl={10}>
+                <Col xs={15} sm={15} md={7} lg={8} xl={8}>
+                  <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
+                    group='C' height='160px' type='industry' />
+                </Col>
+                <Col xs={9} sm={9} md={6} lg={5} xl={5}>
+                  <MoneyFlowBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.015, 15)}
+                    group='C' height='160px' type='industry' />
+                </Col>
+                <Col xs={15} sm={15} md={6} lg={6} xl={6}>
+                  <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
+                    group='C' height='160px' type='industry' />
+                </Col>
+                <Col xs={9} sm={9} md={5} lg={5} xl={5}>
+                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
+                    group='C' height='160px' type='group' />
+                </Col>
+              </Row>
+              <Row gutter={20} style={{ marginTop: '10px' }}>
+                <Col xs={15} sm={15} md={7} lg={8} xl={8}>
                   <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
                     group='D' height='120px' type='industry' />
                 </Col>
-                <Col xs={5} sm={5} md={6} lg={6} xl={6}>
+                <Col xs={9} sm={9} md={6} lg={5} xl={5}>
                   <MoneyFlowBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='D' height='120px' type='industry' />
                 </Col>
-                <Col xs={7} sm={7} md={8} lg={8} xl={8}>
+                <Col xs={15} sm={15} md={6} lg={6} xl={6}>
                   <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
                     group='D' height='120px' type='industry' />
+                </Col>
+                <Col xs={9} sm={9} md={5} lg={5} xl={5}>
+                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
+                    group='D' height='120px' type='group' />
                 </Col>
               </Row>
             </Col >

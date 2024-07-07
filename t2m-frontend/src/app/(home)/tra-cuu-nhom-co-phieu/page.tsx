@@ -16,6 +16,7 @@ import { sessionLimit } from "@/utlis/sessionLimit";
 import { resetAuthState } from "@/redux/authSlice";
 import LockSection from "@/components/subscribers/blurComponents";
 import GroupMarketStructureChart from "./components/cau_truc_song/cau_truc_song_chart";
+import LiquidityBreathChart from "./components/thong_tin_nhom/do_rong_thanh_khoan";
 
 const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
@@ -617,7 +618,7 @@ export default function Page3() {
                   <Row>
                     <Col span={24}>
                       <div style={{
-                        width: '100%', height: '72px', background: '#161616',
+                        width: '100%', height: ww > 767 ? '120px' : '100px', background: '#161616',
                         padding: '10px', borderRadius: '5px', marginTop: '10px'
                       }}>
                         <p style={{
@@ -628,7 +629,17 @@ export default function Page3() {
                         </p>
                         <MoneyFlowBreathChart data={market_breath_df}
                           ww={ww} fontSize={pixel(0.017, 17)}
-                          group='hs' height='50px' type='group'
+                          group='hs' height={ww > 767 ? 40 : 30} type='group'
+                        />
+                        <p style={{
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '-5px 0px 0px 2px', padding: 0
+                        }}>
+                          Độ rộng thanh khoản
+                        </p>
+                        <LiquidityBreathChart data={market_breath_df}
+                          ww={ww} fontSize={pixel(0.017, 17)}
+                          group='hs' height={ww > 767 ? 40 : 30} type='group'
                         />
                       </div>
                     </Col>
@@ -668,7 +679,7 @@ export default function Page3() {
                       </Radio.Group>
                     </>
                   )}
-                  <IndexGroupPriceChart data={group_stock_price_index} select_group={select_group} time_span={time_span} width='100%' height={ww > 767 ? '270px' : '235px'} />
+                  <IndexGroupPriceChart data={group_stock_price_index} select_group={select_group} time_span={time_span} width='100%' height={ww > 767 ? '310px' : '260px'} />
                 </Col>
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>

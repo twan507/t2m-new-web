@@ -124,6 +124,7 @@ const NganhHsDRanking = (props: any) => {
         scales: {
             x: {
                 ticks: {
+                    display: props.ww > 767 ? true : false,
                     color: '#dfdfdf',
                 },
             },

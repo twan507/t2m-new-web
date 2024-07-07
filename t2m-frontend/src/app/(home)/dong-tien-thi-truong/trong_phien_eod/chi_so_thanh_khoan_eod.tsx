@@ -59,7 +59,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
         indexAxis: 'y', // Chuyển đổi biểu đồ cột thành biểu đồ cột ngang
         layout: {
             padding: {
-                right: props?.ww > 767 ? 60 : 0
+                right: props?.ww > 767 ? 60 : 30
             }
         },
         plugins: {
@@ -100,19 +100,19 @@ const MoneyFlowLiquidityChart = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 767 ? `Thanh khoản ${name_dict[props?.group]}` : `Thanh khoản`,
+                text: props?.ww > 767 ? `Thanh khoản ${name_dict[props?.group]}` : `Thanh khoản ${name_dict[props?.group]}`,
                 padding: {
                     bottom: props?.ww > 767 ? 0 : 15
                 },
                 font: {
                     family: 'Calibri, sans-serif',
-                    size: parseInt(props?.fontSize) - 2, // Chỉnh sửa cỡ chữ
+                    size: parseInt(props?.fontSize) - 4, // Chỉnh sửa cỡ chữ
                     weight: 'bold', // Chỉnh sửa kiểu chữ
                 },
                 color: '#dfdfdf' // Chỉnh sửa màu chữ
             },
             datalabels: {
-                display: props?.ww > 767 ? true : false,
+                display: true,
                 anchor: (context: any) => {
                     const value = context.dataset.data[context.dataIndex];
                     return value > 0 ? 'end' : 'start';
@@ -124,7 +124,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
                 formatter: (value: any) => `${(value * 100)?.toFixed(1)}%`, // Định dạng giá trị hiển thị
                 font: {
                     family: 'Helvetica, sans-serif',
-                    size: parseInt(props?.fontSize) - 7, // Chỉnh sửa cỡ chữ
+                    size: props?.ww > 767 ? parseInt(props?.fontSize) - 7 : parseInt(props?.fontSize) - 6, // Chỉnh sửa cỡ chữ
                 },
                 color: '#dfdfdf',
             },
@@ -146,7 +146,11 @@ const MoneyFlowLiquidityChart = (props: any) => {
                     display: false, // Loại bỏ grid ngang
                 },
                 ticks: {
-                    display: false,
+                    display: props.ww > 767 ? false : true,
+                    color: '#dfdfdf',
+                    font: {
+                        size: parseInt(props?.fontSize) - 5
+                    }
                 },
             },
         },
@@ -161,7 +165,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
         return (
             <>
                 <div style={{ height: props?.height, width: '100%' }}>
-                    <Bar data={data} options={options} />
+                    <Bar data={data} options={options}  />
                 </div>
             </>
         )

@@ -134,6 +134,7 @@ const MoneyFlowT5Chart = (props: any) => {
         },
         scales: {
             x: {
+                display: props.ww > 767 ? true : false,
                 stacked: true,
                 min: props?.type === 'industry' ? Math.floor(minIndustryScore) : null,
                 max: props?.type === 'industry' ? Math.ceil(maxIndustryScore) : null,
@@ -159,7 +160,7 @@ const MoneyFlowT5Chart = (props: any) => {
                     display: false,
                 },
                 ticks: {
-                    display: props?.ww > 400 ? true : false,
+                    display: true,
                     color: '#dfdfdf',
                     font: {
                         size: parseInt(props?.fontSize) - 7
