@@ -28,7 +28,7 @@ const FooterComponent = () => {
                     <p className="footer-title">T2M Learning</p>
                     <ul>
                         <li><a target="_blank" href="https://zalo.me/g/fggvuq311">Hướng dẫn sử dụng</a></li>
-                        <li><a target="_blank" href="https://zalo.me/g/fggvuq311">Phan tích dòng tiền</a></li>
+                        <li><a target="_blank" href="https://zalo.me/g/fggvuq311">Phân tích dòng tiền</a></li>
                         <li><a target="_blank" href="https://zalo.me/g/fggvuq311">Phân tích kĩ thuật</a></li>
                     </ul>
                 </div>
