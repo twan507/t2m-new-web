@@ -42,11 +42,11 @@ const getColorLiquidity = (value: number) => {
   return '#C031C7';
 };
 
-const getColorGroupRank = (value: number) => {
-  if (value === 1) return '#C031C7';
-  if (value === 2) return '#025bc4';
-  if (value === 3) return '#D0be0f';
-  if (value === 4) return '#e14040';
+const getColorGroupRank = (value: string) => {
+  if (value === '1') return '#C031C7';
+  if (value === '2') return '#24B75E';
+  if (value === '3') return '#D0be0f';
+  if (value === '4') return '#e14040';
 };
 
 const getColorIndustryRank = (value: number) => {

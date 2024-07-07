@@ -364,7 +364,7 @@ export default function Page4() {
                           Hiệu suất
                         </p>
                         <p style={{
-                          fontSize: pixel(0.0135, 9), fontFamily: 'Calibri, sans-serif', height: '16.5px',
+                          fontSize: pixel(0.013, 9), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: getColorIndustryPerform(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.industry_perform),
                           fontWeight: 'bold', margin: '5px 0px 0px 2px', padding: 0
                         }}>
@@ -379,9 +379,9 @@ export default function Page4() {
                           Vốn hoá
                         </p>
                         <p style={{
-                          fontSize: pixel(0.0135, 9), fontFamily: 'Calibri, sans-serif', height: '16.5px',
+                          fontSize: pixel(0.012, 9), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: getColorMarketCap(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.marketcap_group),
-                          fontWeight: 'bold', margin: '5px 0px 0px 2px', padding: 0
+                          fontWeight: 'bold', margin: '5.5px 0px 0px 2px', padding: 0
                         }}>
                           {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.marketcap_group}
                         </p>

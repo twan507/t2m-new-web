@@ -14,7 +14,7 @@ const GroupTopCoPhieuTable = (props: any) => {
         return '#C031C7';
     };
 
-    const data_sets = props?.data?.sort((a: any, b: any) => (b.t5_score - a.t5_score))
+    const data_sets = props?.data?.sort((a: any, b: any) => (b.t0_score - a.t0_score))
 
     const columns = (props: any, ww: any): TableProps<any>['columns'] => {
         const baseColumns = [
