@@ -544,7 +544,7 @@ const SalePage = () => {
                         style={{ width: 'auto', height: ww > 767 ? '100px' : '50px', margin: '20px 0px 0px 0px' }}
                         src="/icons/icon_4.png"
                       />
-                      <span style={{ padding: 10 }}>{"Triết lý đầu tư mạnh mẽ áp dụng các nguyên lý của dòng tiền luân chuyển trên thị trường để đạt lợi nhuận >100% sau 12 tháng đầu tiên áp dụng."}</span>
+                      <span style={{ padding: 10 }}>{"Triết lý đầu tư mạnh mẽ, kết hợp phân tích tâm lý hành vi trong tài chính và phân tích hiệu định vị dòng tiền giúp đạt hiệu suất đầu tư vượt trội."}</span>
                     </div>
                   </Col>
                 </Row>
@@ -574,7 +574,7 @@ const SalePage = () => {
                             Hệ thống định vị dòng tiền T2M Stock
                           </p>
                           <p style={{ fontSize: pixel(0.013, 9), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: 0, textAlign: 'justify', paddingRight: ww > 767 ? '20px' : '10px' }}>
-                            Website duy nhất trên thị trường cung cấp khả năng xác định nhanh chóng và chính xác về sự luân chuyển của dòng tiền và trạng thái của thị trường chứng khoán.
+                            Thuật toán độc quyền cung cấp hệ thống định vị nhanh chóng và chính xác sự phân bổ và trạng thái dòng tiền của cổ phiếu trên thị trường.
                           </p>
                         </Col>
                       </Row>
@@ -702,7 +702,7 @@ const SalePage = () => {
                             </Row>
                             <Row>
                               <p style={{ fontSize: pixel(0.013, 10), fontFamily: 'Montserrat, sans-serif', color: '#dfdfdf', margin: 0, textAlign: 'justify', padding: '10px' }}>
-                                Website duy nhất trên thị trường cung cấp khả năng xác định nhanh chóng và chính xác về sự luân chuyển của dòng tiền và trạng thái của thị trường chứng khoán.
+                                Thuật toán độc quyền cung cấp hệ thống định vị nhanh chóng và chính xác sự phân bổ và trạng thái dòng tiền của cổ phiếu trên thị trường.
                               </p>
                             </Row>
                           </Col>
@@ -956,8 +956,8 @@ const SalePage = () => {
                         style={{ width: 'auto', height: ww > 767 ? '100px' : '50px', margin: '20px 0px 0px 0px' }}
                         src="/icons/icon_11.png"
                       />
-                      <span style={{ padding: '0px 10px', margin: '20px 0px 5px 0px', fontSize: pixel(0.02, 15), fontWeight: 'bold' }}> 20%+ </span>
-                      <span style={{ padding: '0px 10px', margin: 0 }}>Tỉ suất lợi nhuận trung bình hàng năm</span>
+                      <span style={{ padding: '0px 10px', margin: '20px 0px 5px 0px', fontSize: pixel(0.02, 15), fontWeight: 'bold' }}> 300%+ </span>
+                      <span style={{ padding: '0px 10px', margin: 0 }}>Hiệu suất đầu tư so với thị trường chung</span>
                     </div>
                   </Col>
                 </Row>

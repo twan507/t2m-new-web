@@ -481,7 +481,7 @@ export default function Report() {
                     group='hs' height='120px' type='group' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>
-                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
+                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='hs' height='120px' type='group' />
                 </Col>
               </Row>
@@ -499,7 +499,7 @@ export default function Report() {
                     group='cap' height='120px' type='group' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>
-                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
+                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='cap' height='120px' type='group' />
                 </Col>
               </Row>
@@ -529,7 +529,7 @@ export default function Report() {
                     group='A' height='190px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>
-                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
+                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='A' height='190px' type='group' />
                 </Col>
               </Row>
@@ -547,7 +547,7 @@ export default function Report() {
                     group='B' height='160px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>
-                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
+                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='B' height='160px' type='group' />
                 </Col>
               </Row>
@@ -565,7 +565,7 @@ export default function Report() {
                     group='C' height='160px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>
-                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
+                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='C' height='160px' type='group' />
                 </Col>
               </Row>
@@ -583,7 +583,7 @@ export default function Report() {
                     group='D' height='120px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>
-                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.017, 17)}
+                  <LiquidityBreathChart data={market_breath_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='D' height='120px' type='group' />
                 </Col>
               </Row>

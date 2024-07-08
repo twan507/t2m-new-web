@@ -103,7 +103,7 @@ const MoneyFlowValueChart = (props: any) => {
                 },
                 font: {
                     family: 'Calibri, sans-serif',
-                    size: parseInt(props?.fontSize) - 4, // Chỉnh sửa cỡ chữ
+                    size: parseInt(props?.fontSize) - 2, // Chỉnh sửa cỡ chữ
                     weight: 'bold', // Chỉnh sửa kiểu chữ
                 },
                 color: '#dfdfdf' // Chỉnh sửa màu chữ
@@ -128,8 +128,8 @@ const MoneyFlowValueChart = (props: any) => {
         },
         scales: {
             x: {
-                min: props?.type === 'industry' ? (props.ww > 767 ? minIndustryScore : minIndustryScore - 2) : null,
-                max: props?.type === 'industry' ? (props.ww > 767 ? maxIndustryScore : maxIndustryScore + 2) : null,
+                min: props?.type === 'industry' ? (props.ww > 767 ? minIndustryScore : minIndustryScore - 3) : null,
+                max: props?.type === 'industry' ? (props.ww > 767 ? maxIndustryScore : maxIndustryScore) : null,
                 grid: {
                     display: false, // Loại bỏ grid dọc
                 },
@@ -146,7 +146,7 @@ const MoneyFlowValueChart = (props: any) => {
                     display: true,
                     color: '#dfdfdf',
                     font: {
-                        size: parseInt(props?.fontSize) - 5
+                        size: parseInt(props?.fontSize) - 7
                     }
                 },
             },

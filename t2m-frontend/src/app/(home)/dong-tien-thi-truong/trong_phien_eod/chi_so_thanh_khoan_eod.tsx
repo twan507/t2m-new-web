@@ -59,7 +59,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
         indexAxis: 'y', // Chuyển đổi biểu đồ cột thành biểu đồ cột ngang
         layout: {
             padding: {
-                right: props?.ww > 767 ? 60 : 30
+                right: props?.ww > 767 ? 60 : 40
             }
         },
         plugins: {
@@ -106,7 +106,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
                 },
                 font: {
                     family: 'Calibri, sans-serif',
-                    size: parseInt(props?.fontSize) - 4, // Chỉnh sửa cỡ chữ
+                    size: parseInt(props?.fontSize) - 2, // Chỉnh sửa cỡ chữ
                     weight: 'bold', // Chỉnh sửa kiểu chữ
                 },
                 color: '#dfdfdf' // Chỉnh sửa màu chữ

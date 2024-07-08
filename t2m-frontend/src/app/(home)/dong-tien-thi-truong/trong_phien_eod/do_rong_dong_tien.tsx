@@ -87,7 +87,7 @@ const MoneyFlowBreathChart = (props: any): any => {
                 },
                 font: {
                     family: 'Calibri, sans-serif',
-                    size: parseInt(props?.fontSize) - 4, // Chỉnh sửa cỡ chữ
+                    size: parseInt(props?.fontSize) - 2, // Chỉnh sửa cỡ chữ
                     weight: 'bold', // Chỉnh sửa kiểu chữ
                 },
                 color: '#dfdfdf' // Chỉnh sửa màu chữ
