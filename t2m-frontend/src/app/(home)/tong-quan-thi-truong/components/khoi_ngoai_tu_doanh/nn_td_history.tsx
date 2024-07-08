@@ -26,12 +26,14 @@ const NnTdHispory = (props: any) => {
         return `${day}-${month}`;
     });
 
+    const slice = props?.ww > 767 ? -20 : (props?.ww > 576 ? -10 : (props?.ww > 400 ? -6 : -4));
+
     const data = {
-        labels: dateList || [],
+        labels: dateList.slice(slice) || [],
         datasets: [
             {
                 label: 'Giá trị',
-                data: props?.switch_kntd === 'NN' ? data_sets?.map((item: any) => item.nn_value) : data_sets?.map((item: any) => item.td_value),
+                data: props?.switch_kntd === 'NN' ? data_sets?.map((item: any) => item.nn_value).slice(slice) : data_sets?.map((item: any) => item.td_value).slice(slice),
                 backgroundColor: function (context: any) {
                     const value = context.dataset.data[context.dataIndex];
                     return value > 0 ? '#24B75E' : '#e14040';
@@ -49,13 +51,13 @@ const NnTdHispory = (props: any) => {
             },
             title: {
                 display: true,
-                text: 'Lịch sử mua/bán ròng 20 phiên',
+                text: props.ww > 767 ? 'Lịch sử mua/bán ròng' : 'Lịch sử mua/bán ròng',
                 padding: {
                     bottom: 20, // Tăng khoảng cách phía dưới tiêu đề
                 },
                 font: {
                     family: 'Calibri, sans-serif',
-                    size: props?.fontSize, // Chỉnh sửa cỡ chữ
+                    size: parseInt(props?.fontSize) - 2, // Chỉnh sửa cỡ chữ
                     weight: 'bold', // Chỉnh sửa kiểu chữ
                 },
                 color: '#dfdfdf' // Chỉnh sửa màu chữ
@@ -75,7 +77,7 @@ const NnTdHispory = (props: any) => {
                 caretPadding: 20
             },
             datalabels: {
-                display: props?.ww > 767 ? true : false,
+                display: true,
                 anchor: (context: any) => {
                     const value = context.dataset.data[context.dataIndex];
                     return value > 0 ? 'end' : 'start';
@@ -100,6 +102,10 @@ const NnTdHispory = (props: any) => {
                 ticks: {
                     color: '#dfdfdf', // Màu của các nhãn trên trục X
                     padding: 15, // Khoảng cách giữa các nhãn và trục x
+                    font: {
+                        family: 'Helvetica, sans-serif',
+                        size: parseInt(props?.fontSize) - 7, // Chỉnh sửa cỡ chữ
+                    },
                 },
             },
             y: {
@@ -109,6 +115,10 @@ const NnTdHispory = (props: any) => {
                 },
                 ticks: {
                     color: '#dfdfdf', // Màu của các nhãn trên trục X
+                    font: {
+                        family: 'Helvetica, sans-serif',
+                        size: parseInt(props?.fontSize) - 7, // Chỉnh sửa cỡ chữ
+                    },
                 },
             },
         },

@@ -81,13 +81,13 @@ const GroupWeekScoreChart = (props: any) => {
                 },
                 font: {
                     family: 'Calibri, sans-serif',
-                    size: props?.fontSize, // Chỉnh sửa cỡ chữ
+                    size: parseInt(props?.fontSize) - 2, // Chỉnh sửa cỡ chữ
                     weight: 'bold', // Chỉnh sửa kiểu chữ
                 },
                 color: '#dfdfdf' // Chỉnh sửa màu chữ
             },
             datalabels: {
-                display: props?.ww > 767 ? true : false,
+                display: true,
                 anchor: (context: any) => {
                     const value = context.dataset.data[context.dataIndex];
                     return value > 0 ? 'end' : 'start';
@@ -99,7 +99,7 @@ const GroupWeekScoreChart = (props: any) => {
                 formatter: (value: any) => value?.toFixed(2), // Định dạng giá trị hiển thị
                 font: {
                     family: 'Helvetica, sans-serif',
-                    size: parseInt(props?.fontSize) - 7, // Chỉnh sửa cỡ chữ
+                    size: props.ww > 576 ? parseInt(props?.fontSize) - 7 : parseInt(props?.fontSize) - 5, // Chỉnh sửa cỡ chữ
                 },
                 color: '#dfdfdf',
             },

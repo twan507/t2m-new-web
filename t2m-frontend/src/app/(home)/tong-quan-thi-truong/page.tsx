@@ -960,10 +960,10 @@ export default function Page1() {
                 <>
                   <Row gutter={10} style={{ marginTop: '20px', position: 'relative' }}>
                     <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='95%' width='100%' />
-                    <Col xs={12} sm={10} md={8} lg={8} xl={8}>
+                    <Col xs={24} sm={12} md={10} lg={8} xl={8}>
                       <MarketWeekScoreChart data={group_score_week} ww={ww} fontSize={pixel(0.015, 17)} />
                     </Col>
-                    <Col xs={12} sm={14} md={16} lg={16} xl={16}>
+                    <Col xs={24} sm={12} md={14} lg={16} xl={16}>
                       <MarketMonthScoreChart data={group_score_month} ww={ww} fontSize={pixel(0.015, 17)} />
                     </Col>
                   </Row>

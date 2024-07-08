@@ -111,7 +111,7 @@ const GroupMonthScoreChart = (props: any) => {
                 },
                 font: {
                     family: 'Calibri, sans-serif',
-                    size: props?.fontSize, // Chỉnh sửa cỡ chữ
+                    size: parseInt(props?.fontSize) - 2, // Chỉnh sửa cỡ chữ
                     weight: 'bold', // Chỉnh sửa kiểu chữ
                 },
                 color: '#dfdfdf' // Chỉnh sửa màu chữ

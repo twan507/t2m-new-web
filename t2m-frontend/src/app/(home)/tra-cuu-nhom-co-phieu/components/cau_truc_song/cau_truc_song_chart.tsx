@@ -105,7 +105,7 @@ const GroupMarketStructureChart = (props: any) => {
                     pointStyle: 'circle', // Đặt kiểu điểm thành hình tròn
                     usePointStyle: true, // Bảo đảm sử dụng pointStyle cho biểu tượng
                     font: {
-                        size: parseInt(props?.fontSize) - 4, // Điều chỉnh cỡ chữ của legend
+                        size: parseInt(props?.fontSize) - 5, // Điều chỉnh cỡ chữ của legend
                         family: 'Calibri', // Điều chỉnh font chữ của legend
                     },
                     color: '#dfdfdf' // Màu chữ của legend
@@ -136,7 +136,7 @@ const GroupMarketStructureChart = (props: any) => {
                 },
                 font: {
                     family: 'Calibri, sans-serif',
-                    size: props?.fontSize, // Chỉnh sửa cỡ chữ
+                    size: parseInt(props?.fontSize) - 2, // Chỉnh sửa cỡ chữ
                     weight: 'bold', // Chỉnh sửa kiểu chữ
                 },
                 color: '#dfdfdf' // Chỉnh sửa màu chữ
@@ -155,14 +155,22 @@ const GroupMarketStructureChart = (props: any) => {
                 max: 100,
                 ticks: {
                     color: '#dfdfdf', // Màu của các nhãn trên trục X
+                    font: {
+                        size: parseInt(props?.fontSize) - 5, // Điều chỉnh cỡ chữ của legend
+                        family: 'Calibri', // Điều chỉnh font chữ của legend
+                    },
                 },
             },
             y: {
                 position: 'right',
                 min: 0,
                 max: 100,
-                    drawTicks: false,
+                drawTicks: false,
                 ticks: {
+                    font: {
+                        size: parseInt(props?.fontSize) - 5, // Điều chỉnh cỡ chữ của legend
+                        family: 'Calibri', // Điều chỉnh font chữ của legend
+                    },
                     stepSize: 20,
                     color: '#dfdfdf', // Màu của các nhãn trên trục Y
                     callback: function (value: number) {
