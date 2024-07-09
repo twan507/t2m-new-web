@@ -856,7 +856,7 @@ export default function Page1() {
                     fontSize={pixel(0.013, 11)} lineHeight={ww > 767 ? '34px' : '23px'} width='100%' height={ww > 767 ? '145px' : '115px'} marginTop={ww > 767 ? '0px' : '5px'} />
                 </Col>
                 <Col xs={12} sm={14} md={18} lg={18} xl={18}>
-                  <NnTdHispory data={nn_td_20p_df} id={id_kntd} switch_kntd={switch_kntd} ww={ww} fontSize={pixel(0.015, 17)} />
+                  <NnTdHispory data={nn_td_20p_df} id={id_kntd} switch_kntd={switch_kntd} ww={ww} fontSize={pixel(0.015, 15)} />
                 </Col>
               </Row>
               <Row>
@@ -961,15 +961,15 @@ export default function Page1() {
                   <Row gutter={10} style={{ marginTop: '20px', position: 'relative' }}>
                     <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='95%' width='100%' />
                     <Col xs={24} sm={12} md={10} lg={8} xl={8}>
-                      <MarketWeekScoreChart data={group_score_week} ww={ww} fontSize={pixel(0.015, 17)} />
+                      <MarketWeekScoreChart data={group_score_week} ww={ww} fontSize={pixel(0.015, 15)} />
                     </Col>
                     <Col xs={24} sm={12} md={14} lg={16} xl={16}>
-                      <MarketMonthScoreChart data={group_score_month} ww={ww} fontSize={pixel(0.015, 17)} />
+                      <MarketMonthScoreChart data={group_score_month} ww={ww} fontSize={pixel(0.015, 15)} />
                     </Col>
                   </Row>
                   <Row gutter={10} style={{ marginTop: '30px', position: 'relative' }}>
                     <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='270px' width='100%' marginTop='-30px' />
-                    <LiquidityLineChart20p data={eod_group_liquidity_df} fontSize={pixel(0.015, 17)} width='100%' height='250px' />
+                    <LiquidityLineChart20p data={eod_group_liquidity_df} fontSize={pixel(0.015, 15)} width='100%' height='250px' />
                   </Row>
                 </>
               )}
@@ -1012,7 +1012,7 @@ export default function Page1() {
               </Row>
               <Row style={{ position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <MarketStructureChart data={market_ms} ww={ww} fontSize={pixel(0.015, 17)} slice={ms_slice} time_index={ms_time_index} />
+                <MarketStructureChart data={market_ms} ww={ww} fontSize={pixel(0.015, 15)} slice={ms_slice} time_index={ms_time_index} />
               </Row>
               {switch_ms_filter && (
                 <Row>

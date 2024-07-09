@@ -628,7 +628,7 @@ export default function Page3() {
                           Độ rộng dòng tiền
                         </p>
                         <MoneyFlowBreathChart data={market_breath_df}
-                          ww={ww} fontSize={pixel(0.017, 17)}
+                          ww={ww} fontSize={pixel(0.017, 15)}
                           group='hs' height={ww > 767 ? 40 : 30} type='group'
                         />
                         <p style={{
@@ -638,7 +638,7 @@ export default function Page3() {
                           Độ rộng thanh khoản
                         </p>
                         <LiquidityBreathChart data={market_breath_df}
-                          ww={ww} fontSize={pixel(0.017, 17)}
+                          ww={ww} fontSize={pixel(0.017, 15)}
                           group='hs' height={ww > 767 ? 40 : 30} type='group'
                         />
                       </div>
@@ -692,15 +692,15 @@ export default function Page3() {
               </Row>
               <Row style={{ marginTop: '30px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <DtVaTkTrongPhien data={itd_score_liquidity_melted} select_group={select_group} ww={ww} fontSize={pixel(0.017, 17)} />
+                <DtVaTkTrongPhien data={itd_score_liquidity_melted} select_group={select_group} ww={ww} fontSize={pixel(0.017, 15)} />
               </Row>
               <Row gutter={10} style={{ marginTop: '20px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <Col xs={24} sm={12} md={10} lg={8} xl={8}>
-                  <GroupWeekScoreChart data={group_score_week} ww={ww} select_group={select_group} fontSize={pixel(0.015, 17)} />
+                  <GroupWeekScoreChart data={group_score_week} ww={ww} select_group={select_group} fontSize={pixel(0.015, 15)} />
                 </Col>
                 <Col xs={24} sm={12} md={14} lg={16} xl={16}>
-                  <GroupMonthScoreChart data={group_score_month} ww={ww} select_group={select_group} fontSize={pixel(0.015, 17)} />
+                  <GroupMonthScoreChart data={group_score_month} ww={ww} select_group={select_group} fontSize={pixel(0.015, 15)} />
                 </Col>
               </Row>
               <Row style={{ marginTop: '30px', marginBottom: '10px' }}>
@@ -714,11 +714,11 @@ export default function Page3() {
               <Row style={{ marginTop: ww > 767 ? '30px' : '20px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <GroupRankingChart data={group_score_ranking_melted} ww={ww} select_group={select_group}
-                  switch_group_industry={switch_group_industry} fontSize={pixel(0.017, 17)} />
+                  switch_group_industry={switch_group_industry} fontSize={pixel(0.017, 15)} />
               </Row>
               <Row style={{ marginTop: ww > 767 ? '20px' : '10px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <GroupLiquidityLineChart20p data={eod_score_liquidity_melted} select_group={select_group} fontSize={pixel(0.017, 17)} />
+                <GroupLiquidityLineChart20p data={eod_score_liquidity_melted} select_group={select_group} fontSize={pixel(0.017, 15)} />
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
                 <Col>
@@ -730,7 +730,7 @@ export default function Page3() {
               </Row>
               <Row style={{ position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <GroupMarketStructureChart data={market_ms} ww={ww} fontSize={pixel(0.015, 17)} select_group={select_group} />
+                <GroupMarketStructureChart data={market_ms} ww={ww} fontSize={pixel(0.015, 15)} select_group={select_group} />
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
                 <Col>

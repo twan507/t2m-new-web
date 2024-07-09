@@ -524,15 +524,15 @@ export default function Page4() {
                               }}>3M
                             </Radio.Button>
                             <Radio.Button value="6M" className="custom-radio-button"
-                                style={{
-                                  fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
-                                }}>6M
-                              </Radio.Button>
-                              <Radio.Button value="1Y" className="custom-radio-button"
-                                style={{
-                                  fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
-                                }}>1Y
-                              </Radio.Button>
+                              style={{
+                                fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
+                              }}>6M
+                            </Radio.Button>
+                            <Radio.Button value="1Y" className="custom-radio-button"
+                              style={{
+                                fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
+                              }}>1Y
+                            </Radio.Button>
                           </Radio.Group>
                         )}
                         <StockPriceChart data={stock_price_chart_df} select_stock={select_stock} time_span={time_span} width='100%' height={ww > 767 ? '270px' : '255px'} />
@@ -641,15 +641,15 @@ export default function Page4() {
               </Row>
               <Row style={{ marginTop: '30px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <DtVaTkTrongPhien data={stock_liquidty_score_t0} select_stock={select_stock} ww={ww} fontSize={pixel(0.017, 17)} />
+                <DtVaTkTrongPhien data={stock_liquidty_score_t0} select_stock={select_stock} ww={ww} fontSize={pixel(0.017, 15)} />
               </Row>
               <Row gutter={10} style={{ marginTop: '20px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <Col xs={24} sm={12} md={10} lg={8} xl={8}>
-                  <StockWeekScoreChart data={stock_score_week} ww={ww} select_stock={select_stock} fontSize={pixel(0.015, 17)} />
+                  <StockWeekScoreChart data={stock_score_week} ww={ww} select_stock={select_stock} fontSize={pixel(0.015, 15)} />
                 </Col>
                 <Col xs={24} sm={12} md={14} lg={16} xl={16}>
-                  <StockMonthScoreChart data={stock_score_month} ww={ww} select_stock={select_stock} fontSize={pixel(0.015, 17)} />
+                  <StockMonthScoreChart data={stock_score_month} ww={ww} select_stock={select_stock} fontSize={pixel(0.015, 15)} />
                 </Col>
               </Row>
               <Row style={{ marginTop: '40px', marginBottom: '10px' }}>
@@ -663,15 +663,15 @@ export default function Page4() {
               <Row style={{ marginTop: ww > 767 ? '30px' : '20px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <Col span={12}>
-                  <StockRankingChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 17)} stock_count={eod_score_df?.length} />
+                  <StockRankingChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 15)} stock_count={eod_score_df?.length} />
                 </Col>
                 <Col span={12}>
-                  <ScorePriceCorrelationChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 17)} />
+                  <ScorePriceCorrelationChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 15)} />
                 </Col>
               </Row>
               <Row style={{ marginTop: ww > 767 ? '20px' : '10px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <StockLiquidityLineChart20p data={stock_score_power_df} select_stock={select_stock} fontSize={pixel(0.017, 17)} />
+                <StockLiquidityLineChart20p data={stock_score_power_df} select_stock={select_stock} fontSize={pixel(0.017, 15)} />
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
                 <Col>
@@ -685,15 +685,15 @@ export default function Page4() {
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <Col span={8}>
                   <GroupRankingChart data={group_score_ranking_melted} ww={ww} select_group={select_industry}
-                    switch_group_industry='industry' fontSize={pixel(0.017, 17)} />
+                    switch_group_industry='industry' fontSize={pixel(0.017, 15)} />
                 </Col>
                 <Col span={8}>
                   <GroupRankingChart data={group_score_ranking_melted} ww={ww} select_group={select_perform}
-                    switch_group_industry='group' fontSize={pixel(0.017, 17)} />
+                    switch_group_industry='group' fontSize={pixel(0.017, 15)} />
                 </Col>
                 <Col span={8}>
                   <GroupRankingChart data={group_score_ranking_melted} ww={ww} select_group={select_cap}
-                    switch_group_industry='group' fontSize={pixel(0.017, 17)} />
+                    switch_group_industry='group' fontSize={pixel(0.017, 15)} />
                 </Col>
               </Row>
             </Col >

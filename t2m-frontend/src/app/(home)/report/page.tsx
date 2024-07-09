@@ -504,7 +504,7 @@ export default function Report() {
                 </Col>
               </Row>
               <Row>
-                <MarketStructureChart data={market_ms} ww={ww} fontSize={pixel(0.015, 17)} />
+                <MarketStructureChart data={market_ms} ww={ww} fontSize={pixel(0.015, 15)} />
               </Row>
 
               <Row gutter={25} style={{ marginTop: '100px', marginBottom: '10px' }}>
