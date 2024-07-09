@@ -369,7 +369,7 @@ export default function Page3() {
                         <Radio.Button value="Chứng khoán" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 610 ? 'Chứng khoán' : 'CK'}
+                          }}>{ww > 650 ? 'Chứng khoán' : 'CK'}
                         </Radio.Button>
                         <Radio.Button value="Công ty tài chính" className="custom-radio-button"
                           style={{
