@@ -148,6 +148,7 @@ export default function Page3() {
   const pixel = (ratio: number, min: number) => {
     return `${Math.max(ratio * ww, min)?.toFixed(0)}px`;
   }
+  console.log(ww)
 
   const onChangeSwitchGroupIndustry = (e: any) => {
     set_switch_group_industry(switch_group_industry === 'group' ? 'industry' : 'group')
@@ -363,17 +364,17 @@ export default function Page3() {
                         <Radio.Button value="Bất động sản" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 767 ? 'Bất động sản' : 'BĐS'}
+                          }}>{ww > 600 ? 'Bất động sản' : 'BĐS'}
                         </Radio.Button>
                         <Radio.Button value="Chứng khoán" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 767 ? 'Chứng khoán' : 'CK'}
+                          }}>{ww > 610 ? 'Chứng khoán' : 'CK'}
                         </Radio.Button>
                         <Radio.Button value="Công ty tài chính" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 767 ? 'Công ty tài chính' : 'CTTC'}
+                          }}>{ww > 910 ? 'Công ty tài chính' : 'CTTC'}
                         </Radio.Button>
                         <Radio.Button value="Thép" className="custom-radio-button"
                           style={{
@@ -383,12 +384,12 @@ export default function Page3() {
                         <Radio.Button value="Vật liệu xây dựng" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 767 ? 'Vật liệu xây dựng' : 'VLXD'}
+                          }}>{ww > 930 ? 'Vật liệu xây dựng' : 'VLXD'}
                         </Radio.Button>
                         <Radio.Button value="Xây dựng" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 767 ? 'Xây dựng' : 'XD'}
+                          }}>{ww > 450 ? 'Xây dựng' : 'XD'}
                         </Radio.Button>
                       </Radio.Group>
                     )}
@@ -404,7 +405,7 @@ export default function Page3() {
                         <Radio.Button value="Công nghiệp" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 767 ? 'Công nghiệp' : 'C nghiệp'}
+                          }}>{ww > 490 ? 'Công nghiệp' : 'C nghiệp'}
                         </Radio.Button>
                         <Radio.Button value="Dầu khí" className="custom-radio-button"
                           style={{
@@ -424,7 +425,7 @@ export default function Page3() {
                         <Radio.Button value="Khoáng sản" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 767 ? 'Khoáng sản' : 'K sản'}
+                          }}>{ww > 460 ? 'Khoáng sản' : 'K sản'}
                         </Radio.Button>
                         <Radio.Button value="Thuỷ sản" className="custom-radio-button"
                           style={{
@@ -445,27 +446,27 @@ export default function Page3() {
                         <Radio.Button value="BĐS KCN" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 767 ? 'BĐS KCN' : 'BĐS KCN'}
+                          }}>{ww > 400 ? 'BĐS KCN' : 'BĐS KCN'}
                         </Radio.Button>
                         <Radio.Button value="Công nghệ" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 767 ? 'Công nghệ' : 'C nghệ'}
+                          }}>{ww > 429 ? 'Công nghệ' : 'C nghệ'}
                         </Radio.Button>
                         <Radio.Button value="Hàng tiêu dùng" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 767 ? 'Hàng tiêu dùng' : 'HTD'}
+                          }}>{ww > 590 ? 'Hàng tiêu dùng' : 'HTD'}
                         </Radio.Button>
                         <Radio.Button value="Ngân hàng" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 767 ? 'Ngân hàng' : 'NH'}
+                          }}>{ww > 400 ? 'Ngân hàng' : 'NH'}
                         </Radio.Button>
                         <Radio.Button value="Thực phẩm" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                          }}>{ww > 767 ? 'Thực phẩm' : 'TP'}
+                          }}>{ww > 450 ? 'Thực phẩm' : 'T Phẩm'}
                         </Radio.Button>
                         <Radio.Button value="Vận tải" className="custom-radio-button"
                           style={{
@@ -628,7 +629,7 @@ export default function Page3() {
                           Độ rộng dòng tiền
                         </p>
                         <MoneyFlowBreathChart data={market_breath_df}
-                          ww={ww} fontSize={pixel(0.017, 15)}
+                          ww={ww} fontSize={pixel(0.017, 16)}
                           group='hs' height={ww > 767 ? 40 : 30} type='group'
                         />
                         <p style={{
@@ -638,7 +639,7 @@ export default function Page3() {
                           Độ rộng thanh khoản
                         </p>
                         <LiquidityBreathChart data={market_breath_df}
-                          ww={ww} fontSize={pixel(0.017, 15)}
+                          ww={ww} fontSize={pixel(0.017, 16)}
                           group='hs' height={ww > 767 ? 40 : 30} type='group'
                         />
                       </div>
@@ -692,7 +693,7 @@ export default function Page3() {
               </Row>
               <Row style={{ marginTop: '30px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <DtVaTkTrongPhien data={itd_score_liquidity_melted} select_group={select_group} ww={ww} fontSize={pixel(0.017, 15)} />
+                <DtVaTkTrongPhien data={itd_score_liquidity_melted} select_group={select_group} ww={ww} fontSize={pixel(0.017, 16)} />
               </Row>
               <Row gutter={10} style={{ marginTop: '20px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
@@ -714,11 +715,11 @@ export default function Page3() {
               <Row style={{ marginTop: ww > 767 ? '30px' : '20px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <GroupRankingChart data={group_score_ranking_melted} ww={ww} select_group={select_group}
-                  switch_group_industry={switch_group_industry} fontSize={pixel(0.017, 15)} />
+                  switch_group_industry={switch_group_industry} fontSize={pixel(0.017, 16)} />
               </Row>
               <Row style={{ marginTop: ww > 767 ? '20px' : '10px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <GroupLiquidityLineChart20p data={eod_score_liquidity_melted} select_group={select_group} fontSize={pixel(0.017, 15)} />
+                <GroupLiquidityLineChart20p data={eod_score_liquidity_melted} select_group={select_group} fontSize={pixel(0.017, 16)} />
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
                 <Col>

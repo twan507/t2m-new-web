@@ -641,7 +641,7 @@ export default function Page4() {
               </Row>
               <Row style={{ marginTop: '30px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <DtVaTkTrongPhien data={stock_liquidty_score_t0} select_stock={select_stock} ww={ww} fontSize={pixel(0.017, 15)} />
+                <DtVaTkTrongPhien data={stock_liquidty_score_t0} select_stock={select_stock} ww={ww} fontSize={pixel(0.017, 16)} />
               </Row>
               <Row gutter={10} style={{ marginTop: '20px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
@@ -663,15 +663,15 @@ export default function Page4() {
               <Row style={{ marginTop: ww > 767 ? '30px' : '20px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <Col span={12}>
-                  <StockRankingChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 15)} stock_count={eod_score_df?.length} />
+                  <StockRankingChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 16)} stock_count={eod_score_df?.length} />
                 </Col>
                 <Col span={12}>
-                  <ScorePriceCorrelationChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 15)} />
+                  <ScorePriceCorrelationChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 16)} />
                 </Col>
               </Row>
               <Row style={{ marginTop: ww > 767 ? '20px' : '10px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <StockLiquidityLineChart20p data={stock_score_power_df} select_stock={select_stock} fontSize={pixel(0.017, 15)} />
+                <StockLiquidityLineChart20p data={stock_score_power_df} select_stock={select_stock} fontSize={pixel(0.017, 16)} />
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
                 <Col>
@@ -685,15 +685,15 @@ export default function Page4() {
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <Col span={8}>
                   <GroupRankingChart data={group_score_ranking_melted} ww={ww} select_group={select_industry}
-                    switch_group_industry='industry' fontSize={pixel(0.017, 15)} />
+                    switch_group_industry='industry' fontSize={pixel(0.017, 16)} />
                 </Col>
                 <Col span={8}>
                   <GroupRankingChart data={group_score_ranking_melted} ww={ww} select_group={select_perform}
-                    switch_group_industry='group' fontSize={pixel(0.017, 15)} />
+                    switch_group_industry='group' fontSize={pixel(0.017, 16)} />
                 </Col>
                 <Col span={8}>
                   <GroupRankingChart data={group_score_ranking_melted} ww={ww} select_group={select_cap}
-                    switch_group_industry='group' fontSize={pixel(0.017, 15)} />
+                    switch_group_industry='group' fontSize={pixel(0.017, 16)} />
                 </Col>
               </Row>
             </Col >

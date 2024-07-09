@@ -82,15 +82,20 @@ const MoneyFlowBreathChart = (props: any): any => {
                 displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip
                 usePointStyle: true, // Sử dụng point style (hình dáng được định nghĩa trong datasets cho ô màu)
                 bodyFontColor: '#dfdfdf', // Màu chữ của tooltip
-                bodyFontSize: parseInt(props?.fontSize) - 4, // Cỡ chữ trong tooltip
-                bodyFontStyle: 'bold', // Kiểu chữ trong tooltip
+                bodyFont: {
+                    size: parseInt(props?.fontSize) - 7,
+                },
+                titleFont: {
+                    size: parseInt(props?.fontSize) - 7,
+                }, // Cỡ chữ trong tooltip
+                // Kiểu chữ trong tooltip
                 boxWidth: 10, // Kích thước của ô màu
             },
             datalabels: {
                 display: true,
                 anchor: 'center',
                 align: 'center',
-                formatter: (value: any) => value > ( props?.ww > 768 ? 25 : 35) ? (value.toFixed(1) + '%') : '', // Định dạng giá trị hiển thị
+                formatter: (value: any) => value > (props?.ww > 768 ? 25 : 35) ? (value.toFixed(1) + '%') : '', // Định dạng giá trị hiển thị
                 font: {
                     family: 'Helvetica, sans-serif',
                     size: parseInt(props?.fontSize) - 7, // Chỉnh sửa cỡ chữ

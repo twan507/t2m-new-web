@@ -29,7 +29,7 @@ const NhomVhRanking = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#24B75E',
-                tension: 0,
+                tension: 0.2,
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -40,7 +40,7 @@ const NhomVhRanking = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#025bc4',
-                tension: 0,
+                tension: 0.2,
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -51,7 +51,7 @@ const NhomVhRanking = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#D0be0f',
-                tension: 0,
+                tension: 0.2,
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -62,7 +62,7 @@ const NhomVhRanking = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#e14040',
-                tension: 0,
+                tension: 0.2,
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
         ],
@@ -97,8 +97,13 @@ const NhomVhRanking = (props: any) => {
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
-                bodyFontSize: parseInt(props?.fontSize) - 4,
-                bodyFontStyle: 'bold',
+                bodyFont: {
+                    size: parseInt(props?.fontSize) - 7,
+                },
+                titleFont: {
+                    size: parseInt(props?.fontSize) - 7,
+                },
+
                 boxHeight: 8,
                 caretPadding: 20
             },
@@ -124,8 +129,11 @@ const NhomVhRanking = (props: any) => {
         scales: {
             x: {
                 ticks: {
-                    display: props.ww > 767 ? true : false,
+                    display: true,
                     color: '#dfdfdf',
+                    font: {
+                        size: parseInt(props?.fontSize) - 7
+                    },
                 },
             },
             y: {
@@ -136,6 +144,9 @@ const NhomVhRanking = (props: any) => {
                 ticks: {
                     stepSize: 1,
                     color: '#dfdfdf',
+                    font: {
+                        size: parseInt(props?.fontSize) - 7
+                    },
                     callback: function (value: any) {
                         if (value >= 1 && value <= 4) {
                             return value;

@@ -68,8 +68,13 @@ const MarketBreathChart = (props: any) => {
         displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip
         usePointStyle: true, // Sử dụng point style (hình dáng được định nghĩa trong datasets cho ô màu)
         bodyFontColor: 'white', // Màu chữ của tooltip
-        bodyFontSize: '14px', // Cỡ chữ trong tooltip
-        bodyFontStyle: 'bold', // Kiểu chữ trong tooltip
+        bodyFont: {
+          size: parseInt(props?.fontSize) - 7,
+        },
+        titleFont: {
+          size: parseInt(props?.fontSize) - 7,
+        }, // Cỡ chữ trong tooltip
+        // Kiểu chữ trong tooltip
         boxWidth: 20, // Kích thước của ô màu
       },
       legend: {

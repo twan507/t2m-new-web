@@ -95,8 +95,13 @@ const NhomHsLiquidItd = (props: any) => {
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
-                bodyFontSize: parseInt(props?.fontSize) - 6,
-                bodyFontStyle: 'bold',
+                bodyFont: {
+                    size: parseInt(props?.fontSize) - 7,
+                },
+                titleFont: {
+                    size: parseInt(props?.fontSize) - 7,
+                },
+
                 boxHeight: 8,
                 caretPadding: 20
             },

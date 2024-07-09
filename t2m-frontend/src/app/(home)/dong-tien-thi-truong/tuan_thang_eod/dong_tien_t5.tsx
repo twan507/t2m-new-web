@@ -83,16 +83,16 @@ const MoneyFlowT5Chart = (props: any) => {
         },
         plugins: {
             legend: {
-                display: props?.ww > 767 ? true : false,
+                display: true,
                 position: 'top',
                 labels: {
-                    boxWidth: 20, // Width of the color box in legend
+                    boxWidth: props.ww > 767 ? 20 : 2, // Width of the color box in legend
                     boxHeight: 8,
                     padding: 10, // Spacing between items in legend
                     pointStyle: 'circle', // Set point style to circle
                     usePointStyle: true, // Ensure use of pointStyle for symbol
                     font: {
-                        size: parseInt(props?.fontSize) - 4, // Adjust font size of legend
+                        size: props.ww > 400 ? parseInt(props?.fontSize) - 4 : parseInt(props?.fontSize) - 5, // Adjust font size of legend
                         family: 'Calibri', // Adjust font family of legend
                     },
                     color: '#dfdfdf' // Font color of legend
@@ -111,15 +111,20 @@ const MoneyFlowT5Chart = (props: any) => {
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
-                bodyFontSize: parseInt(props?.fontSize) - 4,
-                bodyFontStyle: 'bold',
+                bodyFont: {
+                    size: parseInt(props?.fontSize) - 7,
+                },
+                titleFont: {
+                    size: parseInt(props?.fontSize) - 7,
+                },
+
                 boxWidth: 10,
             },
             title: {
                 display: true,
-                text: props?.ww > 767 ? `Dòng tiền ${name_dict[props?.group]}` : `DT ${name_dict[props?.group]}`,
+                text: `Dòng tiền ${name_dict[props?.group]}`,
                 padding: {
-                    bottom: props?.ww > 767 ? 0 : 15
+                    bottom: 0, // Giảm khoảng cách phía dưới tiêu đề
                 },
                 font: {
                     family: 'Calibri, sans-serif',
@@ -134,7 +139,7 @@ const MoneyFlowT5Chart = (props: any) => {
         },
         scales: {
             x: {
-                display: props.ww > 767 ? true : false,
+                display: true,
                 stacked: true,
                 min: props?.type === 'industry' ? Math.floor(minIndustryScore) : null,
                 max: props?.type === 'industry' ? Math.ceil(maxIndustryScore) : null,
@@ -150,8 +155,17 @@ const MoneyFlowT5Chart = (props: any) => {
                 ticks: {
                     stepSize: 1,
                     display: true,
-                    color: '#dfdfdf'
-                },
+                    color: '#dfdfdf',
+                    font: {
+                        size: parseInt(props?.fontSize) - 7
+                    },
+                    callback: function (value: any) {
+                        if (value === 0) {
+                            return value;
+                        }
+                        return null;
+                    }
+                }
             },
             y: {
                 stacked: true,

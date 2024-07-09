@@ -91,8 +91,13 @@ const MoneyFlowValueChart = (props: any) => {
                 displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip
                 usePointStyle: true, // Sử dụng point style (hình dáng được định nghĩa trong datasets cho ô màu)
                 bodyFontColor: '#dfdfdf', // Màu chữ của tooltip
-                bodyFontSize: parseInt(props?.fontSize) - 4, // Cỡ chữ trong tooltip
-                bodyFontStyle: 'bold', // Kiểu chữ trong tooltip
+                bodyFont: {
+                    size: parseInt(props?.fontSize) - 7,
+                },
+                titleFont: {
+                    size: parseInt(props?.fontSize) - 7,
+                }, // Cỡ chữ trong tooltip
+                // Kiểu chữ trong tooltip
                 boxWidth: 10, // Kích thước của ô màu
             },
             title: {
@@ -128,8 +133,8 @@ const MoneyFlowValueChart = (props: any) => {
         },
         scales: {
             x: {
-                min: props?.type === 'industry' ? (props.ww > 767 ? minIndustryScore : minIndustryScore - 3) : null,
-                max: props?.type === 'industry' ? (props.ww > 767 ? maxIndustryScore : maxIndustryScore) : null,
+                min: props?.type === 'industry' ? Math.floor(props.ww > 767 ? minIndustryScore : minIndustryScore - 0.5) : null,
+                max: props?.type === 'industry' ? Math.ceil(props.ww > 767 ? maxIndustryScore : maxIndustryScore) : null,
                 grid: {
                     display: false, // Loại bỏ grid dọc
                 },

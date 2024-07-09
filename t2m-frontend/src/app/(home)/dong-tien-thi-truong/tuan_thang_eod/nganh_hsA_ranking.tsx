@@ -130,8 +130,13 @@ const NganhHsARanking = (props: any) => {
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
-                bodyFontSize: parseInt(props?.fontSize) - 4,
-                bodyFontStyle: 'bold',
+                bodyFont: {
+                    size: parseInt(props?.fontSize) - 7,
+                },
+                titleFont: {
+                    size: parseInt(props?.fontSize) - 7,
+                },
+
                 boxHeight: 8,
                 caretPadding: 20
             },
@@ -157,8 +162,11 @@ const NganhHsARanking = (props: any) => {
         scales: {
             x: {
                 ticks: {
-                    display: props.ww > 767 ? true : false,
+                    display: true,
                     color: '#dfdfdf',
+                    font: {
+                        size: parseInt(props?.fontSize) - 7
+                    },
                 },
             },
             y: {
@@ -169,6 +177,9 @@ const NganhHsARanking = (props: any) => {
                 ticks: {
                     stepSize: 1,
                     color: '#dfdfdf',
+                    font: {
+                        size: parseInt(props?.fontSize) - 7
+                    },
                     callback: function (value: any) {
                         if (value >= 1 && value <= 23) {
                             return value;

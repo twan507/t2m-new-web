@@ -544,7 +544,7 @@ const SalePage = () => {
                         style={{ width: 'auto', height: ww > 767 ? '100px' : '50px', margin: '20px 0px 0px 0px' }}
                         src="/icons/icon_4.png"
                       />
-                      <span style={{ padding: 10 }}>{"Triết lý đầu tư mạnh mẽ, kết hợp phân tích tâm lý hành vi trong tài chính và phân tích hiệu định vị dòng tiền giúp đạt hiệu suất đầu tư vượt trội."}</span>
+                      <span style={{ padding: 10 }}>{"Triết lý đầu tư mạnh mẽ, kết hợp phân tích tâm lý hành vi và phân tích hiệu suất đầu tư giúp nhà đầu tư có kết quả vượt trội."}</span>
                     </div>
                   </Col>
                 </Row>
