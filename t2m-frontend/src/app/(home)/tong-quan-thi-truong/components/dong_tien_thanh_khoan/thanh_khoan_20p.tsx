@@ -16,7 +16,7 @@ const LiquidityLineChart20p = (props: any) => {
         return `${day}-${month}`;
     });
 
-    const lines = {
+    const lines: any = {
         labels: dateList || [],
         datasets: [
             {

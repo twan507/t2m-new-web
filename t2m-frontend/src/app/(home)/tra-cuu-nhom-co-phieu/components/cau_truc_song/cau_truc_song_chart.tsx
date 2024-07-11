@@ -20,7 +20,7 @@ const GroupMarketStructureChart = (props: any) => {
 
     const slice = props?.ww > 767 ? -60 : (props?.ww > 500 ? -40 : -20);
 
-    const lines = {
+    const lines: any = {
         labels: dateList?.slice(slice) || [],
         datasets: [
             {

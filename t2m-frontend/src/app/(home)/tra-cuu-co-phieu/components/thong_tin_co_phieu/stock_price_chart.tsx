@@ -21,7 +21,7 @@ const StockPriceChart = (props: any) => {
 		(props?.time_span == '3M' ? -50 :
 			(props?.time_span == '6M' ? -100 : -props?.time_span))
 
-	const lines = {
+	const lines: any = {
 		labels: dateList?.slice(slice) || [],
 		datasets: [
 			{

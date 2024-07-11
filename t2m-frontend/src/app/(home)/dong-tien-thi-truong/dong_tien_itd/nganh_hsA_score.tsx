@@ -17,7 +17,7 @@ const NganhHsAScoreItd = (props: any) => {
         return `${utcHours}:${utcMinutes}`;
     });
 
-    const lines = {
+    const lines: any = {
         labels: timeList || [],
         datasets: [
             {

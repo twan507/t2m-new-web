@@ -19,7 +19,7 @@ const NganhHsARanking = (props: any) => {
 
     const slice = props?.ww > 767 ? -20 : (props?.ww > 500 ? -13 : -7);
 
-    const lines = {
+    const lines: any = {
         labels: dateList?.slice(slice) || [],
         datasets: [
             {

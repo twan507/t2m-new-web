@@ -18,7 +18,7 @@ const MarketStructureChart = (props: any) => {
         return `${day}-${month}-${year}`; // Trả về định dạng ngày-tháng-năm
     });
 
-    const lines = {
+    const lines: any = {
         labels: dateList?.slice(props?.time_index - props?.slice, props?.time_index) || [],
         datasets: [
             {

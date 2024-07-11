@@ -36,7 +36,7 @@ const GroupMonthScoreChart = (props: any) => {
     const data_sets = props?.data?.filter((item: any) => item.group_name === props?.select_group)
         .sort((a: any, b: any) => a.day_num - b.day_num)
 
-    const lines = {
+    const lines: any = {
         labels: data_sets?.map((item: any) => item.day_num) || [],
         datasets: [
             {
