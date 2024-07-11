@@ -27,7 +27,7 @@ const NganhHsDLiquidItd = (props: any) => {
                 pointRadius: 0,
                 hoverRadius: 5,
                 pointBackgroundColor: '#24B75E',
-                tension: 0.4,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -38,7 +38,7 @@ const NganhHsDLiquidItd = (props: any) => {
                 pointRadius: 0,
                 hoverRadius: 5,
                 pointBackgroundColor: '#025bc4',
-                tension: 0.4,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -49,7 +49,7 @@ const NganhHsDLiquidItd = (props: any) => {
                 pointRadius: 0,
                 hoverRadius: 5,
                 pointBackgroundColor: '#D0be0f',
-                tension: 0.4,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -60,7 +60,7 @@ const NganhHsDLiquidItd = (props: any) => {
                 pointRadius: 0,
                 hoverRadius: 5,
                 pointBackgroundColor: '#e14040',
-                tension: 0.4,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             }
         ],

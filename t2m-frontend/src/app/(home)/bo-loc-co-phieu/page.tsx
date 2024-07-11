@@ -253,7 +253,7 @@ export default function Page5() {
                   </div>
                 </Col >
                 <Col xs={4} sm={4} md={2} lg={2} xl={2}>
-                  <div style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
+                  <div style={{ height: ww > 767 ? '100%' : 'calc(100% + 10px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
                     <Tooltip title="Xoá tất cả bộ lọc">
                       <Button
                         className="filter-button"

@@ -28,7 +28,7 @@ const MarketStructureChart = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#C031C7', // Màu nền cho các điểm
-                tension: 0.4,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -39,7 +39,7 @@ const MarketStructureChart = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#24B75E',
-                tension: 0.4,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -50,7 +50,7 @@ const MarketStructureChart = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#025bc4', // Màu nền cho các điểm
-                tension: 0.4,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -61,7 +61,7 @@ const MarketStructureChart = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#D0be0f', // Màu nền cho các điểm
-                tension: 0.4,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -72,7 +72,7 @@ const MarketStructureChart = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#e14040', // Màu nền cho các điểm
-                tension: 0.4,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -83,7 +83,7 @@ const MarketStructureChart = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#b3b3b3', // Màu nền cho các điểm
-                tension: 0.4,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
         ],

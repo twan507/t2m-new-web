@@ -29,7 +29,7 @@ const NhomVhRanking = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#24B75E',
-                tension: 0.2,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -40,7 +40,7 @@ const NhomVhRanking = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#025bc4',
-                tension: 0.2,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -51,7 +51,7 @@ const NhomVhRanking = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#D0be0f',
-                tension: 0.2,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -62,7 +62,7 @@ const NhomVhRanking = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#e14040',
-                tension: 0.2,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
         ],

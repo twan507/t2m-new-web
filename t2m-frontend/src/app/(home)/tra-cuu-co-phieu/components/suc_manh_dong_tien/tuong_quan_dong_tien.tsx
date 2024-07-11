@@ -55,7 +55,7 @@ const ScorePriceCorrelationChart = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#C031C7',
-                tension: 0.4,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -65,7 +65,7 @@ const ScorePriceCorrelationChart = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#025bc4',
-                tension: 0.4,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
         ],

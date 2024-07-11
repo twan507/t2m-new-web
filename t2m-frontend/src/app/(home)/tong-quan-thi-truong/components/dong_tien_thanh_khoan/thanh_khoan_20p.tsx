@@ -28,7 +28,7 @@ const LiquidityLineChart20p = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5,
                 pointBackgroundColor: '#025bc4', // Màu nền cho các điểm
-                tension: 0.4, // Đường cong mượt
+                cubicInterpolationMode: 'monotone', // Đường cong mượt
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
         ],

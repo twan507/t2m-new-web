@@ -32,7 +32,7 @@ const IndexPriceChart = (props: any) => {
 				pointRadius: 0, // Tắt các chấm màu xám ở các data label
 				hoverRadius: 4, // Tăng kích thước khi di chuột tới
 				pointBackgroundColor: '#C031C7', // Màu nền cho các điểm
-				tension: 0.4, // Đường cong mượt
+				cubicInterpolationMode: 'monotone', // Đường cong mượt
 				borderWidth: props?.ww > 767 ? 2.5 : 2,
 			},
 		],

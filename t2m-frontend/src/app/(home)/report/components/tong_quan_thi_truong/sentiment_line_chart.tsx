@@ -26,7 +26,7 @@ const ReportSentimentLineChart = (props: any) => {
                 pointRadius: 0,
                 hoverRadius: 4,
                 pointBackgroundColor: '#999999',
-                tension: 0.4,
+                cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
         ],

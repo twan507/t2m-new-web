@@ -29,7 +29,7 @@ const MarketStructureChart = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#C031C7', // Màu nền cho các điểm
-                tension: 0.4, // Đường cong mượt
+                cubicInterpolationMode: 'monotone', // Đường cong mượt
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -40,7 +40,7 @@ const MarketStructureChart = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#24B75E', // Màu nền cho các điểm
-                tension: 0.4, // Đường cong mượt
+                cubicInterpolationMode: 'monotone', // Đường cong mượt
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -51,7 +51,7 @@ const MarketStructureChart = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#025bc4', // Màu nền cho các điểm
-                tension: 0.4, // Đường cong mượt
+                cubicInterpolationMode: 'monotone', // Đường cong mượt
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -62,7 +62,7 @@ const MarketStructureChart = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#D0be0f', // Màu nền cho các điểm
-                tension: 0.4, // Đường cong mượt
+                cubicInterpolationMode: 'monotone', // Đường cong mượt
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -73,7 +73,7 @@ const MarketStructureChart = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#e14040', // Màu nền cho các điểm
-                tension: 0.4, // Đường cong mượt
+                cubicInterpolationMode: 'monotone', // Đường cong mượt
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
             {
@@ -84,7 +84,7 @@ const MarketStructureChart = (props: any) => {
                 pointRadius: 1.4,
                 hoverRadius: 5, // Tăng kích thước khi di chuột tới
                 pointBackgroundColor: '#b3b3b3', // Màu nền cho các điểm
-                tension: 0.4, // Đường cong mượt
+                cubicInterpolationMode: 'monotone', // Đường cong mượt
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
         ],
