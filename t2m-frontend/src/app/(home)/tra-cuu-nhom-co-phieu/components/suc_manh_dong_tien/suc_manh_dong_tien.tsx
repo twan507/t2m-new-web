@@ -1,15 +1,14 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, Plugin } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, Filler, Plugin } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, ChartDataLabels);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, Filler, ChartDataLabels);
 
 const customLegendMargin: Plugin = {
     id: 'customLegendMargin',
     beforeInit(chart: any) {
-        // Add padding to the top of the chart to create space for the legend
         const originalFit = chart.legend.fit;
         chart.legend.fit = function fit() {
             originalFit.bind(chart.legend)();
@@ -22,7 +21,6 @@ const customTitleMargin: Plugin = {
     id: 'customTitleMargin',
     beforeInit(chart: any) {
         if (chart.title && chart.title.draw) {
-            // Adjust title padding to bring it closer to the chart
             const originalDraw = chart.title.draw;
             chart.title.draw = function draw() {
                 originalDraw.bind(chart.title)();
@@ -33,15 +31,15 @@ const customTitleMargin: Plugin = {
 };
 
 
-const ScorePriceCorrelationChart = (props: any) => {
+const GroupScorePriceCorrelationChart = (props: any) => {
 
-    const data_sets = props?.data?.filter((item: any) => item.stock === props?.select_stock)
+    const data_sets = props?.data?.filter((item: any) => item.group === props?.select_group)
         .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     const dateList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
-        const month = ('0' + (date.getMonth() + 1))?.slice(-2); // Lấy tháng và thêm số 0 nếu cần
-        const day = ('0' + date.getDate())?.slice(-2); // Lấy ngày và thêm số 0 nếu cần
+        const month = ('0' + (date.getMonth() + 1))?.slice(-2);
+        const day = ('0' + date.getDate())?.slice(-2);
         return `${day}-${month}`;
     });
 
@@ -57,6 +55,7 @@ const ScorePriceCorrelationChart = (props: any) => {
                 pointBackgroundColor: '#C031C7',
                 cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
+                yAxisID: 'y', // Sử dụng trục y đầu tiên
             },
             {
                 label: '% biến động giá',
@@ -67,7 +66,16 @@ const ScorePriceCorrelationChart = (props: any) => {
                 pointBackgroundColor: '#025bc4',
                 cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
+                yAxisID: 'y', // Sử dụng trục y đầu tiên
             },
+            {
+                label: props.ww > 767 ? 'Khối lượng giao dịch' : 'Khối lượng',
+                data: data_sets?.map((item: any) => item.volume),
+                backgroundColor: 'rgba(211, 211, 211, 0.2)', // Màu sắc cho cột
+                type: 'bar', // Đặt kiểu dữ liệu là biểu đồ cột
+                yAxisID: 'y2', // Sử dụng trục y thứ hai
+                maxBarThickness: 30,
+            }
         ],
     };
 
@@ -79,16 +87,16 @@ const ScorePriceCorrelationChart = (props: any) => {
                 display: true,
                 position: 'top',
                 labels: {
-                    boxWidth: 20, // Độ rộng của hộp màu trong legend
+                    boxWidth: 20,
                     boxHeight: 6,
-                    padding: 10, // Khoảng cách giữa các mục trong legend
-                    pointStyle: 'circle', // Đặt kiểu điểm thành hình tròn
-                    usePointStyle: true, // Bảo đảm sử dụng pointStyle cho biểu tượng
+                    padding: 10,
+                    pointStyle: 'circle',
+                    usePointStyle: true,
                     font: {
-                        size: parseInt(props?.fontSize) - 4, // Điều chỉnh cỡ chữ của legend
-                        family: 'Calibri', // Điều chỉnh font chữ của legend
+                        size: parseInt(props?.fontSize) - 4,
+                        family: 'Calibri',
                     },
-                    color: '#dfdfdf' // Màu chữ của legend
+                    color: '#dfdfdf'
                 }
             },
             tooltip: {
@@ -97,19 +105,26 @@ const ScorePriceCorrelationChart = (props: any) => {
                         return `Ngày ${tooltipItems[0].label}`;
                     },
                     label: function (tooltipItem: any) {
-                        return `${tooltipItem?.dataset?.label}: ${tooltipItem?.raw?.toFixed(2)}%`;
+                        const label = tooltipItem?.dataset?.label;
+                        const value = tooltipItem?.raw;
+
+                        // Kiểm tra trục y của dataset để tùy chỉnh tooltip
+                        if (tooltipItem.dataset.yAxisID === 'y2') {
+                            // Định dạng số volume với dấu phẩy phân cách
+                            return `${label}: ${value.toLocaleString()}`;
+                        }
+
+                        return `${label}: ${value.toFixed(2)}%`; // Thêm ký hiệu '%' cho các dataset trên trục y
                     }
                 },
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
-
                 boxHeight: 8,
                 caretPadding: 20
             },
             title: {
-                display: true,
-                padding: {},
+                display: false,
                 text: props?.ww > 767 ? 'Tương quan biến động giá và dòng tiền' : 'Tương quan giá và dòng tiền',
                 font: {
                     family: 'Calibri, sans-serif',
@@ -138,7 +153,7 @@ const ScorePriceCorrelationChart = (props: any) => {
                     color: '#dfdfdf',
                     stepSize: 5,
                     callback: function (value: number) {
-                        return `${value}%`; // Hiển thị dạng phần trăm
+                        return `${value}%`;
                     }
                 },
                 grid: {
@@ -146,10 +161,19 @@ const ScorePriceCorrelationChart = (props: any) => {
                     color: '#dfdfdf',
                     drawBorder: false,
                     lineWidth: function (context: any) {
-                        return context.tick.value === 0 ? 1 : 0; // Draw grid line only at value 0
+                        return context.tick.value === 0 ? 1 : 0;
                     },
                 },
             },
+            y2: {
+                position: 'left', // Đặt trục y thứ hai ở phía bên trái
+                grid: {
+                    display: false,
+                },
+                ticks: {
+                    display: false,
+                },
+            }
         },
     };
 
@@ -169,4 +193,4 @@ const ScorePriceCorrelationChart = (props: any) => {
     return null;
 }
 
-export default ScorePriceCorrelationChart;
+export default GroupScorePriceCorrelationChart;

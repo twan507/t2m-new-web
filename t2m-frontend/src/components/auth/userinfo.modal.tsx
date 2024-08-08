@@ -1,10 +1,13 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, Modal, notification, Avatar } from 'antd';
+import { Button, Form, Input, Modal, notification, Avatar, Row, Col } from 'antd';
 import { sendRequest } from '@/utlis/api';
 import ChangePasswordModal from './changepassword.modal';
 import { useRouter } from 'next/navigation';
-import { useAppSelector } from '@/redux/store';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { sessionLimit } from '@/utlis/sessionLimit';
+import { resetAuthState } from '@/redux/authSlice';
+import { signOut } from '@/utlis/signOut';
 
 
 interface IProps {
@@ -34,9 +37,18 @@ const UserInfoModal = (props: IProps) => {
     const ww = useWindowWidth();
 
     const [form] = Form.useForm()
-    const router = useRouter();
+
+    const [limitState, setLimitState] = useState(false);
+    const dispatch = useAppDispatch();
     const authInfo = useAppSelector((state) => state.auth)
-    const authState = !!authInfo?.user?._id
+    useEffect(() => {
+      (async () => {
+        const limitState = await sessionLimit(authInfo?.user?.email, authInfo?.access_token);
+        if (!limitState) { dispatch(resetAuthState()) }
+        setLimitState(limitState);
+      })()
+    }, [authInfo?.user?.email, authInfo?.access_token]);
+    const authState = !!authInfo?.user?._id && limitState
 
     const { isUserInfoModal, setUserInfoModalOpen } = props
     const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false)
@@ -275,33 +287,62 @@ const UserInfoModal = (props: IProps) => {
                         name="password"
                         style={{ marginBottom: '30px' }}
                     >
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Input disabled style={{ background: '#333333', border: '0px', color: '#dfdfdf', width: '65%', marginRight: '10px' }} size='large' value='•••••••••••' />
-                            <Button
-                                type='primary'
-                                style={{ fontSize: 16 }}
-                                onClick={() => {
-                                    setIsChangePasswordOpen(true)
-                                    setUserInfoModalOpen(false)
-                                }}
-                            >
-                                Đổi mật khẩu
-                            </Button>
-                        </div>
+                        <Row gutter={20}>
+                            <Col span={16}>
+                                <Input disabled style={{ background: '#333333', border: '0px', color: '#dfdfdf', height: '33px' }} value='•••••••••••' />
+                            </Col>
+                            <Col span={8}>
+                                <Button type='primary' block
+                                    style={{
+                                        fontWeight: 'bold', // làm chữ đậm
+                                        fontSize: 16,
+                                        marginBottom: '20px',
+                                        padding: '0px 0px 2px 0px',
+                                    }}
+                                    onClick={() => {
+                                        setIsChangePasswordOpen(true)
+                                        setUserInfoModalOpen(false)
+                                    }}
+                                >
+                                    Đổi mật khẩu
+                                </Button>
+                            </Col>
+                        </Row>
                     </Form.Item>
 
 
                     <Form.Item style={{ marginBottom: '5px' }}>
-                        <Button type="primary" htmlType="submit" block
-                            style={{
-                                height: '40px', // hoặc bất kỳ độ cao nào bạn muốn
-                                fontWeight: 'bold', // làm chữ đậm
-                                fontSize: 16,
-                                marginBottom: '20px'
-                            }}
-                        >
-                            Cập nhật thông tin
-                        </Button>
+                        <Row gutter={20}>
+                            <Col span={16}>
+                                <Button type="primary" htmlType="submit" block
+                                    style={{
+                                        fontWeight: 'bold', // làm chữ đậm
+                                        fontSize: 16,
+                                        marginBottom: '20px',
+                                        padding: '0px 0px 5px 0px',
+                                    }}
+                                >
+                                    Cập nhật thông tin
+                                </Button>
+                            </Col>
+                            <Col span={8}>
+                                <Button type="primary" block danger
+                                    style={{
+                                        fontWeight: 'bold', // làm chữ đậm
+                                        fontSize: 16,
+                                        marginBottom: '20px',
+                                        padding: '0px 0px 5px 0px',
+                                    }}
+                                    onClick = {() => {
+                                        handleClose()
+                                        dispatch(resetAuthState())
+                                        signOut(authInfo.access_token)
+                                    }}
+                                >
+                                    Đăng xuất
+                                </Button>
+                            </Col>
+                        </Row>
                     </Form.Item>
                 </Form>
             </Modal >

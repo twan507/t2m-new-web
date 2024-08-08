@@ -54,7 +54,7 @@ function getAvatarName(name: string) {
 }
 
 function capitalizeFirstLetter(word: string): string {
-  return word.charAt(0).toUpperCase() + word.slice(1);
+  return word.charAt(0).toUpperCase() + word?.slice(1);
 }
 
 function getUserName(name: string) {
@@ -121,8 +121,6 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
     })()
   }, [authInfo?.user?.email, authInfo?.access_token]);
   const authState = !!authInfo?.user?._id && limitState
-
-  const showLogout = authState ? true : false
 
   const [isSignInModalOpen, setSignInModalOpen] = useState(false)
   const [isSignUpModalOpen, setSignUpModalOpen] = useState(false)
@@ -215,11 +213,8 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
         </Link>
       ),
       key: 'bo-loc-co-phieu',
-      icon: <FundViewOutlined style={{ fontSize: '18px', marginLeft: '0px', marginTop: '12px' }} />,
-    }
-  ]
-
-  const bottom_sider_menu = [
+      icon: <FundViewOutlined style={{ fontSize: '18px', marginLeft: '-1px', marginTop: collapsed ? '11px' : '0px' }} />,
+    },
     ...((authInfo?.user?.role === "T2M ADMIN") ? [
       {
         label: (
@@ -231,21 +226,8 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
           </Link>
         ),
         key: 'report',
-        icon: <ExportOutlined />,
+        icon: <ExportOutlined style={{ fontSize: '18px', marginLeft: '-1px', marginTop: collapsed ? '11px' : '0px' }} />,
       }] : []),
-    {
-      label: (
-        <Link href="#" onClick={async (e) => {
-          e.preventDefault()
-          dispatch(resetAuthState())
-          signOut(authInfo.access_token)
-        }}>
-          Đăng xuất
-        </Link>
-      ),
-      key: '#',
-      icon: <LogoutOutlined />,
-    }
   ]
 
   const [checkAuth, setCheckAuth] = useState(true);
@@ -364,20 +346,6 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
                 items={sider_menu}
               />
             </div>
-            {showLogout && (
-              <Menu
-                style={{
-                  // 110 là chiều cao 2 nút trên cùng, 46 là chiều cao mỗi nút đổi trang, 50 hoặc 100 là chiều cao bản thân nút này
-                  marginTop: authInfo.user.role === "T2M ADMIN" ? `calc(100vh - 110px - ${5 * 46}px - 100px` : `calc(100vh - 110px - ${5 * 46}px - 50px`,
-                  background: '#000000'
-                }}
-                theme="dark"
-                mode="inline"
-                selectedKeys={[]}
-                onClick={handleSelect}
-                items={bottom_sider_menu}
-              />
-            )}
           </Sider>
           <Layout style={{ background: '#000000' }}>
             <Header style={{

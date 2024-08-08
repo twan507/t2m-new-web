@@ -23,21 +23,12 @@ const name_dict: any = {
     'D': 'ngành hiệu suất D',
 }
 
-const MoneyFlowT5Chart = (props: any) => {
+const StockMoneyFlowT5Chart = (props: any) => {
 
-    let data_sets: any;
-    if (props?.type === 'industry') {
-        data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => b.rank - a.rank);
-    } else {
-        data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.index - b.index);
-    }
-
-    const industry_data_sets = props?.data?.filter((item: any) => ['A', 'B', 'C', 'D'].includes(item.group));
-    const minIndustryScore = industry_data_sets?.reduce((min: any, current: any) => current?.score < min ? current?.score : min, industry_data_sets?.[0]?.score);
-    const maxIndustryScore = industry_data_sets?.reduce((max: any, current: any) => current?.score > max ? current?.score : max, industry_data_sets?.[0]?.score);
+    const data_sets = props?.data
 
     const data = {
-        labels: data_sets?.map((item: any) => props?.ww > 767 ? (item.name + '        ') : item.name),
+        labels: data_sets?.map((item: any) => item.stock),
         datasets: [
             {
                 label: 'T-0',
@@ -76,23 +67,19 @@ const MoneyFlowT5Chart = (props: any) => {
         responsive: true,
         maintainAspectRatio: false,
         indexAxis: 'y',
-        layout: {
-            padding: {
-                right: props?.ww > 767 ? 40 : 0,
-            }
-        },
         plugins: {
             legend: {
+                // display: props?.ww > 767 ? true : false,
                 display: true,
                 position: 'top',
                 labels: {
-                    boxWidth: props.ww > 767 ? 20 : 2, // Width of the color box in legend
-                    boxHeight: 8,
-                    padding: 10, // Spacing between items in legend
+                    boxWidth: props.ww > 767 ? 6 : 4, // Width of the color box in legend
+                    boxHeight: props.ww > 767 ? 8 : 5,
+                    padding: props.ww > 767 ? 8 : 5, // Spacing between items in legend
                     pointStyle: 'circle', // Set point style to circle
                     usePointStyle: true, // Ensure use of pointStyle for symbol
                     font: {
-                        size: props.ww > 400 ? parseInt(props?.fontSize) - 4 : parseInt(props?.fontSize) - 5, // Adjust font size of legend
+                        size: parseInt(props?.fontSize), // Adjust font size of legend
                         family: 'Calibri', // Adjust font family of legend
                     },
                     color: '#dfdfdf' // Font color of legend
@@ -106,7 +93,10 @@ const MoneyFlowT5Chart = (props: any) => {
                         } else {
                             return `${tooltipItem?.dataset.label}: ${tooltipItem?.raw?.toFixed(2)}`;
                         }
-                    }
+                    },
+                    title: function (tooltipItems: any) {
+                        return `Dòng tiền trong ngày`;
+                    },
                 },
                 displayColors: true,
                 usePointStyle: true,
@@ -114,14 +104,14 @@ const MoneyFlowT5Chart = (props: any) => {
                 boxWidth: 10,
             },
             title: {
-                display: true,
+                display: false,
                 text: `Dòng tiền ${name_dict[props?.group]}`,
                 padding: {
                     bottom: 0, // Giảm khoảng cách phía dưới tiêu đề
                 },
                 font: {
                     family: 'Calibri, sans-serif',
-                    size: parseInt(props?.fontSize) - 2,
+                    size: parseInt(props?.fontSize),
                     weight: 'bold',
                 },
                 color: '#dfdfdf'
@@ -134,15 +124,13 @@ const MoneyFlowT5Chart = (props: any) => {
             x: {
                 display: true,
                 stacked: true,
-                min: props?.type === 'industry' ? Math.floor(minIndustryScore) : null,
-                max: props?.type === 'industry' ? Math.ceil(maxIndustryScore) : null,
                 grid: {
                     display: true,
                     color: '#dfdfdf',
                     drawTicks: false,
                     drawBorder: false,
                     lineWidth: function (context: any) {
-                        return context.tick.value === 0 ? 2 : 0;
+                        return context.tick.value === 0 ? 3 : 0;
                     },
                 },
                 ticks: {
@@ -150,7 +138,7 @@ const MoneyFlowT5Chart = (props: any) => {
                     display: true,
                     color: '#dfdfdf',
                     font: {
-                        size: parseInt(props?.fontSize) - 7
+                        size: parseInt(props?.fontSize) - 1
                     },
                     callback: function (value: any) {
                         if (value === 0) {
@@ -167,11 +155,7 @@ const MoneyFlowT5Chart = (props: any) => {
                     display: false,
                 },
                 ticks: {
-                    display: true,
-                    color: '#dfdfdf',
-                    font: {
-                        size: parseInt(props?.fontSize) - 7
-                    }
+                    display: false,
                 },
             },
         },
@@ -185,7 +169,7 @@ const MoneyFlowT5Chart = (props: any) => {
     if (!checkAuth) {
         return (
             <>
-                <div style={{ height: props?.height, width: '100%' }}>
+                <div style={{ height: props?.height, width: '100%', marginTop: props.ww > 767 ? '10px' : '5px', marginLeft: '-5px' }}>
                     <Bar data={data} options={options} />
                 </div>
             </>
@@ -193,4 +177,4 @@ const MoneyFlowT5Chart = (props: any) => {
     }
 };
 
-export default MoneyFlowT5Chart;
+export default StockMoneyFlowT5Chart;

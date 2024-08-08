@@ -84,14 +84,14 @@ export default function Report() {
       await set_update_time(res.data)
     } else if (tableName === 'index_card_df') {
       await set_index_card_df(res.data)
-    } else if (tableName === 'market_info_df') {
-      await set_market_info_df(res.data)
-    } else if (tableName === 'market_top_stock') {
-      await set_market_top_stock(res.data)
-    } else if (tableName === 'market_sentiment') {
-      await set_market_sentiment(res.data)
-    } else if (tableName === 'itd_score_liquidity_last') {
-      await set_itd_score_liquidity_last(res.data)
+    } else if (tableName === 'market_price_breath_df') {
+      await set_market_price_breath_df(res.data)
+    } else if (tableName === 'market_top_stock_df') {
+      await set_market_top_stock_df(res.data)
+    } else if (tableName === 'market_sentiment_df') {
+      await set_market_sentiment_df(res.data)
+    } else if (tableName === 'group_score_liquidity_df') {
+      await set_group_score_liquidity_df(res.data)
     } else if (tableName === 'itd_score_liquidity_df') {
       await set_itd_score_liquidity_df(res.data)
     } else if (tableName === 'market_ms') {
@@ -106,10 +106,10 @@ export default function Report() {
     const fetchData = async () => {
       getData('update_time');
       getData('index_card_df');
-      getData('market_info_df');
-      getData('market_top_stock');
-      getData('market_sentiment');
-      getData('itd_score_liquidity_last');
+      getData('market_price_breath_df');
+      getData('market_top_stock_df');
+      getData('market_sentiment_df');
+      getData('group_score_liquidity_df');
       getData('itd_score_liquidity_df');
       getData('market_ms');
       getData('market_breath_df');
@@ -124,10 +124,10 @@ export default function Report() {
   //State lưu trữ dữ liệu cổ phiếu
   const [update_time, set_update_time] = useState<any[]>([]);
   const [index_card_df, set_index_card_df] = useState<any[]>([]);
-  const [market_info_df, set_market_info_df] = useState<any[]>([]);
-  const [market_top_stock, set_market_top_stock] = useState<any[]>([]);
-  const [market_sentiment, set_market_sentiment] = useState<any[]>([]);
-  const [itd_score_liquidity_last, set_itd_score_liquidity_last] = useState<any[]>([]);
+  const [market_price_breath_df, set_market_price_breath_df] = useState<any[]>([]);
+  const [market_top_stock_df, set_market_top_stock_df] = useState<any[]>([]);
+  const [market_sentiment_df, set_market_sentiment_df] = useState<any[]>([]);
+  const [group_score_liquidity_df, set_group_score_liquidity_df] = useState<any[]>([]);
   const [itd_score_liquidity_df, set_itd_score_liquidity_df] = useState<any[]>([]);
   const [market_ms, set_market_ms] = useState<any[]>([]);
   const [market_breath_df, set_market_breath_df] = useState<any[]>([]);
@@ -384,7 +384,7 @@ export default function Report() {
                         Khối lượng giao dịch
                       </p>
                       <p style={{ fontSize: pixel(0.016, 14), fontFamily: 'Calibri, sans-serif', color: 'white', fontWeight: 'bold', margin: '5px 0px 0px 10px', padding: 0 }}>
-                        {market_info_df?.reduce((sum, item) => sum + item.volume, 0).toLocaleString('en-US')}
+                        {market_price_breath_df?.reduce((sum, item) => sum + item.volume, 0).toLocaleString('en-US')}
                       </p>
                     </div>
                     <div style={{ marginLeft: ww > 800 ? '40px' : '-10px', marginTop: ww > 800 ? '0px' : '10px' }}>
@@ -392,18 +392,18 @@ export default function Report() {
                         Giá trị giao dịch
                       </p>
                       <p style={{ fontSize: pixel(0.016, 14), fontFamily: 'Calibri, sans-serif', color: 'white', fontWeight: 'bold', margin: '5px 0px 0px 10px', padding: 0 }}>
-                        {Math.round(market_info_df?.reduce((sum, item) => sum + item.value, 0)).toLocaleString('en-US')} <span style={{ fontSize: pixel(0.015, 12), color: '#B3B3B3' }}>Tỷ</span>
+                        {Math.round(market_price_breath_df?.reduce((sum, item) => sum + item.value, 0)).toLocaleString('en-US')} <span style={{ fontSize: pixel(0.015, 12), color: '#B3B3B3' }}>Tỷ</span>
                       </p>
                     </div>
                   </Row>
                   <Row gutter={10}>
-                    <MarketBreathChart data={market_info_df} width={ww > 400 ? '100%' : '200px'} height={ww > 800 ? '230px' : '180px'} ww={ww} pixel={pixel} />
+                    <MarketBreathChart data={market_price_breath_df} width={ww > 400 ? '100%' : '200px'} height={ww > 800 ? '230px' : '180px'} ww={ww} pixel={pixel} />
                   </Row>
                 </Col>
                 <Col span={1}>
                 </Col>
                 <Col span={12}>
-                  <MarketTopStockChart data={market_top_stock} ww={ww} pixel={pixel} />
+                  <MarketTopStockChart data={market_top_stock_df} ww={ww} pixel={pixel} />
                 </Col>
               </Row >
               <Row gutter={10}>
@@ -415,20 +415,20 @@ export default function Report() {
                           color: '#B3B3B3', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
                         }}> Trạng thái tâm lý
                         </p>
-                        <ReportSentimentGaugeChart openState={openState} data={market_sentiment} width='100%' height='100px' ww={ww} />
+                        <ReportSentimentGaugeChart openState={openState} data={market_sentiment_df} width='100%' height='100px' ww={ww} />
                         <div style={{
-                          background: getColorSentiment(openState ? market_sentiment?.[0]?.last_ratio : ''),
+                          background: getColorSentiment(openState ? market_sentiment_df?.[0]?.last_ratio : ''),
                           padding: '0px', borderRadius: '5px', margin: '10px 0px 0px 0px', display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: '10px', height: '25px'
                         }}>
                           <p style={{
                             color: 'white', fontSize: pixel(0.015, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
-                          }}> {openState ? market_sentiment?.[0]?.last_sentiment : ''}
+                          }}> {openState ? market_sentiment_df?.[0]?.last_sentiment : ''}
                           </p>
                         </div>
                       </div>
                     </Col>
                     <Col span={17}>
-                      <ReportSentimentLineChart data={market_sentiment} width='99%' height='200px' />
+                      <ReportSentimentLineChart data={market_sentiment_df} width='99%' height='200px' />
                     </Col>
                   </Row>
                 </Col>
@@ -440,14 +440,14 @@ export default function Report() {
                           color: '#B3B3B3', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
                         }}> Chỉ số thanh khoản
                         </p>
-                        <ReportLiquidityGaugeChart openState={openState} data={itd_score_liquidity_last} width='100%' height='100px' ww={ww} />
+                        <ReportLiquidityGaugeChart openState={openState} data={group_score_liquidity_df} width='100%' height='100px' ww={ww} />
                         <div style={{
-                          background: getColorLiquidity(openState ? (itd_score_liquidity_last?.filter((item: any) => item.name === 'Thị trường')[0]?.liquidity * 100) : ''),
+                          background: getColorLiquidity(openState ? (group_score_liquidity_df?.filter((item: any) => item.name === 'Thị trường')[0]?.liquidity * 100) : ''),
                           padding: '0px', borderRadius: '5px', margin: '10px 0px 0px 0px', display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: '10px', height: '25px'
                         }}>
                           <p style={{
                             color: 'white', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
-                          }}> {openState ? itd_score_liquidity_last?.filter((item: any) => item.name === 'Thị trường')[0]?.liquid_state : ''}
+                          }}> {openState ? group_score_liquidity_df?.filter((item: any) => item.name === 'Thị trường')[0]?.liquid_state : ''}
                           </p>
                         </div>
                       </div>
@@ -469,7 +469,7 @@ export default function Report() {
               </Row>
               <Row gutter={20} style={{ marginTop: '20px' }}>
                 <Col xs={15} sm={15} md={7} lg={8} xl={8}>
-                  <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowValueChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='hs' height='120px' type='group' />
                 </Col>
                 <Col xs={9} sm={9} md={6} lg={5} xl={5}>
@@ -477,7 +477,7 @@ export default function Report() {
                     group='hs' height='120px' type='group' />
                 </Col>
                 <Col xs={15} sm={15} md={6} lg={6} xl={6}>
-                  <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowLiquidityChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='hs' height='120px' type='group' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>
@@ -487,7 +487,7 @@ export default function Report() {
               </Row>
               <Row gutter={20} style={{ marginTop: '20px' }}>
                 <Col xs={15} sm={15} md={7} lg={8} xl={8}>
-                  <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowValueChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='cap' height='120px' type='group' />
                 </Col>
                 <Col xs={9} sm={9} md={6} lg={5} xl={5}>
@@ -495,7 +495,7 @@ export default function Report() {
                     group='cap' height='120px' type='group' />
                 </Col>
                 <Col xs={15} sm={15} md={6} lg={6} xl={6}>
-                  <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowLiquidityChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='cap' height='120px' type='group' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>
@@ -517,7 +517,7 @@ export default function Report() {
               </Row>
               <Row gutter={20} style={{ marginTop: '10px' }}>
                 <Col xs={15} sm={15} md={7} lg={8} xl={8}>
-                  <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowValueChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='A' height='190px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={6} lg={5} xl={5}>
@@ -525,7 +525,7 @@ export default function Report() {
                     group='A' height='190px' type='industry' />
                 </Col>
                 <Col xs={15} sm={15} md={6} lg={6} xl={6}>
-                  <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowLiquidityChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='A' height='190px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>
@@ -535,7 +535,7 @@ export default function Report() {
               </Row>
               <Row gutter={20} style={{ marginTop: '10px' }}>
                 <Col xs={15} sm={15} md={7} lg={8} xl={8}>
-                  <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowValueChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='B' height='160px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={6} lg={5} xl={5}>
@@ -543,7 +543,7 @@ export default function Report() {
                     group='B' height='160px' type='industry' />
                 </Col>
                 <Col xs={15} sm={15} md={6} lg={6} xl={6}>
-                  <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowLiquidityChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='B' height='160px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>
@@ -553,7 +553,7 @@ export default function Report() {
               </Row>
               <Row gutter={20} style={{ marginTop: '10px' }}>
                 <Col xs={15} sm={15} md={7} lg={8} xl={8}>
-                  <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowValueChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='C' height='160px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={6} lg={5} xl={5}>
@@ -561,7 +561,7 @@ export default function Report() {
                     group='C' height='160px' type='industry' />
                 </Col>
                 <Col xs={15} sm={15} md={6} lg={6} xl={6}>
-                  <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowLiquidityChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='C' height='160px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>
@@ -571,7 +571,7 @@ export default function Report() {
               </Row>
               <Row gutter={20} style={{ marginTop: '10px' }}>
                 <Col xs={15} sm={15} md={7} lg={8} xl={8}>
-                  <MoneyFlowValueChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowValueChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='D' height='120px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={6} lg={5} xl={5}>
@@ -579,7 +579,7 @@ export default function Report() {
                     group='D' height='120px' type='industry' />
                 </Col>
                 <Col xs={15} sm={15} md={6} lg={6} xl={6}>
-                  <MoneyFlowLiquidityChart data={itd_score_liquidity_last} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowLiquidityChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='D' height='120px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>

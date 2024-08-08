@@ -8,22 +8,25 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const GroupRankingChart = (props: any) => {
 
-    const data_sets = props?.data?.filter((item: any) => item.group_name === props?.select_group)
+    const data_sets = props?.data?.filter((item: any) => item.name === props?.select_group)
         .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     const dateList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
-        const month = ('0' + (date.getMonth() + 1)).slice(-2); // Lấy tháng và thêm số 0 nếu cần
-        const day = ('0' + date.getDate()).slice(-2); // Lấy ngày và thêm số 0 nếu cần
+        const month = ('0' + (date.getMonth() + 1))?.slice(-2); // Lấy tháng và thêm số 0 nếu cần
+        const day = ('0' + date.getDate())?.slice(-2); // Lấy ngày và thêm số 0 nếu cần
         return `${day}-${month}`;
     });
 
+    const slice = props?.ww > 767 ? -20 : (props?.ww > 576 ? -12 : (props?.ww > 400 ? -8 : -6));
+
+
     const lines: any = {
-        labels: dateList || [],
+        labels: dateList.slice(slice) || [],
         datasets: [
             {
                 label: props?.select_group,
-                data: data_sets?.map((item: any) => item.rank),
+                data: data_sets?.map((item: any) => item.rank).slice(slice),
                 borderColor: '#C031C7',
                 pointRadius: 1.4,
                 hoverRadius: 5,
@@ -50,12 +53,6 @@ const GroupRankingChart = (props: any) => {
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
-                bodyFont: {
-                    size: parseInt(props?.fontSize) - 7,
-                },
-                titleFont: {
-                    size: parseInt(props?.fontSize) - 7,
-                },
 
                 boxHeight: 8,
                 caretPadding: 20

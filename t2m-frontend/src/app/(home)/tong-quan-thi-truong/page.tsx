@@ -15,14 +15,12 @@ import LiquidityLineChart from "./components/trang_thai_thi_truong/liquidity_lin
 import NnTdBuySellTable from "./components/khoi_ngoai_tu_doanh/nn_td_buy_sell_table";
 import NnTdHispory from "./components/khoi_ngoai_tu_doanh/nn_td_history";
 import NdTdTopStockChart from "./components/khoi_ngoai_tu_doanh/nn_td_top_stock";
-import MarketWeekScoreChart from "./components/dong_tien_thanh_khoan/score_week";
-import MarketMonthScoreChart from "./components/dong_tien_thanh_khoan/score_month";
-import LiquidityLineChart20p from "./components/dong_tien_thanh_khoan/thanh_khoan_20p";
 import TopCoPhieuTable from "./components/cau_truc_song_va_top_cp/top_co_phieu_table";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { resetAuthState } from "@/redux/authSlice";
 import { sessionLimit } from "@/utlis/sessionLimit";
 import LockSection from "@/components/subscribers/blurComponents";
+
 import MarketStructureChart from "./components/cau_truc_song_va_top_cp/cau_truc_song_chart";
 import MsSpanSlider from "./components/cau_truc_song_va_top_cp/ms_span_slider";
 import { ZoomInOutlined } from "@ant-design/icons";
@@ -88,18 +86,18 @@ export default function Page1() {
       await set_update_time(res.data)
     } else if (tableName === 'index_card_df') {
       await set_index_card_df(res.data)
-    } else if (tableName === 'market_info_df') {
-      await set_market_info_df(res.data)
-    } else if (tableName === 'market_top_stock') {
-      await set_market_top_stock(res.data)
+    } else if (tableName === 'market_price_breath_df') {
+      await set_market_price_breath_df(res.data)
+    } else if (tableName === 'market_top_stock_df') {
+      await set_market_top_stock_df(res.data)
     } else if (tableName === 'index_price_chart_df') {
       await set_index_price_chart_df(res.data)
     } else if (tableName === 'ta_index_df') {
       await set_ta_index_df(res.data)
-    } else if (tableName === 'market_sentiment') {
-      await set_market_sentiment(res.data)
-    } else if (tableName === 'itd_score_liquidity_last') {
-      await set_itd_score_liquidity_last(res.data)
+    } else if (tableName === 'market_sentiment_df') {
+      await set_market_sentiment_df(res.data)
+    } else if (tableName === 'group_score_liquidity_df') {
+      await set_group_score_liquidity_df(res.data)
     } else if (tableName === 'itd_score_liquidity_df') {
       await set_itd_score_liquidity_df(res.data)
     } else if (tableName === 'nn_td_20p_df') {
@@ -108,12 +106,6 @@ export default function Page1() {
       await set_nn_td_buy_sell_df(res.data)
     } else if (tableName === 'nn_td_top_stock') {
       await set_nn_td_top_stock(res.data)
-    } else if (tableName === 'group_score_week') {
-      await set_group_score_week(res.data)
-    } else if (tableName === 'group_score_month') {
-      await set_group_score_month(res.data)
-    } else if (tableName === 'eod_group_liquidity_df') {
-      await set_eod_group_liquidity_df(res.data)
     } else if (tableName === 'market_ms') {
       await set_market_ms(res.data)
     }
@@ -122,12 +114,12 @@ export default function Page1() {
     const fetchData = async () => {
       getData('update_time');
       getData('index_card_df');
-      getData('market_info_df');
-      getData('market_top_stock');
+      getData('market_price_breath_df');
+      getData('market_top_stock_df');
       getData('index_price_chart_df');
       getData('ta_index_df');
-      getData('market_sentiment');
-      getData('itd_score_liquidity_last');
+      getData('market_sentiment_df');
+      getData('group_score_liquidity_df');
       getData('itd_score_liquidity_df');
       getData('nn_td_20p_df');
       getData('nn_td_buy_sell_df');
@@ -151,19 +143,16 @@ export default function Page1() {
   //State lưu trữ dữ liệu cổ phiếu
   const [update_time, set_update_time] = useState<any[]>([]);
   const [index_card_df, set_index_card_df] = useState<any[]>([]);
-  const [market_info_df, set_market_info_df] = useState<any[]>([]);
-  const [market_top_stock, set_market_top_stock] = useState<any[]>([]);
+  const [market_price_breath_df, set_market_price_breath_df] = useState<any[]>([]);
+  const [market_top_stock_df, set_market_top_stock_df] = useState<any[]>([]);
   const [index_price_chart_df, set_index_price_chart_df] = useState<any[]>([]);
   const [ta_index_df, set_ta_index_df] = useState<any[]>([]);
-  const [market_sentiment, set_market_sentiment] = useState<any[]>([]);
-  const [itd_score_liquidity_last, set_itd_score_liquidity_last] = useState<any[]>([]);
+  const [market_sentiment_df, set_market_sentiment_df] = useState<any[]>([]);
+  const [group_score_liquidity_df, set_group_score_liquidity_df] = useState<any[]>([]);
   const [itd_score_liquidity_df, set_itd_score_liquidity_df] = useState<any[]>([]);
   const [nn_td_20p_df, set_nn_td_20p_df] = useState<any[]>([]);
   const [nn_td_buy_sell_df, set_nn_td_buy_sell_df] = useState<any[]>([]);
   const [nn_td_top_stock, set_nn_td_top_stock] = useState<any[]>([]);
-  const [group_score_week, set_group_score_week] = useState<any[]>([]);
-  const [group_score_month, set_group_score_month] = useState<any[]>([]);
-  const [eod_group_liquidity_df, set_eod_group_liquidity_df] = useState<any[]>([]);
   const [market_ms, set_market_ms] = useState<any[]>([]);
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
@@ -171,7 +160,6 @@ export default function Page1() {
   const [time_span, set_time_span] = useState('1M');
   const [index_name, set_index_name] = useState('VNINDEX');
   const [mobile_ta_mode, set_mobile_ta_mode] = useState('month');
-  const [tttt_dttk, set_tttt_dttk] = useState('TTTT');
   const [id_kntd, set_id_kntd] = useState('HSX');
   const [switch_kntd, set_switch_kntd] = useState('NN');
   const [switch_top_mobile, set_switch_top_mobile] = useState('top');
@@ -199,11 +187,6 @@ export default function Page1() {
   const onChangeIndexPriceChartTimeSpan = (e: any) => {
     const value = e.target.value;
     set_time_span(value)
-  };
-
-  const onChangeTttt = (e: any) => {
-    const value = e.target.value;
-    set_tttt_dttk(value)
   };
 
   const onChangeMobileTaMode = (e: any) => {
@@ -238,21 +221,6 @@ export default function Page1() {
 
   const onChangeChiSoThiTruongMobile: MenuProps['onClick'] = (e) => {
     set_chi_so_thi_truong(e.key);
-  };
-
-  const tttt_mobile_items: any = [
-    {
-      key: 'TTTT',
-      label: ww > 500 ? 'Trạng thái thị truờng' : 'Trạng thái TT',
-    },
-    {
-      key: 'DTTK',
-      label: ww > 500 ? 'Dòng tiền & Thanh khoản' : 'DT & TK',
-    },
-  ];
-
-  const onChangeTtttMobile: MenuProps['onClick'] = (e) => {
-    set_tttt_dttk(e.key);
   };
 
   const switch_top_mobile_items: any = [
@@ -510,7 +478,7 @@ export default function Page1() {
                               Khối lượng giao dịch
                             </p>
                             <p style={{ fontSize: pixel(0.016, 14), fontFamily: 'Calibri, sans-serif', color: 'white', fontWeight: 'bold', margin: '5px 0px 0px 10px', padding: 0 }}>
-                              {market_info_df?.reduce((sum, item) => sum + item.volume, 0).toLocaleString('en-US')}
+                              {market_price_breath_df?.reduce((sum, item) => sum + item.volume, 0).toLocaleString('en-US')}
                             </p>
                           </div>
                           <div style={{ marginLeft: ww > 800 ? '40px' : '-10px', marginTop: ww > 800 ? '0px' : '10px' }}>
@@ -518,7 +486,7 @@ export default function Page1() {
                               Giá trị giao dịch
                             </p>
                             <p style={{ fontSize: pixel(0.016, 14), fontFamily: 'Calibri, sans-serif', color: 'white', fontWeight: 'bold', margin: '5px 0px 0px 10px', padding: 0 }}>
-                              {Math.round(market_info_df?.reduce((sum, item) => sum + item.value, 0)).toLocaleString('en-US')} <span style={{ fontSize: pixel(0.015, 12), color: '#B3B3B3' }}>Tỷ</span>
+                              {Math.round(market_price_breath_df?.reduce((sum, item) => sum + item.value, 0)).toLocaleString('en-US')} <span style={{ fontSize: pixel(0.015, 12), color: '#B3B3B3' }}>Tỷ</span>
                             </p>
                           </div>
                         </>
@@ -642,10 +610,10 @@ export default function Page1() {
                     {chi_so_thi_truong === 'TQ' && (
                       <>
                         <Col xs={24} sm={24} md={12} lg={11} xl={10} style={{ display: 'flex', justifyContent: 'center', height: '240px' }}>
-                          <MarketBreathChart data={market_info_df} width={ww > 400 ? '100%' : '200px'} height={ww > 800 ? '230px' : '180px'} ww={ww} pixel={pixel} />
+                          <MarketBreathChart data={market_price_breath_df} width={ww > 400 ? '100%' : '200px'} height={ww > 800 ? '230px' : '180px'} ww={ww} pixel={pixel} />
                         </Col>
                         <Col xs={0} sm={0} md={12} lg={13} xl={14}>
-                          <MarketTopStockChart data={market_top_stock} ww={ww} pixel={pixel} />
+                          <MarketTopStockChart data={market_top_stock_df} ww={ww} pixel={pixel} />
                         </Col>
                       </>
                     )}
@@ -863,116 +831,61 @@ export default function Page1() {
                 <NdTdTopStockChart data={nn_td_top_stock} ww={ww} pixel={pixel} id={id_kntd} switch_kntd={switch_kntd} />
               </Row>
               <Row gutter={25} style={{ marginTop: '50px', marginBottom: '10px' }}>
-                <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                <Col>
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
-                    {tttt_dttk === 'TTTT' ? 'Trạng thái thị trường' : 'Dòng tiền & Thanh khoản'}
+                    Trạng thái thị trường
                   </p>
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
                 </Col>
-                <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                  {ww > 900 && (
-                    <Radio.Group
-                      className="custom-radio-group"
-                      defaultValue={tttt_dttk}
-                      buttonStyle="solid"
-                      onChange={onChangeTttt}
-                      style={{ display: 'flex', width: '100%', marginTop: '5px', height: '50px' }}
-                    >
-                      <Radio.Button value="TTTT" className="custom-radio-button"
-                        style={{
-                          fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                        }}>Trạng thái thị trường
-                      </Radio.Button>
-                      <Radio.Button value="DTTK" className="custom-radio-button"
-                        style={{
-                          fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                        }}>Dòng tiền & Thanh khoản
-                      </Radio.Button>
-                    </Radio.Group>
-                  )}
-                  {ww <= 900 && (
-                    <Menu
-                      theme='dark'
-                      onClick={onChangeTtttMobile}
-                      className="tttt-menu"
-                      style={{ width: '100%', background: 'black', fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf', height: '50px' }}
-                      defaultOpenKeys={[tttt_dttk]}
-                      selectedKeys={[tttt_dttk]}
-                      mode="vertical"
-                      items={tttt_mobile_items}
-                    />
-                  )}
+              </Row>
+              <Row gutter={10} style={{ marginTop: '25px' }}>
+                <Col xs={8} sm={7} md={5} lg={5} xl={4}>
+                  <div style={{ background: '#161616', padding: '10px', borderRadius: '5px', margin: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                    <p style={{
+                      color: 'white', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
+                    }}> Trạng thái tâm lý
+                    </p>
+                    <SentimentGaugeChart openState={openState} data={market_sentiment_df} width='100%' height='150px' ww={ww} />
+                  </div>
+                  <div style={{
+                    background: getColorSentiment(openState ? market_sentiment_df?.[0]?.last_ratio : ''),
+                    padding: '10px', borderRadius: '5px', margin: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: '10px', height: '30px'
+                  }}>
+                    <p style={{
+                      color: 'white', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
+                    }}> {openState ? market_sentiment_df?.[0]?.last_sentiment : ''}
+                    </p>
+                  </div>
+                </Col>
+                <Col xs={16} sm={17} md={19} lg={19} xl={20}>
+                  <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width={ww > 767 ? '100%' : '96%'} />
+                  <SentimentLineChart data={market_sentiment_df} openState={openState} width='100%' height='250px' />
                 </Col>
               </Row>
-              {tttt_dttk === 'TTTT' && (
-                <>
-                  <Row gutter={10} style={{ marginTop: '25px' }}>
-                    <Col xs={8} sm={7} md={5} lg={5} xl={4}>
-                      <div style={{ background: '#161616', padding: '10px', borderRadius: '5px', margin: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                        <p style={{
-                          color: 'white', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
-                        }}> Trạng thái tâm lý
-                        </p>
-                        <SentimentGaugeChart openState={openState} data={market_sentiment} width='100%' height='150px' ww={ww} />
-                      </div>
-                      <div style={{
-                        background: getColorSentiment(openState ? market_sentiment?.[0]?.last_ratio : ''),
-                        padding: '10px', borderRadius: '5px', margin: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: '10px', height: '30px'
-                      }}>
-                        <p style={{
-                          color: 'white', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
-                        }}> {openState ? market_sentiment?.[0]?.last_sentiment : ''}
-                        </p>
-                      </div>
-                    </Col>
-                    <Col xs={16} sm={17} md={19} lg={19} xl={20}>
-                      <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width={ww > 767 ? '100%' : '96%'} />
-                      <SentimentLineChart data={market_sentiment} openState={openState} width='100%' height='250px' />
-                    </Col>
-                  </Row>
-                  <Row gutter={10} style={{ marginTop: '20px' }}>
-                    <Col xs={8} sm={7} md={5} lg={5} xl={4}>
-                      <div style={{ background: '#161616', padding: '10px', borderRadius: '5px', margin: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                        <p style={{
-                          color: 'white', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
-                        }}> Chỉ số thanh khoản
-                        </p>
-                        <LiquidityGaugeChart openState={openState} data={itd_score_liquidity_last} width='100%' height='150px' ww={ww} />
-                      </div>
-                      <div style={{
-                        background: getColorLiquidity(openState ? (itd_score_liquidity_last?.filter((item: any) => item.name === 'Thị trường')[0]?.liquidity * 100) : ''),
-                        padding: '10px', borderRadius: '5px', margin: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: '10px', height: '30px'
-                      }}>
-                        <p style={{
-                          color: 'white', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
-                        }}> {openState ? itd_score_liquidity_last?.filter((item: any) => item.name === 'Thị trường')[0]?.liquid_state : ''}
-                        </p>
-                      </div>
-                    </Col>
-                    <Col xs={16} sm={17} md={19} lg={19} xl={20}>
-                      <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width={ww > 767 ? '100%' : '96%'} />
-                      <LiquidityLineChart openState={openState} data={itd_score_liquidity_df} width='100%' height='250px' />
-                    </Col>
-                  </Row>
-                </>
-              )}
-              {tttt_dttk === 'DTTK' && (
-                <>
-                  <Row gutter={10} style={{ marginTop: '20px', position: 'relative' }}>
-                    <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='95%' width='100%' />
-                    <Col xs={24} sm={12} md={10} lg={8} xl={8}>
-                      <MarketWeekScoreChart data={group_score_week} ww={ww} fontSize={pixel(0.015, 15)} />
-                    </Col>
-                    <Col xs={24} sm={12} md={14} lg={16} xl={16}>
-                      <MarketMonthScoreChart data={group_score_month} ww={ww} fontSize={pixel(0.015, 15)} />
-                    </Col>
-                  </Row>
-                  <Row gutter={10} style={{ marginTop: '30px', position: 'relative' }}>
-                    <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='270px' width='100%' marginTop='-30px' />
-                    <LiquidityLineChart20p data={eod_group_liquidity_df} fontSize={pixel(0.015, 15)} width='100%' height='250px' />
-                  </Row>
-                </>
-              )}
+              <Row gutter={10} style={{ marginTop: '20px' }}>
+                <Col xs={8} sm={7} md={5} lg={5} xl={4}>
+                  <div style={{ background: '#161616', padding: '10px', borderRadius: '5px', margin: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                    <p style={{
+                      color: 'white', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
+                    }}> Chỉ số thanh khoản
+                    </p>
+                    <LiquidityGaugeChart openState={openState} data={group_score_liquidity_df} width='100%' height='150px' ww={ww} />
+                  </div>
+                  <div style={{
+                    background: getColorLiquidity(openState ? (group_score_liquidity_df?.filter((item: any) => item.name === 'Thị trường')[0]?.liquidity * 100) : ''),
+                    padding: '10px', borderRadius: '5px', margin: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: '10px', height: '30px'
+                  }}>
+                    <p style={{
+                      color: 'white', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
+                    }}> {openState ? group_score_liquidity_df?.filter((item: any) => item.name === 'Thị trường')[0]?.liquid_state : ''}
+                    </p>
+                  </div>
+                </Col>
+                <Col xs={16} sm={17} md={19} lg={19} xl={20}>
+                  <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width={ww > 767 ? '100%' : '96%'} />
+                  <LiquidityLineChart openState={openState} data={itd_score_liquidity_df} width='100%' height='250px' />
+                </Col>
+              </Row>
               <Row gutter={25} style={{ marginTop: '50px', marginBottom: '10px' }}>
                 <Col xs={20} sm={20} md={8} lg={8} xl={8}>
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
@@ -1050,7 +963,7 @@ export default function Page1() {
                         fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
                         marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
                       }}>Top cổ phiếu dòng tiền vào mạnh</p>
-                      <TopCoPhieuTable data={market_top_stock} type='top' ww={ww}
+                      <TopCoPhieuTable data={market_top_stock_df} type='top' ww={ww}
                         fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
                     </div>
                   )}
@@ -1060,7 +973,7 @@ export default function Page1() {
                         fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
                         marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
                       }}>Top cổ phiếu dòng tiền ra mạnh</p>
-                      <TopCoPhieuTable data={market_top_stock} type='bottom' ww={ww}
+                      <TopCoPhieuTable data={market_top_stock_df} type='bottom' ww={ww}
                         fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
                     </div>
                   )}
@@ -1071,7 +984,7 @@ export default function Page1() {
                       fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
                       marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
                     }}>Top cổ phiếu dòng tiền ra mạnh</p>
-                    <TopCoPhieuTable data={market_top_stock} type='bottom' ww={ww}
+                    <TopCoPhieuTable data={market_top_stock_df} type='bottom' ww={ww}
                       fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
                   </div>
                 </Col>

@@ -12,8 +12,8 @@ const NganhHsCRanking = (props: any) => {
 
     const dateList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
-        const month = ('0' + (date.getMonth() + 1)).slice(-2); // Lấy tháng và thêm số 0 nếu cần
-        const day = ('0' + date.getDate()).slice(-2); // Lấy ngày và thêm số 0 nếu cần
+        const month = ('0' + (date.getMonth() + 1))?.slice(-2); // Lấy tháng và thêm số 0 nếu cần
+        const day = ('0' + date.getDate())?.slice(-2); // Lấy ngày và thêm số 0 nếu cần
         return `${day}-${month}`;
     });
 
@@ -24,7 +24,7 @@ const NganhHsCRanking = (props: any) => {
         datasets: [
             {
                 label: 'BĐS KCN',
-                data: data_sets?.map((item: any) => item.bds_kcn).slice(slice),
+                data: data_sets?.map((item: any) => item.bds_kcn)?.slice(slice),
                 borderColor: '#C031C7',
                 pointRadius: 1.4,
                 hoverRadius: 5,
@@ -34,7 +34,7 @@ const NganhHsCRanking = (props: any) => {
             },
             {
                 label: 'Công nghệ',
-                data: data_sets?.map((item: any) => item.cong_nghe).slice(slice),
+                data: data_sets?.map((item: any) => item.cong_nghe)?.slice(slice),
                 fill: 'origin',
                 borderColor: '#24B75E',
                 pointRadius: 1.4,
@@ -45,7 +45,7 @@ const NganhHsCRanking = (props: any) => {
             },
             {
                 label: 'Hàng tiêu dùng',
-                data: data_sets?.map((item: any) => item.htd).slice(slice),
+                data: data_sets?.map((item: any) => item.htd)?.slice(slice),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 1.4,
@@ -56,7 +56,7 @@ const NganhHsCRanking = (props: any) => {
             },
             {
                 label: 'Ngân hàng',
-                data: data_sets?.map((item: any) => item.ngan_hang).slice(slice),
+                data: data_sets?.map((item: any) => item.ngan_hang)?.slice(slice),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 1.4,
@@ -67,7 +67,7 @@ const NganhHsCRanking = (props: any) => {
             },
             {
                 label: 'Thực phẩm',
-                data: data_sets?.map((item: any) => item.thuc_pham).slice(slice),
+                data: data_sets?.map((item: any) => item.thuc_pham)?.slice(slice),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 1.4,
@@ -78,7 +78,7 @@ const NganhHsCRanking = (props: any) => {
             },
             {
                 label: 'Vận tải',
-                data: data_sets?.map((item: any) => item.van_tai).slice(slice),
+                data: data_sets?.map((item: any) => item.van_tai)?.slice(slice),
                 fill: 'origin',
                 borderColor: '#00cccc',
                 pointRadius: 1.4,
@@ -119,12 +119,6 @@ const NganhHsCRanking = (props: any) => {
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
-                bodyFont: {
-                    size: parseInt(props?.fontSize) - 7,
-                },
-                titleFont: {
-                    size: parseInt(props?.fontSize) - 7,
-                },
 
                 boxHeight: 8,
                 caretPadding: 20

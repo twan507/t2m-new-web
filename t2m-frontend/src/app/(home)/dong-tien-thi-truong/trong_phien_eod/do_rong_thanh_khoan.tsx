@@ -67,7 +67,7 @@ const LiquidityBreathChart = (props: any): any => {
         indexAxis: 'y', // Chuyển đổi biểu đồ cột thành biểu đồ cột ngang
         plugins: {
             legend: {
-                display: props?.ww > 767 ? true : false,
+                display: props?.ww > 991 ? true : false,
                 position: 'top',
                 labels: {
                     boxWidth: 20, // Độ rộng của hộp màu trong legend
@@ -84,9 +84,9 @@ const LiquidityBreathChart = (props: any): any => {
             },
             title: {
                 display: true,
-                text: props?.ww > 767 ? `Độ rộng thanh khoản` : `Độ rộng thanh khoản`,
+                text: props?.ww > 1100 ? `Độ rộng thanh khoản` : `Độ rộng TK`,
                 padding: {
-                    bottom: props?.ww > 767 ? 0 : 15
+                    bottom: props?.ww > 991 ? 0 : 15
                 },
                 font: {
                     family: 'Calibri, sans-serif',
@@ -98,7 +98,7 @@ const LiquidityBreathChart = (props: any): any => {
             tooltip: {
                 callbacks: {
                     label: function (tooltipItem: any) {
-                        if (props?.ww > 767) {
+                        if (props?.ww > 991) {
                             return `${tooltipItem?.dataset.label}: ${tooltipItem?.raw?.toFixed(1)}%`;
                         } else {
                             return `${tooltipItem?.raw?.toFixed(1)}%`;
@@ -108,23 +108,16 @@ const LiquidityBreathChart = (props: any): any => {
                 displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip
                 usePointStyle: true, // Sử dụng point style (hình dáng được định nghĩa trong datasets cho ô màu)
                 bodyFontColor: '#dfdfdf', // Màu chữ của tooltip
-                bodyFont: {
-                    size: parseInt(props?.fontSize) - 7,
-                },
-                titleFont: {
-                    size: parseInt(props?.fontSize) - 7,
-                }, // Cỡ chữ trong tooltip
-                // Kiểu chữ trong tooltip
                 boxWidth: 10, // Kích thước của ô màu
             },
             datalabels: {
                 display: true,
                 anchor: 'center',
                 align: 'center',
-                formatter: (value: any) => value > (props?.ww > 767 ? 20 : 30) ? (value.toFixed(1) + '%') : '', // Định dạng giá trị hiển thị
+                formatter: (value: any) => value > (props?.ww > 991 ? 20 : 35) ? (value.toFixed(1) + '%') : '', // Định dạng giá trị hiển thị
                 font: {
                     family: 'Helvetica, sans-serif',
-                    size: props?.ww > 767 ? parseInt(props?.fontSize) - 7 : parseInt(props?.fontSize) - 6, // Chỉnh sửa cỡ chữ
+                    size: props?.ww > 991 ? parseInt(props?.fontSize) - 7 : parseInt(props?.fontSize) - 6, // Chỉnh sửa cỡ chữ
                 },
                 color: '#ffffff',
             },
@@ -161,7 +154,7 @@ const LiquidityBreathChart = (props: any): any => {
     if (!checkAuth) {
         return (
             <>
-                <div style={{ height: props?.height, width: '100%', marginLeft: props?.ww > 767 ? '-20px' : '-10px' }}>
+                <div style={{ height: props?.height, width: '100%', marginLeft: props?.ww > 991 ? '-20px' : '-10px' }}>
                     <Bar data={data} options={options} />
                 </div>
             </>

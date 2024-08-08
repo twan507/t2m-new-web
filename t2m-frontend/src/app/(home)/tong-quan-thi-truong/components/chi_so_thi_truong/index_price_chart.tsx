@@ -12,8 +12,8 @@ const IndexPriceChart = (props: any) => {
 
 	const dateList: string[] = data_sets?.map((item: any) => {
 		const date = new Date(item.date);
-		const month = ('0' + (date.getMonth() + 1)).slice(-2); // Lấy tháng và thêm số 0 nếu cần
-		const day = ('0' + date.getDate()).slice(-2); // Lấy ngày và thêm số 0 nếu cần
+		const month = ('0' + (date.getMonth() + 1))?.slice(-2); // Lấy tháng và thêm số 0 nếu cần
+		const day = ('0' + date.getDate())?.slice(-2); // Lấy ngày và thêm số 0 nếu cần
 		return `${day}-${month}`;
 	});
 
@@ -26,7 +26,7 @@ const IndexPriceChart = (props: any) => {
 		datasets: [
 			{
 				label: 'Giá trị',
-				data: data_sets?.map((item: any) => item.value).slice(slice),
+				data: data_sets?.map((item: any) => item.value)?.slice(slice),
 				fill: true,
 				borderColor: '#C031C7',
 				pointRadius: 0, // Tắt các chấm màu xám ở các data label

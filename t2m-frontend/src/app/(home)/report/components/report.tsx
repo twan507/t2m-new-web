@@ -70,7 +70,7 @@ const DailyReport = (props: any) => {
                 </span>
                 <br />
                 <span className='daily-report'>
-                    Kết thúc phiên giao dịch, toàn thị trường có {tang_gia} mã tăng giá, {giam_gia} mã tăng giá và {khong_doi} mã không đổi, trạng thái tâm lý ở mức {market_sentiment}, chỉ số thanh khoản đạt {liquidity}.
+                    Kết thúc phiên giao dịch, toàn thị trường có {tang_gia} mã tăng giá, {giam_gia} mã giảm giá và {khong_doi} mã không đổi, trạng thái tâm lý ở mức {market_sentiment}, chỉ số thanh khoản đạt {liquidity}.
                 </span>
                 <br />
                 <span className='daily-report'>

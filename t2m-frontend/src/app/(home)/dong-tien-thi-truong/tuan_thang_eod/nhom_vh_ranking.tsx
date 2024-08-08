@@ -12,8 +12,8 @@ const NhomVhRanking = (props: any) => {
 
     const dateList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
-        const month = ('0' + (date.getMonth() + 1)).slice(-2); // Lấy tháng và thêm số 0 nếu cần
-        const day = ('0' + date.getDate()).slice(-2); // Lấy ngày và thêm số 0 nếu cần
+        const month = ('0' + (date.getMonth() + 1))?.slice(-2); // Lấy tháng và thêm số 0 nếu cần
+        const day = ('0' + date.getDate())?.slice(-2); // Lấy ngày và thêm số 0 nếu cần
         return `${day}-${month}`;
     });
 
@@ -24,7 +24,7 @@ const NhomVhRanking = (props: any) => {
         datasets: [
             {
                 label: 'LARGECAP',
-                data: data_sets?.map((item: any) => item.large).slice(slice),
+                data: data_sets?.map((item: any) => item.large)?.slice(slice),
                 borderColor: '#24B75E',
                 pointRadius: 1.4,
                 hoverRadius: 5,
@@ -34,7 +34,7 @@ const NhomVhRanking = (props: any) => {
             },
             {
                 label: 'MIDCAP',
-                data: data_sets?.map((item: any) => item.mid).slice(slice),
+                data: data_sets?.map((item: any) => item.mid)?.slice(slice),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 1.4,
@@ -45,7 +45,7 @@ const NhomVhRanking = (props: any) => {
             },
             {
                 label: 'SMALLCAP',
-                data: data_sets?.map((item: any) => item.small).slice(slice),
+                data: data_sets?.map((item: any) => item.small)?.slice(slice),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 1.4,
@@ -56,7 +56,7 @@ const NhomVhRanking = (props: any) => {
             },
             {
                 label: 'PENNY',
-                data: data_sets?.map((item: any) => item.penny).slice(slice),
+                data: data_sets?.map((item: any) => item.penny)?.slice(slice),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 1.4,
@@ -97,13 +97,6 @@ const NhomVhRanking = (props: any) => {
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
-                bodyFont: {
-                    size: parseInt(props?.fontSize) - 7,
-                },
-                titleFont: {
-                    size: parseInt(props?.fontSize) - 7,
-                },
-
                 boxHeight: 8,
                 caretPadding: 20
             },

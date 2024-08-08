@@ -10,8 +10,8 @@ const ReportSentimentLineChart = (props: any) => {
 
     const timeList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
-        const utcHours = ('0' + date.getUTCHours()).slice(-2);
-        const utcMinutes = ('0' + date.getUTCMinutes()).slice(-2);
+        const utcHours = ('0' + date.getUTCHours())?.slice(-2);
+        const utcMinutes = ('0' + date.getUTCMinutes())?.slice(-2);
         return `${utcHours}:${utcMinutes}`;
     });
 

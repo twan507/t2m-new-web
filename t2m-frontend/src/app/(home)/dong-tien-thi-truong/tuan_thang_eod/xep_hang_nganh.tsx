@@ -72,13 +72,7 @@ const TopIndustryChart = (props: any) => {
                 displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip
                 usePointStyle: true, // Sử dụng point style (hình dáng được định nghĩa trong datasets cho ô màu)
                 bodyFontColor: '#dfdfdf', // Màu chữ của tooltip
-                bodyFont: {
-                    size: parseInt(props?.fontSize) - 7,
-                },
-                titleFont: {
-                    size: parseInt(props?.fontSize) - 7,
-                }, // Cỡ chữ trong tooltip
-                // Kiểu chữ trong tooltip
+
                 boxWidth: 10, // Kích thước của ô màu
             },
             title: {

@@ -12,8 +12,8 @@ const NganhHsARanking = (props: any) => {
 
     const dateList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
-        const month = ('0' + (date.getMonth() + 1)).slice(-2); // Lấy tháng và thêm số 0 nếu cần
-        const day = ('0' + date.getDate()).slice(-2); // Lấy ngày và thêm số 0 nếu cần
+        const month = ('0' + (date.getMonth() + 1))?.slice(-2); // Lấy tháng và thêm số 0 nếu cần
+        const day = ('0' + date.getDate())?.slice(-2); // Lấy ngày và thêm số 0 nếu cần
         return `${day}-${month}`;
     });
 
@@ -24,7 +24,7 @@ const NganhHsARanking = (props: any) => {
         datasets: [
             {
                 label: 'Bán lẻ',
-                data: data_sets?.map((item: any) => item.ban_le).slice(slice),
+                data: data_sets?.map((item: any) => item.ban_le)?.slice(slice),
                 borderColor: '#C031C7',
                 pointRadius: 1.4,
                 hoverRadius: 5,
@@ -34,7 +34,7 @@ const NganhHsARanking = (props: any) => {
             },
             {
                 label: 'Bất động sản',
-                data: data_sets?.map((item: any) => item.bds).slice(slice),
+                data: data_sets?.map((item: any) => item.bds)?.slice(slice),
                 fill: 'origin',
                 borderColor: '#24B75E',
                 pointRadius: 1.4,
@@ -45,7 +45,7 @@ const NganhHsARanking = (props: any) => {
             },
             {
                 label: 'Chứng khoán',
-                data: data_sets?.map((item: any) => item.chung_khoan).slice(slice),
+                data: data_sets?.map((item: any) => item.chung_khoan)?.slice(slice),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 1.4,
@@ -56,7 +56,7 @@ const NganhHsARanking = (props: any) => {
             },
             {
                 label: 'Tài chính',
-                data: data_sets?.map((item: any) => item.tai_chinh).slice(slice),
+                data: data_sets?.map((item: any) => item.tai_chinh)?.slice(slice),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 1.4,
@@ -67,7 +67,7 @@ const NganhHsARanking = (props: any) => {
             },
             {
                 label: 'Thép',
-                data: data_sets?.map((item: any) => item.thep).slice(slice),
+                data: data_sets?.map((item: any) => item.thep)?.slice(slice),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 1.4,
@@ -78,7 +78,7 @@ const NganhHsARanking = (props: any) => {
             },
             {
                 label: 'VLXD',
-                data: data_sets?.map((item: any) => item.vlxd).slice(slice),
+                data: data_sets?.map((item: any) => item.vlxd)?.slice(slice),
                 fill: 'origin',
                 borderColor: '#00cccc',
                 pointRadius: 1.4,
@@ -89,7 +89,7 @@ const NganhHsARanking = (props: any) => {
             },
             {
                 label: 'Xây dựng',
-                data: data_sets?.map((item: any) => item.xd).slice(slice),
+                data: data_sets?.map((item: any) => item.xd)?.slice(slice),
                 fill: 'origin',
                 borderColor: '#999999',
                 pointRadius: 1.4,
@@ -130,13 +130,6 @@ const NganhHsARanking = (props: any) => {
                 displayColors: true,
                 usePointStyle: true,
                 bodyFontColor: '#dfdfdf',
-                bodyFont: {
-                    size: parseInt(props?.fontSize) - 7,
-                },
-                titleFont: {
-                    size: parseInt(props?.fontSize) - 7,
-                },
-
                 boxHeight: 8,
                 caretPadding: 20
             },

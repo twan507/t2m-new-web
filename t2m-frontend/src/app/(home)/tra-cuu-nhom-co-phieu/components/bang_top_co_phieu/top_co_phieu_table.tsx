@@ -164,7 +164,7 @@ const GroupTopCoPhieuTable = (props: any) => {
             baseColumns.splice(9, 0,
                 {
                     title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}>Xếp hạng hiện tại</span>,
-                    dataIndex: 'rank',
+                    dataIndex: 'rank_t5',
                     // width: '8%',
                     render: (value: number) => (
                         <span style={{

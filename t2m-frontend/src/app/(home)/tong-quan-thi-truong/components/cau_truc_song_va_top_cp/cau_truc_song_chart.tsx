@@ -12,8 +12,8 @@ const MarketStructureChart = (props: any) => {
 
     const dateList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
-        const month = ('0' + (date.getMonth() + 1)).slice(-2); // Lấy tháng và thêm số 0 nếu cần
-        const day = ('0' + date.getDate()).slice(-2); // Lấy ngày và thêm số 0 nếu cần
+        const month = ('0' + (date.getMonth() + 1))?.slice(-2); // Lấy tháng và thêm số 0 nếu cần
+        const day = ('0' + date.getDate())?.slice(-2); // Lấy ngày và thêm số 0 nếu cần
         const year = date.getFullYear(); // Lấy năm
         return `${day}-${month}-${year}`; // Trả về định dạng ngày-tháng-năm
     });
@@ -23,7 +23,7 @@ const MarketStructureChart = (props: any) => {
         datasets: [
             {
                 label: 'Tuần',
-                data: data_sets?.map((item: any) => item.trend_5p * 100).slice(props?.time_index - props?.slice, props?.time_index),
+                data: data_sets?.map((item: any) => item.trend_5p * 100)?.slice(props?.time_index - props?.slice, props?.time_index),
                 borderColor: '#C031C7',
                 pointRadius: 1.4,
                 hoverRadius: 5,
@@ -33,7 +33,7 @@ const MarketStructureChart = (props: any) => {
             },
             {
                 label: 'Tháng',
-                data: data_sets?.map((item: any) => item.trend_20p * 100).slice(props?.time_index - props?.slice, props?.time_index),
+                data: data_sets?.map((item: any) => item.trend_20p * 100)?.slice(props?.time_index - props?.slice, props?.time_index),
                 fill: 'origin',
                 borderColor: '#24B75E',
                 pointRadius: 1.4,
@@ -44,7 +44,7 @@ const MarketStructureChart = (props: any) => {
             },
             {
                 label: 'Quý',
-                data: data_sets?.map((item: any) => item.trend_60p * 100).slice(props?.time_index - props?.slice, props?.time_index),
+                data: data_sets?.map((item: any) => item.trend_60p * 100)?.slice(props?.time_index - props?.slice, props?.time_index),
                 fill: 'origin',
                 borderColor: '#025bc4',
                 pointRadius: 1.4,
@@ -55,7 +55,7 @@ const MarketStructureChart = (props: any) => {
             },
             {
                 label: 'Bán niên',
-                data: data_sets?.map((item: any) => item.trend_120p * 100).slice(props?.time_index - props?.slice, props?.time_index),
+                data: data_sets?.map((item: any) => item.trend_120p * 100)?.slice(props?.time_index - props?.slice, props?.time_index),
                 fill: 'origin',
                 borderColor: '#D0be0f',
                 pointRadius: 1.4,
@@ -66,7 +66,7 @@ const MarketStructureChart = (props: any) => {
             },
             {
                 label: '1 Năm',
-                data: data_sets?.map((item: any) => item.trend_240p * 100).slice(props?.time_index - props?.slice, props?.time_index),
+                data: data_sets?.map((item: any) => item.trend_240p * 100)?.slice(props?.time_index - props?.slice, props?.time_index),
                 fill: 'origin',
                 borderColor: '#e14040',
                 pointRadius: 1.4,
@@ -77,7 +77,7 @@ const MarketStructureChart = (props: any) => {
             },
             {
                 label: '2 Năm',
-                data: data_sets?.map((item: any) => item.trend_480p * 100).slice(props?.time_index - props?.slice, props?.time_index),
+                data: data_sets?.map((item: any) => item.trend_480p * 100)?.slice(props?.time_index - props?.slice, props?.time_index),
                 fill: 'origin',
                 borderColor: '#b3b3b3',
                 pointRadius: 1.4,
@@ -121,12 +121,7 @@ const MarketStructureChart = (props: any) => {
                 displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip
                 usePointStyle: true, // Sử dụng point style (hình dáng được định nghĩa trong datasets cho ô màu)
                 bodyFontColor: '#dfdfdf', // Màu chữ của tooltip
-                bodyFont: {
-                    size: parseInt(props?.fontSize) - 7,
-                },
-                titleFont: {
-                    size: parseInt(props?.fontSize) - 7,
-                }, // Cỡ chữ trong tooltip
+
                 // Kiểu chữ trong tooltip
                 boxHeight: 8, // Kích thước của ô màu
                 caretPadding: 20

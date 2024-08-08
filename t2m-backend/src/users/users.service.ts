@@ -303,7 +303,7 @@ export class UsersService {
   updateTokensArray = async (_id: string) => {
     const devices_number = process.env.MAX_DEVICES as unknown as number
     const user = await this.userModel.findOne({ _id: _id });
-    const tokensToKeep = user.tokens.slice(-devices_number); // Cắt lấy 2 phần tử cuối cùng
+    const tokensToKeep = user.tokens?.slice(-devices_number); // Cắt lấy 2 phần tử cuối cùng
     await this.userModel.updateOne(
       { _id: _id },
       { $set: { tokens: tokensToKeep } }
