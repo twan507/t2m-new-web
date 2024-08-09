@@ -29,15 +29,34 @@ const MoneyFlowT5Chart = (props: any) => {
     if (props?.type === 'industry') {
         data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => b.rank - a.rank);
     } else {
-        data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.index - b.index);
+        data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.industry_rank - b.industry_rank);
     }
 
     const industry_data_sets = props?.data?.filter((item: any) => ['A', 'B', 'C', 'D'].includes(item.group));
-    const minIndustryScore = industry_data_sets?.reduce((min: any, current: any) => current?.score < min ? current?.score : min, industry_data_sets?.[0]?.score);
-    const maxIndustryScore = industry_data_sets?.reduce((max: any, current: any) => current?.score > max ? current?.score : max, industry_data_sets?.[0]?.score);
+    const minIndustryScore = industry_data_sets?.reduce((min: any, current: any) => {
+        const currentMin = Math.min(
+            current?.["T-0"],
+            current?.["T-1"],
+            current?.["T-2"],
+            current?.["T-3"],
+            current?.["T-4"]
+        );
+        return currentMin < min ? currentMin : min;
+    }, Infinity);
+
+    const maxIndustryScore = industry_data_sets?.reduce((max: any, current: any) => {
+        const currentMax = Math.max(
+            current?.["T-0"],
+            current?.["T-1"],
+            current?.["T-2"],
+            current?.["T-3"],
+            current?.["T-4"]
+        );
+        return currentMax > max ? currentMax : max;
+    }, -1000);
 
     const data = {
-        labels: data_sets?.map((item: any) => props?.ww > 767 ? (item.name + '        ') : item.name),
+        labels: data_sets?.map((item: any) => item.name),
         datasets: [
             {
                 label: 'T-0',

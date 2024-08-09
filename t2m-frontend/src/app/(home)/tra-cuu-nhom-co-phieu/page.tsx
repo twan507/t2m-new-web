@@ -78,31 +78,31 @@ export default function Page3() {
       method: "GET",
       queryParams: { columnName: columnName, columnValue: select_group },
     })
-    if (tableName === 'update_time') {
-      await set_update_time(res.data)
+    if (tableName === 'market_update_time') {
+      await set_market_update_time(res.data)
     } else if (tableName === 'group_score_power_df') {
       await set_group_score_power_df(res.data)
-    } else if (tableName === 'market_ms') {
-      await set_market_ms(res.data)
+    } else if (tableName === 'group_ms_chart_df') {
+      await set_group_ms_chart_df(res.data)
     } else if (tableName === 'group_stock_top_10_df') {
       await set_group_stock_top_10_df(res.data)
     } else if (tableName === 'group_breath_df') {
       await set_group_breath_df(res.data)
-    } else if (tableName === 'group_score_liquidity_df') {
-      await set_group_score_liquidity_df(res.data)
+    } else if (tableName === 'group_eod_score_liquidity_df') {
+      await set_group_eod_score_liquidity_df(res.data)
     } else if (tableName === 'group_score_5p_df') {
       await set_group_score_5p_df(res.data)
     }
   }
   useEffect(() => {
     const fetchData = async () => {
-      getData('update_time', null);
+      getData('market_update_time', null);
       getData('group_stock_price_index', 'group_name');
       getData('group_score_power_df', 'name');
-      getData('market_ms', 'name');
+      getData('group_ms_chart_df', 'name');
       getData('group_stock_top_10_df', 'name');
       getData('group_breath_df', 'name');
-      getData('group_score_liquidity_df', 'name');
+      getData('group_eod_score_liquidity_df', 'name');
       getData('group_score_5p_df', 'name');
     };
     fetchData();
@@ -112,12 +112,12 @@ export default function Page3() {
   }, [select_group]);
 
   //State lưu trữ dữ liệu cổ phiếu
-  const [update_time, set_update_time] = useState<any[]>([]);
+  const [market_update_time, set_market_update_time] = useState<any[]>([]);
   const [group_score_power_df, set_group_score_power_df] = useState<any[]>([]);
-  const [market_ms, set_market_ms] = useState<any[]>([]);
+  const [group_ms_chart_df, set_group_ms_chart_df] = useState<any[]>([]);
   const [group_stock_top_10_df, set_group_stock_top_10_df] = useState<any[]>([]);
   const [group_breath_df, set_group_breath_df] = useState<any[]>([]);
-  const [group_score_liquidity_df, set_group_score_liquidity_df] = useState<any[]>([]);
+  const [group_eod_score_liquidity_df, set_group_eod_score_liquidity_df] = useState<any[]>([]);
   const [group_score_5p_df, set_group_score_5p_df] = useState<any[]>([]);
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
@@ -489,7 +489,7 @@ export default function Page3() {
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
                     {`Thông tin nhóm ${select_group}`}
                   </p>
-                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
                 </Col>
               </Row>
               <Row gutter={10}>
@@ -511,10 +511,10 @@ export default function Page3() {
                             </p>
                             <p style={{
                               fontSize: pixel(0.014, 14), fontFamily: 'Calibri, sans-serif', height: '15.5px',
-                              color: getColorLiquidity(group_score_liquidity_df?.[0]?.liquidity * 100),
+                              color: getColorLiquidity(group_eod_score_liquidity_df?.[0]?.liquidity * 100),
                               fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
                             }}>
-                              {`${(group_score_liquidity_df?.[0]?.liquidity * 100).toFixed(2)}%`}
+                              {`${(group_eod_score_liquidity_df?.[0]?.liquidity * 100).toFixed(2)}%`}
                             </p>
                           </Col>
                           <Col span={10}>
@@ -527,12 +527,12 @@ export default function Page3() {
                             <p style={{
                               fontSize: pixel(0.014, 14), fontFamily: 'Calibri, sans-serif', height: '15.5px',
                               color:
-                                ['hs', 'cap'].includes(group_score_liquidity_df?.[0]?.group) ?
-                                  getColorGroupRank(group_score_liquidity_df?.[0]?.rank) :
-                                  getColorIndustryRank(group_score_liquidity_df?.[0]?.rank),
+                                ['hs', 'cap'].includes(group_eod_score_liquidity_df?.[0]?.group) ?
+                                  getColorGroupRank(group_eod_score_liquidity_df?.[0]?.rank) :
+                                  getColorIndustryRank(group_eod_score_liquidity_df?.[0]?.rank),
                               fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
                             }}>
-                              {`${Math.round(group_score_liquidity_df?.[0]?.rank)}`}{['hs', 'cap'].includes(group_score_liquidity_df?.[0]?.group) ? '/4' : '/23'}
+                              {`${Math.round(group_eod_score_liquidity_df?.[0]?.rank)}`}{['hs', 'cap'].includes(group_eod_score_liquidity_df?.[0]?.group) ? '/4' : '/23'}
                             </p>
                           </Col>
                         </Row>
@@ -591,7 +591,7 @@ export default function Page3() {
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
                     {`Sức mạnh dòng tiền nhóm ${select_group}`}
                   </p>
-                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
                 </Col>
               </Row>
               <Row>
@@ -602,19 +602,19 @@ export default function Page3() {
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
                     {`Cấu trúc sóng nhóm ${select_group}`}
                   </p>
-                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
                 </Col>
               </Row>
               <Row style={{ position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <GroupMarketStructureChart data={market_ms} ww={ww} fontSize={pixel(0.015, 15)} select_group={select_group} />
+                <GroupMarketStructureChart data={group_ms_chart_df} ww={ww} fontSize={pixel(0.015, 15)} select_group={select_group} />
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
                 <Col>
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
                     {`Top cổ phiếu nhóm ${select_group}`}
                   </p>
-                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
                 </Col>
               </Row>
               <Row style={{ position: 'relative' }}>

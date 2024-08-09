@@ -59,14 +59,14 @@ export default function Page4() {
       method: "GET",
       queryParams: { columnName: columnName, columnValue: select_stock },
     })
-    if (tableName === 'update_time') {
-      await set_update_time(res.data)
+    if (tableName === 'market_update_time') {
+      await set_market_update_time(res.data)
     } else if (tableName === 'stock_score_5p_df') {
       await set_stock_score_5p_df(res.data)
     } else if (tableName === 'stock_score_power_df') {
       await set_stock_score_power_df(res.data)
-    } else if (tableName === 'eod_score_df') {
-      await set_eod_score_df(res.data)
+    } else if (tableName === 'stock_score_filter_df') {
+      await set_stock_score_filter_df(res.data)
     } else if (tableName === 'stock_ta_df') {
       await set_stock_ta_df(res.data)
     } else if (tableName === 'group_score_power_df') {
@@ -78,12 +78,12 @@ export default function Page4() {
 
   useEffect(() => {
     const fetchData = async () => {
-      getData('update_time', null);
+      getData('market_update_time', null);
       getData('stock_liquidty_score_t0', 'stock');
       getData('stock_score_week', 'stock');
       getData('stock_score_month', 'stock');
       getData('stock_score_power_df', 'stock');
-      getData('eod_score_df', null);
+      getData('stock_score_filter_df', null);
       getData('stock_ta_df', 'stock');
       getData('group_score_power_df', null);
       getData('stock_score_5p_df', 'stock');
@@ -96,8 +96,8 @@ export default function Page4() {
   }, [select_stock]);
 
   //State lưu trữ dữ liệu cổ phiếu
-  const [update_time, set_update_time] = useState<any[]>([]);
-  const [eod_score_df, set_eod_score_df] = useState<any[]>([]);
+  const [market_update_time, set_market_update_time] = useState<any[]>([]);
+  const [stock_score_filter_df, set_stock_score_filter_df] = useState<any[]>([]);
   const [stock_score_5p_df, set_stock_score_5p_df] = useState<any[]>([]);
   const [stock_ta_df, set_stock_ta_df] = useState<any[]>([]);
   const [stock_score_power_df, set_stock_score_power_df] = useState<any[]>([]);
@@ -211,7 +211,7 @@ export default function Page4() {
                   <Row gutter={20}>
                     <Col xs={0} sm={0} md={16} lg={16} xl={16}><div style={{ width: '100%' }} /></Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                      <SearchComponent data={eod_score_df}
+                      <SearchComponent data={stock_score_filter_df}
                         set_select_stock={set_select_stock}
                         set_select_industry={set_select_industry}
                         set_select_perform={set_select_perform}
@@ -226,7 +226,7 @@ export default function Page4() {
                   {`Thông tin cổ phiếu ${select_stock}`}
                 </p>
                 <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>
-                  {update_time?.[0]?.date}
+                  {market_update_time?.[0]?.date}
                 </p>
               </Row>
               <Row gutter={10} style={{ marginTop: '0px' }}>
@@ -245,10 +245,10 @@ export default function Page4() {
                         </p>
                         <p style={{
                           fontSize: pixel(0.014, 14), fontFamily: 'Calibri, sans-serif', height: '16.5px',
-                          color: getColorLiquidity(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.liquid_ratio * 100),
+                          color: getColorLiquidity(stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.liquid_ratio * 100),
                           fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
                         }}>
-                          {`${(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.liquid_ratio * 100).toFixed(2)}%`}
+                          {`${(stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.liquid_ratio * 100).toFixed(2)}%`}
                         </p>
                       </Col>
                       <Col span={10}>
@@ -260,10 +260,10 @@ export default function Page4() {
                         </p>
                         <p style={{
                           fontSize: pixel(0.014, 14), fontFamily: 'Calibri, sans-serif', height: '16.5px',
-                          color: getColorStockRank(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.rank_t5),
+                          color: getColorStockRank(stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.rank_t5),
                           fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
                         }}>
-                          {`${eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.rank_t5}/${eod_score_df?.length}`}
+                          {`${stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.rank_t5}/${stock_score_filter_df?.length}`}
                         </p>
                       </Col>
                     </Row>
@@ -292,10 +292,10 @@ export default function Page4() {
                         </p>
                         <p style={{
                           fontSize: pixel(0.014, 14), fontFamily: 'Calibri, sans-serif', height: '16.5px',
-                          color: getColorStockPerform(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.stock_perform),
+                          color: getColorStockPerform(stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.stock_perform),
                           fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
                         }}>
-                          {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.stock_perform}
+                          {stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.stock_perform}
                         </p>
                         <p style={{
                           fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '16.5px',
@@ -308,7 +308,7 @@ export default function Page4() {
                           color: 'white',
                           fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
                         }}>
-                          {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.industry_name}
+                          {stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.industry_name}
                         </p>
                       </Col>
                     </Row>
@@ -322,10 +322,10 @@ export default function Page4() {
                         </p>
                         <p style={{
                           fontSize: pixel(0.014, 14), fontFamily: 'Calibri, sans-serif', height: '16.5px',
-                          color: getColorIndustryPerform(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.industry_perform),
+                          color: getColorIndustryPerform(stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.industry_perform),
                           fontWeight: 'bold', margin: '5px 0px 0px 2px', padding: 0
                         }}>
-                          {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.industry_perform}
+                          {stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.industry_perform}
                         </p>
                       </Col>
                       <Col span={10}>
@@ -337,10 +337,10 @@ export default function Page4() {
                         </p>
                         <p style={{
                           fontSize: pixel(0.014, 14), fontFamily: 'Calibri, sans-serif', height: '16.5px',
-                          color: getColorMarketCap(eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.marketcap_group),
+                          color: getColorMarketCap(stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.marketcap_group),
                           fontWeight: 'bold', margin: '5.5px 0px 0px 2px', padding: 0
                         }}>
-                          {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.marketcap_group}
+                          {stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.marketcap_group}
                         </p>
                       </Col>
                     </Row>
@@ -365,25 +365,25 @@ export default function Page4() {
                             color: 'white', fontSize: pixel(0.015, 12), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
                             margin: `0px 0px 0px ${pixel(0.002, 0)}`
                           }}>
-                            {eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.close?.toFixed(2)}
+                            {stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.close?.toFixed(2)}
                           </p>
                           <p style={{
                             fontSize: pixel(0.015, 12), fontFamily: 'Calibri, sans-serif',
                             fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: 0,
-                            color: (eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.price_change) > 0.0001 ? '#24B75E' :
-                              ((eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.price_change) >= -0.0001 &&
-                                (eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.price_change) <= 0.0001 ? '#D0be0f' : '#e14040')
+                            color: (stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.price_change) > 0.0001 ? '#24B75E' :
+                              ((stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.price_change) >= -0.0001 &&
+                                (stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.price_change) <= 0.0001 ? '#D0be0f' : '#e14040')
                           }}>
-                            {ww > 410 ? eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.value_change?.toFixed(2) : null}
+                            {ww > 410 ? stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.value_change?.toFixed(2) : null}
                           </p>
                           <p style={{
                             fontSize: pixel(0.015, 12), fontFamily: 'Calibri, sans-serif', color: 'white',
                             fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: '0px 3px 0px 3px', borderRadius: '5px',
-                            background: (eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.price_change) > 0.0001 ? '#24B75E' :
-                              ((eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.price_change) >= -0.0001 &&
-                                (eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.price_change) <= 0.0001 ? '#D0be0f' : '#e14040')
+                            background: (stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.price_change) > 0.0001 ? '#24B75E' :
+                              ((stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.price_change) >= -0.0001 &&
+                                (stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.price_change) <= 0.0001 ? '#D0be0f' : '#e14040')
                           }}>
-                            {((eod_score_df?.filter(item => item.stock === select_stock)?.[0]?.price_change) * 100)?.toFixed(2)}%
+                            {((stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.price_change) * 100)?.toFixed(2)}%
                           </p>
                         </div>
                       </Button>
@@ -428,7 +428,7 @@ export default function Page4() {
                   <Row gutter={10}>
                     {thong_tin_cp === 'XHDT' && (
                       <>
-                        <StockRankingChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 16)} stock_count={eod_score_df?.length} />
+                        <StockRankingChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 16)} stock_count={stock_score_filter_df?.length} />
                       </>
                     )}
                     {thong_tin_cp === 'PTKT' && (
@@ -530,7 +530,7 @@ export default function Page4() {
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
                     {`Sức mạnh dòng tiền cổ phiếu ${select_stock}`}
                   </p>
-                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
                 </Col>
               </Row>
               <Row style={{ marginTop: ww > 767 ? '30px' : '20px', position: 'relative' }}>
@@ -542,7 +542,7 @@ export default function Page4() {
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
                     {`Sức mạnh các nhóm liên quan cổ phiếu ${select_stock}`}
                   </p>
-                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
                 </Col>
               </Row>
               <Row gutter={10} style={{ position: 'relative' }}>

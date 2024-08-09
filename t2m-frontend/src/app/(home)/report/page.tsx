@@ -80,22 +80,22 @@ export default function Report() {
       url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
       method: "GET",
     })
-    if (tableName === 'update_time') {
-      await set_update_time(res.data)
-    } else if (tableName === 'index_card_df') {
-      await set_index_card_df(res.data)
+    if (tableName === 'market_update_time') {
+      await set_market_update_time(res.data)
+    } else if (tableName === 'market_index_card_df') {
+      await set_market_index_card_df(res.data)
     } else if (tableName === 'market_price_breath_df') {
       await set_market_price_breath_df(res.data)
     } else if (tableName === 'market_top_stock_df') {
       await set_market_top_stock_df(res.data)
     } else if (tableName === 'market_sentiment_df') {
       await set_market_sentiment_df(res.data)
-    } else if (tableName === 'group_score_liquidity_df') {
-      await set_group_score_liquidity_df(res.data)
-    } else if (tableName === 'itd_score_liquidity_df') {
-      await set_itd_score_liquidity_df(res.data)
-    } else if (tableName === 'market_ms') {
-      await set_market_ms(res.data)
+    } else if (tableName === 'group_eod_score_liquidity_df') {
+      await set_group_eod_score_liquidity_df(res.data)
+    } else if (tableName === 'group_itd_score_liquidity_df') {
+      await set_group_itd_score_liquidity_df(res.data)
+    } else if (tableName === 'group_ms_chart_df') {
+      await set_group_ms_chart_df(res.data)
     } else if (tableName === 'market_breath_df') {
       await set_market_breath_df(res.data)
     } else if (tableName === 'daily_report_df') {
@@ -104,14 +104,14 @@ export default function Report() {
   }
   useEffect(() => {
     const fetchData = async () => {
-      getData('update_time');
-      getData('index_card_df');
+      getData('market_update_time');
+      getData('market_index_card_df');
       getData('market_price_breath_df');
       getData('market_top_stock_df');
       getData('market_sentiment_df');
-      getData('group_score_liquidity_df');
-      getData('itd_score_liquidity_df');
-      getData('market_ms');
+      getData('group_eod_score_liquidity_df');
+      getData('group_itd_score_liquidity_df');
+      getData('group_ms_chart_df');
       getData('market_breath_df');
       getData('daily_report_df');
     };
@@ -122,20 +122,20 @@ export default function Report() {
   }, []);
 
   //State lưu trữ dữ liệu cổ phiếu
-  const [update_time, set_update_time] = useState<any[]>([]);
-  const [index_card_df, set_index_card_df] = useState<any[]>([]);
+  const [market_update_time, set_market_update_time] = useState<any[]>([]);
+  const [market_index_card_df, set_market_index_card_df] = useState<any[]>([]);
   const [market_price_breath_df, set_market_price_breath_df] = useState<any[]>([]);
   const [market_top_stock_df, set_market_top_stock_df] = useState<any[]>([]);
   const [market_sentiment_df, set_market_sentiment_df] = useState<any[]>([]);
-  const [group_score_liquidity_df, set_group_score_liquidity_df] = useState<any[]>([]);
-  const [itd_score_liquidity_df, set_itd_score_liquidity_df] = useState<any[]>([]);
-  const [market_ms, set_market_ms] = useState<any[]>([]);
+  const [group_eod_score_liquidity_df, set_group_eod_score_liquidity_df] = useState<any[]>([]);
+  const [group_itd_score_liquidity_df, set_group_itd_score_liquidity_df] = useState<any[]>([]);
+  const [group_ms_chart_df, set_group_ms_chart_df] = useState<any[]>([]);
   const [market_breath_df, set_market_breath_df] = useState<any[]>([]);
   const [daily_report_df, set_daily_report_df] = useState<any[]>([]);
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
 
-  const currentTime = getUpdateTime(update_time?.[0]?.date?.slice(-8))
+  const currentTime = getUpdateTime(market_update_time?.[0]?.date?.slice(-8))
   const openTime = getOpenTime()
   const openState = currentTime > openTime
 
@@ -182,7 +182,7 @@ export default function Report() {
               </Row>
               <Row style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px' }}>
                 <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>Tổng quan thị trường</p>
-                <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+                <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
               </Row>
               <Row gutter={10}>
                 <Col span={4}>
@@ -195,32 +195,32 @@ export default function Report() {
                       height: '28px', color: 'white', fontSize: pixel(0.015, 14), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
                       margin: `1px 0px 0px ${pixel(0.01, 0)}`, display: 'flex', alignItems: 'center'
                     }}>
-                      {index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.stock}
+                      {market_index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.stock}
                     </p>
                     <div style={{ height: '24px', display: 'flex', margin: 0, padding: 0, alignItems: 'center' }}>
                       <p style={{
                         color: 'white', fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
                         margin: `0px 0px 0px ${pixel(0.01, 0)}`
                       }}>
-                        {index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.close?.toFixed(2)}
+                        {market_index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.close?.toFixed(2)}
                       </p>
                       <p style={{
                         fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif',
                         fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: 0,
-                        color: (index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) > 0.0001 ? '#24B75E' :
-                          ((index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) >= -0.0001 &&
-                            (index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
+                        color: (market_index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) > 0.0001 ? '#24B75E' :
+                          ((market_index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) >= -0.0001 &&
+                            (market_index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
                       }}>
-                        {index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_value?.toFixed(2)}
+                        {market_index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_value?.toFixed(2)}
                       </p>
                       <p style={{
                         fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif', color: 'white',
                         fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: '0px 3px 0px 3px', borderRadius: '5px',
-                        background: (index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) > 0.0001 ? '#24B75E' :
-                          ((index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) >= -0.0001 &&
-                            (index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
+                        background: (market_index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) > 0.0001 ? '#24B75E' :
+                          ((market_index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) >= -0.0001 &&
+                            (market_index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
                       }}>
-                        {((index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) * 100)?.toFixed(2)}%
+                        {((market_index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) * 100)?.toFixed(2)}%
                       </p>
                     </div>
                   </Button>
@@ -233,32 +233,32 @@ export default function Report() {
                       height: '28px', color: 'white', fontSize: pixel(0.015, 14), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
                       margin: `1px 0px 0px ${pixel(0.01, 0)}`, display: 'flex', alignItems: 'center'
                     }}>
-                      {index_card_df?.filter(item => item.stock === 'VN30')[0]?.stock}
+                      {market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.stock}
                     </p>
                     <div style={{ height: '24px', display: 'flex', margin: 0, padding: 0, alignItems: 'center' }}>
                       <p style={{
                         color: 'white', fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
                         margin: `0px 0px 0px ${pixel(0.01, 0)}`
                       }}>
-                        {index_card_df?.filter(item => item.stock === 'VN30')[0]?.close?.toFixed(2)}
+                        {market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.close?.toFixed(2)}
                       </p>
                       <p style={{
                         fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif',
                         fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: 0,
-                        color: (index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) > 0.0001 ? '#24B75E' :
-                          ((index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) >= -0.0001 &&
-                            (index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
+                        color: (market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) > 0.0001 ? '#24B75E' :
+                          ((market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) >= -0.0001 &&
+                            (market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
                       }}>
-                        {index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_value?.toFixed(2)}
+                        {market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_value?.toFixed(2)}
                       </p>
                       <p style={{
                         fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif', color: 'white',
                         fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: '0px 3px 0px 3px', borderRadius: '5px',
-                        background: (index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) > 0.0001 ? '#24B75E' :
-                          ((index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) >= -0.0001 &&
-                            (index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
+                        background: (market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) > 0.0001 ? '#24B75E' :
+                          ((market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) >= -0.0001 &&
+                            (market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
                       }}>
-                        {((index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) * 100)?.toFixed(2)}%
+                        {((market_index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) * 100)?.toFixed(2)}%
                       </p>
                     </div>
                   </Button>
@@ -271,32 +271,32 @@ export default function Report() {
                       height: '28px', color: 'white', fontSize: pixel(0.015, 14), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
                       margin: `1px 0px 0px ${pixel(0.01, 0)}`, display: 'flex', alignItems: 'center'
                     }}>
-                      {index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.stock}
+                      {market_index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.stock}
                     </p>
                     <div style={{ height: '24px', display: 'flex', margin: 0, padding: 0, alignItems: 'center' }}>
                       <p style={{
                         color: 'white', fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
                         margin: `0px 0px 0px ${pixel(0.01, 0)}`
                       }}>
-                        {index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.close?.toFixed(2)}
+                        {market_index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.close?.toFixed(2)}
                       </p>
                       <p style={{
                         fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif',
                         fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: 0,
-                        color: (index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.change_percent) > 0.0001 ? '#24B75E' :
-                          ((index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.change_percent) >= -0.0001 &&
-                            (index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
+                        color: (market_index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.change_percent) > 0.0001 ? '#24B75E' :
+                          ((market_index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.change_percent) >= -0.0001 &&
+                            (market_index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
                       }}>
-                        {index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.change_value?.toFixed(2)}
+                        {market_index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.change_value?.toFixed(2)}
                       </p>
                       <p style={{
                         fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif', color: 'white',
                         fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: '0px 3px 0px 3px', borderRadius: '5px',
-                        background: (index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.change_percent) > 0.0001 ? '#24B75E' :
-                          ((index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.change_percent) >= -0.0001 &&
-                            (index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
+                        background: (market_index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.change_percent) > 0.0001 ? '#24B75E' :
+                          ((market_index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.change_percent) >= -0.0001 &&
+                            (market_index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
                       }}>
-                        {((index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.change_percent) * 100)?.toFixed(2)}%
+                        {((market_index_card_df?.filter(item => item.stock === 'HNXINDEX')[0]?.change_percent) * 100)?.toFixed(2)}%
                       </p>
                     </div>
                   </Button>
@@ -309,32 +309,32 @@ export default function Report() {
                       height: '28px', color: 'white', fontSize: pixel(0.015, 14), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
                       margin: `1px 0px 0px ${pixel(0.01, 0)}`, display: 'flex', alignItems: 'center'
                     }}>
-                      {index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.stock}
+                      {market_index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.stock}
                     </p>
                     <div style={{ height: '24px', display: 'flex', margin: 0, padding: 0, alignItems: 'center' }}>
                       <p style={{
                         color: 'white', fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
                         margin: `0px 0px 0px ${pixel(0.01, 0)}`
                       }}>
-                        {index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.close?.toFixed(2)}
+                        {market_index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.close?.toFixed(2)}
                       </p>
                       <p style={{
                         fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif',
                         fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: 0,
-                        color: (index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_percent) > 0.0001 ? '#24B75E' :
-                          ((index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_percent) >= -0.0001 &&
-                            (index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
+                        color: (market_index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_percent) > 0.0001 ? '#24B75E' :
+                          ((market_index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_percent) >= -0.0001 &&
+                            (market_index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
                       }}>
-                        {index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_value?.toFixed(2)}
+                        {market_index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_value?.toFixed(2)}
                       </p>
                       <p style={{
                         fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif', color: 'white',
                         fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: '0px 3px 0px 3px', borderRadius: '5px',
-                        background: (index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_percent) > 0.0001 ? '#24B75E' :
-                          ((index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_percent) >= -0.0001 &&
-                            (index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
+                        background: (market_index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_percent) > 0.0001 ? '#24B75E' :
+                          ((market_index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_percent) >= -0.0001 &&
+                            (market_index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
                       }}>
-                        {((index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_percent) * 100)?.toFixed(2)}%
+                        {((market_index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_percent) * 100)?.toFixed(2)}%
                       </p>
                     </div>
                   </Button>
@@ -347,32 +347,32 @@ export default function Report() {
                       height: '28px', color: 'white', fontSize: pixel(0.015, 14), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
                       margin: `1px 0px 0px ${pixel(0.01, 0)}`, display: 'flex', alignItems: 'center'
                     }}>
-                      {index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.stock}
+                      {market_index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.stock}
                     </p>
                     <div style={{ height: '24px', display: 'flex', margin: 0, padding: 0, alignItems: 'center' }}>
                       <p style={{
                         color: 'white', fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
                         margin: `0px 0px 0px ${pixel(0.01, 0)}`
                       }}>
-                        {index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.close?.toFixed(2)}
+                        {market_index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.close?.toFixed(2)}
                       </p>
                       <p style={{
                         fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif',
                         fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: 0,
-                        color: (index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.change_percent) > 0.0001 ? '#24B75E' :
-                          ((index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.change_percent) >= -0.0001 &&
-                            (index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
+                        color: (market_index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.change_percent) > 0.0001 ? '#24B75E' :
+                          ((market_index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.change_percent) >= -0.0001 &&
+                            (market_index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
                       }}>
-                        {index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.change_value?.toFixed(2)}
+                        {market_index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.change_value?.toFixed(2)}
                       </p>
                       <p style={{
                         fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif', color: 'white',
                         fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: '0px 3px 0px 3px', borderRadius: '5px',
-                        background: (index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.change_percent) > 0.0001 ? '#24B75E' :
-                          ((index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.change_percent) >= -0.0001 &&
-                            (index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
+                        background: (market_index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.change_percent) > 0.0001 ? '#24B75E' :
+                          ((market_index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.change_percent) >= -0.0001 &&
+                            (market_index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
                       }}>
-                        {((index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.change_percent) * 100)?.toFixed(2)}%
+                        {((market_index_card_df?.filter(item => item.stock === 'VN30F1M')[0]?.change_percent) * 100)?.toFixed(2)}%
                       </p>
                     </div>
                   </Button>
@@ -440,20 +440,20 @@ export default function Report() {
                           color: '#B3B3B3', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
                         }}> Chỉ số thanh khoản
                         </p>
-                        <ReportLiquidityGaugeChart openState={openState} data={group_score_liquidity_df} width='100%' height='100px' ww={ww} />
+                        <ReportLiquidityGaugeChart openState={openState} data={group_eod_score_liquidity_df} width='100%' height='100px' ww={ww} />
                         <div style={{
-                          background: getColorLiquidity(openState ? (group_score_liquidity_df?.filter((item: any) => item.name === 'Thị trường')[0]?.liquidity * 100) : ''),
+                          background: getColorLiquidity(openState ? (group_eod_score_liquidity_df?.filter((item: any) => item.name === 'Thị trường')[0]?.liquidity * 100) : ''),
                           padding: '0px', borderRadius: '5px', margin: '10px 0px 0px 0px', display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: '10px', height: '25px'
                         }}>
                           <p style={{
                             color: 'white', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
-                          }}> {openState ? group_score_liquidity_df?.filter((item: any) => item.name === 'Thị trường')[0]?.liquid_state : ''}
+                          }}> {openState ? group_eod_score_liquidity_df?.filter((item: any) => item.name === 'Thị trường')[0]?.liquid_state : ''}
                           </p>
                         </div>
                       </div>
                     </Col>
                     <Col span={17}>
-                      <ReportLiquidityLineChart openState={openState} data={itd_score_liquidity_df} width='99%' height='200px' />
+                      <ReportLiquidityLineChart openState={openState} data={group_itd_score_liquidity_df} width='99%' height='200px' />
                     </Col>
                   </Row>
                 </Col>
@@ -464,12 +464,12 @@ export default function Report() {
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
                     Dòng tiền thị trường
                   </p>
-                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
                 </Col>
               </Row>
               <Row gutter={20} style={{ marginTop: '20px' }}>
                 <Col xs={15} sm={15} md={7} lg={8} xl={8}>
-                  <MoneyFlowValueChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowValueChart data={group_eod_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='hs' height='120px' type='group' />
                 </Col>
                 <Col xs={9} sm={9} md={6} lg={5} xl={5}>
@@ -477,7 +477,7 @@ export default function Report() {
                     group='hs' height='120px' type='group' />
                 </Col>
                 <Col xs={15} sm={15} md={6} lg={6} xl={6}>
-                  <MoneyFlowLiquidityChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowLiquidityChart data={group_eod_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='hs' height='120px' type='group' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>
@@ -487,7 +487,7 @@ export default function Report() {
               </Row>
               <Row gutter={20} style={{ marginTop: '20px' }}>
                 <Col xs={15} sm={15} md={7} lg={8} xl={8}>
-                  <MoneyFlowValueChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowValueChart data={group_eod_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='cap' height='120px' type='group' />
                 </Col>
                 <Col xs={9} sm={9} md={6} lg={5} xl={5}>
@@ -495,7 +495,7 @@ export default function Report() {
                     group='cap' height='120px' type='group' />
                 </Col>
                 <Col xs={15} sm={15} md={6} lg={6} xl={6}>
-                  <MoneyFlowLiquidityChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowLiquidityChart data={group_eod_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='cap' height='120px' type='group' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>
@@ -504,7 +504,7 @@ export default function Report() {
                 </Col>
               </Row>
               <Row>
-                <MarketStructureChart data={market_ms} ww={ww} fontSize={pixel(0.015, 15)} />
+                <MarketStructureChart data={group_ms_chart_df} ww={ww} fontSize={pixel(0.015, 15)} />
               </Row>
 
               <Row gutter={25} style={{ marginTop: '100px', marginBottom: '10px' }}>
@@ -512,12 +512,12 @@ export default function Report() {
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
                     Dòng tiền nhóm ngành
                   </p>
-                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
                 </Col>
               </Row>
               <Row gutter={20} style={{ marginTop: '10px' }}>
                 <Col xs={15} sm={15} md={7} lg={8} xl={8}>
-                  <MoneyFlowValueChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowValueChart data={group_eod_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='A' height='190px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={6} lg={5} xl={5}>
@@ -525,7 +525,7 @@ export default function Report() {
                     group='A' height='190px' type='industry' />
                 </Col>
                 <Col xs={15} sm={15} md={6} lg={6} xl={6}>
-                  <MoneyFlowLiquidityChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowLiquidityChart data={group_eod_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='A' height='190px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>
@@ -535,7 +535,7 @@ export default function Report() {
               </Row>
               <Row gutter={20} style={{ marginTop: '10px' }}>
                 <Col xs={15} sm={15} md={7} lg={8} xl={8}>
-                  <MoneyFlowValueChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowValueChart data={group_eod_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='B' height='160px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={6} lg={5} xl={5}>
@@ -543,7 +543,7 @@ export default function Report() {
                     group='B' height='160px' type='industry' />
                 </Col>
                 <Col xs={15} sm={15} md={6} lg={6} xl={6}>
-                  <MoneyFlowLiquidityChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowLiquidityChart data={group_eod_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='B' height='160px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>
@@ -553,7 +553,7 @@ export default function Report() {
               </Row>
               <Row gutter={20} style={{ marginTop: '10px' }}>
                 <Col xs={15} sm={15} md={7} lg={8} xl={8}>
-                  <MoneyFlowValueChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowValueChart data={group_eod_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='C' height='160px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={6} lg={5} xl={5}>
@@ -561,7 +561,7 @@ export default function Report() {
                     group='C' height='160px' type='industry' />
                 </Col>
                 <Col xs={15} sm={15} md={6} lg={6} xl={6}>
-                  <MoneyFlowLiquidityChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowLiquidityChart data={group_eod_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='C' height='160px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>
@@ -571,7 +571,7 @@ export default function Report() {
               </Row>
               <Row gutter={20} style={{ marginTop: '10px' }}>
                 <Col xs={15} sm={15} md={7} lg={8} xl={8}>
-                  <MoneyFlowValueChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowValueChart data={group_eod_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='D' height='120px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={6} lg={5} xl={5}>
@@ -579,7 +579,7 @@ export default function Report() {
                     group='D' height='120px' type='industry' />
                 </Col>
                 <Col xs={15} sm={15} md={6} lg={6} xl={6}>
-                  <MoneyFlowLiquidityChart data={group_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
+                  <MoneyFlowLiquidityChart data={group_eod_score_liquidity_df} ww={ww} fontSize={pixel(0.015, 15)}
                     group='D' height='120px' type='industry' />
                 </Col>
                 <Col xs={9} sm={9} md={5} lg={5} xl={5}>

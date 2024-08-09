@@ -50,16 +50,16 @@ export default function Page5() {
       url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
       method: "GET",
     })
-    if (tableName === 'update_time') {
-      await set_update_time(res.data)
-    } else if (tableName === 'filter_stock_df') {
-      await set_filter_stock_df(res.data)
+    if (tableName === 'market_update_time') {
+      await set_market_update_time(res.data)
+    } else if (tableName === 'stock_ta_filter_df') {
+      await set_stock_ta_filter_df(res.data)
     }
   }
   useEffect(() => {
     const fetchData = async () => {
-      getData('update_time');
-      getData('filter_stock_df');
+      getData('market_update_time');
+      getData('stock_ta_filter_df');
     };
     fetchData();
 
@@ -68,8 +68,8 @@ export default function Page5() {
   }, []);
 
   //State lưu trữ dữ liệu cổ phiếu
-  const [update_time, set_update_time] = useState<any[]>([]);
-  const [filter_stock_df, set_filter_stock_df] = useState<any[]>([]);
+  const [market_update_time, set_market_update_time] = useState<any[]>([]);
+  const [stock_ta_filter_df, set_stock_ta_filter_df] = useState<any[]>([]);
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
   const [table_type, set_table_type] = useState('dt');
@@ -176,7 +176,7 @@ export default function Page5() {
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
                     Bộ lọc cổ phiếu T2M
                   </p>
-                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{update_time?.[0]?.date}</p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
                 </Col>
               </Row>
               <Row gutter={10} style={{ marginTop: '20px', position: 'relative' }}>
@@ -191,7 +191,7 @@ export default function Page5() {
                         }}>
                           Nhóm hiệu suất
                         </p>
-                        <BasicSelector name='industry_perform' sort='industry_perform' data={filter_stock_df} filter={set_filter_hieu_suat} filter_value={filter_hieu_suat} placeholder={placeholder} setPlaceholder={setPlaceholder} />
+                        <BasicSelector name='industry_perform' sort='industry_perform' data={stock_ta_filter_df} filter={set_filter_hieu_suat} filter_value={filter_hieu_suat} placeholder={placeholder} setPlaceholder={setPlaceholder} />
                       </Col>
                       <Col span={12}>
                         <p style={{
@@ -200,7 +200,7 @@ export default function Page5() {
                         }}>
                           Nhóm vốn hoá
                         </p>
-                        <BasicSelector name='marketcap_group' sort='marketcap_group' data={filter_stock_df} filter={set_filter_von_hoa} filter_value={filter_von_hoa} placeholder={placeholder} setPlaceholder={setPlaceholder} />
+                        <BasicSelector name='marketcap_group' sort='marketcap_group' data={stock_ta_filter_df} filter={set_filter_von_hoa} filter_value={filter_von_hoa} placeholder={placeholder} setPlaceholder={setPlaceholder} />
                       </Col>
                     </Row>
                     <Row>
@@ -210,7 +210,7 @@ export default function Page5() {
                       }}>
                         Nhóm ngành
                       </p>
-                      <BasicSelector name='industry_name' sort='industry_name' data={filter_stock_df} filter={set_filter_nhom_nganh} filter_value={filter_nhom_nganh} placeholder={placeholder} setPlaceholder={setPlaceholder} />
+                      <BasicSelector name='industry_name' sort='industry_name' data={stock_ta_filter_df} filter={set_filter_nhom_nganh} filter_value={filter_nhom_nganh} placeholder={placeholder} setPlaceholder={setPlaceholder} />
                     </Row>
                   </div>
                 </Col>
@@ -224,14 +224,14 @@ export default function Page5() {
                         }}>
                           Dòng tiền trong phiên
                         </p>
-                        <BasicSelector name='filter_t0' sort='filter_t0' data={filter_stock_df} filter={set_filter_t0} filter_value={filter_t0} placeholder={placeholder} setPlaceholder={setPlaceholder} />
+                        <BasicSelector name='filter_t0' sort='filter_t0' data={stock_ta_filter_df} filter={set_filter_t0} filter_value={filter_t0} placeholder={placeholder} setPlaceholder={setPlaceholder} />
                         <p style={{
                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
                           margin: '10px 0px 5px 2px', padding: 0, height: '20px'
                         }}>
                           Chỉ số thanh khoản
                         </p>
-                        <BasicSelector name='filter_liquid' sort='order_filter_liquid' data={filter_stock_df} filter={set_filter_liquid} filter_value={filter_liquid} placeholder={placeholder} setPlaceholder={setPlaceholder} />
+                        <BasicSelector name='filter_liquid' sort='order_filter_liquid' data={stock_ta_filter_df} filter={set_filter_liquid} filter_value={filter_liquid} placeholder={placeholder} setPlaceholder={setPlaceholder} />
                       </Col>
                       <Col span={12}>
                         <p style={{
@@ -240,14 +240,14 @@ export default function Page5() {
                         }}>
                           Dòng tiền trong tuần
                         </p>
-                        <BasicSelector name='filter_t5' sort='filter_t5' data={filter_stock_df} filter={set_filter_t5} filter_value={filter_t5} placeholder={placeholder} setPlaceholder={setPlaceholder} />
+                        <BasicSelector name='filter_t5' sort='filter_t5' data={stock_ta_filter_df} filter={set_filter_t5} filter_value={filter_t5} placeholder={placeholder} setPlaceholder={setPlaceholder} />
                         <p style={{
                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
                           margin: '10px 0px 5px 2px', padding: 0, height: '20px'
                         }}>
                           Xếp hạng hiện tại
                         </p>
-                        <BasicSelector name='filter_rank' sort='order_filter_rank' data={filter_stock_df} filter={set_filter_rank} filter_value={filter_rank} placeholder={placeholder} setPlaceholder={setPlaceholder} />
+                        <BasicSelector name='filter_rank' sort='order_filter_rank' data={stock_ta_filter_df} filter={set_filter_rank} filter_value={filter_rank} placeholder={placeholder} setPlaceholder={setPlaceholder} />
                       </Col>
                     </Row>
                   </div>
@@ -286,7 +286,7 @@ export default function Page5() {
                         }}>
                           Xu hướng giá tháng
                         </p>
-                        <BasicSelector name='month_trend' sort='month_trend' data={filter_stock_df} filter={set_filter_month_trend} filter_value={filter_month_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
+                        <BasicSelector name='month_trend' sort='month_trend' data={stock_ta_filter_df} filter={set_filter_month_trend} filter_value={filter_month_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
 
                         <p style={{
                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
@@ -294,7 +294,7 @@ export default function Page5() {
                         }}>
                           Xu hướng giá quý
                         </p>
-                        <BasicSelector name='quarter_trend' sort='quarter_trend' data={filter_stock_df} filter={set_filter_quarter_trend} filter_value={filter_quarter_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
+                        <BasicSelector name='quarter_trend' sort='quarter_trend' data={stock_ta_filter_df} filter={set_filter_quarter_trend} filter_value={filter_quarter_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
 
                         <p style={{
                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
@@ -302,7 +302,7 @@ export default function Page5() {
                         }}>
                           Xu hướng giá năm
                         </p>
-                        <BasicSelector name='year_trend' sort='year_trend' data={filter_stock_df} filter={set_filter_year_trend} filter_value={filter_year_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
+                        <BasicSelector name='year_trend' sort='year_trend' data={stock_ta_filter_df} filter={set_filter_year_trend} filter_value={filter_year_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
                       </div>
                     </Col>
                     <Col xs={24} sm={24} md={14} lg={14} xl={14}>
@@ -313,7 +313,7 @@ export default function Page5() {
                         }}>
                           Lọc theo biến động giá
                         </p>
-                        <TaSelector name='filter_candle' data={filter_stock_df} filter={set_ta_filter_candle} filter_value={ta_filter_candle} />
+                        <TaSelector name='filter_candle' data={stock_ta_filter_df} filter={set_ta_filter_candle} filter_value={ta_filter_candle} />
 
                         <p style={{
                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
@@ -321,7 +321,7 @@ export default function Page5() {
                         }}>
                           Lọc theo MA và Pivot
                         </p>
-                        <TaSelector name='filter_ma_pivot' data={filter_stock_df} filter={set_ta_filter_ma_pivot} filter_value={ta_filter_ma_pivot} />
+                        <TaSelector name='filter_ma_pivot' data={stock_ta_filter_df} filter={set_ta_filter_ma_pivot} filter_value={ta_filter_ma_pivot} />
 
                         <p style={{
                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
@@ -329,7 +329,7 @@ export default function Page5() {
                         }}>
                           Lọc theo mức giá Fibonacci
                         </p>
-                        <TaSelector name='filter_fibo' data={filter_stock_df} filter={set_ta_filter_fibo} filter_value={ta_filter_fibo} />
+                        <TaSelector name='filter_fibo' data={stock_ta_filter_df} filter={set_ta_filter_fibo} filter_value={ta_filter_fibo} />
                       </div>
                     </Col>
                   </Row>
@@ -411,7 +411,7 @@ export default function Page5() {
                   />
                 )}
                 <FilterStockTable
-                  data={filter_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
+                  data={stock_ta_filter_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
                   table_type={table_type} switch_ta_table={switch_ta_table}
                   currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}
                   filter_nhom_nganh={filter_nhom_nganh}

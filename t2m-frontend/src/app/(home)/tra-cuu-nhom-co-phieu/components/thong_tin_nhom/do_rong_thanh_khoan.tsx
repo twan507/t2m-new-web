@@ -27,7 +27,7 @@ const LiquidityBreathChart = (props: any): any => {
 
     let data_sets: any
     if (props?.type === 'industry') {
-        data_sets = props?.data?.sort((a: any, b: any) => a.index - b.index)
+        data_sets = props?.data?.sort((a: any, b: any) => a.industry_rank - b.industry_rank)
     } else {
         data_sets = props?.data?.sort((a: any, b: any) => a.order - b.order)
     }

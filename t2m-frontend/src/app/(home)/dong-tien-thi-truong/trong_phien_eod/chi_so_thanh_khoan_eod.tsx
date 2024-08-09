@@ -27,7 +27,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
 
     let data_sets: any
     if (props?.type === 'industry') {
-        data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.index - b.index)
+        data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.industry_rank - b.industry_rank)
     } else {
         data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.order - b.order)
     }
@@ -98,7 +98,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 767 ? `Thanh khoản ${name_dict[props?.group]}` : `Thanh khoản ${name_dict[props?.group]}`,
+                text: props?.ww > 991 ? `Chỉ số thanh khoản` : `Thanh khoản ${name_dict[props?.group]}`,
                 padding: {
                     bottom: props?.ww > 767 ? 0 : 15
                 },
