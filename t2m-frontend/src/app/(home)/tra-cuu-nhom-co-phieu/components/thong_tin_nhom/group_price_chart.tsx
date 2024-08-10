@@ -1,21 +1,18 @@
 import React, { useEffect, useRef } from 'react';
-import { createChart, IChartApi, ISeriesApi, CandlestickData, HistogramData } from 'lightweight-charts';
+import { createChart, IChartApi, ISeriesApi } from 'lightweight-charts';
 
-// Mở rộng CandlestickData để bao gồm volume
-interface CombinedCandlestickData extends CandlestickData {
-    volume: number;
-}
-
-const IndexPriceChart = (props: any) => {
+const GroupPriceChart = (props: any) => {
     const chartContainerRef = useRef<HTMLDivElement | null>(null);
     const chartRef = useRef<IChartApi | null>(null);
-    const candlestickSeriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
+    const areaSeriesRef = useRef<ISeriesApi<'Area'> | null>(null);
     const volumeSeriesRef = useRef<ISeriesApi<'Histogram'> | null>(null);
+
     const ww = props?.ww
 
     useEffect(() => {
         if (!chartContainerRef.current) return;
 
+        // Tạo biểu đồ
         chartRef.current = createChart(chartContainerRef.current, {
             width: chartContainerRef.current.clientWidth,
             height: 300,
@@ -38,8 +35,8 @@ const IndexPriceChart = (props: any) => {
                 locale: 'vi-VN',
             },
             timeScale: {
-                rightOffset: 2,
-                barSpacing:  ww > 767 ? 20 : (ww > 576 ? 10 : 5),
+                rightOffset: 1,
+                barSpacing: ww > 767 ? 12 : (ww > 576 ? 6 : 3),
             },
             handleScroll: {
                 mouseWheel: false, // Disable zoom on mouse wheel
@@ -49,42 +46,43 @@ const IndexPriceChart = (props: any) => {
             },
         });
 
-        candlestickSeriesRef.current = chartRef.current.addCandlestickSeries({
-            upColor: '#24B75E',
-            downColor: '#e14040',
-            borderDownColor: '#e14040',
-            borderUpColor: '#24B75E',
-            wickDownColor: '#e14040',
-            wickUpColor: '#24B75E',
+        // Thêm area series
+        areaSeriesRef.current = chartRef.current.addAreaSeries({
+            topColor: 'rgba(192, 49, 199, 0.5)',
+            bottomColor: 'rgba(192, 49, 199, 0)',
+            lineColor: '#C031C7',
+            lineWidth: 2,
+            priceScaleId: 'right',
         });
 
-        // Thêm series histogram với scale riêng biệt
+        // Thêm histogram series
         volumeSeriesRef.current = chartRef.current.addHistogramSeries({
+            color: 'rgba(192, 49, 199, 0.4)',
             priceFormat: {
                 type: 'volume',
             },
-            priceScaleId: 'volume', // Scale riêng biệt cho histogram volume
-            lastValueVisible: true, // Ẩn nhãn giá trị cuối cùng cho histogram
+            priceScaleId: 'volume',
+            lastValueVisible: true,
             priceLineVisible: false,
         });
 
-        // Áp dụng tùy chọn để cấu hình scales giá
+        // Cấu hình scale
         chartRef.current.priceScale('right').applyOptions({
             scaleMargins: {
-                top: 0.2, // 80% chiều cao biểu đồ cho area series
-                bottom: 0.25, // Canh chỉnh histogram xuống đáy biểu đồ
+                top: 0.2,
+                bottom: 0.25,
             },
         });
 
         chartRef.current.priceScale('volume').applyOptions({
             scaleMargins: {
-                top: 0.75, // Dành 25% dưới cùng của biểu đồ cho histogram
+                top: 0.75,
                 bottom: 0,
             },
-            visible: true, // Hiển thị scale volume
+            visible: true,
         });
 
-        // Ẩn các đường lưới ngang cho scale giá volume
+        // Ẩn đường lưới ngang cho volume price scale
         chartRef.current.applyOptions({
             grid: {
                 vertLines: {
@@ -98,30 +96,23 @@ const IndexPriceChart = (props: any) => {
             },
         });
 
+        const chartData = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());;
 
-        const chartData: any = props?.data?.filter((item: any) => item.index === props?.index_name)
-            .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+        const areaData = chartData.map(({ date, value }: any) => ({
+            time: Date.parse(date) / 1000, // Chuyển đổi sang giây
+            value: value,
+        }));
 
-        candlestickSeriesRef.current.setData(
-            chartData.map((data: any) => ({
-                // time: data.time,
-                time: Date.parse(data.date) / 1000, // Chuyển đổi sang giây
-                open: data.open,
-                high: data.high,
-                low: data.low,
-                close: data.close,
-            }))
-        );
+        const volumeData = chartData.map(({ date, volume }: any) => ({
+            time: Date.parse(date) / 1000, // Chuyển đổi sang giây
+            value: volume,
+        }));
 
-        volumeSeriesRef.current.setData(
-            chartData.map((data: any) => ({
-                time: Date.parse(data.date) / 1000, // Chuyển đổi sang giây
-                // time: data.time,
-                value: data.volume,
-                color: data.close > data.open ? 'rgba(36, 183, 94, 0.4)' : 'rgba(225, 64, 64, 0.4)', // Màu sắc dựa trên candlestick
-            }))
-        );
+        // Đặt dữ liệu
+        areaSeriesRef.current.setData(areaData);
+        volumeSeriesRef.current.setData(volumeData);
 
+        // Quan sát thay đổi kích thước để thiết kế đáp ứng
         const resizeObserver = new ResizeObserver((entries) => {
             if (chartRef.current) {
                 const { width, height } = entries[0].contentRect;
@@ -140,12 +131,17 @@ const IndexPriceChart = (props: any) => {
             resizeObserver.disconnect(); // Ngừng quan sát thay đổi kích thước
 
             // Xóa các tham chiếu tới series để đảm bảo giải phóng bộ nhớ
-            candlestickSeriesRef.current = null;
+            areaSeriesRef.current = null;
             volumeSeriesRef.current = null;
         };
-    }, []);
+    }, [props.data]);
 
-    return <div ref={chartContainerRef} style={{ width: '100%', height: props.ww > 767 ? '290px' : '235px' }} />;
+    return (
+        <div
+            ref={chartContainerRef}
+            style={{ width: '100%', height: props.ww > 767 ? '310px' : '265px' }}
+        />
+    );
 };
 
-export default IndexPriceChart;
+export default GroupPriceChart;

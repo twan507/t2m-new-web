@@ -444,7 +444,7 @@ const FilterStockTable = (props: any) => {
                 }}>
                 {ww > 767 ? (<>Xếp hạng<br />hiện tại</>) : (<>XH</>)}
               </span>,
-            dataIndex: 'rank',
+            dataIndex: 'rank_t5',
             className: 'left-sort',
             // width: '9%',
             render: (value: number) => (
@@ -496,41 +496,6 @@ const FilterStockTable = (props: any) => {
               const aValue = parseFloat(a.top_count);
               const bValue = parseFloat(b.top_count);
               return bValue - aValue;
-            }
-          },
-          {
-            title:
-              <span
-                className='span-right'
-                style={{
-                  display: 'flex', justifyContent: 'flex-end',
-                  fontSize: parseInt(props?.fontSize) - 3,
-                }}>
-                {ww > 767 ? (<>T2M<br />Select</>) : (<>S</>)}
-              </span>,
-            dataIndex: `t2m_select`,
-            className: 'left-sort',
-            // width: '16%',
-            render: (value: number) => (
-              <span style={{
-                color: '#C031C7',
-                fontFamily: 'Calibri, sans-serif',
-                fontSize: props?.fontSize,
-                display: 'flex',
-                justifyContent: 'flex-end',
-                lineHeight: props?.lineHeight
-              }}>{value}</span>
-            ),
-            sorter: (a: any, b: any) => {
-              const aValue = a.t2m_select.toLowerCase();
-              const bValue = b.t2m_select.toLowerCase();
-              if (bValue < aValue) {
-                return -1;
-              }
-              if (bValue > aValue) {
-                return 1;
-              }
-              return 0;
             }
           },
         );

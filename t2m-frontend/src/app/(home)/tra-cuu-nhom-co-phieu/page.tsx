@@ -1,9 +1,9 @@
 'use client'
 import { sendRequest } from "@/utlis/api"
-import { Button, Col, Menu, MenuProps, Radio, Row } from "antd";
+import { Button, Col, Menu, MenuProps, Radio, Row, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import './styles.css'
-import GroupRankingChart from "./components/thong_tin_nhom/group_ranking";
+import GroupRankingChart from "./components/suc_manh_dong_tien/group_ranking";
 import GroupTopCoPhieuTable from "./components/bang_top_co_phieu/top_co_phieu_table";
 import MoneyFlowBreathChart from "./components/thong_tin_nhom/do_rong_dong_tien";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
@@ -13,7 +13,13 @@ import LockSection from "@/components/subscribers/blurComponents";
 import GroupMarketStructureChart from "./components/cau_truc_song/cau_truc_song_chart";
 import LiquidityBreathChart from "./components/thong_tin_nhom/do_rong_thanh_khoan";
 import GroupMoneyFlowT5Chart from "./components/thong_tin_nhom/dong_tien_t5";
-import GroupScorePriceCorrelationChart from "./components/suc_manh_dong_tien/suc_manh_dong_tien";
+import GroupScorePriceCorrelationChart from "./components/suc_manh_dong_tien/tuong_quan_dong_tien";
+import GroupWeekScore from "./components/suc_manh_dong_tien/dong_tien_trong_tuan";
+import GroupPriceChart from "./components/thong_tin_nhom/group_price_chart";
+import MsSpanSlider from "./components/cau_truc_song/ms_span_slider";
+import { ZoomInOutlined } from "@ant-design/icons";
+import MarketStructureChart from "./components/cau_truc_song/cau_truc_song_thi_truong";
+import MsTimeSlider from "./components/cau_truc_song/ms_time_slider";
 
 const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
@@ -70,7 +76,7 @@ export default function Page3() {
   const authState = !!authInfo?.user?._id && limitState
   const accessLevel = authInfo?.user?.role === 'T2M ADMIN' ? 4 : authInfo?.user?.licenseInfo?.accessLevel
 
-  const [select_group, set_select_group] = useState('Bán lẻ');
+  const [select_group, set_select_group] = useState('Thị trường');
 
   const getData = async (tableName: string, columnName: any) => {
     const res = await sendRequest<IBackendRes<any>>({
@@ -92,25 +98,38 @@ export default function Page3() {
       await set_group_eod_score_liquidity_df(res.data)
     } else if (tableName === 'group_score_5p_df') {
       await set_group_score_5p_df(res.data)
+    } else if (tableName === 'group_price_chart_df') {
+      await set_group_price_chart_df(res.data)
     }
   }
+
   useEffect(() => {
     const fetchData = async () => {
       getData('market_update_time', null);
-      getData('group_stock_price_index', 'group_name');
       getData('group_score_power_df', 'name');
       getData('group_ms_chart_df', 'name');
       getData('group_stock_top_10_df', 'name');
       getData('group_breath_df', 'name');
       getData('group_eod_score_liquidity_df', 'name');
       getData('group_score_5p_df', 'name');
+      getData('group_price_chart_df', 'name');
     };
     fetchData();
 
-    const interval = setInterval(fetchData, 5 * 1000); // Gọi lại mỗi x giây
-    return () => clearInterval(interval); // Xóa interval khi component unmount
+    function resetInterval() {
+      clearInterval(interval);
+      interval = setInterval(fetchData, 30000);
+    }
+    let interval = setInterval(fetchData, 30000);
+    window.addEventListener('click', resetInterval);
+    window.addEventListener('wheel', resetInterval);
+    window.addEventListener('mousemove', resetInterval);
   }, [select_group]);
 
+  const ww = useWindowWidth();
+  const pixel = (ratio: number, min: number) => {
+    return `${Math.max(ratio * ww, min)?.toFixed(0)}px`;
+  }
   //State lưu trữ dữ liệu cổ phiếu
   const [market_update_time, set_market_update_time] = useState<any[]>([]);
   const [group_score_power_df, set_group_score_power_df] = useState<any[]>([]);
@@ -119,16 +138,29 @@ export default function Page3() {
   const [group_breath_df, set_group_breath_df] = useState<any[]>([]);
   const [group_eod_score_liquidity_df, set_group_eod_score_liquidity_df] = useState<any[]>([]);
   const [group_score_5p_df, set_group_score_5p_df] = useState<any[]>([]);
+  const [group_price_chart_df, set_group_price_chart_df] = useState<any[]>([]);
+
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
-  const [switch_group_industry, set_switch_group_industry] = useState('industry');
-  const [switch_hs_cap, set_switch_hs_cap] = useState('hs');
+  const [switch_group_industry, set_switch_group_industry] = useState('group');
+  const [switch_hs_cap, set_switch_hs_cap] = useState('tt');
   const [switch_nhom_nganh_hs, set_switch_nhom_nganh_hs] = useState('A');
+  const [switch_ms_filter, set_switch_ms_filter] = useState(false);
+  const [ms_slice, set_ms_slice] = useState(ww > 767 ? 60 : (ww > 500 ? 40 : 20));
+  const [ms_time_index, set_ms_time_index] = useState(group_ms_chart_df.length);
 
-  const ww = useWindowWidth();
-  const pixel = (ratio: number, min: number) => {
-    return `${Math.max(ratio * ww, min)?.toFixed(0)}px`;
-  }
+  useEffect(() => {
+    set_ms_time_index(group_ms_chart_df.length)
+    set_group_price_chart_df(group_price_chart_df)
+  }, [group_ms_chart_df.length, group_price_chart_df])
+
+  const toggleMsFilter = (e: any) => {
+    if (switch_ms_filter) {
+      set_ms_slice((ww > 767 ? 60 : (ww > 500 ? 40 : 20)))
+      set_ms_time_index(group_ms_chart_df.length)
+    }
+    set_switch_ms_filter(!switch_ms_filter)
+  };
 
   const onChangeSwitchGroupIndustry = (e: any) => {
     set_switch_group_industry(switch_group_industry === 'group' ? 'industry' : 'group')
@@ -136,8 +168,8 @@ export default function Page3() {
       set_switch_nhom_nganh_hs('A')
       set_select_group('Bán lẻ')
     } else {
-      set_switch_hs_cap('hs')
-      set_select_group('Hiệu suất A')
+      set_switch_hs_cap('tt')
+      set_select_group('Thị trường')
     }
   };
 
@@ -146,8 +178,10 @@ export default function Page3() {
     set_switch_hs_cap(value)
     if (value === 'hs') {
       set_select_group('Hiệu suất A')
-    } else {
+    } else if (value === 'cap') {
       set_select_group('LARGECAP')
+    } else {
+      set_select_group('Thị trường')
     }
   };
 
@@ -210,6 +244,11 @@ export default function Page3() {
                       onChange={onChangeHsCap}
                       style={{ display: 'flex', width: '100%', marginTop: ww > 767 ? '20px' : '10px', height: '50px' }}
                     >
+                      <Radio.Button value="tt" className="custom-radio-button"
+                        style={{
+                          fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
+                        }}>Nhóm cổ phiếu T2M
+                      </Radio.Button>
                       <Radio.Button value="hs" className="custom-radio-button"
                         style={{
                           fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
@@ -487,12 +526,12 @@ export default function Page3() {
               <Row gutter={25} style={{ marginTop: '30px', marginBottom: '20px' }}>
                 <Col>
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
-                    {`Thông tin nhóm ${select_group}`}
+                    {select_group != 'Thị trường' ? `Thông tin nhóm ${select_group}` : 'Thông tin nhóm cổ phiếu T2M'}
                   </p>
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
                 </Col>
               </Row>
-              <Row gutter={10}>
+              <Row gutter={20}>
                 <Col xs={12} sm={10} md={8} lg={8} xl={6}>
                   <Row>
                     <Col span={24}>
@@ -517,24 +556,26 @@ export default function Page3() {
                               {`${(group_eod_score_liquidity_df?.[0]?.liquidity * 100).toFixed(2)}%`}
                             </p>
                           </Col>
-                          <Col span={10}>
-                            <p style={{
-                              fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
-                              color: '#B3B3B3', fontWeight: 'bold', margin: '0px 0px 0px 2px', padding: 0
-                            }}>
-                              Xếp hạng
-                            </p>
-                            <p style={{
-                              fontSize: pixel(0.014, 14), fontFamily: 'Calibri, sans-serif', height: '15.5px',
-                              color:
-                                ['hs', 'cap'].includes(group_eod_score_liquidity_df?.[0]?.group) ?
-                                  getColorGroupRank(group_eod_score_liquidity_df?.[0]?.rank) :
-                                  getColorIndustryRank(group_eod_score_liquidity_df?.[0]?.rank),
-                              fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
-                            }}>
-                              {`${Math.round(group_eod_score_liquidity_df?.[0]?.rank)}`}{['hs', 'cap'].includes(group_eod_score_liquidity_df?.[0]?.group) ? '/4' : '/23'}
-                            </p>
-                          </Col>
+                          {select_group != 'Thị trường' && (
+                            <Col span={10}>
+                              <p style={{
+                                fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                                color: '#B3B3B3', fontWeight: 'bold', margin: '0px 0px 0px 2px', padding: 0
+                              }}>
+                                Xếp hạng
+                              </p>
+                              <p style={{
+                                fontSize: pixel(0.014, 14), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                                color:
+                                  ['hs', 'cap'].includes(group_eod_score_liquidity_df?.[0]?.group) ?
+                                    getColorGroupRank(group_eod_score_liquidity_df?.[0]?.rank) :
+                                    getColorIndustryRank(group_eod_score_liquidity_df?.[0]?.rank),
+                                fontWeight: 'bold', margin: '2px 0px 0px 2px', padding: 0
+                              }}>
+                                {`${Math.round(group_eod_score_liquidity_df?.[0]?.rank)}`}{['hs', 'cap'].includes(group_eod_score_liquidity_df?.[0]?.group) ? '/4' : '/23'}
+                              </p>
+                            </Col>
+                          )}
                         </Row>
                         <Row>
                           <Col>
@@ -582,49 +623,121 @@ export default function Page3() {
                   </Row>
                 </Col>
                 <Col xs={12} sm={14} md={16} lg={16} xl={18}>
-                  <GroupRankingChart data={group_score_power_df} ww={ww} select_group={select_group}
-                    switch_group_industry={switch_group_industry} fontSize={pixel(0.017, 16)} />
+                  <GroupPriceChart data={group_price_chart_df} ww={ww} select_group={select_group} />
                 </Col>
               </Row>
               <Row style={{ marginTop: '30px', marginBottom: '10px' }}>
                 <Col>
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
-                    {`Sức mạnh dòng tiền nhóm ${select_group}`}
+                    {select_group != 'Thị trường' ? `Sức mạnh dòng tiền nhóm ${select_group}` : 'Sức mạnh dòng tiền nhóm cổ phiếu T2M'}
                   </p>
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
                 </Col>
               </Row>
-              <Row>
-                <GroupScorePriceCorrelationChart data={group_score_power_df} ww={ww} select_stock={select_group} fontSize={pixel(0.017, 16)} />
-              </Row>
-              <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
-                <Col>
-                  <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
-                    {`Cấu trúc sóng nhóm ${select_group}`}
-                  </p>
-                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
-                </Col>
-              </Row>
-              <Row style={{ position: 'relative' }}>
+              <Row gutter={10} style={{ marginTop: '20px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <GroupMarketStructureChart data={group_ms_chart_df} ww={ww} fontSize={pixel(0.015, 15)} select_group={select_group} />
-              </Row>
-              <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
-                <Col>
-                  <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
-                    {`Top cổ phiếu nhóm ${select_group}`}
-                  </p>
-                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                  <GroupWeekScore data={group_score_power_df} ww={ww} select_group={select_group} fontSize={pixel(0.017, 16)} />
+                </Col>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                  <GroupScorePriceCorrelationChart data={group_score_power_df} ww={ww} select_group={select_group} fontSize={pixel(0.017, 16)} />
                 </Col>
               </Row>
-              <Row style={{ position: 'relative' }}>
-                <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <Col span={24}>
-                  <div style={{ background: '#161616', padding: '10px 10px 10px 10px', borderRadius: '5px', margin: 0 }}>
-                    <GroupTopCoPhieuTable data={group_stock_top_10_df} ww={ww} fontSize={pixel(0.013, 11)} lineHeight='34px' />
-                  </div>
-                </Col>
-              </Row>
+              {select_group != 'Thị trường' && (
+                <Row gutter={10} style={{ marginTop: '20px', position: 'relative' }}>
+                  <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
+                  <GroupRankingChart data={group_score_power_df} ww={ww} select_group={select_group}
+                    switch_group_industry={switch_group_industry} fontSize={pixel(0.017, 16)} />
+                </Row>
+              )}
+              {select_group != 'Thị trường' && (
+                <>
+                  <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
+                    <Col>
+                      <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
+                        {`Cấu trúc sóng nhóm ${select_group}`}
+                      </p>
+                      <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
+                    </Col>
+                  </Row>
+                  <Row style={{ position: 'relative' }}>
+                    <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
+                    <GroupMarketStructureChart data={group_ms_chart_df} ww={ww} fontSize={pixel(0.015, 15)} select_group={select_group} />
+                  </Row>
+                </>
+              )}
+              {select_group == 'Thị trường' && (
+                <>
+                  <Row gutter={25} style={{ marginTop: '50px', marginBottom: '10px' }}>
+                    <Col xs={20} sm={20} md={10} lg={10} xl={10}>
+                      <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
+                        Cấu trúc sóng nhóm cổ phiếu T2M
+                      </p>
+                      <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
+                    </Col>
+                    {ww < 767 && (
+                      <Col xs={4} sm={4} md={0} lg={0} xl={0} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <Button
+                          className="filter-button"
+                          block={true}
+                          icon={<ZoomInOutlined style={{ fontSize: pixel(0.02, 20) }} />}
+                          size={ww > 767 ? 'large' : 'middle'}
+                          style={{ border: 0, backgroundColor: switch_ms_filter ? '#1677ff' : '#161616', marginTop: '0px' }}
+                          onClick={toggleMsFilter}
+                        />
+                      </Col>
+                    )}
+                    <Col xs={24} sm={24} md={14} lg={14} xl={14} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      {switch_ms_filter && (
+                        <MsSpanSlider set_ms_slice={set_ms_slice} ww={ww} />
+                      )}
+                      {ww > 767 && (
+                        <Tooltip title={!switch_ms_filter ? "Bật chế độ zoom biểu đồ" : "Tắt chế độ zoom biểu đồ"}>
+                          <Button
+                            className="filter-button"
+                            block={true}
+                            icon={<ZoomInOutlined style={{ fontSize: pixel(0.02, 20) }} />}
+                            size={ww > 767 ? 'large' : 'middle'}
+                            style={{ border: 0, backgroundColor: switch_ms_filter ? '#1677ff' : '#161616', marginTop: '16px' }}
+                            onClick={toggleMsFilter}
+                          />
+                        </Tooltip>
+                      )}
+                    </Col>
+                  </Row>
+                  <Row style={{ position: 'relative' }}>
+                    <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
+                    <MarketStructureChart data={group_ms_chart_df} ww={ww} fontSize={pixel(0.015, 15)} slice={ms_slice} time_index={ms_time_index} />
+                  </Row>
+                  {switch_ms_filter && (
+                    <Row>
+                      <Col span={24}>
+                        <MsTimeSlider time_index={ms_time_index} set_ms_time_index={set_ms_time_index} slice={ms_slice} data={group_ms_chart_df} />
+                      </Col>
+                    </Row>
+                  )}
+                </>
+              )}
+              {select_group != 'Thị trường' && (
+                <>
+                  <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
+                    <Col>
+                      <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
+                        {`Top cổ phiếu nhóm ${select_group}`}
+                      </p>
+                      <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
+                    </Col>
+                  </Row>
+                  <Row style={{ position: 'relative' }}>
+                    <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
+                    <Col span={24}>
+                      <div style={{ background: '#161616', padding: '10px 10px 10px 10px', borderRadius: '5px', margin: 0 }}>
+                        <GroupTopCoPhieuTable data={group_stock_top_10_df} ww={ww} fontSize={pixel(0.013, 11)} lineHeight='34px' />
+                      </div>
+                    </Col>
+                  </Row>
+                </>
+              )}
             </Col>
           </Row >
         </Col >

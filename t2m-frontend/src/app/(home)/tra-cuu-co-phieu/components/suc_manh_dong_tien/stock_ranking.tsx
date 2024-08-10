@@ -53,14 +53,12 @@ const StockRankingChart = (props: any) => {
         return `${day}-${month}`;
     });
 
-    const slice = props?.ww > 767 ? -20 : (props?.ww > 576 ? -16 : (props?.ww > 400 ? -12 : -8));
-
     const lines: any = {
-        labels: dateList.slice(slice) || [],
+        labels: dateList || [],
         datasets: [
             {
                 label: props?.select_stock,
-                data: data_sets?.map((item: any) => item.rank_t5).slice(slice),
+                data: data_sets?.map((item: any) => item.rank_t5),
                 borderColor: '#C031C7',
                 pointRadius: 1.4,
                 hoverRadius: 5,
@@ -72,7 +70,7 @@ const StockRankingChart = (props: any) => {
             {
                 label: 'Top 10% tiền vào',
                 type: 'bar',
-                data: data_sets?.map((item: any) => item.top_rank_check).slice(slice),
+                data: data_sets?.map((item: any) => item.top_rank_check),
                 backgroundColor: hexToRgba('#24B75E', 0.5),
                 yAxisID: 'y1',
                 maxBarThickness: 10,
@@ -81,7 +79,7 @@ const StockRankingChart = (props: any) => {
             {
                 label: 'Top 10% tiền ra',
                 type: 'bar',
-                data: data_sets?.map((item: any) => item.bot_rank_check).slice(slice),
+                data: data_sets?.map((item: any) => item.bot_rank_check),
                 backgroundColor: hexToRgba('#e14040', 0.5),
                 yAxisID: 'y2',
                 maxBarThickness: 10,
@@ -95,7 +93,7 @@ const StockRankingChart = (props: any) => {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                display: props.ww > 767 ? true : false,
+                display: true,
                 labels: {
                     boxWidth: 20, // Độ rộng của hộp màu trong legend
                     boxHeight: 8,
@@ -134,9 +132,9 @@ const StockRankingChart = (props: any) => {
                 caretPadding: 20
             },
             title: {
-                display: false,
+                display: true,
                 padding: {},
-                text: props?.ww > 767 ? 'Diễn biến sức mạnh dòng tiền' : 'Diễn biến SMDT',
+                text: 'Diễn biến xếp hạng sức mạnh dòng tiền',
                 font: {
                     family: 'Calibri, sans-serif',
                     size: parseInt(props?.fontSize) - 2,
@@ -213,7 +211,7 @@ const StockRankingChart = (props: any) => {
 
     if (!checkAuth) {
         return (
-            <div style={{ width: '100%', height: props.ww > 767 ? '260px' : '255px', marginTop: props.ww > 767 ? '0px' : '-30px' }}>
+            <div style={{ width: '100%', height: props.ww > 767 ? '300px' : '250px' , marginTop: '20px' }}>
                 <Line data={lines} options={options} plugins={[customLegendMargin, customTitleMargin]} />
             </div>
         );

@@ -59,7 +59,7 @@ const SearchComponent = (props: any) => {
     return (
         <AutoComplete
             className="custom-search"
-            dropdownClassName="custom-search"
+            popupClassName="custom-search"
             options={options}
             onSearch={onSearch}
             style={{ width: '100%' }}

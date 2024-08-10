@@ -6,7 +6,6 @@ import './styles.css'
 
 import MarketBreathChart from "./components/chi_so_thi_truong/market_breath";
 import MarketTopStockChart from "./components/chi_so_thi_truong/market_top_stock";
-import IndexPriceChart from "./components/chi_so_thi_truong/index_price_chart";
 import TaTable from "./components/chi_so_thi_truong/index_ta_table";
 import SentimentGaugeChart from "./components/trang_thai_thi_truong/sentiment_gauge_chart";
 import LiquidityGaugeChart from "./components/trang_thai_thi_truong/liquidity_gauge_chart";
@@ -20,11 +19,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { resetAuthState } from "@/redux/authSlice";
 import { sessionLimit } from "@/utlis/sessionLimit";
 import LockSection from "@/components/subscribers/blurComponents";
-
-import MarketStructureChart from "./components/cau_truc_song_va_top_cp/cau_truc_song_chart";
-import MsSpanSlider from "./components/cau_truc_song_va_top_cp/ms_span_slider";
-import { ZoomInOutlined } from "@ant-design/icons";
-import MsTimeSlider from "./components/cau_truc_song_va_top_cp/ms_time_slider";
+import IndexPriceChart from "./components/chi_so_thi_truong/index_price_chart";
 
 const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
@@ -106,8 +101,6 @@ export default function Page1() {
       await set_nn_td_buy_sell_df(res.data)
     } else if (tableName === 'nn_td_top_stock') {
       await set_nn_td_top_stock(res.data)
-    } else if (tableName === 'group_ms_chart_df') {
-      await set_group_ms_chart_df(res.data)
     }
   }
   useEffect(() => {
@@ -124,15 +117,17 @@ export default function Page1() {
       getData('nn_td_20p_df');
       getData('nn_td_buy_sell_df');
       getData('nn_td_top_stock');
-      getData('group_score_week');
-      getData('group_score_month');
-      getData('eod_group_liquidity_df');
-      getData('group_ms_chart_df', 'name');
     };
     fetchData();
 
-    const interval = setInterval(fetchData, 5 * 1000); // Gọi lại mỗi x giây
-    return () => clearInterval(interval); // Xóa interval khi component unmount
+    function resetInterval() {
+      clearInterval(interval);
+      interval = setInterval(fetchData, 30000);
+    }
+    let interval = setInterval(fetchData, 30000);
+    window.addEventListener('click', resetInterval);
+    window.addEventListener('wheel', resetInterval);
+    window.addEventListener('mousemove', resetInterval);
   }, []);
 
   const ww = useWindowWidth();
@@ -153,40 +148,20 @@ export default function Page1() {
   const [nn_td_20p_df, set_nn_td_20p_df] = useState<any[]>([]);
   const [nn_td_buy_sell_df, set_nn_td_buy_sell_df] = useState<any[]>([]);
   const [nn_td_top_stock, set_nn_td_top_stock] = useState<any[]>([]);
-  const [group_ms_chart_df, set_group_ms_chart_df] = useState<any[]>([]);
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
   const [chi_so_thi_truong, set_chi_so_thi_truong] = useState('TQ');
-  const [time_span, set_time_span] = useState('1M');
   const [index_name, set_index_name] = useState('VNINDEX');
   const [mobile_ta_mode, set_mobile_ta_mode] = useState('month');
   const [id_kntd, set_id_kntd] = useState('HSX');
   const [switch_kntd, set_switch_kntd] = useState('NN');
   const [switch_top_mobile, set_switch_top_mobile] = useState('top');
 
-  const [switch_ms_filter, set_switch_ms_filter] = useState(false);
-  const [ms_slice, set_ms_slice] = useState(ww > 767 ? 60 : (ww > 500 ? 40 : 20));
-  const [ms_time_index, set_ms_time_index] = useState(960);
-
-
-  const toggleMsFilter = (e: any) => {
-    if (switch_ms_filter) {
-      set_ms_slice((ww > 767 ? 60 : (ww > 500 ? 40 : 20)))
-      set_ms_time_index(960)
-    }
-    set_switch_ms_filter(!switch_ms_filter)
-  };
-
   const openState = isInTimeFrame()
 
   const onChangeChiSoThiTruong = (e: any) => {
     const value = e.target.value;
     set_chi_so_thi_truong(value)
-  };
-
-  const onChangeIndexPriceChartTimeSpan = (e: any) => {
-    const value = e.target.value;
-    set_time_span(value)
   };
 
   const onChangeMobileTaMode = (e: any) => {
@@ -560,36 +535,6 @@ export default function Page1() {
                               }}>PTKT
                             </Radio.Button>
                           </Radio.Group>
-                          {chi_so_thi_truong === 'BD' && (
-                            <Radio.Group
-                              className="custom-radio-group" size="small"
-                              defaultValue={time_span}
-                              buttonStyle="solid"
-                              onChange={onChangeIndexPriceChartTimeSpan}
-                              style={{ display: 'flex', width: '100%', marginTop: '20px', height: '20px' }}
-                            >
-                              <Radio.Button value="1M" className="custom-radio-button"
-                                style={{
-                                  fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
-                                }}>1M
-                              </Radio.Button>
-                              <Radio.Button value="3M" className="custom-radio-button"
-                                style={{
-                                  fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
-                                }}>3M
-                              </Radio.Button>
-                              <Radio.Button value="6M" className="custom-radio-button"
-                                style={{
-                                  fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
-                                }}>6M
-                              </Radio.Button>
-                              <Radio.Button value="1Y" className="custom-radio-button"
-                                style={{
-                                  fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
-                                }}>1Y
-                              </Radio.Button>
-                            </Radio.Group>
-                          )}
                         </div>
                       )}
                       {ww <= 767 && (
@@ -618,39 +563,7 @@ export default function Page1() {
                       </>
                     )}
                     {chi_so_thi_truong === 'BD' && (
-                      <>
-                        {ww < 767 && (
-                          <Radio.Group
-                            className="custom-radio-group" size="small"
-                            defaultValue={time_span}
-                            buttonStyle="solid"
-                            onChange={onChangeIndexPriceChartTimeSpan}
-                            style={{ display: 'flex', width: '100%', marginTop: '-5px', height: '20px' }}
-                          >
-                            <Radio.Button value="1M" className="custom-radio-button"
-                              style={{
-                                fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
-                              }}>1M
-                            </Radio.Button>
-                            <Radio.Button value="3M" className="custom-radio-button"
-                              style={{
-                                fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
-                              }}>3M
-                            </Radio.Button>
-                            <Radio.Button value="6M" className="custom-radio-button"
-                              style={{
-                                fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
-                              }}>6M
-                            </Radio.Button>
-                            <Radio.Button value="1Y" className="custom-radio-button"
-                              style={{
-                                fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
-                              }}>1Y
-                            </Radio.Button>
-                          </Radio.Group>
-                        )}
-                        <IndexPriceChart data={market_index_price_chart_df} index_name={index_name} time_span={time_span} width='100%' height={ww > 767 ? '270px' : '215px'} />
-                      </>
+                      <IndexPriceChart data={market_index_price_chart_df} index_name={index_name} ww={ww} key={JSON.stringify(index_name)}/>
                     )}
                     {chi_so_thi_truong === 'PTKT' && (
                       <>
@@ -886,54 +799,6 @@ export default function Page1() {
                   <LiquidityLineChart openState={openState} data={group_itd_score_liquidity_df} width='100%' height='250px' />
                 </Col>
               </Row>
-              <Row gutter={25} style={{ marginTop: '50px', marginBottom: '10px' }}>
-                <Col xs={20} sm={20} md={8} lg={8} xl={8}>
-                  <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
-                    Cấu trúc sóng thị trường
-                  </p>
-                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
-                </Col>
-                {ww < 767 && (
-                  <Col xs={4} sm={4} md={0} lg={0} xl={0} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <Button
-                      className="filter-button"
-                      block={true}
-                      icon={<ZoomInOutlined style={{ fontSize: pixel(0.02, 20) }} />}
-                      size={ww > 767 ? 'large' : 'middle'}
-                      style={{ border: 0, backgroundColor: switch_ms_filter ? '#1677ff' : '#161616', marginTop: '0px' }}
-                      onClick={toggleMsFilter}
-                    />
-                  </Col>
-                )}
-                <Col xs={24} sm={24} md={16} lg={16} xl={16} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  {switch_ms_filter && (
-                    <MsSpanSlider set_ms_slice={set_ms_slice} ww={ww} />
-                  )}
-                  {ww > 767 && (
-                    <Tooltip title={!switch_ms_filter ? "Bật chế độ zoom biểu đồ" : "Tắt chế độ zoom biểu đồ"}>
-                      <Button
-                        className="filter-button"
-                        block={true}
-                        icon={<ZoomInOutlined style={{ fontSize: pixel(0.02, 20) }} />}
-                        size={ww > 767 ? 'large' : 'middle'}
-                        style={{ border: 0, backgroundColor: switch_ms_filter ? '#1677ff' : '#161616', marginTop: '16px' }}
-                        onClick={toggleMsFilter}
-                      />
-                    </Tooltip>
-                  )}
-                </Col>
-              </Row>
-              <Row style={{ position: 'relative' }}>
-                <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <MarketStructureChart data={group_ms_chart_df} ww={ww} fontSize={pixel(0.015, 15)} slice={ms_slice} time_index={ms_time_index} />
-              </Row>
-              {switch_ms_filter && (
-                <Row>
-                  <Col span={24}>
-                    <MsTimeSlider time_index={ms_time_index} set_ms_time_index={set_ms_time_index} slice={ms_slice} data={group_ms_chart_df} />
-                  </Col>
-                </Row>
-              )}
               <Row style={{ marginTop: '50px', marginBottom: '20px' }}>
                 <Col xs={12} sm={12} md={24} lg={24} xl={24}>
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>

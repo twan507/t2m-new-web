@@ -18,14 +18,12 @@ const GroupRankingChart = (props: any) => {
         return `${day}-${month}`;
     });
 
-    const slice = props?.ww > 767 ? -20 : (props?.ww > 576 ? -12 : (props?.ww > 400 ? -8 : -6));
-
     const lines: any = {
-        labels: dateList.slice(slice) || [],
+        labels: dateList || [],
         datasets: [
             {
                 label: props?.select_group,
-                data: data_sets?.map((item: any) => item.rank.slice(slice)),
+                data: data_sets?.map((item: any) => item.rank),
                 borderColor: '#C031C7',
                 pointRadius: 1.4,
                 hoverRadius: 5,
@@ -59,8 +57,8 @@ const GroupRankingChart = (props: any) => {
                 caretPadding: 20
             },
             title: {
-                display: false,
-                text: props?.ww > 767 ? 'Diễn biến sức mạnh dòng tiền' : 'Diễn biến sức mạnh dòng tiền',
+                display: true,
+                text: props?.ww > 767 ? 'Diễn biến xếp hạng sức mạnh dòng tiền' : 'Diễn biến xếp hạng sức mạnh dòng tiền',
                 font: {
                     family: 'Calibri, sans-serif',
                     size: parseInt(props?.fontSize) - 2,
@@ -115,7 +113,7 @@ const GroupRankingChart = (props: any) => {
 
     if (!checkAuth) {
         return (
-            <div style={{ width: '100%', height: props.ww > 767 ? '310px' : '260px' }}>
+            <div style={{ width: '100%', height: props.ww > 767 ? '250px' : '200px', marginTop: '20px' }}>
                 <Line data={lines} options={options} />
             </div>
         );

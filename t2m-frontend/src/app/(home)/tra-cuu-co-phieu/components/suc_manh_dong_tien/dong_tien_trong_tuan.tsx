@@ -30,11 +30,8 @@ const customTitleMargin: Plugin = {
     },
 };
 
-
-const GroupScorePriceCorrelationChart = (props: any) => {
-
-    const data_sets = props?.data?.filter((item: any) => item.group === props?.select_group)
-        .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+const StockWeekScore = (props: any) => {
+    const data_sets = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     const dateList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
@@ -47,34 +44,22 @@ const GroupScorePriceCorrelationChart = (props: any) => {
         labels: dateList || [],
         datasets: [
             {
-                label: '% biến động dòng tiền',
-                data: data_sets?.map((item: any) => item.score_change * 100),
-                borderColor: '#C031C7',
-                pointRadius: 1.4,
-                hoverRadius: 5,
-                pointBackgroundColor: '#C031C7',
-                cubicInterpolationMode: 'monotone',
-                borderWidth: props?.ww > 767 ? 2.5 : 2,
-                yAxisID: 'y', // Sử dụng trục y đầu tiên
-            },
-            {
-                label: '% biến động giá',
-                data: data_sets?.map((item: any) => item.price_change * 100),
+                label: 'Sức mạnh dòng tiền',
+                data: data_sets?.map((item: any) => item.t5_score),
+                fill: 'origin',
+                backgroundColor: 'rgba(2, 91, 196, 0.2)', // Thêm màu nền cho khu vực dưới đường biểu đồ
                 borderColor: '#025bc4',
+                pointBackgroundColor: '#025bc4', // Màu nền cho các điểm
                 pointRadius: 1.4,
                 hoverRadius: 5,
-                pointBackgroundColor: '#025bc4',
                 cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
-                yAxisID: 'y', // Sử dụng trục y đầu tiên
             },
             {
-                label: props.ww > 767 ? 'Khối lượng giao dịch' : 'Khối lượng',
-                data: data_sets?.map((item: any) => item.volume),
-                backgroundColor: 'rgba(211, 211, 211, 0.2)', // Màu sắc cho cột
-                type: 'bar', // Đặt kiểu dữ liệu là biểu đồ cột
-                yAxisID: 'y2', // Sử dụng trục y thứ hai
-                maxBarThickness: 30,
+                label: 'Dòng tiền trong phiên',
+                data: data_sets?.map((item: any) => item.t0_score),
+                backgroundColor: data_sets?.map((item: any) => item.t0_score >= 0 ? 'rgba(36, 183, 94, 0.5)' : 'rgba(225, 64, 64, 0.5)'), // Dynamic color based on value
+                type: 'bar', 
             }
         ],
     };
@@ -97,6 +82,22 @@ const GroupScorePriceCorrelationChart = (props: any) => {
                         family: 'Calibri',
                     },
                     color: '#dfdfdf'
+                },
+                generateLabels: (chart: any) => {
+                    // Access the datasets and determine colors
+                    return chart.data.datasets.map((dataset: any, index: number) => {
+                        // Determine the color based on the last data point
+                        const lastDataPointColor = Array.isArray(dataset.backgroundColor)
+                            ? dataset.backgroundColor[dataset.data.length - 1]
+                            : dataset.backgroundColor;
+                        return {
+                            text: dataset.label,
+                            fillStyle: index === 1 ? lastDataPointColor : dataset.borderColor,
+                            strokeStyle: index === 1 ? lastDataPointColor : dataset.borderColor,
+                            hidden: !chart.isDatasetVisible(index),
+                            index: index,
+                        };
+                    });
                 }
             },
             tooltip: {
@@ -108,13 +109,7 @@ const GroupScorePriceCorrelationChart = (props: any) => {
                         const label = tooltipItem?.dataset?.label;
                         const value = tooltipItem?.raw;
 
-                        // Kiểm tra trục y của dataset để tùy chỉnh tooltip
-                        if (tooltipItem.dataset.yAxisID === 'y2') {
-                            // Định dạng số volume với dấu phẩy phân cách
-                            return `${label}: ${value.toLocaleString()}`;
-                        }
-
-                        return `${label}: ${value.toFixed(2)}%`; // Thêm ký hiệu '%' cho các dataset trên trục y
+                        return `${label}: ${value.toFixed(2)}`;
                     }
                 },
                 displayColors: true,
@@ -124,8 +119,8 @@ const GroupScorePriceCorrelationChart = (props: any) => {
                 caretPadding: 20
             },
             title: {
-                display: false,
-                text: props?.ww > 767 ? 'Tương quan biến động giá và dòng tiền' : 'Tương quan giá và dòng tiền',
+                display: true,
+                text: 'Diễn biến sức mạnh dòng tiền',
                 font: {
                     family: 'Calibri, sans-serif',
                     size: parseInt(props?.fontSize) - 2,
@@ -146,6 +141,7 @@ const GroupScorePriceCorrelationChart = (props: any) => {
                 ticks: {
                     color: '#dfdfdf',
                 },
+                
             },
             y: {
                 position: 'right',
@@ -153,27 +149,15 @@ const GroupScorePriceCorrelationChart = (props: any) => {
                     color: '#dfdfdf',
                     stepSize: 5,
                     callback: function (value: number) {
-                        return `${value}%`;
+                        return `${value}`;
                     }
                 },
                 grid: {
                     display: true,
-                    color: '#dfdfdf',
-                    drawBorder: false,
-                    lineWidth: function (context: any) {
-                        return context.tick.value === 0 ? 1 : 0;
-                    },
+                    color: '#555555',
+                    lineWidth: 0.5,
                 },
             },
-            y2: {
-                position: 'left', // Đặt trục y thứ hai ở phía bên trái
-                grid: {
-                    display: false,
-                },
-                ticks: {
-                    display: false,
-                },
-            }
         },
     };
 
@@ -184,7 +168,7 @@ const GroupScorePriceCorrelationChart = (props: any) => {
 
     if (!checkAuth) {
         return (
-            <div style={{ width: '100%', height: '300px' }}>
+            <div style={{ width: '100%', height: props.ww > 767 ? '350px' : '250px' }}>
                 <Line data={lines} options={options} plugins={[customLegendMargin, customTitleMargin]} />
             </div>
         );
@@ -193,4 +177,4 @@ const GroupScorePriceCorrelationChart = (props: any) => {
     return null;
 }
 
-export default GroupScorePriceCorrelationChart;
+export default StockWeekScore;

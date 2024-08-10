@@ -139,20 +139,42 @@
 
 /* -------------------------------------------------------------------------------------------------------------- */
 /* CSS cho các button */
-/* .custom-button {
-    background-color: transparent !important;
-    border: 1px solid #1677ff;
+.filter-button {
+    background-color: #161616;
+    border: 0;
     color: #dfdfdf !important;
-    transition: background-color 0.3s, color 0.3s;
 }
-
-.custom-button:hover {
-    background-color: #1677ff !important;
-    color: #dfdfdf !important;
-} */
 
 .custom-button {
     background-color: #161616 !important;
     border: 0 !important;
     color: #dfdfdf !important;
+}
+
+/* --------------------------------------------------------------------------------------------------------------- */
+/* CSS cho slider */
+.ant-slider-rail {
+    background-color: #333 !important;
+}
+
+.ant-input-number .ant-input-number-input {
+    color: #fff !important;
+    background-color: #000 !important;
+}
+
+.ant-input-number-handler {
+    background: black !important;
+    border: white !important;
+    box-shadow: none !important;
+    color: black !important;
+}
+
+.ant-input-number-handler:hover {
+    color: #333 !important;
+    background: #333 !important;
+}
+
+.ant-input-number-handler-up-inner,
+.ant-input-number-handler-down-inner {
+    color: white !important;
 }

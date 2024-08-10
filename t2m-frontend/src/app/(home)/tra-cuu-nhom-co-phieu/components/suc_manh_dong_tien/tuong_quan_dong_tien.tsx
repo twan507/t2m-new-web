@@ -31,10 +31,9 @@ const customTitleMargin: Plugin = {
 };
 
 
-const StockScorePriceCorrelationChart = (props: any) => {
+const GroupScorePriceCorrelationChart = (props: any) => {
 
-    const data_sets = props?.data?.filter((item: any) => item.stock === props?.select_stock)
-        .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    const data_sets = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     const dateList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
@@ -68,14 +67,6 @@ const StockScorePriceCorrelationChart = (props: any) => {
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
                 yAxisID: 'y', // Sử dụng trục y đầu tiên
             },
-            {
-                label: props.ww > 767 ? 'Khối lượng giao dịch' : 'Khối lượng',
-                data: data_sets?.map((item: any) => item.volume),
-                backgroundColor: 'rgba(211, 211, 211, 0.2)', // Màu sắc cho cột
-                type: 'bar', // Đặt kiểu dữ liệu là biểu đồ cột
-                yAxisID: 'y2', // Sử dụng trục y thứ hai
-                maxBarThickness: 30,
-            }
         ],
     };
 
@@ -84,6 +75,7 @@ const StockScorePriceCorrelationChart = (props: any) => {
         maintainAspectRatio: false,
         plugins: {
             legend: {
+                // display: props.ww > 767 ? true : false,
                 display: true,
                 position: 'top',
                 labels: {
@@ -108,12 +100,6 @@ const StockScorePriceCorrelationChart = (props: any) => {
                         const label = tooltipItem?.dataset?.label;
                         const value = tooltipItem?.raw;
 
-                        // Kiểm tra trục y của dataset để tùy chỉnh tooltip
-                        if (tooltipItem.dataset.yAxisID === 'y2') {
-                            // Định dạng số volume với dấu phẩy phân cách
-                            return `${label}: ${value.toLocaleString()}`;
-                        }
-
                         return `${label}: ${value.toFixed(2)}%`; // Thêm ký hiệu '%' cho các dataset trên trục y
                     }
                 },
@@ -124,7 +110,7 @@ const StockScorePriceCorrelationChart = (props: any) => {
                 caretPadding: 20
             },
             title: {
-                display: false,
+                display: true,
                 text: props?.ww > 767 ? 'Tương quan biến động giá và dòng tiền' : 'Tương quan giá và dòng tiền',
                 font: {
                     family: 'Calibri, sans-serif',
@@ -158,22 +144,15 @@ const StockScorePriceCorrelationChart = (props: any) => {
                 },
                 grid: {
                     display: true,
-                    color: '#dfdfdf',
+                    color: function (context: any) {
+                        return context.tick.value === 0 ? '#dfdfdf' : '#555555';
+                    },
                     drawBorder: false,
                     lineWidth: function (context: any) {
-                        return context.tick.value === 0 ? 1 : 0;
+                        return context.tick.value === 0 ? 1 : 0.5;
                     },
                 },
             },
-            y2: {
-                position: 'left', // Đặt trục y thứ hai ở phía bên trái
-                grid: {
-                    display: false,
-                },
-                ticks: {
-                    display: false,
-                },
-            }
         },
     };
 
@@ -184,7 +163,7 @@ const StockScorePriceCorrelationChart = (props: any) => {
 
     if (!checkAuth) {
         return (
-            <div style={{ width: '100%', height: '300px' }}>
+            <div style={{ width: '100%', height: props.ww > 767 ? '350px' : '250px', marginTop: props.ww > 767 ? '0px' : '20px' }}>
                 <Line data={lines} options={options} plugins={[customLegendMargin, customTitleMargin]} />
             </div>
         );
@@ -193,4 +172,4 @@ const StockScorePriceCorrelationChart = (props: any) => {
     return null;
 }
 
-export default StockScorePriceCorrelationChart;
+export default GroupScorePriceCorrelationChart;

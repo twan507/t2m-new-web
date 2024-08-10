@@ -6,14 +6,16 @@ import './styles.css'
 
 import SearchComponent from "./components/search_bar/search_bar";
 import StockTaTable from "./components/thong_tin_co_phieu/stock_ta_table";
-import StockRankingChart from "./components/thong_tin_co_phieu/stock_ranking";
+import StockRankingChart from "./components/suc_manh_dong_tien/stock_ranking";
 import GroupRankingChart from "./components/dong_tien_nhom_lien_quan/group_ranking";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { sessionLimit } from "@/utlis/sessionLimit";
 import { resetAuthState } from "@/redux/authSlice";
 import LockSection from "@/components/subscribers/blurComponents";
 import StockMoneyFlowT5Chart from "./components/thong_tin_co_phieu/dong_tien_t5";
-import StockScorePriceCorrelationChart from "./components/suc_manh_dong_tien/suc_manh_dong_tien";
+import StockScorePriceCorrelationChart from "./components/suc_manh_dong_tien/tuong_quan_dong_tien";
+import StockWeekScore from "./components/suc_manh_dong_tien/dong_tien_trong_tuan";
+import StockPriceChart from "./components/thong_tin_co_phieu/stock_price_chart";
 
 
 const useWindowWidth = (): any => {
@@ -70,41 +72,45 @@ export default function Page4() {
     } else if (tableName === 'stock_ta_df') {
       await set_stock_ta_df(res.data)
     } else if (tableName === 'group_score_power_df') {
-      await set_group_score_ranking_melted(res.data)
-    } else if (tableName === 'stock_score_5p_df') {
-      await set_stock_score_5p_df(res.data)
+      await set_group_score_power_df(res.data)
+    } else if (tableName === 'stock_price_chart_df') {
+      await set_stock_price_chart_df(res.data)
     }
   }
 
   useEffect(() => {
     const fetchData = async () => {
       getData('market_update_time', null);
-      getData('stock_liquidty_score_t0', 'stock');
-      getData('stock_score_week', 'stock');
-      getData('stock_score_month', 'stock');
       getData('stock_score_power_df', 'stock');
       getData('stock_score_filter_df', null);
       getData('stock_ta_df', 'stock');
       getData('group_score_power_df', null);
       getData('stock_score_5p_df', 'stock');
-
-
+      getData('stock_price_chart_df', 'stock');
     };
     fetchData();
-    const interval = setInterval(fetchData, 5 * 1000); // Gọi lại mỗi x giây
-    return () => clearInterval(interval); // Xóa interval khi component unmount
+
+    function resetInterval() {
+      clearInterval(interval);
+      interval = setInterval(fetchData, 30000);
+    }
+    let interval = setInterval(fetchData, 30000);
+    window.addEventListener('click', resetInterval);
+    window.addEventListener('wheel', resetInterval);
+    window.addEventListener('mousemove', resetInterval);
   }, [select_stock]);
 
   //State lưu trữ dữ liệu cổ phiếu
   const [market_update_time, set_market_update_time] = useState<any[]>([]);
   const [stock_score_filter_df, set_stock_score_filter_df] = useState<any[]>([]);
+  const [group_score_power_df, set_group_score_power_df] = useState<any[]>([]);
   const [stock_score_5p_df, set_stock_score_5p_df] = useState<any[]>([]);
   const [stock_ta_df, set_stock_ta_df] = useState<any[]>([]);
   const [stock_score_power_df, set_stock_score_power_df] = useState<any[]>([]);
-  const [group_score_power_df, set_group_score_ranking_melted] = useState<any[]>([]);
+  const [stock_price_chart_df, set_stock_price_chart_df] = useState<any[]>([]);
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
-  const [thong_tin_cp, set_thong_tin_cp] = useState('XHDT');
+  const [thong_tin_cp, set_thong_tin_cp] = useState('BD');
   const [mobile_ta_mode, set_mobile_ta_mode] = useState('month');
 
   const ww = useWindowWidth();
@@ -119,8 +125,8 @@ export default function Page4() {
 
   const thong_tin_cp_mobile_items: any = [
     {
-      key: 'XHDT',
-      label: 'XHDT',
+      key: 'BD',
+      label: 'BD',
     },
     {
       key: 'PTKT',
@@ -151,14 +157,6 @@ export default function Page4() {
     if (value < 150) return '#D0be0f';
     if (value < 250) return '#e14040';
     return '#00cccc';
-  };
-
-  const getColorTopRankCount = (value: number) => {
-    if (value < 1) return '#00cccc';
-    if (value < 3) return '#e14040';
-    if (value < 5) return '#D0be0f';
-    if (value < 10) return '#24B75E';
-    return '#C031C7';
   };
 
   const getColorIndustryPerform = (value: string) => {
@@ -398,10 +396,10 @@ export default function Page4() {
                             onChange={onChangeChiSoThiTruong}
                             style={{ display: 'flex', width: '100%', marginTop: '-10px', height: '20px' }}
                           >
-                            <Radio.Button value="XHDT" className="custom-radio-button"
+                            <Radio.Button value="BD" className="custom-radio-button"
                               style={{
                                 fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
-                              }}>{ww > 767 ? 'Xếp hạng dòng tiền' : 'XHDT'}
+                              }}>{ww > 400 ? 'Biểu đồ giá' : 'Biểu đồ'}
                             </Radio.Button>
                             <Radio.Button value="PTKT" className="custom-radio-button"
                               style={{
@@ -426,14 +424,16 @@ export default function Page4() {
                     </Col>
                   </Row>
                   <Row gutter={10}>
-                    {thong_tin_cp === 'XHDT' && (
+                    {thong_tin_cp === 'BD' && (
                       <>
-                        <StockRankingChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 16)} stock_count={stock_score_filter_df?.length} />
+                        {stock_price_chart_df.length > 0 && (
+                          <StockPriceChart data={stock_price_chart_df} ww={ww} key={JSON.stringify(stock_price_chart_df)} />
+                        )}
                       </>
                     )}
                     {thong_tin_cp === 'PTKT' && (
                       <>
-                        <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height={ww > 767 ? '270px' : '280px'} width='100%' marginTop={ww > 767 ? '0px' : '-10px'} />
+                        <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height={ww > 767 ? '255px' : '235px'} width='100%' marginTop={ww > 767 ? '0px' : '-10px'} />
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                           {ww < 767 && (
                             <Radio.Group
@@ -535,7 +535,16 @@ export default function Page4() {
               </Row>
               <Row style={{ marginTop: ww > 767 ? '30px' : '20px', position: 'relative' }}>
                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <StockScorePriceCorrelationChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 16)} />
+                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                  <StockWeekScore data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 16)} />
+                </Col>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                  <StockScorePriceCorrelationChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 16)} />
+                </Col>
+              </Row>
+              <Row gutter={10} style={{ marginTop: '20px', position: 'relative' }}>
+                <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
+                <StockRankingChart data={stock_score_power_df} ww={ww} select_stock={select_stock} fontSize={pixel(0.017, 16)} stock_count={stock_score_filter_df?.length} />
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
                 <Col>

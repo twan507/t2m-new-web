@@ -1,16 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { createChart, IChartApi, ISeriesApi, CandlestickData, HistogramData } from 'lightweight-charts';
 
-// Mở rộng CandlestickData để bao gồm volume
-interface CombinedCandlestickData extends CandlestickData {
-    volume: number;
-}
 
-const IndexPriceChart = (props: any) => {
+const StockPriceChart = (props: any) => {
     const chartContainerRef = useRef<HTMLDivElement | null>(null);
     const chartRef = useRef<IChartApi | null>(null);
     const candlestickSeriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
     const volumeSeriesRef = useRef<ISeriesApi<'Histogram'> | null>(null);
+
     const ww = props?.ww
 
     useEffect(() => {
@@ -39,7 +36,7 @@ const IndexPriceChart = (props: any) => {
             },
             timeScale: {
                 rightOffset: 2,
-                barSpacing:  ww > 767 ? 20 : (ww > 576 ? 10 : 5),
+                barSpacing: ww > 767 ? 20 : (ww > 576 ? 10 : 5),
             },
             handleScroll: {
                 mouseWheel: false, // Disable zoom on mouse wheel
@@ -98,13 +95,10 @@ const IndexPriceChart = (props: any) => {
             },
         });
 
-
-        const chartData: any = props?.data?.filter((item: any) => item.index === props?.index_name)
-            .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+        const chartData: any = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
         candlestickSeriesRef.current.setData(
             chartData.map((data: any) => ({
-                // time: data.time,
                 time: Date.parse(data.date) / 1000, // Chuyển đổi sang giây
                 open: data.open,
                 high: data.high,
@@ -116,7 +110,6 @@ const IndexPriceChart = (props: any) => {
         volumeSeriesRef.current.setData(
             chartData.map((data: any) => ({
                 time: Date.parse(data.date) / 1000, // Chuyển đổi sang giây
-                // time: data.time,
                 value: data.volume,
                 color: data.close > data.open ? 'rgba(36, 183, 94, 0.4)' : 'rgba(225, 64, 64, 0.4)', // Màu sắc dựa trên candlestick
             }))
@@ -145,7 +138,7 @@ const IndexPriceChart = (props: any) => {
         };
     }, []);
 
-    return <div ref={chartContainerRef} style={{ width: '100%', height: props.ww > 767 ? '290px' : '235px' }} />;
+    return <div ref={chartContainerRef} style={{ width: '100%', height: props.ww > 767 ? '260px' : '235px' }} />;
 };
 
-export default IndexPriceChart;
+export default StockPriceChart;
