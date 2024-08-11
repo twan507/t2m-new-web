@@ -14,7 +14,7 @@ import LiquidityLineChart from "./components/trang_thai_thi_truong/liquidity_lin
 import NnTdBuySellTable from "./components/khoi_ngoai_tu_doanh/nn_td_buy_sell_table";
 import NnTdHispory from "./components/khoi_ngoai_tu_doanh/nn_td_history";
 import NdTdTopStockChart from "./components/khoi_ngoai_tu_doanh/nn_td_top_stock";
-import TopCoPhieuTable from "./components/cau_truc_song_va_top_cp/top_co_phieu_table";
+import TopCoPhieuTable from "./components/top_co_phieu/top_co_phieu_table";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { resetAuthState } from "@/redux/authSlice";
 import { sessionLimit } from "@/utlis/sessionLimit";
@@ -122,9 +122,9 @@ export default function Page1() {
 
     function resetInterval() {
       clearInterval(interval);
-      interval = setInterval(fetchData, 30000);
+      interval = setInterval(fetchData, 60000);
     }
-    let interval = setInterval(fetchData, 30000);
+    let interval = setInterval(fetchData, 60000);
     window.addEventListener('click', resetInterval);
     window.addEventListener('wheel', resetInterval);
     window.addEventListener('mousemove', resetInterval);
@@ -563,7 +563,7 @@ export default function Page1() {
                       </>
                     )}
                     {chi_so_thi_truong === 'BD' && (
-                      <IndexPriceChart data={market_index_price_chart_df} index_name={index_name} ww={ww} key={JSON.stringify(index_name)}/>
+                      <IndexPriceChart data={market_index_price_chart_df} index_name={index_name} ww={ww} key={JSON.stringify(index_name)} />
                     )}
                     {chi_so_thi_truong === 'PTKT' && (
                       <>

@@ -53,7 +53,7 @@ const AuthSignInModal = (props: IProps) => {
                 -webkit-background-clip: text !important;
                 -webkit-text-fill-color: #dfdfdf !important;
                 -webkit-box-shadow: 0 0 0 30px #333333 inset !important;
-                transition: background-color 5000s ease-in-out 0s;
+                transition: background-color 60000s ease-in-out 0s;
             }
 
           .custom-modal .ant-modal-content {

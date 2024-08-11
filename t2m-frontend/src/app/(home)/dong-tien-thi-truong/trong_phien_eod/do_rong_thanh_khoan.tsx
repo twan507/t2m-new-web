@@ -67,7 +67,7 @@ const LiquidityBreathChart = (props: any): any => {
         indexAxis: 'y', // Chuyển đổi biểu đồ cột thành biểu đồ cột ngang
         plugins: {
             legend: {
-                display: props?.ww > 991 ? true : false,
+                display: props?.ww > 576 ? true : false,
                 position: 'top',
                 labels: {
                     boxWidth: 20, // Độ rộng của hộp màu trong legend
@@ -86,7 +86,7 @@ const LiquidityBreathChart = (props: any): any => {
                 display: true,
                 text: props?.ww > 1100 ? `Độ rộng thanh khoản` : `Độ rộng TK`,
                 padding: {
-                    bottom: props?.ww > 991 ? 0 : 15
+                    bottom: props?.ww > 576 ? 0 : 15
                 },
                 font: {
                     family: 'Calibri, sans-serif',

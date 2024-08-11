@@ -37,7 +37,7 @@ const MoneyFlowValueChart = (props: any) => {
     const maxIndustryScore = industry_data_sets?.reduce((max: any, current: any) => current?.score > max ? current?.score : max, industry_data_sets?.[0]?.score);
 
     const data = {
-        labels: data_sets?.map((item: any) => props?.ww > 767 ? (item.name + '        ') : item.name),
+        labels: data_sets?.map((item: any) => item.name),
         datasets: [
             {
                 label: 'Giá trị',
@@ -61,7 +61,7 @@ const MoneyFlowValueChart = (props: any) => {
         },
         plugins: {
             legend: {
-                display: props?.ww > 767 ? true : false,
+                display: props?.ww > 576 ? true : false,
                 position: 'top',
                 labels: {
                     boxWidth: 0, // Độ rộng của hộp màu trong legend
@@ -97,7 +97,7 @@ const MoneyFlowValueChart = (props: any) => {
                 display: true,
                 text: props?.ww > 767 ? `Dòng tiền ${name_dict[props?.group]}` : `Dòng tiền ${name_dict[props?.group]}`,
                 padding: {
-                    bottom: props?.ww > 767 ? 0 : 15
+                    bottom: props?.ww > 576 ? 0 : 15
                 },
                 font: {
                     family: 'Calibri, sans-serif',

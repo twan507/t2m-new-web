@@ -25,3 +25,7 @@
   right: 0px !important;
 }
 
+.layout-sider-menu .ant-tooltip {
+  display: none !important;
+}
+

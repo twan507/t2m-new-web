@@ -132,7 +132,7 @@ const MoneyFlowLiquidityChart = (props: any) => {
                 min: 0,
                 max: props?.type === 'industry' ? maxIndustryLiquidity : null,
                 grid: {
-                    display: false, // Loại bỏ grid dọc
+                    display: false,
                 },
                 ticks: {
                     display: false,
@@ -141,10 +141,10 @@ const MoneyFlowLiquidityChart = (props: any) => {
             y: {
                 position: 'left',
                 grid: {
-                    display: false, // Loại bỏ grid ngang
+                    display: false,
                 },
                 ticks: {
-                    display: props.ww > 767 ? false : true,
+                    display: props.ww > 991 ? false : true,
                     color: '#dfdfdf',
                     font: {
                         size: parseInt(props?.fontSize) - 5

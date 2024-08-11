@@ -137,7 +137,7 @@ const GroupScorePriceCorrelationChart = (props: any) => {
                 position: 'right',
                 ticks: {
                     color: '#dfdfdf',
-                    stepSize: 5,
+                    // stepSize: 5,
                     callback: function (value: number) {
                         return `${value}%`;
                     }

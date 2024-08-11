@@ -39,7 +39,7 @@ const IndexPriceChart = (props: any) => {
             },
             timeScale: {
                 rightOffset: 2,
-                barSpacing:  ww > 767 ? 20 : (ww > 576 ? 10 : 5),
+                barSpacing:  ww > 767 ? 15 : (ww > 576 ? 10 : 5),
             },
             handleScroll: {
                 mouseWheel: false, // Disable zoom on mouse wheel

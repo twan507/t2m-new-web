@@ -57,7 +57,7 @@ const GroupWeekScore = (props: any) => {
             },
             {
                 label: 'Dòng tiền trong phiên',
-                data: data_sets?.map((item: any) => item.t0_score),
+                data: data_sets?.map((item: any) => item.t0_score/5),
                 backgroundColor: data_sets?.map((item: any) => item.t0_score >= 0 ? 'rgba(36, 183, 94, 0.5)' : 'rgba(225, 64, 64, 0.5)'), // Dynamic color based on value
                 type: 'bar', 
             }
@@ -147,7 +147,7 @@ const GroupWeekScore = (props: any) => {
                 position: 'right',
                 ticks: {
                     color: '#dfdfdf',
-                    stepSize: 5,
+                    // stepSize: 5,
                     callback: function (value: number) {
                         return `${value}`;
                     }

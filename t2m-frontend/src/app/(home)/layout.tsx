@@ -338,6 +338,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
                 }}
               />
               <Menu
+                className='layout-sider-menu'
                 style={{ background: '#000000' }}
                 theme="dark"
                 mode="inline"
