@@ -44,7 +44,7 @@ const GroupWeekScore = (props: any) => {
         labels: dateList || [],
         datasets: [
             {
-                label: 'Sức mạnh dòng tiền',
+                label: 'Dòng tiền trong tuần',
                 data: data_sets?.map((item: any) => item.t5_score),
                 fill: 'origin',
                 backgroundColor: 'rgba(2, 91, 196, 0.2)', // Thêm màu nền cho khu vực dưới đường biểu đồ
