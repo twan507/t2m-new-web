@@ -147,12 +147,12 @@ export default function Page3() {
   const [switch_nhom_nganh_hs, set_switch_nhom_nganh_hs] = useState('A');
   const [switch_ms_filter, set_switch_ms_filter] = useState(false);
   const [ms_slice, set_ms_slice] = useState(ww > 767 ? 60 : (ww > 500 ? 40 : 20));
-  const [ms_time_index, set_ms_time_index] = useState(group_ms_chart_df.length);
+  const [ms_time_index, set_ms_time_index] = useState(0);
 
   useEffect(() => {
-    set_ms_time_index(group_ms_chart_df.length)
+    set_ms_time_index(group_ms_chart_df?.length)
     set_group_price_chart_df(group_price_chart_df)
-  }, [group_ms_chart_df.length, group_price_chart_df])
+  }, [group_ms_chart_df?.length, group_price_chart_df])
 
   const toggleMsFilter = (e: any) => {
     if (switch_ms_filter) {
