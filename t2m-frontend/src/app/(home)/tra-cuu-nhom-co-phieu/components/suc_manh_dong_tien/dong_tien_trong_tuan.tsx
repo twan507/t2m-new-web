@@ -57,9 +57,9 @@ const GroupWeekScore = (props: any) => {
             },
             {
                 label: 'Dòng tiền trong phiên',
-                data: data_sets?.map((item: any) => item.t0_score/5),
+                data: data_sets?.map((item: any) => item.t0_score / 5),
                 backgroundColor: data_sets?.map((item: any) => item.t0_score >= 0 ? 'rgba(36, 183, 94, 0.5)' : 'rgba(225, 64, 64, 0.5)'), // Dynamic color based on value
-                type: 'bar', 
+                type: 'bar',
             }
         ],
     };
@@ -107,7 +107,12 @@ const GroupWeekScore = (props: any) => {
                     },
                     label: function (tooltipItem: any) {
                         const label = tooltipItem?.dataset?.label;
-                        const value = tooltipItem?.raw;
+                        let value = tooltipItem?.raw;
+
+                        // Multiply value by 5 if it is for 'Dòng tiền trong phiên' bar
+                        if (tooltipItem.dataset.label === 'Dòng tiền trong phiên') {
+                            value *= 5;
+                        }
 
                         return `${label}: ${value.toFixed(2)}`;
                     }
@@ -141,7 +146,7 @@ const GroupWeekScore = (props: any) => {
                 ticks: {
                     color: '#dfdfdf',
                 },
-                
+
             },
             y: {
                 position: 'right',

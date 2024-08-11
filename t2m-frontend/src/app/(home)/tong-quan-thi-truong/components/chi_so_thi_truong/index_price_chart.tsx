@@ -41,12 +41,12 @@ const IndexPriceChart = (props: any) => {
                 rightOffset: 2,
                 barSpacing:  ww > 767 ? 15 : (ww > 576 ? 10 : 5),
             },
-            handleScroll: {
-                mouseWheel: false, // Disable zoom on mouse wheel
-            },
-            handleScale: {
-                mouseWheel: false, // Disable zoom on mouse wheel
-            },
+            // handleScroll: {
+            //     mouseWheel: false, // Disable zoom on mouse wheel
+            // },
+            // handleScale: {
+            //     mouseWheel: false, // Disable zoom on mouse wheel
+            // },
         });
 
         candlestickSeriesRef.current = chartRef.current.addCandlestickSeries({

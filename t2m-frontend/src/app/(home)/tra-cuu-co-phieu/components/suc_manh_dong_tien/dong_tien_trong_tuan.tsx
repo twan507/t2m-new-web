@@ -107,7 +107,12 @@ const StockWeekScore = (props: any) => {
                     },
                     label: function (tooltipItem: any) {
                         const label = tooltipItem?.dataset?.label;
-                        const value = tooltipItem?.raw;
+                        let value = tooltipItem?.raw;
+
+                        // Multiply value by 5 if it is for 'Dòng tiền trong phiên' bar
+                        if (tooltipItem.dataset.label === 'Dòng tiền trong phiên') {
+                            value *= 5;
+                        }
 
                         return `${label}: ${value.toFixed(2)}`;
                     }

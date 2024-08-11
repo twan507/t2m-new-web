@@ -18,8 +18,6 @@ const GroupRankingChart = (props: any) => {
         return `${day}-${month}`;
     });
 
-    // console.log(props.data)
-
     const slice = props?.ww > 767 ? -20 : (props?.ww > 576 ? -12 : (props?.ww > 400 ? -8 : -6));
 
     const lines: any = {

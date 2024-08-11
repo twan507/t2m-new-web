@@ -38,12 +38,12 @@ const GroupPriceChart = (props: any) => {
                 rightOffset: 1,
                 barSpacing: ww > 767 ? 12 : (ww > 576 ? 6 : 3),
             },
-            handleScroll: {
-                mouseWheel: false, // Disable zoom on mouse wheel
-            },
-            handleScale: {
-                mouseWheel: false, // Disable zoom on mouse wheel
-            },
+            // handleScroll: {
+            //     mouseWheel: false, // Disable zoom on mouse wheel
+            // },
+            // handleScale: {
+            //     mouseWheel: false, // Disable zoom on mouse wheel
+            // },
         });
 
         // Thêm area series

@@ -75,7 +75,6 @@ const StockScorePriceCorrelationChart = (props: any) => {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                // display: props.ww > 767 ? true : false,
                 display: true,
                 position: 'top',
                 labels: {
