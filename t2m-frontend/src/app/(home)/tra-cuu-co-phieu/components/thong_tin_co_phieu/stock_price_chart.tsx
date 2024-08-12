@@ -98,7 +98,7 @@ const StockPriceChart = (props: any) => {
         const chartData: any = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
         candlestickSeriesRef.current.setData(
-            chartData.map((data: any) => ({
+            chartData?.map((data: any) => ({
                 time: Date.parse(data.date) / 1000, // Chuyển đổi sang giây
                 open: data.open,
                 high: data.high,
@@ -108,7 +108,7 @@ const StockPriceChart = (props: any) => {
         );
 
         volumeSeriesRef.current.setData(
-            chartData.map((data: any) => ({
+            chartData?.map((data: any) => ({
                 time: Date.parse(data.date) / 1000, // Chuyển đổi sang giây
                 value: data.volume,
                 color: data.close > data.open ? 'rgba(36, 183, 94, 0.4)' : 'rgba(225, 64, 64, 0.4)', // Màu sắc dựa trên candlestick

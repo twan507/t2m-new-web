@@ -348,17 +348,16 @@ export default function Page5() {
                         buttonStyle="solid"
                         onChange={onChangeTableType}
                         style={{ display: 'flex', width: '100%', marginTop: '5px' }}
-                        size='small'
                       >
                         <Radio.Button value="dt" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
-                          }}>{ww > 767 ? 'Bảng thông tin chung' : 'Thông tin'}
+                          }}>{ww > 992 ? 'Bảng thông tin chung' :(ww > 767 ? 'Bảng thông tin' : 'Thông tin')}
                         </Radio.Button>
                         <Radio.Button value="kt" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
-                          }}>{ww > 767 ? 'Bảng chỉ số kĩ thuật' : 'Kĩ thuật'}
+                          }}>{ww > 992 ? 'Bảng chỉ số kĩ thuật' : (ww > 767 ? 'Bảng kĩ thuật' : 'Kĩ thuật')}
                         </Radio.Button>
                       </Radio.Group>
                     </Col>
@@ -371,7 +370,6 @@ export default function Page5() {
                           buttonStyle="solid"
                           onChange={onChangeTaTable}
                           style={{ display: 'flex', width: '100%', marginTop: '5px' }}
-                          size='small'
                         >
                           <Radio.Button value="candle" className="custom-radio-button"
                             style={{
@@ -402,7 +400,7 @@ export default function Page5() {
                       position: 'absolute',
                       top: 0,
                       left: 0,
-                      width: 'calc(27% + 55px)',
+                      width: 'calc(30% + 45px)',
                       height: 'calc(100% - 70px)',
                       backgroundColor: '#161616',
                       borderRadius: '5px',

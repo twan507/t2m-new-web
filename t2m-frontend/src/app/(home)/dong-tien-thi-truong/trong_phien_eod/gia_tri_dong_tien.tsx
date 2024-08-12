@@ -37,7 +37,7 @@ const MoneyFlowValueChart = (props: any) => {
     const maxIndustryScore = industry_data_sets?.reduce((max: any, current: any) => current?.score > max ? current?.score : max, industry_data_sets?.[0]?.score);
 
     const data = {
-        labels: data_sets?.map((item: any) => item.name),
+        labels: data_sets?.map((item: any) => props?.type === 'industry' ? item.name + '         ' : item.name + '    '),
         datasets: [
             {
                 label: 'Giá trị',
@@ -126,14 +126,16 @@ const MoneyFlowValueChart = (props: any) => {
         },
         scales: {
             x: {
-                min: props?.type === 'industry' ? Math.floor(props.ww > 767 ? minIndustryScore : minIndustryScore) : null,
-                max: props?.type === 'industry' ? Math.ceil(props.ww > 767 ? maxIndustryScore : maxIndustryScore) : null,
+                // min: props?.type === 'industry' ? Math.floor(props.ww > 767 ? minIndustryScore : minIndustryScore) : null,
+                // max: props?.type === 'industry' ? Math.ceil(props.ww > 767 ? maxIndustryScore : maxIndustryScore) : null,    
+                min: props?.type === 'industry' ? minIndustryScore : null,
+                max: props?.type === 'industry' ? maxIndustryScore : null,  
                 grid: {
                     display: false, // Loại bỏ grid dọc
                 },
                 ticks: {
                     display: false,
-                    stepSize: 0.5
+                    stepSize: 0.1
                 },
             },
             y: {

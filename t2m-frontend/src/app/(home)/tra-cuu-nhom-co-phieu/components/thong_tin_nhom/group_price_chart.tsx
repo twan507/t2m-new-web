@@ -98,12 +98,12 @@ const GroupPriceChart = (props: any) => {
 
         const chartData = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());;
 
-        const areaData = chartData.map(({ date, value }: any) => ({
+        const areaData = chartData?.map(({ date, value }: any) => ({
             time: Date.parse(date) / 1000, // Chuyển đổi sang giây
             value: value,
         }));
 
-        const volumeData = chartData.map(({ date, volume }: any) => ({
+        const volumeData = chartData?.map(({ date, volume }: any) => ({
             time: Date.parse(date) / 1000, // Chuyển đổi sang giây
             value: volume,
         }));

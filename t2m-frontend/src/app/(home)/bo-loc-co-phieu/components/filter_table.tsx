@@ -569,12 +569,12 @@ const FilterStockTable = (props: any) => {
               {props?.ww > 950 ? (<>Xu hướng<br />Tháng</>) : (<>Tháng</>)}
             </span>,
           dataIndex: 'month_trend',
-          width: '9%',
+          width: '10%',
           render: (text: string) => (
             <span style={{
               color: getColorTrend(text),
               fontFamily: 'Calibri, sans-serif',
-              fontSize: parseInt(props?.fontSize) - 1,
+              fontSize: parseInt(props?.fontSize) - 2,
               display: 'flex',
               fontWeight: 'bold',
               justifyContent: 'flex-start',
@@ -601,12 +601,12 @@ const FilterStockTable = (props: any) => {
               {props?.ww > 950 ? (<>Xu hướng<br />Quý</>) : (<>Quý</>)}
             </span>,
           dataIndex: 'quarter_trend',
-          width: '9%',
+          width: '10%',
           render: (text: string) => (
             <span style={{
               color: getColorTrend(text),
               fontFamily: 'Calibri, sans-serif',
-              fontSize: parseInt(props?.fontSize) - 1,
+              fontSize: parseInt(props?.fontSize) - 2,
               display: 'flex',
               fontWeight: 'bold',
               justifyContent: 'flex-start',
@@ -633,12 +633,12 @@ const FilterStockTable = (props: any) => {
               {props?.ww > 950 ? (<>Xu hướng<br />Năm</>) : (<>Năm</>)}
             </span>,
           dataIndex: 'year_trend',
-          width: '9%',
+          width: '10%',
           render: (text: string) => (
             <span style={{
               color: getColorTrend(text),
               fontFamily: 'Calibri, sans-serif',
-              fontSize: parseInt(props?.fontSize) - 1,
+              fontSize: parseInt(props?.fontSize) - 2,
               display: 'flex',
               fontWeight: 'bold',
               justifyContent: 'flex-start',

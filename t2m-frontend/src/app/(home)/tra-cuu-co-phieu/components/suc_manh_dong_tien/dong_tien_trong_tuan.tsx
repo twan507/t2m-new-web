@@ -152,9 +152,8 @@ const StockWeekScore = (props: any) => {
                 position: 'right',
                 ticks: {
                     color: '#dfdfdf',
-                    // stepSize: 5,
                     callback: function (value: number) {
-                        return `${value}`;
+                        return `${value.toFixed(1)}`;
                     }
                 },
                 grid: {

@@ -103,7 +103,7 @@ const IndexPriceChart = (props: any) => {
             .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
         candlestickSeriesRef.current.setData(
-            chartData.map((data: any) => ({
+            chartData?.map((data: any) => ({
                 // time: data.time,
                 time: Date.parse(data.date) / 1000, // Chuyển đổi sang giây
                 open: data.open,
@@ -114,7 +114,7 @@ const IndexPriceChart = (props: any) => {
         );
 
         volumeSeriesRef.current.setData(
-            chartData.map((data: any) => ({
+            chartData?.map((data: any) => ({
                 time: Date.parse(data.date) / 1000, // Chuyển đổi sang giây
                 // time: data.time,
                 value: data.volume,
