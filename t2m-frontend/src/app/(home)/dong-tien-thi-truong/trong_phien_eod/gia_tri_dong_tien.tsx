@@ -56,7 +56,7 @@ const MoneyFlowValueChart = (props: any) => {
         indexAxis: 'y', // Chuyển đổi biểu đồ cột thành biểu đồ cột ngang
         layout: {
             padding: {
-                right: props?.ww > 767 ? 50 : (props?.type === 'industry' ? 0 : 30),
+                right: props?.ww > 767 ? 50 : 30,
             }
         },
         plugins: {
@@ -129,7 +129,7 @@ const MoneyFlowValueChart = (props: any) => {
                 // min: props?.type === 'industry' ? Math.floor(props.ww > 767 ? minIndustryScore : minIndustryScore) : null,
                 // max: props?.type === 'industry' ? Math.ceil(props.ww > 767 ? maxIndustryScore : maxIndustryScore) : null,    
                 min: props?.type === 'industry' ? minIndustryScore : null,
-                max: props?.type === 'industry' ? maxIndustryScore : null,  
+                max: props?.type === 'industry' ? maxIndustryScore : null,
                 grid: {
                     display: false, // Loại bỏ grid dọc
                 },
