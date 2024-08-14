@@ -329,14 +329,14 @@ export default function Page4() {
                       <Col span={ww > 767 ? 10 : 11}>
                         <p style={{
                           fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '16.5px',
-                          color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px -2px', padding: 0
                         }}>
                           {ww > 767 ? 'Nhóm vốn hoá' : 'Vốn hoá'}
                         </p>
                         <p style={{
                           fontSize: pixel(0.014, 14), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: getColorMarketCap(stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.marketcap_group),
-                          fontWeight: 'bold', margin: '5px 0px 0px 2px', padding: 0
+                          fontWeight: 'bold', margin: '5px 0px 0px -2px', padding: 0
                         }}>
                           {stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.marketcap_group}
                         </p>
