@@ -118,9 +118,9 @@ export default function Page3() {
 
     function resetInterval() {
       clearInterval(interval);
-      interval = setInterval(fetchData, 60000);
+      interval = setInterval(fetchData, 10000);
     }
-    let interval = setInterval(fetchData, 60000);
+    let interval = setInterval(fetchData, 10000);
     window.addEventListener('click', resetInterval);
     window.addEventListener('wheel', resetInterval);
     window.addEventListener('mousemove', resetInterval);
@@ -531,15 +531,14 @@ export default function Page3() {
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
                 </Col>
               </Row>
-              <Row gutter={20}>
-                <Col xs={12} sm={10} md={8} lg={8} xl={6}>
+              <Row gutter={10}>
+                <Col xs={11} sm={10} md={8} lg={8} xl={6}>
                   <Row>
                     <Col span={24}>
                       <div style={{
                         width: '100%', height: ww > 767 ? '170px' : '140px', background: '#161616',
-                        padding: '10px', borderRadius: '5px', marginTop: '10px'
+                        padding: '5px', borderRadius: '5px', marginTop: '10px'
                       }}>
-
                         <Row>
                           <Col span={14}>
                             <p style={{
@@ -596,11 +595,11 @@ export default function Page3() {
                     <Col span={24}>
                       <div style={{
                         width: '100%', height: ww > 767 ? '120px' : '100px', background: '#161616',
-                        padding: '10px', borderRadius: '5px', marginTop: '10px'
+                        padding: '5px', borderRadius: '5px', marginTop: '10px'
                       }}>
                         <p style={{
                           fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
-                          color: '#B3B3B3', fontWeight: 'bold', margin: '-5px 0px 0px 2px', padding: 0
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '1px 0px 0px 2px', padding: 0
                         }}>
                           Độ rộng dòng tiền
                         </p>
@@ -610,7 +609,7 @@ export default function Page3() {
                         />
                         <p style={{
                           fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
-                          color: '#B3B3B3', fontWeight: 'bold', margin: '-5px 0px 0px 2px', padding: 0
+                          color: '#B3B3B3', fontWeight: 'bold', margin: '-3px 0px 0px 2px', padding: 0
                         }}>
                           Độ rộng thanh khoản
                         </p>
@@ -622,7 +621,7 @@ export default function Page3() {
                     </Col>
                   </Row>
                 </Col>
-                <Col xs={12} sm={14} md={16} lg={16} xl={18}>
+                <Col xs={13} sm={14} md={16} lg={16} xl={18}>
                   <GroupPriceChart data={group_price_chart_df} ww={ww} select_group={select_group} />
                 </Col>
               </Row>

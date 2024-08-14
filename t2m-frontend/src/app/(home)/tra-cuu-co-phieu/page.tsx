@@ -92,9 +92,9 @@ export default function Page4() {
 
     function resetInterval() {
       clearInterval(interval);
-      interval = setInterval(fetchData, 60000);
+      interval = setInterval(fetchData, 10000);
     }
-    let interval = setInterval(fetchData, 60000);
+    let interval = setInterval(fetchData, 10000);
     window.addEventListener('click', resetInterval);
     window.addEventListener('wheel', resetInterval);
     window.addEventListener('mousemove', resetInterval);
@@ -228,7 +228,7 @@ export default function Page4() {
                 </p>
               </Row>
               <Row gutter={10} style={{ marginTop: '0px' }}>
-                <Col xs={12} sm={10} md={8} lg={8} xl={6}>
+                <Col xs={11} sm={10} md={8} lg={8} xl={6}>
                   <div style={{
                     width: '100%', height: ww > 767 ? '170px' : '140px', background: '#161616',
                     padding: '5px 5px 5px 5px', borderRadius: '5px'
@@ -311,7 +311,7 @@ export default function Page4() {
                       </Col>
                     </Row>
                     <Row>
-                      <Col span={14}>
+                      <Col span={ww > 767 ? 14 : 13}>
                         <p style={{
                           fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
@@ -326,7 +326,7 @@ export default function Page4() {
                           {stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.industry_perform}
                         </p>
                       </Col>
-                      <Col span={10}>
+                      <Col span={ww > 767 ? 10 : 11}>
                         <p style={{
                           fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
@@ -336,7 +336,7 @@ export default function Page4() {
                         <p style={{
                           fontSize: pixel(0.014, 14), fontFamily: 'Calibri, sans-serif', height: '16.5px',
                           color: getColorMarketCap(stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.marketcap_group),
-                          fontWeight: 'bold', margin: '5.5px 0px 0px 2px', padding: 0
+                          fontWeight: 'bold', margin: '5px 0px 0px 2px', padding: 0
                         }}>
                           {stock_score_filter_df?.filter(item => item.stock === select_stock)?.[0]?.marketcap_group}
                         </p>
@@ -344,7 +344,7 @@ export default function Page4() {
                     </Row>
                   </div>
                 </Col>
-                <Col xs={12} sm={14} md={16} lg={16} xl={18}>
+                <Col xs={13} sm={14} md={16} lg={16} xl={18}>
                   <Row gutter={20} style={{ height: '60px', marginBottom: '10px' }}>
                     <Col xs={12} sm={12} md={14} lg={14} xl={14} style={{ display: 'flex', flexDirection: ww > 800 ? 'row' : 'column' }}>
                       <Button type='text' style={{
@@ -426,7 +426,7 @@ export default function Page4() {
                   <Row gutter={10}>
                     {thong_tin_cp === 'BD' && (
                       <>
-                        {stock_price_chart_df.length > 0 && (
+                        {stock_price_chart_df?.length > 0 && (
                           <StockPriceChart data={stock_price_chart_df} ww={ww} key={JSON.stringify(stock_price_chart_df)} />
                         )}
                       </>

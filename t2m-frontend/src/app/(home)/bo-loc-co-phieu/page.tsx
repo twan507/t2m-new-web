@@ -63,7 +63,7 @@ export default function Page5() {
     };
     fetchData();
 
-    const interval = setInterval(fetchData, 60000); // Gọi lại mỗi x giây
+    const interval = setInterval(fetchData, 10000); // Gọi lại mỗi x giây
     return () => clearInterval(interval); // Xóa interval khi component unmount
   }, []);
 
@@ -352,7 +352,7 @@ export default function Page5() {
                         <Radio.Button value="dt" className="custom-radio-button"
                           style={{
                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
-                          }}>{ww > 992 ? 'Bảng thông tin chung' :(ww > 767 ? 'Bảng thông tin' : 'Thông tin')}
+                          }}>{ww > 992 ? 'Bảng thông tin chung' : (ww > 767 ? 'Bảng thông tin' : 'Thông tin')}
                         </Radio.Button>
                         <Radio.Button value="kt" className="custom-radio-button"
                           style={{

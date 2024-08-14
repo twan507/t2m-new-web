@@ -139,7 +139,7 @@ const GroupPriceChart = (props: any) => {
     return (
         <div
             ref={chartContainerRef}
-            style={{ width: '100%', height: props.ww > 767 ? '310px' : '265px' }}
+            style={{ width: '100%', height: props.ww > 767 ? '300px' : '256px', marginTop: '10px' }}
         />
     );
 };

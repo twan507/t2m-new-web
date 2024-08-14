@@ -169,7 +169,7 @@ const StockMoneyFlowT5Chart = (props: any) => {
     if (!checkAuth) {
         return (
             <>
-                <div style={{ height: props?.height, width: '100%', marginTop: props.ww > 767 ? '10px' : '5px', marginLeft: '-5px' }}>
+                <div style={{ height: props?.height, width: '100%', marginTop: props.ww > 767 ? '10px' : '5px' }}>
                     <Bar data={data} options={options} />
                 </div>
             </>

@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { sessionLimit } from '@/utlis/sessionLimit';
 import { resetAuthState } from '@/redux/authSlice';
 import { signOut } from '@/utlis/signOut';
+import { KeyOutlined, LogoutOutlined } from '@ant-design/icons';
 
 
 interface IProps {
@@ -42,11 +43,11 @@ const UserInfoModal = (props: IProps) => {
     const dispatch = useAppDispatch();
     const authInfo = useAppSelector((state) => state.auth)
     useEffect(() => {
-      (async () => {
-        const limitState = await sessionLimit(authInfo?.user?.email, authInfo?.access_token);
-        if (!limitState) { dispatch(resetAuthState()) }
-        setLimitState(limitState);
-      })()
+        (async () => {
+            const limitState = await sessionLimit(authInfo?.user?.email, authInfo?.access_token);
+            if (!limitState) { dispatch(resetAuthState()) }
+            setLimitState(limitState);
+        })()
     }, [authInfo?.user?.email, authInfo?.access_token]);
     const authState = !!authInfo?.user?._id && limitState
 
@@ -293,6 +294,7 @@ const UserInfoModal = (props: IProps) => {
                             </Col>
                             <Col span={8}>
                                 <Button type='primary' block
+                                    icon={ww > 576 ? null : <KeyOutlined />}
                                     style={{
                                         fontWeight: 'bold', // làm chữ đậm
                                         fontSize: 16,
@@ -304,7 +306,7 @@ const UserInfoModal = (props: IProps) => {
                                         setUserInfoModalOpen(false)
                                     }}
                                 >
-                                    Đổi mật khẩu
+                                    {ww > 576 ? 'Đổi mật khẩu' : ''}
                                 </Button>
                             </Col>
                         </Row>
@@ -316,7 +318,7 @@ const UserInfoModal = (props: IProps) => {
                             <Col span={16}>
                                 <Button type="primary" htmlType="submit" block
                                     style={{
-                                        fontWeight: 'bold', // làm chữ đậm
+                                        fontWeight: (ww > 576 ? 'bold' : 'normal'), // làm chữ đậm
                                         fontSize: 16,
                                         marginBottom: '20px',
                                         padding: '0px 0px 5px 0px',
@@ -327,19 +329,20 @@ const UserInfoModal = (props: IProps) => {
                             </Col>
                             <Col span={8}>
                                 <Button type="primary" block danger
+                                    icon={ww > 576 ? null : <LogoutOutlined />}
                                     style={{
                                         fontWeight: 'bold', // làm chữ đậm
                                         fontSize: 16,
                                         marginBottom: '20px',
                                         padding: '0px 0px 5px 0px',
                                     }}
-                                    onClick = {() => {
+                                    onClick={() => {
                                         handleClose()
                                         dispatch(resetAuthState())
                                         signOut(authInfo.access_token)
                                     }}
                                 >
-                                    Đăng xuất
+                                    {ww > 576 ? 'Đăng xuất' : ''}
                                 </Button>
                             </Col>
                         </Row>

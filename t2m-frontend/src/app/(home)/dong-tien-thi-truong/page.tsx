@@ -97,7 +97,7 @@ export default function Page2() {
     };
     fetchData();
 
-    const interval = setInterval(fetchData, 60000); // Gọi lại mỗi x giây
+    const interval = setInterval(fetchData, 10000); // Gọi lại mỗi x giây
     return () => clearInterval(interval); // Xóa interval khi component unmount
   }, []);
 
@@ -344,7 +344,7 @@ export default function Page2() {
                         </Col>
                         <Col xs={10} sm={10} md={14} lg={14} xl={14}>
                           <NhomHsRanking data={group_score_ranking_df} ww={ww} fontSize={pixel(0.017, 16)}
-                            height={ww > 991 ? '250px' : '170px'} type='group' />
+                            height={ww > 991 ? '250px' : '160px'} type='group' />
                         </Col>
                       </Row>
                       <Row gutter={20} style={{ marginTop: ww > 991 ? '40px' : '30px', position: 'relative' }}>
@@ -355,7 +355,7 @@ export default function Page2() {
                         </Col>
                         <Col xs={10} sm={10} md={14} lg={14} xl={14}>
                           <NhomVhRanking data={group_score_ranking_df} ww={ww} fontSize={pixel(0.017, 16)}
-                            height={ww > 991 ? '250px' : '170px'} type='group' />
+                            height={ww > 991 ? '250px' : '160px'} type='group' />
                         </Col>
                       </Row>
                     </>

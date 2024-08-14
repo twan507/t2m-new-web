@@ -23,7 +23,7 @@ const LiquidityLineChart = (props: any) => {
                 label: 'Giá trị',
                 data: data_sets?.map((item: any) => item.liquid_all_stock === null ? null : (item.liquid_all_stock * 100).toFixed(2)),
                 fill: 'start',
-                backgroundColor: 'rgba(2, 91, 196, 0.2)', // Thêm màu nền cho khu vực dưới đường biểu đồ
+                backgroundColor: 'rgba(2, 91, 196, 0.3)', // Thêm màu nền cho khu vực dưới đường biểu đồ
                 borderColor: '#025bc4',
                 pointRadius: 0, // Tắt các chấm màu xám ở các data label
                 hoverRadius: 5,
@@ -31,6 +31,17 @@ const LiquidityLineChart = (props: any) => {
                 cubicInterpolationMode: 'monotone', // Đường cong mượt
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
+            {
+                label: '100',
+                data: new Array(timeList.length).fill(100), // Tạo một mảng có độ dài bằng số lượng nhãn với giá trị 1
+                borderWidth: 2,
+                pointRadius: 0,
+                hoverRadius: 0,
+                fill: 'start',
+                borderColor: 'rgba(555, 555, 555, 0.6)', // Màu của đường thẳng (tông màu xám)
+                backgroundColor: 'rgba(555, 555, 555, 0.15)', // Thêm màu nền cho khu vực dưới đường biểu đồ (tông màu xám nhạt)
+                borderDash: [5, 5], // Đường kẻ đứt đoạn
+            }
         ],
     };
 
@@ -54,7 +65,15 @@ const LiquidityLineChart = (props: any) => {
                 caretPadding: 20, // Kéo ô tooltip ra xa khỏi điểm dữ liệu một chút
                 callbacks: {
                     label: function (tooltipItem: any) {
-                        return ` ${tooltipItem?.dataset.label}: ${tooltipItem?.raw}%`;
+                        const label = tooltipItem?.dataset?.label;
+                        let value = tooltipItem?.raw;
+
+                        // Bỏ qua việc hiển thị tooltip cho dataset có label là 'Mốc 1%'
+                        if (label === '100') {
+                            return null;
+                        }
+
+                        return ` ${label}: ${value}%`;
                     }
                 }
             },
