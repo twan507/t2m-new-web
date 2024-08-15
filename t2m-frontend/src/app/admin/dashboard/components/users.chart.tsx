@@ -113,7 +113,6 @@ const UsersChart: React.FC<LineChartProps> = ({ width, height, data }) => {
                 display: false, // Tắt các số tại các data label
             },
             tooltip: {
-                enabled: props.ww > 767 ? true : false,
                 enabled: true, // Always enable tooltips
                 mode: 'index',
                 intersect: false,
