@@ -71,7 +71,6 @@ const NhomVhScoreItd = (props: any) => {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                display: props?.ww > 767 ? true : false,
                 position: 'top',
                 labels: {
                     boxWidth: 20,
@@ -99,7 +98,7 @@ const NhomVhScoreItd = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 767 ? 'Diễn biến dòng tiền nhóm vốn hoá' : 'DT nhóm vốn hoá',
+                text: props?.ww > 767 ? 'Diễn biến dòng tiền nhóm vốn hoá' : 'Diễn biến dòng tiền nhóm vốn hoá',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',
@@ -129,11 +128,11 @@ const NhomVhScoreItd = (props: any) => {
                 },
                 grid: {
                     display: true,
-                    color: '#dfdfdf',
-                    drawBorder: false,
-                    lineWidth: function (context: any) {
-                        return context.tick.value === 0 ? 1 : 0; // Draw grid line only at value 0
+                    color: function (context: any) {
+                        return context.tick.value === 0 ? '#dfdfdf' : "#333333"; // Draw grid line only at value 0
                     },
+                    drawBorder: false,
+                    lineWidth: 1
                 },
             },
         },
@@ -146,7 +145,7 @@ const NhomVhScoreItd = (props: any) => {
 
     if (!checkAuth) {
         return (
-            <div style={{ width: '100%', height: props?.height }}>
+            <div style={{ width: '100%', height: props.ww > 470 ? props?.height : `calc(${props?.height} + 50px)` }}>
                 <Line data={lines} options={options} />
             </div>
         );

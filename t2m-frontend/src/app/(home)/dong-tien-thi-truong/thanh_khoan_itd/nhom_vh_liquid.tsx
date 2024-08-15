@@ -63,6 +63,17 @@ const NhomVhLiquidItd = (props: any) => {
                 cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
             },
+            {
+                label: '100',
+                data: new Array(timeList?.length).fill(100), // Tạo một mảng có độ dài bằng số lượng nhãn với giá trị 1
+                borderWidth: 2,
+                pointRadius: 0,
+                hoverRadius: 0,
+                fill: 'start',
+                borderColor: 'rgba(555, 555, 555, 0.6)', // Màu của đường thẳng (tông màu xám)
+                backgroundColor: 'rgba(555, 555, 555, 0.15)', // Thêm màu nền cho khu vực dưới đường biểu đồ (tông màu xám nhạt)
+                borderDash: [5, 5], // Đường kẻ đứt đoạn
+            }
         ],
     };
 
@@ -71,12 +82,14 @@ const NhomVhLiquidItd = (props: any) => {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                display: props?.ww > 767 ? true : false,
                 position: 'top',
                 labels: {
+                    filter: function (item: any, chart: any) {
+                        // Bỏ qua các mục có label là '100'
+                        return item.text !== '100';
+                    },
                     boxWidth: 20,
                     boxHeight: 6,
-                    // padding: 10,
                     pointStyle: 'circle',
                     usePointStyle: true,
                     font: {
@@ -89,7 +102,15 @@ const NhomVhLiquidItd = (props: any) => {
             tooltip: {
                 callbacks: {
                     label: function (tooltipItem: any) {
-                        return `${tooltipItem?.dataset?.label}: ${tooltipItem?.raw?.toFixed(2)}%`;
+                        const label = tooltipItem?.dataset?.label;
+                        let value = tooltipItem?.raw;
+
+                        // Bỏ qua việc hiển thị tooltip cho dataset có label là 'Mốc 1%'
+                        if (label === '100') {
+                            return null;
+                        }
+
+                        return ` ${label}: ${value.toFixed(2)}%`;
                     }
                 },
                 displayColors: true,
@@ -101,7 +122,7 @@ const NhomVhLiquidItd = (props: any) => {
             },
             title: {
                 display: true,
-                text: props?.ww > 767 ? 'Diễn biến thanh khoản nhóm vốn hoá' : 'TK nhóm vốn hoá',
+                text: props?.ww > 767 ? 'Diễn biến thanh khoản nhóm vốn hoá' : 'Diễn biến thanh khoản nhóm vốn hoá',
                 padding: {},
                 font: {
                     family: 'Calibri, sans-serif',
@@ -133,7 +154,9 @@ const NhomVhLiquidItd = (props: any) => {
                     }
                 },
                 grid: {
-                    display: false,
+                    display: true,
+                    color: '#333333',
+                    lineWidth: 1
                 }
             },
         },
@@ -146,7 +169,7 @@ const NhomVhLiquidItd = (props: any) => {
 
     if (!checkAuth) {
         return (
-            <div style={{ width: '100%', height: props?.height }}>
+            <div style={{ width: '100%', height: props.ww > 470 ? props?.height : `calc(${props?.height} + 50px)` }}>
                 <Line data={lines} options={options} />
             </div>
         );

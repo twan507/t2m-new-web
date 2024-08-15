@@ -109,6 +109,7 @@ const MarketStructureChart = (props: any) => {
                 }
             },
             tooltip: {
+                enabled: props.ww > 767 ? true : false,
                 callbacks: {
                     title: function (tooltipItems: any) {
                         return `Ngày ${tooltipItems[0].label}`;

@@ -57,9 +57,9 @@ const StockWeekScore = (props: any) => {
             },
             {
                 label: 'Dòng tiền trong phiên',
-                data: data_sets?.map((item: any) => item.t0_score/5),
+                data: data_sets?.map((item: any) => item.t0_score / 5),
                 backgroundColor: data_sets?.map((item: any) => item.t0_score >= 0 ? 'rgba(36, 183, 94, 0.5)' : 'rgba(225, 64, 64, 0.5)'), // Dynamic color based on value
-                type: 'bar', 
+                type: 'bar',
             }
         ],
     };
@@ -101,6 +101,7 @@ const StockWeekScore = (props: any) => {
                 }
             },
             tooltip: {
+                enabled: props.ww > 767 ? true : false,
                 callbacks: {
                     title: function (tooltipItems: any) {
                         return `Ngày ${tooltipItems[0].label}`;
@@ -146,7 +147,7 @@ const StockWeekScore = (props: any) => {
                 ticks: {
                     color: '#dfdfdf',
                 },
-                
+
             },
             y: {
                 position: 'right',

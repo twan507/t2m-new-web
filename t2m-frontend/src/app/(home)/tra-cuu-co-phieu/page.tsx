@@ -92,9 +92,9 @@ export default function Page4() {
 
     function resetInterval() {
       clearInterval(interval);
-      interval = setInterval(fetchData, 10000);
+      interval = setInterval(fetchData, 60000);
     }
-    let interval = setInterval(fetchData, 10000);
+    let interval = setInterval(fetchData, 60000);
     window.addEventListener('click', resetInterval);
     window.addEventListener('wheel', resetInterval);
     window.addEventListener('mousemove', resetInterval);

@@ -87,7 +87,7 @@ const FilterStockTable = (props: any) => {
 
   const data_sets = filterData(props?.data)
     ?.sort((a: any, b: any) => a.stock.localeCompare(b.stock))
-    ?.map((item: any, stt: any) => ({ ...item, stt: stt }));
+    ?.map((item: any, stt: any) => ({ ...item, stt: stt, key: `${item.stock}-${stt}` }));
 
   const columns = (props: any, ww: any) => {
     if (props?.table_type === 'dt') {

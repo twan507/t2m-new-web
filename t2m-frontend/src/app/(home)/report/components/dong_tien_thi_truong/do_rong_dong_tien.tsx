@@ -93,6 +93,7 @@ const MoneyFlowBreathChart = (props: any): any => {
                 color: '#dfdfdf' // Chỉnh sửa màu chữ
             },
             tooltip: {
+                enabled: props.ww > 767 ? true : false,
                 callbacks: {
                     label: function (tooltipItem: any) {
                         if (props?.ww > 767) {

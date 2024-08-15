@@ -86,6 +86,7 @@ const StockMoneyFlowT5Chart = (props: any) => {
                 }
             },
             tooltip: {
+                enabled: props.ww > 767 ? true : false,
                 callbacks: {
                     label: function (tooltipItem: any) {
                         if (props?.ww > 767) {

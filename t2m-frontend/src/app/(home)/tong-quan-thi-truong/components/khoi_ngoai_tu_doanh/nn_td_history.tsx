@@ -63,6 +63,7 @@ const NnTdHispory = (props: any) => {
                 color: '#dfdfdf' // Chỉnh sửa màu chữ
             },
             tooltip: {
+                enabled: props.ww > 767 ? true : false,
                 callbacks: {
                     label: function (tooltipItem: any) {
                         return `${tooltipItem?.dataset?.label}: ${Math.round(tooltipItem?.raw)} Tỷ`;

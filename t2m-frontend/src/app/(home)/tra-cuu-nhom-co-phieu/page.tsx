@@ -118,9 +118,9 @@ export default function Page3() {
 
     function resetInterval() {
       clearInterval(interval);
-      interval = setInterval(fetchData, 10000);
+      interval = setInterval(fetchData, 60000);
     }
-    let interval = setInterval(fetchData, 10000);
+    let interval = setInterval(fetchData, 60000);
     window.addEventListener('click', resetInterval);
     window.addEventListener('wheel', resetInterval);
     window.addEventListener('mousemove', resetInterval);
@@ -668,7 +668,7 @@ export default function Page3() {
               {select_group == 'Thị trường' && (
                 <>
                   <Row gutter={25} style={{ marginTop: '50px', marginBottom: '10px' }}>
-                    <Col xs={20} sm={20} md={10} lg={10} xl={10}>
+                    <Col xs={20} sm={20} md={12} lg={10} xl={10}>
                       <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
                         Cấu trúc sóng nhóm cổ phiếu T2M
                       </p>
@@ -686,7 +686,7 @@ export default function Page3() {
                         />
                       </Col>
                     )}
-                    <Col xs={24} sm={24} md={14} lg={14} xl={14} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Col xs={24} sm={24} md={12} lg={14} xl={14} style={{ display: 'flex', justifyContent: 'flex-end' }}>
                       {switch_ms_filter && (
                         <MsSpanSlider set_ms_slice={set_ms_slice} ww={ww} />
                       )}

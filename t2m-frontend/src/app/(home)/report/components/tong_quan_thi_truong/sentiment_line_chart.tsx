@@ -45,6 +45,7 @@ const ReportSentimentLineChart = (props: any) => {
                 display: true,
             },
             tooltip: {
+                enabled: props.ww > 767 ? true : false,
                 mode: 'index',
                 intersect: false,
                 displayColors: true,

@@ -42,6 +42,7 @@ const GroupRankingChart = (props: any) => {
                 display: false,
             },
             tooltip: {
+                enabled: props.ww > 767 ? true : false,
                 callbacks: {
                     title: function (tooltipItems: any) {
                         return `Xếp hạng ngày ${tooltipItems[0].label}`;

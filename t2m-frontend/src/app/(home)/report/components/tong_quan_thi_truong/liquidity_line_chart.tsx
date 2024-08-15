@@ -47,6 +47,7 @@ const ReportLiquidityLineChart = (props: any) => {
                 display: true,
             },
             tooltip: {
+                enabled: props.ww > 767 ? true : false,
                 mode: 'index',
                 intersect: false,
                 displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip

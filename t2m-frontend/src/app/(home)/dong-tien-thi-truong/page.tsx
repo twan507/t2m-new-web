@@ -338,22 +338,22 @@ export default function Page2() {
                     <>
                       <Row gutter={20} style={{ marginTop: ww > 991 ? '40px' : '30px', position: 'relative' }}>
                         < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                        <Col xs={14} sm={14} md={10} lg={10} xl={10}>
+                        <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_5p_df} ww={ww} fontSize={pixel(0.017, 16)}
                             group='hs' height={ww > 991 ? '250px' : '150px'} type='group' />
                         </Col>
-                        <Col xs={10} sm={10} md={14} lg={14} xl={14}>
+                        <Col xs={12} sm={12} md={14} lg={14} xl={14}>
                           <NhomHsRanking data={group_score_ranking_df} ww={ww} fontSize={pixel(0.017, 16)}
                             height={ww > 991 ? '250px' : '160px'} type='group' />
                         </Col>
                       </Row>
                       <Row gutter={20} style={{ marginTop: ww > 991 ? '40px' : '30px', position: 'relative' }}>
                         < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                        <Col xs={14} sm={14} md={10} lg={10} xl={10}>
+                        <Col xs={12} sm={12} md={10} lg={10} xl={10}>
                           <MoneyFlowT5Chart data={group_score_5p_df} ww={ww} fontSize={pixel(0.017, 16)}
                             group='cap' height={ww > 991 ? '250px' : '150px'} type='group' />
                         </Col>
-                        <Col xs={10} sm={10} md={14} lg={14} xl={14}>
+                        <Col xs={12} sm={12} md={14} lg={14} xl={14}>
                           <NhomVhRanking data={group_score_ranking_df} ww={ww} fontSize={pixel(0.017, 16)}
                             height={ww > 991 ? '250px' : '160px'} type='group' />
                         </Col>
@@ -364,27 +364,55 @@ export default function Page2() {
               )}
               {switch_itd_eod === 'itd' && (
                 <>
+                  {ww < 767 && (
+                    <Radio.Group
+                      className="custom-radio-group"
+                      defaultValue={switch_flow_liquid_group}
+                      buttonStyle="solid" size='small'
+                      onChange={onChangeFlowLiquidGroup}
+                      style={{ display: 'flex', width: '100%', marginTop: '20px' }}
+                    >
+                      <Radio.Button value="F" className="custom-radio-button"
+                        style={{
+                          fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
+                        }}>Dòng tiền
+                      </Radio.Button>
+                      <Radio.Button value="L" className="custom-radio-button"
+                        style={{
+                          fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
+                        }}>Thanh khoản
+                      </Radio.Button>
+                    </Radio.Group>
+                  )}
                   <Row gutter={20} style={{ marginTop: ww > 991 ? '40px' : '30px', position: 'relative' }}>
-                    < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                      <NhomHsScoreItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
-                        height={ww > 991 ? '300px' : '200px'} type='group' />
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                      <NhomHsLiquidItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
-                        height={ww > 991 ? '300px' : '200px'} type='group' />
-                    </Col>
+                    <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
+                    {(ww > 767 || switch_flow_liquid_group === 'F') && (
+                      <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <NhomHsScoreItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          height={ww > 991 ? '300px' : '200px'} type='group' />
+                      </Col>
+                    )}
+                    {(ww > 767 || switch_flow_liquid_group === 'L') && (
+                      <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <NhomHsLiquidItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          height={ww > 991 ? '300px' : '200px'} type='group' />
+                      </Col>
+                    )}
                   </Row>
                   <Row gutter={20} style={{ marginTop: ww > 991 ? '40px' : '30px', position: 'relative' }}>
                     < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                      <NhomVhScoreItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
-                        height={ww > 991 ? '300px' : '200px'} type='group' />
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                      <NhomVhLiquidItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
-                        height={ww > 991 ? '300px' : '200px'} type='group' />
-                    </Col>
+                    {(ww > 767 || switch_flow_liquid_group === 'F') && (
+                      <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <NhomVhScoreItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          height={ww > 991 ? '300px' : '200px'} type='group' />
+                      </Col>
+                    )}
+                    {(ww > 767 || switch_flow_liquid_group === 'L') && (
+                      <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <NhomVhLiquidItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          height={ww > 991 ? '300px' : '200px'} type='group' />
+                      </Col>
+                    )}
                   </Row>
                 </>
               )}
@@ -639,49 +667,85 @@ export default function Page2() {
               )}
               {switch_itd_eod === 'itd' && (
                 <>
+                  {ww < 767 && (
+                    <Radio.Group
+                      className="custom-radio-group"
+                      defaultValue={switch_flow_liquid_industry}
+                      buttonStyle="solid" size='small'
+                      onChange={onChangeFlowLiquidIndustry}
+                      style={{ display: 'flex', width: '100%', marginTop: '20px' }}
+                    >
+                      <Radio.Button value="F" className="custom-radio-button"
+                        style={{
+                          fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
+                        }}>Dòng tiền
+                      </Radio.Button>
+                      <Radio.Button value="L" className="custom-radio-button"
+                        style={{
+                          fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 12), color: '#dfdfdf'
+                        }}>Thanh khoản
+                      </Radio.Button>
+                    </Radio.Group>
+                  )}
                   <Row gutter={20} style={{ marginTop: ww > 991 ? '40px' : '30px', position: 'relative' }}>
                     < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                      <NganhHsAScoreItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
-                        height={ww > 991 ? '300px' : '200px'} type='group' />
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                      <NganhHsALiquidItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
-                        height={ww > 991 ? '300px' : '200px'} type='group' />
-                    </Col>
+                    {(ww > 767 || switch_flow_liquid_industry === 'F') && (
+                      <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <NganhHsAScoreItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          height={ww > 991 ? '300px' : '200px'} type='group' />
+                      </Col>
+                    )}
+                    {(ww > 767 || switch_flow_liquid_industry === 'L') && (
+                      <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <NganhHsALiquidItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          height={ww > 991 ? '300px' : '200px'} type='group' />
+                      </Col>
+                    )}
                   </Row>
                   <Row gutter={20} style={{ marginTop: ww > 991 ? '40px' : '30px', position: 'relative' }}>
                     < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                      <NganhHsBScoreItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
-                        height={ww > 991 ? '300px' : '200px'} type='group' />
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                      <NganhHsBLiquidItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
-                        height={ww > 991 ? '300px' : '200px'} type='group' />
-                    </Col>
+                    {(ww > 767 || switch_flow_liquid_industry === 'F') && (
+                      <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <NganhHsBScoreItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          height={ww > 991 ? '300px' : '200px'} type='group' />
+                      </Col>
+                    )}
+                    {(ww > 767 || switch_flow_liquid_industry === 'L') && (
+                      <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <NganhHsBLiquidItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          height={ww > 991 ? '300px' : '200px'} type='group' />
+                      </Col>
+                    )}
                   </Row>
                   <Row gutter={20} style={{ marginTop: ww > 991 ? '40px' : '30px', position: 'relative' }}>
                     < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                      <NganhHsCScoreItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
-                        height={ww > 991 ? '300px' : '200px'} type='group' />
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                      <NganhHsCLiquidItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
-                        height={ww > 991 ? '300px' : '200px'} type='group' />
-                    </Col>
+                    {(ww > 767 || switch_flow_liquid_industry === 'F') && (
+                      <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <NganhHsCScoreItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          height={ww > 991 ? '300px' : '200px'} type='group' />
+                      </Col>
+                    )}
+                    {(ww > 767 || switch_flow_liquid_industry === 'L') && (
+                      <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <NganhHsCLiquidItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          height={ww > 991 ? '300px' : '200px'} type='group' />
+                      </Col>
+                    )}
                   </Row>
                   <Row gutter={20} style={{ marginTop: ww > 991 ? '40px' : '30px', position: 'relative' }}>
                     < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                      <NganhHsDScoreItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
-                        height={ww > 991 ? '300px' : '200px'} type='group' />
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                      <NganhHsDLiquidItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
-                        height={ww > 991 ? '300px' : '200px'} type='group' />
-                    </Col>
+                    {(ww > 767 || switch_flow_liquid_industry === 'F') && (
+                      <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <NganhHsDScoreItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          height={ww > 991 ? '300px' : '200px'} type='group' />
+                      </Col>
+                    )}
+                    {(ww > 767 || switch_flow_liquid_industry === 'L') && (
+                      <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <NganhHsDLiquidItd data={group_itd_score_liquidity_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          height={ww > 991 ? '300px' : '200px'} type='group' />
+                      </Col>
+                    )}
                   </Row>
                 </>
               )}

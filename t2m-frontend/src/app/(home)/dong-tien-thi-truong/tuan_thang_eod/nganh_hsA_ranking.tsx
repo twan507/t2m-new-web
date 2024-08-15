@@ -136,7 +136,7 @@ const NganhHsARanking = (props: any) => {
             title: {
                 display: true,
                 text: props?.ww > 767 ? 'Sức mạnh dòng tiền ngành hiệu suất A' : 'Sức mạnh ngành hiệu suất A',
-                padding: {},
+                padding: { bottom: 15 },
                 font: {
                     family: 'Calibri, sans-serif',
                     size: parseInt(props?.fontSize) - 2,

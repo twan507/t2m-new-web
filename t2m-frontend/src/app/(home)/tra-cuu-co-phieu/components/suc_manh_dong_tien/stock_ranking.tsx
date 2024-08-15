@@ -112,6 +112,7 @@ const StockRankingChart = (props: any) => {
                 }
             },
             tooltip: {
+                enabled: props.ww > 767 ? true : false,
                 callbacks: {
                     title: function (tooltipItems: any) {
                         return `Xếp hạng ngày ${tooltipItems[0].label}`;
@@ -211,7 +212,7 @@ const StockRankingChart = (props: any) => {
 
     if (!checkAuth) {
         return (
-            <div style={{ width: '100%', height: props.ww > 767 ? '300px' : '250px' , marginTop: '20px' }}>
+            <div style={{ width: '100%', height: props.ww > 767 ? '300px' : '250px', marginTop: '20px' }}>
                 <Line data={lines} options={options} plugins={[customLegendMargin, customTitleMargin]} />
             </div>
         );

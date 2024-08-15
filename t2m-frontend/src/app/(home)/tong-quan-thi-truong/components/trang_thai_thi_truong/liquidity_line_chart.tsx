@@ -33,7 +33,7 @@ const LiquidityLineChart = (props: any) => {
             },
             {
                 label: '100',
-                data: new Array(timeList.length).fill(100), // Tạo một mảng có độ dài bằng số lượng nhãn với giá trị 1
+                data: new Array(timeList?.length).fill(100), // Tạo một mảng có độ dài bằng số lượng nhãn với giá trị 1
                 borderWidth: 2,
                 pointRadius: 0,
                 hoverRadius: 0,
@@ -58,6 +58,7 @@ const LiquidityLineChart = (props: any) => {
                 display: true,
             },
             tooltip: {
+                enabled: props.ww > 767 ? true : false,
                 mode: 'index',
                 intersect: false,
                 displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip
@@ -73,7 +74,7 @@ const LiquidityLineChart = (props: any) => {
                             return null;
                         }
 
-                        return ` ${label}: ${value}%`;
+                        return ` ${label}: ${value.toFixed(2)}%`;
                     }
                 }
             },

@@ -37,7 +37,7 @@ const MoneyFlowValueChart = (props: any) => {
     const maxIndustryScore = industry_data_sets?.reduce((max: any, current: any) => current?.score > max ? current?.score : max, industry_data_sets?.[0]?.score);
 
     const data = {
-        labels: data_sets?.map((item: any) => props?.type === 'industry' ? item.name + '           ' : item.name + '    '),
+        labels: data_sets?.map((item: any) => props?.type === 'industry' ? item.name + '           ' : item.name + '       '),
         datasets: [
             {
                 label: 'Giá trị',
@@ -79,6 +79,7 @@ const MoneyFlowValueChart = (props: any) => {
                 }
             },
             tooltip: {
+                enabled: props.ww > 767 ? true : false,
                 callbacks: {
                     label: function (tooltipItem: any) {
                         if (props?.ww > 767) {
