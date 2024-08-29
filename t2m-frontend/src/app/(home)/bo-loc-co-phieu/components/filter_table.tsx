@@ -137,8 +137,8 @@ const FilterStockTable = (props: any) => {
             }}>{text}</span>
           ),
           sorter: (a: any, b: any) => {
-            const aValue = a.stock.toLowerCase();
-            const bValue = b.stock.toLowerCase();
+            const aValue = a.stock?.toLowerCase();
+            const bValue = b.stock?.toLowerCase();
             if (aValue < bValue) {
               return -1;
             }
@@ -170,8 +170,8 @@ const FilterStockTable = (props: any) => {
             }}>{text}</span>
           ),
           sorter: (a: any, b: any) => {
-            const aValue = a.industry_name.toLowerCase();
-            const bValue = b.industry_name.toLowerCase();
+            const aValue = a.industry_name?.toLowerCase();
+            const bValue = b.industry_name?.toLowerCase();
             if (aValue < bValue) {
               return -1;
             }
@@ -203,8 +203,8 @@ const FilterStockTable = (props: any) => {
             }}>{text}</span>
           ),
           sorter: (a: any, b: any) => {
-            const aValue = a.stock_perform.toLowerCase();
-            const bValue = b.stock_perform.toLowerCase();
+            const aValue = a.stock_perform?.toLowerCase();
+            const bValue = b.stock_perform?.toLowerCase();
             if (aValue < bValue) {
               return -1;
             }
@@ -385,8 +385,8 @@ const FilterStockTable = (props: any) => {
               }}>{text}</span>
             ),
             sorter: (a: any, b: any) => {
-              const aValue = a.industry_perform.toLowerCase();
-              const bValue = b.industry_perform.toLowerCase();
+              const aValue = a.industry_perform?.toLowerCase();
+              const bValue = b.industry_perform?.toLowerCase();
               if (aValue < bValue) {
                 return -1;
               }
@@ -418,8 +418,8 @@ const FilterStockTable = (props: any) => {
               }}>{text}</span>
             ),
             sorter: (a: any, b: any) => {
-              const aValue = a.marketcap_group.toLowerCase();
-              const bValue = b.marketcap_group.toLowerCase();
+              const aValue = a.marketcap_group?.toLowerCase();
+              const bValue = b.marketcap_group?.toLowerCase();
               if (aValue < bValue) {
                 return -1;
               }
@@ -548,8 +548,8 @@ const FilterStockTable = (props: any) => {
             }}>{text}</span>
           ),
           sorter: (a: any, b: any) => {
-            const aValue = a.stock.toLowerCase();
-            const bValue = b.stock.toLowerCase();
+            const aValue = a.stock?.toLowerCase();
+            const bValue = b.stock?.toLowerCase();
             if (aValue < bValue) {
               return -1;
             }
@@ -964,8 +964,8 @@ const FilterStockTable = (props: any) => {
             }}>{text}</span>
           ),
           sorter: (a: any, b: any) => {
-            const aValue = a.stock.toLowerCase();
-            const bValue = b.stock.toLowerCase();
+            const aValue = a.stock?.toLowerCase();
+            const bValue = b.stock?.toLowerCase();
             if (aValue < bValue) {
               return -1;
             }
@@ -1380,8 +1380,8 @@ const FilterStockTable = (props: any) => {
             }}>{text}</span>
           ),
           sorter: (a: any, b: any) => {
-            const aValue = a.stock.toLowerCase();
-            const bValue = b.stock.toLowerCase();
+            const aValue = a.stock?.toLowerCase();
+            const bValue = b.stock?.toLowerCase();
             if (aValue < bValue) {
               return -1;
             }

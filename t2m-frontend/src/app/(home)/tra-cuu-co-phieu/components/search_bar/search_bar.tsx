@@ -21,7 +21,7 @@ const SearchComponent = (props: any) => {
 
     const onSearch = (searchText: string) => {
         setOptions(
-            allOptions.filter((item: any) => item.value.toLowerCase().startsWith(searchText.toLowerCase()))
+            allOptions.filter((item: any) => item.value?.toLowerCase().startsWith(searchText?.toLowerCase()))
         );
         setInputValue(searchText);
     };

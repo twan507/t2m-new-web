@@ -7,8 +7,9 @@ const GroupPriceChart = (props: any) => {
     const areaSeriesRef = useRef<ISeriesApi<'Area'> | null>(null);
     const volumeSeriesRef = useRef<ISeriesApi<'Histogram'> | null>(null);
 
-    const ww = props?.ww
+    const ww = props?.ww;
 
+    // useEffect để tạo biểu đồ chỉ chạy một lần khi component mount
     useEffect(() => {
         if (!chartContainerRef.current) return;
 
@@ -96,22 +97,6 @@ const GroupPriceChart = (props: any) => {
             },
         });
 
-        const chartData = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());;
-
-        const areaData = chartData?.map(({ date, value }: any) => ({
-            time: Date.parse(date) / 1000, // Chuyển đổi sang giây
-            value: value,
-        }));
-
-        const volumeData = chartData?.map(({ date, volume }: any) => ({
-            time: Date.parse(date) / 1000, // Chuyển đổi sang giây
-            value: volume,
-        }));
-
-        // Đặt dữ liệu
-        areaSeriesRef.current.setData(areaData);
-        volumeSeriesRef.current.setData(volumeData);
-
         // Quan sát thay đổi kích thước để thiết kế đáp ứng
         const resizeObserver = new ResizeObserver((entries) => {
             if (chartRef.current) {
@@ -134,7 +119,28 @@ const GroupPriceChart = (props: any) => {
             areaSeriesRef.current = null;
             volumeSeriesRef.current = null;
         };
-    }, [props.data]);
+    }, []); // Chỉ chạy một lần khi component mount
+
+    // useEffect để cập nhật dữ liệu khi props.data thay đổi
+    useEffect(() => {
+        if (!areaSeriesRef.current || !volumeSeriesRef.current) return;
+
+        const chartData = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+        const areaData = chartData?.map(({ date, value }: any) => ({
+            time: Date.parse(date) / 1000, // Chuyển đổi sang giây
+            value: value,
+        }));
+
+        const volumeData = chartData?.map(({ date, volume }: any) => ({
+            time: Date.parse(date) / 1000, // Chuyển đổi sang giây
+            value: volume,
+        }));
+
+        // Cập nhật dữ liệu
+        areaSeriesRef.current.setData(areaData);
+        volumeSeriesRef.current.setData(volumeData);
+    }, [props.data]); // Chỉ chạy khi props.data thay đổi
 
     return (
         <div

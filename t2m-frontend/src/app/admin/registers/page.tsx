@@ -132,8 +132,8 @@ const PageRegisters: React.FC = () => {
         onFilter: (value, record) =>
             record[dataIndex]
                 .toString()
-                .toLowerCase()
-                .includes((value as string).toLowerCase()),
+                ?.toLowerCase()
+                .includes((value as string)?.toLowerCase()),
         onFilterDropdownOpenChange: (visible) => {
             if (visible) {
                 setTimeout(() => searchInput.current?.select(), 100);

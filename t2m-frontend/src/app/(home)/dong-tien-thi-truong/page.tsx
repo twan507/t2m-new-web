@@ -64,25 +64,38 @@ export default function Page2() {
   const authState = !!authInfo?.user?._id && limitState
   const accessLevel = authInfo?.user?.role === 'T2M ADMIN' ? 4 : authInfo?.user?.licenseInfo?.accessLevel
 
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
   const getData = async (tableName: string) => {
-    const res = await sendRequest<IBackendRes<any>>({
-      url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
-      method: "GET",
-    })
+
+    let res;
+    for (let i = 0; i < 8; i++) {
+      res = await sendRequest<IBackendRes<any>>({
+        url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
+        method: "GET",
+      })
+
+      if (res.data && res.data.length > 0) {
+        break; // Thoát khỏi vòng lặp khi dữ liệu thỏa mãn điều kiện
+      } else {
+        console.log(`[${new Date().toLocaleTimeString()}] Bảng ${tableName} chưa tải xong, thử lại sau 1 giây...`);
+        await delay(1000); // Nghỉ 1 giây trước khi thử lại
+      }
+    }
+
     if (tableName === 'market_update_time') {
-      await set_market_update_time(res.data)
+      await set_market_update_time(res?.data)
     } else if (tableName === 'group_eod_score_liquidity_df') {
-      await set_group_eod_score_liquidity_df(res.data)
+      await set_group_eod_score_liquidity_df(res?.data)
     } else if (tableName === 'group_breath_df') {
-      await set_group_breath_df(res.data)
+      await set_group_breath_df(res?.data)
     } else if (tableName === 'group_industry_ranking_df') {
-      await set_group_industry_ranking_df(res.data)
+      await set_group_industry_ranking_df(res?.data)
     } else if (tableName === 'group_score_5p_df') {
-      await set_group_score_5p_df(res.data)
+      await set_group_score_5p_df(res?.data)
     } else if (tableName === 'group_score_ranking_df') {
-      await set_group_score_ranking_df(res.data)
+      await set_group_score_ranking_df(res?.data)
     } else if (tableName === 'group_itd_score_liquidity_df') {
-      await set_group_itd_score_liquidity_df(res.data)
+      await set_group_itd_score_liquidity_df(res?.data)
     }
   }
   useEffect(() => {

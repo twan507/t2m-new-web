@@ -55,26 +55,40 @@ export default function Page4() {
   const [select_perform, set_select_perform] = useState('Hiệu suất B');
   const [select_cap, set_select_cap] = useState('SMALLCAP');
 
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
   const getData = async (tableName: string, columnName: any) => {
-    const res = await sendRequest<IBackendRes<any>>({
-      url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
-      method: "GET",
-      queryParams: { columnName: columnName, columnValue: select_stock },
-    })
+
+    let res;
+    for (let i = 0; i < 8; i++) {
+      res = await sendRequest<IBackendRes<any>>({
+        url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
+        method: "GET",
+        queryParams: { columnName: columnName, columnValue: select_stock },
+      })
+
+      if (res.data && res.data.length > 0) {
+        break; // Thoát khỏi vòng lặp khi dữ liệu thỏa mãn điều kiện
+      } else {
+        console.log(`[${new Date().toLocaleTimeString()}] Bảng ${tableName} chưa tải xong, thử lại sau 1 giây...`);
+        await delay(1000); // Nghỉ 1 giây trước khi thử lại
+      }
+    }
+
     if (tableName === 'market_update_time') {
-      await set_market_update_time(res.data)
+      await set_market_update_time(res?.data)
     } else if (tableName === 'stock_score_5p_df') {
-      await set_stock_score_5p_df(res.data)
+      await set_stock_score_5p_df(res?.data)
     } else if (tableName === 'stock_score_power_df') {
-      await set_stock_score_power_df(res.data)
+      await set_stock_score_power_df(res?.data)
     } else if (tableName === 'stock_score_filter_df') {
-      await set_stock_score_filter_df(res.data)
+      await set_stock_score_filter_df(res?.data)
     } else if (tableName === 'stock_ta_df') {
-      await set_stock_ta_df(res.data)
+      await set_stock_ta_df(res?.data)
     } else if (tableName === 'group_score_power_df') {
-      await set_group_score_power_df(res.data)
+      await set_group_score_power_df(res?.data)
     } else if (tableName === 'stock_price_chart_df') {
-      await set_stock_price_chart_df(res.data)
+      await set_stock_price_chart_df(res?.data)
     }
   }
 
@@ -92,9 +106,9 @@ export default function Page4() {
 
     function resetInterval() {
       clearInterval(interval);
-      interval = setInterval(fetchData, 60000);
+      interval = setInterval(fetchData, 10000);
     }
-    let interval = setInterval(fetchData, 60000);
+    let interval = setInterval(fetchData, 10000);
     window.addEventListener('click', resetInterval);
     window.addEventListener('wheel', resetInterval);
     window.addEventListener('mousemove', resetInterval);
@@ -427,7 +441,7 @@ export default function Page4() {
                     {thong_tin_cp === 'BD' && (
                       <>
                         {stock_price_chart_df?.length > 0 && (
-                          <StockPriceChart data={stock_price_chart_df} ww={ww} key={JSON.stringify(stock_price_chart_df)} />
+                          <StockPriceChart data={stock_price_chart_df} ww={ww} />
                         )}
                       </>
                     )}

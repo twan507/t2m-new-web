@@ -85,7 +85,7 @@ const TaSelector = (props: any) => {
       onBlur={handleBlur}
       value={props?.filter_value}
       filterOption={(input, option: any) =>
-        option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        option?.children ??.toLowerCase().indexOf(input?.toLowerCase()) >= 0
       }
       style={{ width: '100%', color: '#dfdfdf' }}
     >

@@ -43,7 +43,7 @@ export class MulterConfigService implements MulterOptionsFactory {
                         const hours = String(currentDate.getHours()).padStart(2, '0');
                         const minutes = String(currentDate.getMinutes()).padStart(2, '0');
 
-                        return day + month + year +'(' + hours + minutes +')';
+                        return day + month + year + '(' + hours + minutes + ')';
                     }
 
                     let extName = path.extname(file.originalname);
@@ -53,7 +53,7 @@ export class MulterConfigService implements MulterOptionsFactory {
             }),
             fileFilter: (req, file, cb) => {
                 const allowedFileTypes = ['jpg', 'jpeg', 'png', 'gif', 'tiff', 'tif', 'webp'];
-                const fileExtension = file.originalname.split('.').pop().toLowerCase();
+                const fileExtension = file.originalname.split('.').pop()?.toLowerCase();
                 const isValidFileType = allowedFileTypes.includes(fileExtension);
                 if (!isValidFileType) {
                     cb(new HttpException('Invalid file type', HttpStatus.UNPROCESSABLE_ENTITY), null);

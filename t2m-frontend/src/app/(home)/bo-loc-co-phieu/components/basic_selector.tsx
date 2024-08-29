@@ -66,9 +66,9 @@ const BasicSelector = (props: any) => {
       onBlur={handleBlur}
       value={props?.filter_value}
       filterOption={(input, option: any) =>
-        option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        option?.children ??.toLowerCase().indexOf(input?.toLowerCase()) >= 0
       }
-      style={{ width: '100%', color: '#dfdfdf'}}
+      style={{ width: '100%', color: '#dfdfdf' }}
     >
       <Select.Option value="all">Chọn tất cả</Select.Option>
       {options.map(option => (

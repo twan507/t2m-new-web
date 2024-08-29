@@ -71,38 +71,54 @@ export default function Page1() {
   const authState = !!authInfo?.user?._id && limitState
   const accessLevel = authInfo?.user?.role === 'T2M ADMIN' ? 4 : authInfo?.user?.licenseInfo?.accessLevel
 
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
   const getData = async (tableName: string, columnName: string | null = null) => {
-    const res = await sendRequest<IBackendRes<any>>({
-      url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
-      method: "GET",
-      queryParams: { columnName: columnName, columnValue: 'Thị trường' },
-    })
-    if (tableName === 'market_update_time') {
-      await set_market_update_time(res.data)
-    } else if (tableName === 'market_index_card_df') {
-      await set_market_index_card_df(res.data)
-    } else if (tableName === 'market_price_breath_df') {
-      await set_market_price_breath_df(res.data)
-    } else if (tableName === 'market_top_stock_df') {
-      await set_market_top_stock_df(res.data)
-    } else if (tableName === 'market_index_price_chart_df') {
-      await set_market_index_price_chart_df(res.data)
-    } else if (tableName === 'market_index_ta_df') {
-      await set_market_index_ta_df(res.data)
-    } else if (tableName === 'market_sentiment_df') {
-      await set_market_sentiment_df(res.data)
-    } else if (tableName === 'group_eod_score_liquidity_df') {
-      await set_group_eod_score_liquidity_df(res.data)
-    } else if (tableName === 'group_itd_score_liquidity_df') {
-      await set_group_itd_score_liquidity_df(res.data)
-    } else if (tableName === 'nn_td_20p_df') {
-      await set_nn_td_20p_df(res.data)
-    } else if (tableName === 'nn_td_buy_sell_df') {
-      await set_nn_td_buy_sell_df(res.data)
-    } else if (tableName === 'nn_td_top_stock') {
-      await set_nn_td_top_stock(res.data)
+
+    let res;
+    for (let i = 0; i < 8; i++) {
+      res = await sendRequest<IBackendRes<any>>({
+        url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
+        method: "GET",
+        queryParams: { columnName: columnName, columnValue: 'Thị trường' },
+      });
+    
+      if (res.data && res.data.length > 0) {
+        break; // Thoát khỏi vòng lặp khi dữ liệu thỏa mãn điều kiện
+      } else {
+        console.log(`[${new Date().toLocaleTimeString()}] Bảng ${tableName} chưa tải xong, thử lại sau 1 giây...`);
+        await delay(1000); // Nghỉ 1 giây trước khi thử lại
+      }
     }
-  }
+  
+    // Đặt dữ liệu vào state tương ứng sau khi dữ liệu thỏa mãn điều kiện
+    if (tableName === 'market_update_time') {
+      await set_market_update_time(res?.data);
+    } else if (tableName === 'market_index_card_df') {
+      await set_market_index_card_df(res?.data);
+    } else if (tableName === 'market_price_breath_df') {
+      await set_market_price_breath_df(res?.data);
+    } else if (tableName === 'market_top_stock_df') {
+      await set_market_top_stock_df(res?.data);
+    } else if (tableName === 'market_index_price_chart_df') {
+      await set_market_index_price_chart_df(res?.data);
+    } else if (tableName === 'market_index_ta_df') {
+      await set_market_index_ta_df(res?.data);
+    } else if (tableName === 'market_sentiment_df') {
+      await set_market_sentiment_df(res?.data);
+    } else if (tableName === 'group_eod_score_liquidity_df') {
+      await set_group_eod_score_liquidity_df(res?.data);
+    } else if (tableName === 'group_itd_score_liquidity_df') {
+      await set_group_itd_score_liquidity_df(res?.data);
+    } else if (tableName === 'nn_td_20p_df') {
+      await set_nn_td_20p_df(res?.data);
+    } else if (tableName === 'nn_td_buy_sell_df') {
+      await set_nn_td_buy_sell_df(res?.data);
+    } else if (tableName === 'nn_td_top_stock') {
+      await set_nn_td_top_stock(res?.data);
+    }
+  };
+  
+
   useEffect(() => {
     const fetchData = async () => {
       getData('market_update_time');
@@ -122,9 +138,9 @@ export default function Page1() {
 
     function resetInterval() {
       clearInterval(interval);
-      interval = setInterval(fetchData, 60000);
+      interval = setInterval(fetchData, 10000);
     }
-    let interval = setInterval(fetchData, 60000);
+    let interval = setInterval(fetchData, 10000);
     window.addEventListener('click', resetInterval);
     window.addEventListener('wheel', resetInterval);
     window.addEventListener('mousemove', resetInterval);
@@ -563,7 +579,7 @@ export default function Page1() {
                       </>
                     )}
                     {chi_so_thi_truong === 'BD' && (
-                      <IndexPriceChart data={market_index_price_chart_df} index_name={index_name} ww={ww} key={JSON.stringify(index_name)} />
+                      <IndexPriceChart data={market_index_price_chart_df} index_name={index_name} ww={ww}/>
                     )}
                     {chi_so_thi_truong === 'PTKT' && (
                       <>
@@ -772,7 +788,7 @@ export default function Page1() {
                 </Col>
                 <Col xs={16} sm={17} md={19} lg={19} xl={20}>
                   <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width={ww > 767 ? '100%' : '96%'} />
-                  <SentimentLineChart data={market_sentiment_df} openState={openState} width='100%' height='250px' />
+                  <SentimentLineChart data={market_sentiment_df} ww={ww} openState={openState} width='100%' height='250px' />
                 </Col>
               </Row>
               <Row gutter={10} style={{ marginTop: '20px' }}>
@@ -796,7 +812,7 @@ export default function Page1() {
                 </Col>
                 <Col xs={16} sm={17} md={19} lg={19} xl={20}>
                   <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width={ww > 767 ? '100%' : '96%'} />
-                  <LiquidityLineChart openState={openState} data={group_itd_score_liquidity_df} width='100%' height='250px' />
+                  <LiquidityLineChart openState={openState} ww={ww} data={group_itd_score_liquidity_df} width='100%' height='250px' />
                 </Col>
               </Row>
               <Row style={{ marginTop: '50px', marginBottom: '20px' }}>

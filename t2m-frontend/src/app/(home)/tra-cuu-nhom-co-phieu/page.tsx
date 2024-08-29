@@ -78,28 +78,41 @@ export default function Page3() {
 
   const [select_group, set_select_group] = useState('Thị trường');
 
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
   const getData = async (tableName: string, columnName: any) => {
-    const res = await sendRequest<IBackendRes<any>>({
-      url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
-      method: "GET",
-      queryParams: { columnName: columnName, columnValue: select_group },
-    })
+
+    let res;
+    for (let i = 0; i < 8; i++) {
+      res = await sendRequest<IBackendRes<any>>({
+        url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
+        method: "GET",
+        queryParams: { columnName: columnName, columnValue: select_group },
+      })
+
+      if (res.data && res.data.length > 0) {
+        break; // Thoát khỏi vòng lặp khi dữ liệu thỏa mãn điều kiện
+      } else {
+        console.log(`[${new Date().toLocaleTimeString()}] Bảng ${tableName} chưa tải xong, thử lại sau 1 giây...`);
+        await delay(1000); // Nghỉ 1 giây trước khi thử lại
+      }
+    }
+
     if (tableName === 'market_update_time') {
-      await set_market_update_time(res.data)
+      await set_market_update_time(res?.data)
     } else if (tableName === 'group_score_power_df') {
-      await set_group_score_power_df(res.data)
+      await set_group_score_power_df(res?.data)
     } else if (tableName === 'group_ms_chart_df') {
-      await set_group_ms_chart_df(res.data)
+      await set_group_ms_chart_df(res?.data)
     } else if (tableName === 'group_stock_top_10_df') {
-      await set_group_stock_top_10_df(res.data)
+      await set_group_stock_top_10_df(res?.data)
     } else if (tableName === 'group_breath_df') {
-      await set_group_breath_df(res.data)
+      await set_group_breath_df(res?.data)
     } else if (tableName === 'group_eod_score_liquidity_df') {
-      await set_group_eod_score_liquidity_df(res.data)
+      await set_group_eod_score_liquidity_df(res?.data)
     } else if (tableName === 'group_score_5p_df') {
-      await set_group_score_5p_df(res.data)
+      await set_group_score_5p_df(res?.data)
     } else if (tableName === 'group_price_chart_df') {
-      await set_group_price_chart_df(res.data)
+      await set_group_price_chart_df(res?.data)
     }
   }
 
@@ -118,9 +131,9 @@ export default function Page3() {
 
     function resetInterval() {
       clearInterval(interval);
-      interval = setInterval(fetchData, 60000);
+      interval = setInterval(fetchData, 10000);
     }
-    let interval = setInterval(fetchData, 60000);
+    let interval = setInterval(fetchData, 10000);
     window.addEventListener('click', resetInterval);
     window.addEventListener('wheel', resetInterval);
     window.addEventListener('mousemove', resetInterval);
@@ -139,7 +152,6 @@ export default function Page3() {
   const [group_eod_score_liquidity_df, set_group_eod_score_liquidity_df] = useState<any[]>([]);
   const [group_score_5p_df, set_group_score_5p_df] = useState<any[]>([]);
   const [group_price_chart_df, set_group_price_chart_df] = useState<any[]>([]);
-
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
   const [switch_group_industry, set_switch_group_industry] = useState('group');
@@ -622,7 +634,7 @@ export default function Page3() {
                   </Row>
                 </Col>
                 <Col xs={13} sm={14} md={16} lg={16} xl={18}>
-                  <GroupPriceChart data={group_price_chart_df} ww={ww} select_group={select_group} />
+                  <GroupPriceChart data={group_price_chart_df} ww={ww} select_group={select_group}/>
                 </Col>
               </Row>
               <Row style={{ marginTop: '30px', marginBottom: '10px' }}>

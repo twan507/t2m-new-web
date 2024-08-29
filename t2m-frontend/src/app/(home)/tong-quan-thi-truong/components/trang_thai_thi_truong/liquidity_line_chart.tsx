@@ -74,7 +74,7 @@ const LiquidityLineChart = (props: any) => {
                             return null;
                         }
 
-                        return ` ${label}: ${value.toFixed(2)}%`;
+                        return ` ${label}: ${value}%`;
                     }
                 }
             },
