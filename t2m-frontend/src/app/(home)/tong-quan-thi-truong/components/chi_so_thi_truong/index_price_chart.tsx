@@ -11,8 +11,9 @@ const IndexPriceChart = (props: any) => {
     const chartRef = useRef<IChartApi | null>(null);
     const candlestickSeriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
     const volumeSeriesRef = useRef<ISeriesApi<'Histogram'> | null>(null);
-    const ww = props?.ww
+    const ww = props?.ww;
 
+    // useEffect để tạo biểu đồ chỉ chạy một lần khi component mount
     useEffect(() => {
         if (!chartContainerRef.current) return;
 
@@ -39,14 +40,8 @@ const IndexPriceChart = (props: any) => {
             },
             timeScale: {
                 rightOffset: 2,
-                barSpacing:  ww > 767 ? 15 : (ww > 576 ? 10 : 5),
+                barSpacing: ww > 767 ? 15 : (ww > 576 ? 10 : 5),
             },
-            // handleScroll: {
-            //     mouseWheel: false, // Disable zoom on mouse wheel
-            // },
-            // handleScale: {
-            //     mouseWheel: false, // Disable zoom on mouse wheel
-            // },
         });
 
         candlestickSeriesRef.current = chartRef.current.addCandlestickSeries({
@@ -98,30 +93,7 @@ const IndexPriceChart = (props: any) => {
             },
         });
 
-
-        const chartData: any = props?.data?.filter((item: any) => item.index === props?.index_name)
-            .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
-
-        candlestickSeriesRef.current.setData(
-            chartData?.map((data: any) => ({
-                // time: data.time,
-                time: Date.parse(data.date) / 1000, // Chuyển đổi sang giây
-                open: data.open,
-                high: data.high,
-                low: data.low,
-                close: data.close,
-            }))
-        );
-
-        volumeSeriesRef.current.setData(
-            chartData?.map((data: any) => ({
-                time: Date.parse(data.date) / 1000, // Chuyển đổi sang giây
-                // time: data.time,
-                value: data.volume,
-                color: data.close > data.open ? 'rgba(36, 183, 94, 0.4)' : 'rgba(225, 64, 64, 0.4)', // Màu sắc dựa trên candlestick
-            }))
-        );
-
+        // Quan sát thay đổi kích thước để thiết kế đáp ứng
         const resizeObserver = new ResizeObserver((entries) => {
             if (chartRef.current) {
                 const { width, height } = entries[0].contentRect;
@@ -143,7 +115,33 @@ const IndexPriceChart = (props: any) => {
             candlestickSeriesRef.current = null;
             volumeSeriesRef.current = null;
         };
-    }, []);
+    }, []); // Chỉ chạy một lần khi component mount
+
+    // useEffect để cập nhật dữ liệu khi props.data hoặc props.index_name thay đổi
+    useEffect(() => {
+        if (!candlestickSeriesRef.current || !volumeSeriesRef.current) return;
+
+        const chartData: any = props?.data?.filter((item: any) => item.index === props?.index_name)
+            .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+        candlestickSeriesRef.current.setData(
+            chartData?.map((data: any) => ({
+                time: Date.parse(data.date) / 1000, // Chuyển đổi sang giây
+                open: data.open,
+                high: data.high,
+                low: data.low,
+                close: data.close,
+            }))
+        );
+
+        volumeSeriesRef.current.setData(
+            chartData?.map((data: any) => ({
+                time: Date.parse(data.date) / 1000, // Chuyển đổi sang giây
+                value: data.volume,
+                color: data.close > data.open ? 'rgba(36, 183, 94, 0.4)' : 'rgba(225, 64, 64, 0.4)', // Màu sắc dựa trên candlestick
+            }))
+        );
+    }, [props.data, props.index_name]); // Chỉ chạy khi props.data hoặc props.index_name thay đổi
 
     return <div ref={chartContainerRef} style={{ width: '100%', height: props.ww > 767 ? '290px' : '235px' }} />;
 };
