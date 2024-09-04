@@ -81,7 +81,7 @@ export default function Page1() {
         method: "GET",
         queryParams: { columnName: columnName, columnValue: 'Thị trường' },
       });
-    
+
       if (res.data && res.data.length > 0) {
         break; // Thoát khỏi vòng lặp khi dữ liệu thỏa mãn điều kiện
       } else {
@@ -89,7 +89,7 @@ export default function Page1() {
         await delay(1000); // Nghỉ 1 giây trước khi thử lại
       }
     }
-  
+
     // Đặt dữ liệu vào state tương ứng sau khi dữ liệu thỏa mãn điều kiện
     if (tableName === 'market_update_time') {
       await set_market_update_time(res?.data);
@@ -117,7 +117,7 @@ export default function Page1() {
       await set_nn_td_top_stock(res?.data);
     }
   };
-  
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -138,9 +138,9 @@ export default function Page1() {
 
     function resetInterval() {
       clearInterval(interval);
-      interval = setInterval(fetchData, 10000);
+      interval = setInterval(fetchData, 30000);
     }
-    let interval = setInterval(fetchData, 10000);
+    let interval = setInterval(fetchData, 30000);
     window.addEventListener('click', resetInterval);
     window.addEventListener('wheel', resetInterval);
     window.addEventListener('mousemove', resetInterval);
@@ -579,7 +579,7 @@ export default function Page1() {
                       </>
                     )}
                     {chi_so_thi_truong === 'BD' && (
-                      <IndexPriceChart data={market_index_price_chart_df} index_name={index_name} ww={ww}/>
+                      <IndexPriceChart data={market_index_price_chart_df} index_name={index_name} ww={ww} />
                     )}
                     {chi_so_thi_truong === 'PTKT' && (
                       <>

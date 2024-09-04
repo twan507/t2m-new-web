@@ -131,9 +131,9 @@ export default function Page3() {
 
     function resetInterval() {
       clearInterval(interval);
-      interval = setInterval(fetchData, 10000);
+      interval = setInterval(fetchData, 30000);
     }
-    let interval = setInterval(fetchData, 10000);
+    let interval = setInterval(fetchData, 30000);
     window.addEventListener('click', resetInterval);
     window.addEventListener('wheel', resetInterval);
     window.addEventListener('mousemove', resetInterval);
@@ -634,7 +634,7 @@ export default function Page3() {
                   </Row>
                 </Col>
                 <Col xs={13} sm={14} md={16} lg={16} xl={18}>
-                  <GroupPriceChart data={group_price_chart_df} ww={ww} select_group={select_group}/>
+                  <GroupPriceChart data={group_price_chart_df} ww={ww} select_group={select_group} />
                 </Col>
               </Row>
               <Row style={{ marginTop: '30px', marginBottom: '10px' }}>
