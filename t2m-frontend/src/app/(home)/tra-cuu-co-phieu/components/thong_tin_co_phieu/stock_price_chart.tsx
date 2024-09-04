@@ -111,7 +111,7 @@ const StockPriceChart = (props: any) => {
             candlestickSeriesRef.current = null;
             volumeSeriesRef.current = null;
         };
-    }, []); // Chỉ chạy một lần khi component mount
+    }, [props.select_stock]); // Chỉ chạy một lần khi component mount
 
     // useEffect để cập nhật dữ liệu khi props.data thay đổi
     useEffect(() => {

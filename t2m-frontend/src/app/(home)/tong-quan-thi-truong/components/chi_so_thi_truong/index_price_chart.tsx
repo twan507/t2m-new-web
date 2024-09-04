@@ -115,7 +115,7 @@ const IndexPriceChart = (props: any) => {
             candlestickSeriesRef.current = null;
             volumeSeriesRef.current = null;
         };
-    }, []); // Chỉ chạy một lần khi component mount
+    }, [props.index_name]); // Chỉ chạy một lần khi component mount
 
     // useEffect để cập nhật dữ liệu khi props.data hoặc props.index_name thay đổi
     useEffect(() => {
@@ -141,7 +141,7 @@ const IndexPriceChart = (props: any) => {
                 color: data.close > data.open ? 'rgba(36, 183, 94, 0.4)' : 'rgba(225, 64, 64, 0.4)', // Màu sắc dựa trên candlestick
             }))
         );
-    }, [props.data, props.index_name]); // Chỉ chạy khi props.data hoặc props.index_name thay đổi
+    }, [props.data]); // Chỉ chạy khi props.data hoặc props.index_name thay đổi
 
     return <div ref={chartContainerRef} style={{ width: '100%', height: props.ww > 767 ? '290px' : '235px' }} />;
 };
