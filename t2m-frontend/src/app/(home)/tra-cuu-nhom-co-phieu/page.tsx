@@ -1,7 +1,7 @@
 'use client'
 import { sendRequest } from "@/utlis/api"
 import { Button, Col, Menu, MenuProps, Radio, Row, Tooltip } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import './styles.css'
 import GroupRankingChart from "./components/suc_manh_dong_tien/group_ranking";
 import GroupTopCoPhieuTable from "./components/bang_top_co_phieu/top_co_phieu_table";
@@ -77,16 +77,21 @@ export default function Page3() {
   const accessLevel = authInfo?.user?.role === 'T2M ADMIN' ? 4 : authInfo?.user?.licenseInfo?.accessLevel
 
   const [select_group, set_select_group] = useState('Thị trường');
+  const selectGroupRef = useRef(select_group);
+  useEffect(() => {
+    // Cập nhật giá trị của selectGroupRef mỗi khi select_group thay đổi
+    selectGroupRef.current = select_group;
+  }, [select_group]);
 
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-  const getData = async (tableName: string, columnName: any) => {
+  const getData = async (tableName: string, columnName: any, currentGroup: any) => {
 
     let res;
     for (let i = 0; i < 8; i++) {
       res = await sendRequest<IBackendRes<any>>({
         url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
         method: "GET",
-        queryParams: { columnName: columnName, columnValue: select_group },
+        queryParams: { columnName: columnName, columnValue: currentGroup },
       })
 
       if (res.data && res.data.length > 0) {
@@ -118,25 +123,19 @@ export default function Page3() {
 
   useEffect(() => {
     const fetchData = async () => {
-      getData('market_update_time', null);
-      getData('group_score_power_df', 'name');
-      getData('group_ms_chart_df', 'name');
-      getData('group_stock_top_10_df', 'name');
-      getData('group_breath_df', 'name');
-      getData('group_eod_score_liquidity_df', 'name');
-      getData('group_score_5p_df', 'name');
-      getData('group_price_chart_df', 'name');
+      const currentGroup = selectGroupRef.current;
+      await getData('market_update_time', null, currentGroup);
+      await getData('group_score_power_df', 'name', currentGroup);
+      await getData('group_ms_chart_df', 'name', currentGroup);
+      await getData('group_stock_top_10_df', 'name', currentGroup);
+      await getData('group_breath_df', 'name', currentGroup);
+      await getData('group_eod_score_liquidity_df', 'name', currentGroup);
+      await getData('group_score_5p_df', 'name', currentGroup);
+      await getData('group_price_chart_df', 'name', currentGroup);
     };
-    fetchData();
 
-    function resetInterval() {
-      clearInterval(interval);
-      interval = setInterval(fetchData, 30000);
-    }
-    let interval = setInterval(fetchData, 30000);
-    window.addEventListener('click', resetInterval);
-    window.addEventListener('wheel', resetInterval);
-    window.addEventListener('mousemove', resetInterval);
+    fetchData();
+    setInterval(fetchData, 10000);
   }, [select_group]);
 
   const ww = useWindowWidth();

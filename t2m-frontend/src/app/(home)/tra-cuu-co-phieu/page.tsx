@@ -55,18 +55,23 @@ export default function Page4() {
   const [select_perform, set_select_perform] = useState('Hiệu suất B');
   const [select_cap, set_select_cap] = useState('SMALLCAP');
 
+  const selectStockRef = useRef(select_stock);
+  useEffect(() => {
+    // Cập nhật giá trị của selectGroupRef mỗi khi select_group thay đổi
+    selectStockRef.current = select_stock;
+  }, [select_stock]);
 
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-  const getData = async (tableName: string, columnName: any) => {
+  const getData = async (tableName: string, columnName: any, currentStock: any) => {
 
     let res;
     for (let i = 0; i < 8; i++) {
       res = await sendRequest<IBackendRes<any>>({
         url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
         method: "GET",
-        queryParams: { columnName: columnName, columnValue: select_stock },
+        queryParams: { columnName: columnName, columnValue: currentStock },
       })
-
+      
       if (res.data && res.data.length > 0) {
         break; // Thoát khỏi vòng lặp khi dữ liệu thỏa mãn điều kiện
       } else {
@@ -94,24 +99,17 @@ export default function Page4() {
 
   useEffect(() => {
     const fetchData = async () => {
-      getData('market_update_time', null);
-      getData('stock_score_power_df', 'stock');
-      getData('stock_score_filter_df', null);
-      getData('stock_ta_df', 'stock');
-      getData('group_score_power_df', null);
-      getData('stock_score_5p_df', 'stock');
-      getData('stock_price_chart_df', 'stock');
+      const currentStock = selectStockRef.current;
+      getData('market_update_time', null, currentStock);
+      getData('stock_score_power_df', 'stock', currentStock);
+      getData('stock_score_filter_df', null, currentStock);
+      getData('stock_ta_df', 'stock', currentStock);
+      getData('group_score_power_df', null, currentStock);
+      getData('stock_score_5p_df', 'stock', currentStock);
+      getData('stock_price_chart_df', 'stock', currentStock);
     };
     fetchData();
-
-    function resetInterval() {
-      clearInterval(interval);
-      interval = setInterval(fetchData, 30000);
-    }
-    let interval = setInterval(fetchData, 30000);
-    window.addEventListener('click', resetInterval);
-    window.addEventListener('wheel', resetInterval);
-    window.addEventListener('mousemove', resetInterval);
+    setInterval(fetchData, 10000);
   }, [select_stock]);
 
   //State lưu trữ dữ liệu cổ phiếu

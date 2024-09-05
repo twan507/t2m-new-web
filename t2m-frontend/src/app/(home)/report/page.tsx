@@ -116,9 +116,7 @@ export default function Report() {
       getData('daily_report_df');
     };
     fetchData();
-
-    const interval = setInterval(fetchData, 30000); // Gọi lại mỗi x giây
-    return () => clearInterval(interval); // Xóa interval khi component unmount
+    setInterval(fetchData, 10000)
   }, []);
 
   //State lưu trữ dữ liệu cổ phiếu

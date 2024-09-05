@@ -135,15 +135,7 @@ export default function Page1() {
       getData('nn_td_top_stock');
     };
     fetchData();
-
-    function resetInterval() {
-      clearInterval(interval);
-      interval = setInterval(fetchData, 30000);
-    }
-    let interval = setInterval(fetchData, 30000);
-    window.addEventListener('click', resetInterval);
-    window.addEventListener('wheel', resetInterval);
-    window.addEventListener('mousemove', resetInterval);
+    setInterval(fetchData, 10000)
   }, []);
 
   const ww = useWindowWidth();
