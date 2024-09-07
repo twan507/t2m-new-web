@@ -109,7 +109,7 @@ const HoldingStockTable = (props: any) => {
         ),
       },
       {
-        title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> Giá hiện tại </span>,
+        title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 767 ? 'Giá hiện tại' : 'Giá HT'} </span>,
         className: 'left-sort',
         dataIndex: `sell_price`,
         width: '14%',

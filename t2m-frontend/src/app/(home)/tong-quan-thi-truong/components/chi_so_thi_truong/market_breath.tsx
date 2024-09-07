@@ -35,8 +35,6 @@ const MarketBreathChart = (props: any) => {
     ],
   };
 
-  console.log(props.data)
-
   const options: any = {
     maintainAspectRatio: false,
     plugins: {
