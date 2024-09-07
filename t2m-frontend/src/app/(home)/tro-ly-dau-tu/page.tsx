@@ -1,448 +1,316 @@
-// 'use client'
-// import { sendRequest } from "@/utlis/api"
-// import { Button, Card, Col, Menu, MenuProps, Radio, Row, Tooltip, notification } from "antd";
-// import { useEffect, useState } from "react";
-// import './styles.css'
-// import BasicSelector from "./components/basic_selector";
-// import TaSlider from "./components/ta_slider";
-// import TaSelector from "./components/ta_selector";
-// import { ClearOutlined, PlusCircleOutlined } from "@ant-design/icons";
-// import { useAppDispatch, useAppSelector } from "@/redux/store";
-// import { sessionLimit } from "@/utlis/sessionLimit";
-// import { resetAuthState } from "@/redux/authSlice";
-// import LockSection from "@/components/subscribers/blurComponents";
-// import FilterStockTable from "./components/filter_table";
+'use client'
+import { sendRequest } from "@/utlis/api"
+import { Button, Card, Col, Menu, MenuProps, Radio, Row, Tooltip, notification } from "antd";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { sessionLimit } from "@/utlis/sessionLimit";
+import { resetAuthState } from "@/redux/authSlice";
+import LockSection from "@/components/subscribers/blurComponents";
+import PerformChart from "./components/chart/perform_chart";
+import AllocationLinesChart from "./components/chart/allocation_lines_chart";
+import AllocationPieChart from "./components/chart/allocation_pie_chart";
+import IndustrySelector from "./components/table/basic_selector";
+import HoldingStockTable from "./components/table/holding_stock_table";
+import TradedStockTable from "./components/table/traded_stock_table";
+import './styles.css'
 
-// const useWindowWidth = (): any => {
-//   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
+const useWindowWidth = (): any => {
+  const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
 
-//   useEffect(() => {
-//     const handleResize = () => {
-//       setWindowWidth(Math.min(window.innerWidth, 1250));
-//     };
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(Math.min(window.innerWidth, 1250));
+    };
 
-//     window.addEventListener('resize', handleResize);
-//     return () => {
-//       window.removeEventListener('resize', handleResize);
-//     };
-//   }, []);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
-//   return windowWidth;
-// };
+  return windowWidth;
+};
 
-// export default function Page5() {
+export default function Page5() {
 
-//   const [limitState, setLimitState] = useState(false);
-//   const dispatch = useAppDispatch();
-//   const authInfo = useAppSelector((state) => state.auth)
-//   useEffect(() => {
-//     (async () => {
-//       const limitState = await sessionLimit(authInfo?.user?.email, authInfo?.access_token);
-//       if (!limitState) { dispatch(resetAuthState()) }
-//       setLimitState(limitState);
-//     })()
-//   }, [authInfo?.user?.email, authInfo?.access_token]);
-//   const authState = !!authInfo?.user?._id && limitState
-//   const accessLevel = authInfo?.user?.role === 'T2M ADMIN' ? 4 : authInfo?.user?.licenseInfo?.accessLevel
+  const [limitState, setLimitState] = useState(false);
+  const dispatch = useAppDispatch();
+  const authInfo = useAppSelector((state) => state.auth)
+  useEffect(() => {
+    (async () => {
+      const limitState = await sessionLimit(authInfo?.user?.email, authInfo?.access_token);
+      if (!limitState) { dispatch(resetAuthState()) }
+      setLimitState(limitState);
+    })()
+  }, [authInfo?.user?.email, authInfo?.access_token]);
+  const authState = !!authInfo?.user?._id && limitState
+  const accessLevel = authInfo?.user?.role === 'T2M ADMIN' ? 4 : authInfo?.user?.licenseInfo?.accessLevel
 
-//   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-//   const getData = async (tableName: string) => {
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+  const getData = async (tableName: string) => {
 
-//     let res;
-//     for (let i = 0; i < 8; i++) {
-//       res = await sendRequest<IBackendRes<any>>({
-//         url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
-//         method: "GET",
-//       })
+    let res;
+    for (let i = 0; i < 8; i++) {
+      res = await sendRequest<IBackendRes<any>>({
+        url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
+        method: "GET",
+      })
 
-//       if (res.data && res.data.length > 0) {
-//         break; // Thoát khỏi vòng lặp khi dữ liệu thỏa mãn điều kiện
-//       } else {
-//         console.log(`[${new Date().toLocaleTimeString()}] Bảng ${tableName} chưa tải xong, thử lại sau 1 giây...`);
-//         await delay(1000); // Nghỉ 1 giây trước khi thử lại
-//       }
-//     }
+      if (res.data && res.data.length > 0) {
+        break; // Thoát khỏi vòng lặp khi dữ liệu thỏa mãn điều kiện
+      } else {
+        console.log(`[${new Date().toLocaleTimeString()}] Bảng ${tableName} chưa tải xong, thử lại sau 1 giây...`);
+        await delay(1000); // Nghỉ 1 giây trước khi thử lại
+      }
+    }
 
-//     if (tableName === 'market_update_time') {
-//       await set_market_update_time(res?.data)
-//     } else if (tableName === 'stock_ta_filter_df') {
-//       await set_stock_ta_filter_df(res?.data)
-//     }
-//   }
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       getData('market_update_time');
-//       getData('stock_ta_filter_df');
-//     };
-//     fetchData();
-//     setInterval(fetchData, 10000)
-//   }, []);
+    if (tableName === 'market_update_time') {
+      await set_market_update_time(res?.data)
+    } else if (tableName === 'stock_ta_filter_df') {
+      await set_stock_ta_filter_df(res?.data)
+    } else if (tableName === 'auto_concat_perform_df') {
+      await set_auto_concat_perform_df(res?.data)
+    } else if (tableName === 'auto_cap_allocation_line_df') {
+      await set_auto_cap_allocation_line_df(res?.data)
+    } else if (tableName === 'auto_cap_allocation_pie_df') {
+      await set_auto_cap_allocation_pie_df(res?.data)
+    } else if (tableName === 'auto_holding_stock_df') {
+      await set_auto_holding_stock_df(res?.data)
+    } else if (tableName === 'auto_traded_stock_df') {
+      await set_auto_traded_stock_df(res?.data)
+    }
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      getData('market_update_time');
+      getData('stock_ta_filter_df');
+      getData('group_eod_score_liquidity_df');
+      getData('auto_concat_perform_df');
+      getData('auto_cap_allocation_line_df');
+      getData('auto_cap_allocation_pie_df');
+      getData('auto_holding_stock_df');
+      getData('auto_traded_stock_df');
+    };
+    fetchData();
+    setInterval(fetchData, 10000)
+  }, []);
 
-//   //State lưu trữ dữ liệu cổ phiếu
-//   const [market_update_time, set_market_update_time] = useState<any[]>([]);
-//   const [stock_ta_filter_df, set_stock_ta_filter_df] = useState<any[]>([]);
+  //State lưu trữ dữ liệu cổ phiếu
+  const [market_update_time, set_market_update_time] = useState<any[]>([]);
+  const [stock_ta_filter_df, set_stock_ta_filter_df] = useState<any[]>([]);
+  const [auto_concat_perform_df, set_auto_concat_perform_df] = useState<any[]>([]);
+  const [auto_cap_allocation_line_df, set_auto_cap_allocation_line_df] = useState<any[]>([]);
+  const [auto_cap_allocation_pie_df, set_auto_cap_allocation_pie_df] = useState<any[]>([]);
+  const [auto_holding_stock_df, set_auto_holding_stock_df] = useState<any[]>([]);
+  const [auto_traded_stock_df, set_auto_traded_stock_df] = useState<any[]>([]);
 
-//   //State lưu giữ trạng thái hiển thị của các nút bấm
-//   const [table_type, set_table_type] = useState('dt');
-//   const [switch_ta_filter, set_switch_ta_filter] = useState(false);
-//   const [switch_ta_table, set_switch_ta_table] = useState('candle');
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const [pageSize, setPageSize] = useState(10);
+  //State lưu giữ trạng thái hiển thị của các nút bấm
+  const [switch_ta_filter, set_switch_ta_filter] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
-//   //State lưu giữ trạng thái của các filter
-//   const [placeholder, setPlaceholder] = useState<string | undefined>('All');
-//   const [filter_nhom_nganh, set_filter_nhom_nganh] = useState<any[]>([]);
-//   const [filter_hieu_suat, set_filter_hieu_suat] = useState<any[]>([]);
-//   const [filter_von_hoa, set_filter_von_hoa] = useState<any[]>([]);
-//   const [filter_t0, set_filter_t0] = useState<any[]>([]);
-//   const [filter_t5, set_filter_t5] = useState<any[]>([]);
-//   const [filter_liquid, set_filter_liquid] = useState<any[]>([]);
-//   const [filter_rank, set_filter_rank] = useState<any[]>([]);
-//   const [filter_month_trend, set_filter_month_trend] = useState<any[]>([]);
-//   const [filter_quarter_trend, set_filter_quarter_trend] = useState<any[]>([]);
-//   const [filter_year_trend, set_filter_year_trend] = useState<any[]>([]);
+  //State lưu giữ trạng thái của các filter
+  const [time_span, set_time_span] = useState('3M');
+  const [placeholder, setPlaceholder] = useState<string | undefined>('Chọn ngành');
+  const [filter_holding_nganh, set_filter_holding_nganh] = useState<any[]>([]);
+  const [filter_traded_nganh, set_filter_traded_nganh] = useState<any[]>([]);
 
-//   const [ta_filter_candle, set_ta_filter_candle] = useState<any[]>([]);
-//   const [ta_filter_ma_pivot, set_ta_filter_ma_pivot] = useState<any[]>([]);
-//   const [ta_filter_fibo, set_ta_filter_fibo] = useState<any[]>([]);
-//   const [filter_slider_value, set_filter_slider_value] = useState<any[]>([-0.1, 0.1]);
+  const ww = useWindowWidth();
+  const pixel = (ratio: number, min: number) => {
+    return `${Math.max(ratio * ww, min)?.toFixed(0)}px`;
+  }
 
-//   const ww = useWindowWidth();
-//   const pixel = (ratio: number, min: number) => {
-//     return `${Math.max(ratio * ww, min)?.toFixed(0)}px`;
-//   }
 
-//   const clearFilter = (e: any) => {
-//     set_filter_nhom_nganh([])
-//     set_filter_hieu_suat([])
-//     set_filter_von_hoa([])
-//     set_filter_t0([])
-//     set_filter_t5([])
-//     set_filter_liquid([])
-//     set_filter_rank([])
-//     set_filter_month_trend([])
-//     set_filter_quarter_trend([])
-//     set_filter_year_trend([])
-//     set_ta_filter_candle([])
-//     set_ta_filter_ma_pivot([])
-//     set_ta_filter_fibo([])
-//     set_filter_slider_value([])
-//   };
+  const onChangePerformChart = (e: any) => {
+    const value = e.target.value;
+    set_time_span(value)
+  };
 
-//   useEffect(() => {
-//     if (ww < 767) {
-//       set_table_type('dt')
-//       set_switch_ta_filter(false)
-//       set_filter_month_trend([])
-//       set_filter_quarter_trend([])
-//       set_filter_year_trend([])
-//       set_ta_filter_candle([])
-//       set_ta_filter_ma_pivot([])
-//       set_ta_filter_fibo([])
-//       set_filter_slider_value([])
-//     }
-//   }, [ww]);
+  const getColorPerform = (value: number) => {
+    if (value >= 0.01) return '#24B75E';
+    else if (value <= -0.01) return '#e14040';
+    else return '#D0be0f';
+  };
 
-//   const toggleTaFilter = (e: any) => {
-//     if (ww > 767) {
-//       set_switch_ta_filter(!switch_ta_filter)
-//       if (switch_ta_filter) {
-//         set_table_type('dt')
-//       }
-//     } else {
-//       notification.destroy();
-//       notification.warning({
-//         message: "Xoay ngang màn hình",
-//       });
-//     }
-//   };
 
-//   const onChangeTaTable = (e: any) => {
-//     const value = e.target.value;
-//     set_switch_ta_table(value)
-//   };
+  const [checkAuth, setCheckAuth] = useState(true);
+  useEffect(() => {
+    setCheckAuth(false)
+  }, []);
+  if (!checkAuth) {
+    return (
+      <>
 
-//   const onChangeTableType = (e: any) => {
-//     const value = e.target.value;
-//     set_table_type(value)
-//   };
+        <Col style={{
+          display: 'flex',
+          justifyContent: 'center',  // Căn giữa ngang
+          alignItems: 'center',      // Căn giữa dọc
+          marginTop: '30px'
+        }}>
+          <Row>
+            <Col style={{ width: ww, margin: 0.03 * ww }}>
+              <Row style={{ marginTop: '0px', marginBottom: '10px' }}>
+                <Col span={24}>
+                  <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
+                    Hiệu suất đầu tư theo hệ thống T2M
+                  </p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
+                </Col>
+              </Row>
+              <Row gutter={ww > 767 ? 20 : 10} style={{ position: 'relative' }}>
+                <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
+                <Col xs={16} sm={16} md={18} lg={19} xl={19}>
+                  <PerformChart data={auto_concat_perform_df} ww={ww} time_span={time_span} fontSize={pixel(0.015, 17)} />
+                </Col>
+                <Col xs={8} sm={8} md={6} lg={5} xl={5}>
+                  <Radio.Group
+                    className="custom-radio-group" size="small"
+                    defaultValue={time_span}
+                    buttonStyle="solid"
+                    onChange={onChangePerformChart}
+                    style={{ display: 'flex', width: '100%', height: '20px' }}
+                  >
+                    <Radio.Button value="3M" className="custom-radio-button"
+                      style={{
+                        fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
+                      }}>3M
+                    </Radio.Button>
+                    <Radio.Button value="6M" className="custom-radio-button"
+                      style={{
+                        fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
+                      }}>6M
+                    </Radio.Button>
+                    <Radio.Button value="1Y" className="custom-radio-button"
+                      style={{
+                        fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
+                      }}>1Y
+                    </Radio.Button>
+                    <Radio.Button value="2Y" className="custom-radio-button"
+                      style={{
+                        fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.011, 10), color: '#dfdfdf'
+                      }}>2Y
+                    </Radio.Button>
+                  </Radio.Group>
+                  <p style={{
+                    fontSize: pixel(0.013, 14), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                    color: '#B3B3B3', fontWeight: 'bold', margin: '30px 0px 0px 0px', padding: 0
+                  }}>
+                    Khung thời gian
+                  </p>
+                  <div style={{
+                    width: '100%', height: '50px', background: '#161616',
+                    display: 'flex', justifyContent: 'center', alignItems: 'center',
+                    padding: '5px', borderRadius: '5px', marginTop: '10px'
+                  }}>
+                    <p style={{
+                      fontSize: pixel(0.016, 16), fontFamily: 'Calibri, sans-serif',
+                      color: 'white',
+                      fontWeight: 'bold', margin: 0, padding: 0
+                    }}>
+                      {time_span === '3M' ? '3 Tháng' : (time_span === '6M' ? '6 Tháng' : (time_span === '1Y' ? '1 Năm' : (time_span === '2Y' ? '2 Năm' : '')))}
+                    </p>
+                  </div>
 
-//   const [checkAuth, setCheckAuth] = useState(true);
-//   useEffect(() => {
-//     setCheckAuth(false)
-//   }, []);
-//   if (!checkAuth) {
-//     return (
-//       <>
-//         <Col style={{
-//           display: 'flex',
-//           justifyContent: 'center',  // Căn giữa ngang
-//           alignItems: 'center',      // Căn giữa dọc
-//           marginTop: '30px'
-//         }}>
-//           <Row>
-//             <Col style={{ width: ww, margin: 0.03 * ww }}>
-//               <Row style={{ marginTop: '0px', marginBottom: '10px' }}>
-//                 <Col span={24}>
-//                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
-//                     Bộ lọc cổ phiếu T2M
-//                   </p>
-//                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
-//                 </Col>
-//               </Row>
-//               <Row gutter={10} style={{ marginTop: '20px', position: 'relative' }}>
-//                 <LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-//                 <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-//                   <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
-//                     <Row gutter={10}>
-//                       <Col span={12}>
-//                         <p style={{
-//                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-//                           margin: '0px 0px 5px 2px', padding: 0, height: '20px'
-//                         }}>
-//                           Nhóm hiệu suất
-//                         </p>
-//                         <BasicSelector name='industry_perform' sort='industry_perform' data={stock_ta_filter_df} filter={set_filter_hieu_suat} filter_value={filter_hieu_suat} placeholder={placeholder} setPlaceholder={setPlaceholder} />
-//                       </Col>
-//                       <Col span={12}>
-//                         <p style={{
-//                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-//                           margin: '0px 0px 5px 2px', padding: 0, height: '20px'
-//                         }}>
-//                           Nhóm vốn hoá
-//                         </p>
-//                         <BasicSelector name='marketcap_group' sort='marketcap_group' data={stock_ta_filter_df} filter={set_filter_von_hoa} filter_value={filter_von_hoa} placeholder={placeholder} setPlaceholder={setPlaceholder} />
-//                       </Col>
-//                     </Row>
-//                     <Row>
-//                       <p style={{
-//                         color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-//                         margin: '10px 0px 5px 2px', padding: 0, height: '20px'
-//                       }}>
-//                         Nhóm ngành
-//                       </p>
-//                       <BasicSelector name='industry_name' sort='industry_name' data={stock_ta_filter_df} filter={set_filter_nhom_nganh} filter_value={filter_nhom_nganh} placeholder={placeholder} setPlaceholder={setPlaceholder} />
-//                     </Row>
-//                   </div>
-//                 </Col>
-//                 <Col xs={20} sm={20} md={12} lg={12} xl={12}>
-//                   <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px', marginTop: ww > 767 ? '0px' : '10px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
-//                     <Row gutter={10}>
-//                       <Col span={12}>
-//                         <p style={{
-//                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-//                           margin: '0px 0px 5px 2px', padding: 0, height: '20px'
-//                         }}>
-//                           Dòng tiền trong phiên
-//                         </p>
-//                         <BasicSelector name='filter_t0' sort='filter_t0' data={stock_ta_filter_df} filter={set_filter_t0} filter_value={filter_t0} placeholder={placeholder} setPlaceholder={setPlaceholder} />
-//                         <p style={{
-//                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-//                           margin: '10px 0px 5px 2px', padding: 0, height: '20px'
-//                         }}>
-//                           Chỉ số thanh khoản
-//                         </p>
-//                         <BasicSelector name='filter_liquid' sort='order_filter_liquid' data={stock_ta_filter_df} filter={set_filter_liquid} filter_value={filter_liquid} placeholder={placeholder} setPlaceholder={setPlaceholder} />
-//                       </Col>
-//                       <Col span={12}>
-//                         <p style={{
-//                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-//                           margin: '0px 0px 5px 2px', padding: 0, height: '20px'
-//                         }}>
-//                           Dòng tiền trong tuần
-//                         </p>
-//                         <BasicSelector name='filter_t5' sort='filter_t5' data={stock_ta_filter_df} filter={set_filter_t5} filter_value={filter_t5} placeholder={placeholder} setPlaceholder={setPlaceholder} />
-//                         <p style={{
-//                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-//                           margin: '10px 0px 5px 2px', padding: 0, height: '20px'
-//                         }}>
-//                           Xếp hạng hiện tại
-//                         </p>
-//                         <BasicSelector name='filter_rank' sort='order_filter_rank' data={stock_ta_filter_df} filter={set_filter_rank} filter_value={filter_rank} placeholder={placeholder} setPlaceholder={setPlaceholder} />
-//                       </Col>
-//                     </Row>
-//                   </div>
-//                 </Col >
-//                 <Col xs={4} sm={4} md={2} lg={2} xl={2}>
-//                   <div style={{ height: ww > 767 ? '100%' : 'calc(100% + 10px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
-//                     <Tooltip title="Xoá tất cả bộ lọc">
-//                       <Button
-//                         className="filter-button"
-//                         icon={<ClearOutlined style={{ fontSize: pixel(0.02, 20) }} />}
-//                         size={ww > 767 ? 'large' : 'middle'}
-//                         style={{ width: '100%', height: '50%', border: 0, backgroundColor: '#161616', padding: 0, marginTop: ww > 767 ? '0px' : '10px' }}
-//                         onClick={clearFilter}
-//                       />
-//                     </Tooltip>
-//                     <Tooltip title="Bộ lọc chỉ số kĩ thuật">
-//                       <Button
-//                         className="filter-button"
-//                         icon={<PlusCircleOutlined style={{ fontSize: pixel(0.02, 20) }} />}
-//                         size={ww > 767 ? 'large' : 'middle'}
-//                         style={{ width: '100%', height: '50%', border: 0, backgroundColor: switch_ta_filter ? '#1677ff' : '#161616', padding: 0, marginTop: '9px' }}
-//                         onClick={toggleTaFilter}
-//                       />
-//                     </Tooltip>
-//                   </div>
-//                 </Col>
-//               </Row >
-//               {switch_ta_filter === true && (
-//                 <>
-//                   <Row gutter={10} style={{ marginTop: '10px' }}>
-//                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-//                       <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px', width: '100%' }}>
-//                         <p style={{
-//                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-//                           margin: '0px 0px 5px 2px', padding: 0, height: '20px'
-//                         }}>
-//                           Xu hướng giá tháng
-//                         </p>
-//                         <BasicSelector name='month_trend' sort='month_trend' data={stock_ta_filter_df} filter={set_filter_month_trend} filter_value={filter_month_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
+                  <p style={{
+                    fontSize: pixel(0.013, 14), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                    color: '#B3B3B3', fontWeight: 'bold', margin: '20px 0px 0px 0px', padding: 0
+                  }}>
+                    {ww > 500 ? 'Hiệu suất VNINDEX' : 'VNINDEX'}
+                  </p>
+                  <div style={{
+                    width: '100%', height: '50px', background: '#161616',
+                    display: 'flex', justifyContent: 'center', alignItems: 'center',
+                    padding: '5px', borderRadius: '5px', marginTop: '10px'
+                  }}>
+                    <p style={{
+                      fontSize: pixel(0.016, 16), fontFamily: 'Calibri, sans-serif',
+                      color: getColorPerform(auto_concat_perform_df.filter((item: any) => item.time_span === time_span)[0]?.vnindex_perform * 100),
+                      fontWeight: 'bold', margin: 0, padding: 0
+                    }}>
+                      {`${(auto_concat_perform_df.filter((item: any) => item.time_span === time_span)[0]?.vnindex_perform * 100)?.toFixed(2)}%`}
+                    </p>
+                  </div>
 
-//                         <p style={{
-//                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-//                           margin: '10px 0px 5px 2px', padding: 0, height: '20px'
-//                         }}>
-//                           Xu hướng giá quý
-//                         </p>
-//                         <BasicSelector name='quarter_trend' sort='quarter_trend' data={stock_ta_filter_df} filter={set_filter_quarter_trend} filter_value={filter_quarter_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
-
-//                         <p style={{
-//                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-//                           margin: '10px 0px 5px 2px', padding: 0, height: '20px'
-//                         }}>
-//                           Xu hướng giá năm
-//                         </p>
-//                         <BasicSelector name='year_trend' sort='year_trend' data={stock_ta_filter_df} filter={set_filter_year_trend} filter_value={filter_year_trend} placeholder={placeholder} setPlaceholder={setPlaceholder} />
-//                       </div>
-//                     </Col>
-//                     <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-//                       <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '10px 10px 20px 10px', width: '100%', marginTop: ww > 767 ? '0px' : '10px' }}>
-//                         <p style={{
-//                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-//                           margin: '0px 0px 5px 2px', padding: 0, height: '20px'
-//                         }}>
-//                           Lọc theo biến động giá
-//                         </p>
-//                         <TaSelector name='filter_candle' data={stock_ta_filter_df} filter={set_ta_filter_candle} filter_value={ta_filter_candle} />
-
-//                         <p style={{
-//                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-//                           margin: '10px 0px 5px 2px', padding: 0, height: '20px'
-//                         }}>
-//                           Lọc theo MA và Pivot
-//                         </p>
-//                         <TaSelector name='filter_ma_pivot' data={stock_ta_filter_df} filter={set_ta_filter_ma_pivot} filter_value={ta_filter_ma_pivot} />
-
-//                         <p style={{
-//                           color: '#dfdfdf', fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-//                           margin: '10px 0px 5px 2px', padding: 0, height: '20px'
-//                         }}>
-//                           Lọc theo mức giá Fibonacci
-//                         </p>
-//                         <TaSelector name='filter_fibo' data={stock_ta_filter_df} filter={set_ta_filter_fibo} filter_value={ta_filter_fibo} />
-//                       </div>
-//                     </Col>
-//                   </Row>
-//                   {(ta_filter_candle?.length > 0 || ta_filter_ma_pivot?.length > 0 || ta_filter_fibo?.length > 0) && (
-//                     <Row>
-//                       <div style={{ backgroundColor: '#161616', borderRadius: '5px', padding: '0px 10px 20px 10px', width: '100%', height: '80px', marginTop: '10px' }}>
-//                         <TaSlider fontSize={pixel(0.014, 13)} set_filter_slider_value={set_filter_slider_value} />
-//                       </div>
-//                     </Row>
-//                   )}
-//                   <Row gutter={10} style={{ marginTop: '20px' }}>
-//                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-//                       <Radio.Group
-//                         className="custom-radio-group"
-//                         defaultValue={table_type}
-//                         buttonStyle="solid"
-//                         onChange={onChangeTableType}
-//                         style={{ display: 'flex', width: '100%', marginTop: '5px' }}
-//                       >
-//                         <Radio.Button value="dt" className="custom-radio-button"
-//                           style={{
-//                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
-//                           }}>{ww > 992 ? 'Bảng thông tin chung' : (ww > 767 ? 'Bảng thông tin' : 'Thông tin')}
-//                         </Radio.Button>
-//                         <Radio.Button value="kt" className="custom-radio-button"
-//                           style={{
-//                             fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
-//                           }}>{ww > 992 ? 'Bảng chỉ số kĩ thuật' : (ww > 767 ? 'Bảng kĩ thuật' : 'Kĩ thuật')}
-//                         </Radio.Button>
-//                       </Radio.Group>
-//                     </Col>
-//                     <Col xs={4} sm={4} md={4} lg={4} xl={4}></Col>
-//                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-//                       {table_type === 'kt' && (
-//                         <Radio.Group
-//                           className="custom-radio-group"
-//                           defaultValue={switch_ta_table}
-//                           buttonStyle="solid"
-//                           onChange={onChangeTaTable}
-//                           style={{ display: 'flex', width: '100%', marginTop: '5px' }}
-//                         >
-//                           <Radio.Button value="candle" className="custom-radio-button"
-//                             style={{
-//                               fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
-//                             }}>{ww > 767 ? 'Biến động giá' : 'BĐ giá'}
-//                           </Radio.Button>
-//                           <Radio.Button value="ma_pivot" className="custom-radio-button"
-//                             style={{
-//                               fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
-//                             }}>{ww > 767 ? 'Đường MA và Pivot' : 'MA Pivot'}
-//                           </Radio.Button>
-//                           <Radio.Button value="fibo" className="custom-radio-button"
-//                             style={{
-//                               fontFamily: 'Calibri, sans-serif', fontSize: pixel(0.013, 11), color: '#dfdfdf'
-//                             }}>{ww > 767 ? 'Mức giá Fibonacci' : 'Fibonacci'}
-//                           </Radio.Button>
-//                         </Radio.Group>
-//                       )}
-//                     </Col>
-//                   </Row>
-//                 </>
-//               )}
-//               <Row style={{ marginTop: '20px', position: 'relative' }}>
-//                 <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-//                 {table_type === 'kt' && (
-//                   <div
-//                     style={{
-//                       position: 'absolute',
-//                       top: 0,
-//                       left: 0,
-//                       width: 'calc(30% + 45px)',
-//                       height: 'calc(100% - 70px)',
-//                       backgroundColor: '#161616',
-//                       borderRadius: '5px',
-//                       zIndex: 0,
-//                     }}
-//                   />
-//                 )}
-//                 <FilterStockTable
-//                   data={stock_ta_filter_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
-//                   table_type={table_type} switch_ta_table={switch_ta_table}
-//                   currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}
-//                   filter_nhom_nganh={filter_nhom_nganh}
-//                   filter_hieu_suat={filter_hieu_suat}
-//                   filter_von_hoa={filter_von_hoa}
-//                   filter_t0={filter_t0}
-//                   filter_t5={filter_t5}
-//                   filter_liquid={filter_liquid}
-//                   filter_rank={filter_rank}
-//                   filter_month_trend={filter_month_trend}
-//                   filter_quarter_trend={filter_quarter_trend}
-//                   filter_year_trend={filter_year_trend}
-//                   ta_filter_candle={ta_filter_candle}
-//                   ta_filter_ma_pivot={ta_filter_ma_pivot}
-//                   ta_filter_fibo={ta_filter_fibo}
-//                   filter_slider_value={filter_slider_value}
-//                 />
-//               </Row>
-//             </Col >
-//           </Row >
-//         </Col >
-//       </>
-//     )
-//   }
-// }
+                  <p style={{
+                    fontSize: pixel(0.013, 14), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                    color: '#B3B3B3', fontWeight: 'bold', margin: '20px 0px 0px 0px', padding: 0
+                  }}>
+                    {ww > 500 ? 'Hiệu suất hệ thống T2M' : 'Hệ thống T2M'}
+                  </p>
+                  <div style={{
+                    width: '100%', height: '50px', background: '#161616',
+                    display: 'flex', justifyContent: 'center', alignItems: 'center',
+                    padding: '5px', borderRadius: '5px', marginTop: '10px'
+                  }}>
+                    <p style={{
+                      fontSize: pixel(0.016, 16), fontFamily: 'Calibri, sans-serif',
+                      color: getColorPerform(auto_concat_perform_df.filter((item: any) => item.time_span === time_span)[0]?.invest_perform * 100),
+                      fontWeight: 'bold', margin: 0, padding: 0
+                    }}>
+                      {`${(auto_concat_perform_df.filter((item: any) => item.time_span === time_span)[0]?.invest_perform * 100)?.toFixed(2)}%`}
+                    </p>
+                  </div>
+                </Col>
+              </Row>
+              <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
+                <Col span={24}>
+                  <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
+                    Tỉ trọng và phân bổ vốn
+                  </p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
+                </Col>
+              </Row>
+              <Row gutter={20} style={{ position: 'relative' }}>
+                <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
+                <Col xs={13} sm={14} md={15} lg={16} xl={16}>
+                  <AllocationLinesChart data={auto_cap_allocation_line_df} ww={ww} time_span={time_span} fontSize={pixel(0.015, 17)} />
+                </Col>
+                <Col xs={11} sm={10} md={9} lg={8} xl={8}>
+                  <AllocationPieChart data={auto_cap_allocation_pie_df} ww={ww} pixel={pixel} fontSize={pixel(0.015, 17)} />
+                </Col>
+              </Row>
+              {auto_holding_stock_df?.length > 0 && (
+                <>
+                  <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
+                    <Col span={24}>
+                      <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
+                        Cổ phiếu khuyến nghị
+                      </p>
+                      <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginTop: '20px', position: 'relative' }}>
+                    <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='94%' width='100%' />
+                    <IndustrySelector name='industry_name' sort='industry_name' data={auto_holding_stock_df} filter={set_filter_holding_nganh} filter_value={filter_holding_nganh} placeholder={placeholder} setPlaceholder={setPlaceholder} fontSize={pixel(0.011, 12)} />
+                    <HoldingStockTable
+                      data={auto_holding_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
+                      currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}
+                      filter_nhom_nganh={filter_holding_nganh}
+                    />
+                  </Row>
+                </>
+              )}
+              <Row style={{ marginTop: auto_holding_stock_df?.length > 0 ? '-10px' : '50px', marginBottom: '10px' }}>
+                <Col span={24}>
+                  <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
+                    Lịch sử khuyến nghị
+                  </p>
+                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
+                </Col>
+              </Row>
+              <Row style={{ marginTop: '20px', position: 'relative' }}>
+                <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
+                <IndustrySelector name='industry_name' sort='industry_name' data={auto_traded_stock_df} filter={set_filter_traded_nganh} filter_value={filter_traded_nganh} placeholder={placeholder} setPlaceholder={setPlaceholder} fontSize={pixel(0.011, 12)} />
+                <TradedStockTable
+                  data={auto_traded_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
+                  currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}
+                  filter_nhom_nganh={filter_traded_nganh}
+                />
+              </Row>
+            </Col >
+          </Row >
+        </Col >
+      </>
+    )
+  }
+}

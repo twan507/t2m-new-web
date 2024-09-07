@@ -216,20 +216,20 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
       key: 'bo-loc-co-phieu',
       icon: <FundViewOutlined style={{ fontSize: '18px', marginLeft: '-1px', marginTop: collapsed ? '11px' : '0px' }} />,
     },
-    {
-      label: (
-        <Link href="/tro-ly-dau-tu" onClick={(e) => {
-          e.preventDefault()
-          setCollapsed(true)
-        }}>
-          Trợ lý đầu tư
-        </Link>
-      ),
-      key: 'tro-ly-dau-tu',
-      icon: <RobotOutlined style={{ fontSize: '18px', marginLeft: '-1px', marginTop: collapsed ? '11px' : '0px' }} />,
-    },
 
     ...((authInfo?.user?.role === "T2M ADMIN") ? [
+      {
+        label: (
+          <Link href="/tro-ly-dau-tu" onClick={(e) => {
+            e.preventDefault()
+            setCollapsed(true)
+          }}>
+            Trợ lý đầu tư
+          </Link>
+        ),
+        key: 'tro-ly-dau-tu',
+        icon: <RobotOutlined style={{ fontSize: '18px', marginLeft: '-1px', marginTop: collapsed ? '11px' : '0px' }} />,
+      },
       {
         label: (
           <Link href="/report" onClick={(e) => {
