@@ -137,7 +137,7 @@ const PerformChart = (props: any) => {
                 ticks: {
                     color: '#dfdfdf', // Màu của các nhãn trên trục Y
                     callback: function (value: any) {
-                        return value * 100 + '%'; // Thêm ký hiệu % vào giá trị hiển thị
+                        return value?.toFixed(2) * 100 + '%'; // Thêm ký hiệu % vào giá trị hiển thị
                     }
                 },
                 grid: {

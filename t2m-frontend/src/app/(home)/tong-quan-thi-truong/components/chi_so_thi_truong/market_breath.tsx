@@ -57,6 +57,10 @@ const MarketBreathChart = (props: any) => {
           });
           let percentage = (value * 100 / sum).toFixed(1) + "%";
           return percentage;
+        },
+        display: function (context: any) {
+          // Hiển thị chỉ nếu giá trị lớn hơn 0
+          return context.dataset.data[context.dataIndex] > 0;
         }
       },
       tooltip: {

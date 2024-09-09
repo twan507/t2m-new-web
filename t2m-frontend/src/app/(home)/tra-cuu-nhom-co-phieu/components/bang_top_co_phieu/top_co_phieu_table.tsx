@@ -16,6 +16,10 @@ const GroupTopCoPhieuTable = (props: any) => {
 
     const data_sets = props?.data?.sort((a: any, b: any) => (b.t0_score - a.t0_score))
 
+    function isArrayValid(array: any[]): boolean {
+        return array?.some(item => item.stock !== null && item.t0_score !== null);
+    }
+
     const columns = (props: any, ww: any): TableProps<any>['columns'] => {
         const baseColumns = [
             {
@@ -197,7 +201,19 @@ const GroupTopCoPhieuTable = (props: any) => {
         return (
             <>
                 <div style={{ width: '100%', margin: 0, padding: '0px', background: '#161616', borderRadius: '5px' }}>
-                    <Table className="custom-table" columns={columns(props, props?.ww)} dataSource={data_sets} pagination={false} rowKey="index" />
+                    {isArrayValid(data_sets) && (
+                        <Table className="custom-table" columns={columns(props, props?.ww)} dataSource={data_sets} pagination={false} rowKey="index" />
+                    )}
+                    {!isArrayValid(data_sets) && (
+                        <div style={{
+                            marginTop: '10px', height: '300px', width: '100%',
+                            backgroundColor: '#161616', borderRadius: '5px',
+                            display: 'flex', justifyContent: 'center', alignItems: 'center',
+                            color: '#dfdfdf'
+                        }}>
+                            Top cổ phiếu dòng tiền vào trong phiên
+                        </div>
+                    )}
                 </div>
             </>
         )

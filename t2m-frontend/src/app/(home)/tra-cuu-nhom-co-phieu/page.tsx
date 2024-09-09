@@ -588,7 +588,7 @@ export default function Page3() {
                           )}
                         </Row>
                         <Row>
-                          <Col>
+                          <Col span={24}>
                             <p style={{
                               fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15.5px',
                               color: '#B3B3B3', fontWeight: 'bold', margin: '15px 0px 0px 2px', padding: 0

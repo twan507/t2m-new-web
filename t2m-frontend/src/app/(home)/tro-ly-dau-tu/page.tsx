@@ -281,7 +281,7 @@ export default function Page5() {
                   </Row>
                   <Row style={{ marginTop: '20px', position: 'relative' }}>
                     <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='94%' width='100%' />
-                    <IndustrySelector name='industry_name' sort='industry_name' data={auto_holding_stock_df} filter={set_filter_holding_nganh} filter_value={filter_holding_nganh} placeholder={placeholder} setPlaceholder={setPlaceholder} fontSize={pixel(0.011, 12)} />
+                    <IndustrySelector name='industry_name' sort='industry_name' data={auto_holding_stock_df} filter={set_filter_holding_nganh} filter_value={filter_holding_nganh} placeholder={placeholder} setPlaceholder={setPlaceholder} fontSize={pixel(0.011, 10)} />
                     <HoldingStockTable
                       data={auto_holding_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
                       currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}
@@ -300,7 +300,7 @@ export default function Page5() {
               </Row>
               <Row style={{ marginTop: '20px', position: 'relative' }}>
                 <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <IndustrySelector name='industry_name' sort='industry_name' data={auto_traded_stock_df} filter={set_filter_traded_nganh} filter_value={filter_traded_nganh} placeholder={placeholder} setPlaceholder={setPlaceholder} fontSize={pixel(0.011, 12)} />
+                <IndustrySelector name='industry_name' sort='industry_name' data={auto_traded_stock_df} filter={set_filter_traded_nganh} filter_value={filter_traded_nganh} placeholder={placeholder} setPlaceholder={setPlaceholder} fontSize={pixel(0.011, 10)} />
                 <TradedStockTable
                   data={auto_traded_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
                   currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}

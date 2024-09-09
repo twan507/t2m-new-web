@@ -78,7 +78,7 @@ const HoldingStockTable = (props: any) => {
       {
         title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 767 ? 'Nhóm ngành' : 'Ngành'} </span>,
         dataIndex: 'industry_name',
-        width: '14%',
+        width: '20%',
         sorter: (a: any, b: any) => a.industry_name.localeCompare(b.industry_name), // Sắp xếp chuỗi 'industry_name'
         render: (text: string) => (
           <span style={{
@@ -95,7 +95,7 @@ const HoldingStockTable = (props: any) => {
         title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 767 ? 'Giá khuyến nghị' : 'Giá mua'} </span>,
         className: 'left-sort',
         dataIndex: `buy_price`,
-        width: '14%',
+        width: '16%',
         sorter: (a: any, b: any) => a.buy_price - b.buy_price, // Sắp xếp số 'buy_price'
         render: (value: number) => (
           <span style={{
@@ -112,7 +112,7 @@ const HoldingStockTable = (props: any) => {
         title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 767 ? 'Giá hiện tại' : 'Giá HT'} </span>,
         className: 'left-sort',
         dataIndex: `sell_price`,
-        width: '14%',
+        width: '12%',
         sorter: (a: any, b: any) => a.sell_price - b.sell_price, // Sắp xếp số 'sell_price'
         render: (value: number) => (
           <span style={{
@@ -129,7 +129,7 @@ const HoldingStockTable = (props: any) => {
         title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> % lãi/lỗ </span>,
         className: 'left-sort',
         dataIndex: `profit`,
-        width: '14%',
+        width: '12%',
         sorter: (a: any, b: any) => a.profit - b.profit, // Sắp xếp số 'profit'
         render: (value: number) => (
           <span style={{
@@ -147,7 +147,7 @@ const HoldingStockTable = (props: any) => {
     if (ww >= 767) {
       baseColumns.splice(3, 0,
         {
-          title: <span style={{ display: 'flex', justifyContent: 'center', fontSize: parseInt(props?.fontSize) - 3 }}> Ngày khuyến nghị </span>,
+          title: <span style={{ display: 'flex', justifyContent: 'center', fontSize: parseInt(props?.fontSize) - 3 }}> &nbsp;&nbsp;&nbsp;&nbsp;Ngày khuyến nghị </span>,
           dataIndex: 'buy_date',
           // width: '14%',
           sorter: (a: any, b: any) => new Date(a.buy_date).getTime() - new Date(b.buy_date).getTime(), // Sắp xếp ngày 'buy_date'
@@ -168,7 +168,7 @@ const HoldingStockTable = (props: any) => {
           title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> % thay đổi </span>,
           className: 'left-sort',
           dataIndex: `price_change`,
-          width: '14%',
+          width: '12%',
           sorter: (a: any, b: any) => a.price_change - b.price_change, // Sắp xếp số 'price_change'
           render: (value: number) => (
             <span style={{

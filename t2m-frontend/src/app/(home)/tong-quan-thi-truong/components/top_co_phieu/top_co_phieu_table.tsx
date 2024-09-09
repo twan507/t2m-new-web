@@ -17,6 +17,10 @@ const TopCoPhieuTable = (props: any) => {
     const data_sets = props?.data?.filter((item: any) => props?.type === 'top' ? item.type === 'top' : item.type === 'bottom')
         .sort((a: any, b: any) => props?.type === 'bottom' ? (a.t0_score - b.t0_score) : (b.t0_score - a.t0_score))
 
+    function isArrayValid(array: any[]): boolean {
+        return array?.some(item => item.stock !== null && item.t0_score !== null);
+    }
+
     const columns = (props: any, ww: any): TableProps<any>['columns'] => {
         const baseColumns = [
             {
@@ -159,7 +163,25 @@ const TopCoPhieuTable = (props: any) => {
         return (
             <>
                 <div style={{ width: props?.width, margin: 0, padding: '0px', height: props?.height, background: '#161616', borderRadius: '5px' }}>
-                    <Table className="custom-table" columns={columns(props, props?.ww)} dataSource={data_sets} pagination={false} rowKey="index" />
+                    {isArrayValid(data_sets) && (
+                        <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0 }}>
+                            <p style={{
+                                fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: props?.fontSize, color: 'white',
+                                marginTop: '1px', margin: 0, height: props?.ww > 767 ? '32px' : '22px'
+                            }}>Top cổ phiếu dòng tiền vào mạnh</p>
+                            <Table className="custom-table" columns={columns(props, props?.ww)} dataSource={data_sets} pagination={false} rowKey="index" />
+                        </div>
+                    )}
+                    {!isArrayValid(data_sets) && (
+                        <div style={{
+                            marginTop: '10px', height: '100%', width: '100%',
+                            backgroundColor: '#161616', borderRadius: '5px',
+                            display: 'flex', justifyContent: 'center', alignItems: 'center',
+                            color: '#dfdfdf'
+                        }}>
+                            {props?.type === 'top' ? 'Top cổ phiếu dòng tiền vào trong phiên' : 'Top cổ phiếu dòng tiền ra trong phiên'}
+                        </div>
+                    )}
                 </div>
             </>
         )

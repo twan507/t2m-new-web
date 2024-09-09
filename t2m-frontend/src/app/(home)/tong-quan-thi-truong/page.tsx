@@ -38,22 +38,48 @@ const useWindowWidth = (): any => {
   return windowWidth;
 };
 
-function isInTimeFrame() {
-  const now = new Date();
+function extractTime(updateString: string) {
+  // Kiểm tra xem chuỗi có hợp lệ và chứa thông tin ngày và giờ hay không
+  if (updateString && updateString.includes(": ")) {
+    // Bước 1: Trích xuất phần ngày và giờ từ chuỗi
+    const dateTimeString = updateString.split(": ")[1]; // "09/09/2024 13:07:43"
 
-  // Lấy thông tin ngày và giờ hiện tại
-  const day = now.getDay();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
+    // Bước 2: Tách phần ngày và phần thời gian
+    const [datePart, timePart] = dateTimeString.split(" "); // ["09/09/2024", "13:07:43"]
 
-  // Kiểm tra nếu là ngày từ thứ 2 (1) đến thứ 6 (5)
-  const isWeekday = day >= 1 && day <= 5;
+    // Bước 3: Tạo đối tượng Date từ phần ngày
+    const [day, month, year] = datePart.split("/").map(Number);
+    const extractedDate = new Date(year, month - 1, day); // Lưu ý: tháng trong Date bắt đầu từ 0
 
-  // Kiểm tra nếu trong khung giờ từ 9:00 đến 9:16
-  const isInTime = (hours === 9 && minutes >= 0 && minutes <= 16);
+    // Bước 4: Tách giờ, phút và giây từ phần thời gian
+    const [hours, minutes, seconds] = timePart.split(":").map(Number);
 
-  // Trả về kết quả kiểm tra
-  return !(isWeekday && isInTime);
+    // Bước 5: Đặt giờ, phút, giây vào đối tượng Date bằng các giá trị đã trích xuất
+    extractedDate.setHours(hours, minutes, seconds, 0);
+
+    // Bước 6: Trả về đối tượng thời gian đã xử lý
+    return extractedDate;
+  }
+}
+
+function isInTimeFrame(market_update_time: any) {
+  // const now = new Date();
+  const now = extractTime(market_update_time[0]?.date)
+  if (now) {
+    // Thời gian bắt đầu (8:30)
+    const startTime = new Date();
+    startTime.setHours(8, 30, 0, 0); // 8:30 AM
+
+    // Thời gian kết thúc (9:16)
+    const endTime = new Date();
+    endTime.setHours(9, 16, 0, 0); // 9:16 AM
+
+    // Kiểm tra nếu thời gian hiện tại nằm trong khoảng từ 8:30 đến 9:16
+    const isInTime = now >= startTime && now <= endTime;
+
+    // Trả về kết quả kiểm tra
+    return isInTime;
+  }
 }
 
 export default function Page1() {
@@ -165,7 +191,7 @@ export default function Page1() {
   const [switch_kntd, set_switch_kntd] = useState('NN');
   const [switch_top_mobile, set_switch_top_mobile] = useState('top');
 
-  const openState = isInTimeFrame()
+  const openState = isInTimeFrame(market_update_time)
 
   const onChangeChiSoThiTruong = (e: any) => {
     const value = e.target.value;
@@ -332,7 +358,7 @@ export default function Page1() {
                           ((market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) >= -0.0001 &&
                             (market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
                       }}>
-                        {((market_index_card_df?.filter(item => item.stock === 'VNINDEX')[0]?.change_percent) * 100)?.toFixed(2)}%
+                        {((market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) * 100)?.toFixed(2)}%
                       </p>
                     </div>
                   </Button>
@@ -831,35 +857,41 @@ export default function Page1() {
                 <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   {switch_top_mobile === 'top' && (
-                    <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0 }}>
-                      <p style={{
-                        fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
-                        marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
-                      }}>Top cổ phiếu dòng tiền vào mạnh</p>
-                      <TopCoPhieuTable data={market_top_stock_df} type='top' ww={ww}
-                        fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
-                    </div>
+                    // <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0 }}>
+                    //   <p style={{
+                    //     fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
+                    //     marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
+                    //   }}>Top cổ phiếu dòng tiền vào mạnh</p>
+                    //   <TopCoPhieuTable data={market_top_stock_df} type='top' ww={ww}
+                    //     fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
+                    // </div>
+                    <TopCoPhieuTable data={market_top_stock_df} type='top' ww={ww}
+                      fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
                   )}
                   {switch_top_mobile === 'bottom' && (
-                    <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0 }}>
-                      <p style={{
-                        fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
-                        marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
-                      }}>Top cổ phiếu dòng tiền ra mạnh</p>
-                      <TopCoPhieuTable data={market_top_stock_df} type='bottom' ww={ww}
-                        fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
-                    </div>
+                    // <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0 }}>
+                    //   <p style={{
+                    //     fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
+                    //     marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
+                    //   }}>Top cổ phiếu dòng tiền ra mạnh</p>
+                    //   <TopCoPhieuTable data={market_top_stock_df} type='bottom' ww={ww}
+                    //     fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
+                    // </div>
+                    <TopCoPhieuTable data={market_top_stock_df} type='bottom' ww={ww}
+                      fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
                   )}
                 </Col>
                 <Col xs={0} sm={0} md={12} lg={12} xl={12}>
-                  <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0 }}>
+                  {/* <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0 }}>
                     <p style={{
                       fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
                       marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
                     }}>Top cổ phiếu dòng tiền ra mạnh</p>
                     <TopCoPhieuTable data={market_top_stock_df} type='bottom' ww={ww}
                       fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
-                  </div>
+                  </div> */}
+                  <TopCoPhieuTable data={market_top_stock_df} type='bottom' ww={ww}
+                    fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
                 </Col>
               </Row>
             </Col >

@@ -76,7 +76,7 @@ const TradedStockTable = (props: any) => {
       {
         title: <span style={{ display: 'flex', justifyContent: 'flex-start', fontSize: parseInt(props?.fontSize) - 3 }}> {ww > 767 ? 'Nhóm ngành' : 'Ngành'} </span>,
         dataIndex: 'industry_name',
-        width: '14%',
+        width: '20%',
         sorter: (a: any, b: any) => a.industry_name.localeCompare(b.industry_name), // Sắp xếp theo 'industry_name'
         render: (text: string) => (
           <span style={{
@@ -127,7 +127,7 @@ const TradedStockTable = (props: any) => {
         title: <span style={{ display: 'flex', justifyContent: 'flex-end', fontSize: parseInt(props?.fontSize) - 3 }}> % lãi/lỗ </span>,
         className: 'left-sort',
         dataIndex: `profit`,
-        width: '14%',
+        width: '13%',
         sorter: (a: any, b: any) => a.profit - b.profit, // Sắp xếp theo 'profit'
         render: (value: number) => (
           <span style={{
@@ -145,9 +145,9 @@ const TradedStockTable = (props: any) => {
     if (ww >= 767) {
       baseColumns.splice(3, 0,
         {
-          title: <span style={{ display: 'flex', justifyContent: 'center', fontSize: parseInt(props?.fontSize) - 3 }}> Ngày mua </span>,
+          title: <span style={{ display: 'flex', justifyContent: 'center', fontSize: parseInt(props?.fontSize) - 3 }}> &nbsp;&nbsp;&nbsp;&nbsp;Ngày mua </span>,
           dataIndex: 'buy_date',
-          width: '14%',
+          width: '13%',
           sorter: (a: any, b: any) => new Date(a.buy_date).getTime() - new Date(b.buy_date).getTime(), // Sắp xếp theo 'buy_date'
           render: (text: string) => (
             <span style={{
@@ -161,9 +161,9 @@ const TradedStockTable = (props: any) => {
           ),
         },
         {
-          title: <span style={{ display: 'flex', justifyContent: 'center', fontSize: parseInt(props?.fontSize) - 3 }}> Ngày bán </span>,
+          title: <span style={{ display: 'flex', justifyContent: 'center', fontSize: parseInt(props?.fontSize) - 3 }}> &nbsp;&nbsp;&nbsp;&nbsp;Ngày bán </span>,
           dataIndex: 'sell_date',
-          width: '14%',
+          width: '13%',
           sorter: (a: any, b: any) => new Date(a.sell_date).getTime() - new Date(b.sell_date).getTime(), // Sắp xếp theo 'sell_date'
           render: (text: string) => (
             <span style={{

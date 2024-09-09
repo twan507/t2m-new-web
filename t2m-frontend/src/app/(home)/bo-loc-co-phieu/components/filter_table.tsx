@@ -214,35 +214,35 @@ const FilterStockTable = (props: any) => {
             return 0;
           }
         },
-        {
-          title:
-            <span
-              className='span-right'
-              style={{
-                display: 'flex', justifyContent: 'flex-end',
-                fontSize: parseInt(props?.fontSize) - 3,
-              }}>
-              {ww > 767 ? (<>Giá<br />hiện tại</>) : (<>Giá</>)}
-            </span>,
-          dataIndex: 'close',
-          className: 'left-sort',
-          // width: '9%',
-          render: (value: number) => (
-            <span style={{
-              color: '#ffffff',
-              fontFamily: 'Calibri, sans-serif',
-              fontSize: parseInt(props?.fontSize) - 1,
-              display: 'flex',
-              justifyContent: 'flex-end',
-              lineHeight: props?.lineHeight
-            }}>{props?.ww > 767 ? value.toFixed(2) : value.toFixed(1)}</span>
-          ),
-          sorter: (a: any, b: any) => {
-            const aValue = parseFloat(a.close);
-            const bValue = parseFloat(b.close);
-            return bValue - aValue;
-          }
-        },
+        // {
+        //   title:
+        //     <span
+        //       className='span-right'
+        //       style={{
+        //         display: 'flex', justifyContent: 'flex-end',
+        //         fontSize: parseInt(props?.fontSize) - 3,
+        //       }}>
+        //       {ww > 767 ? (<>Giá<br />hiện tại</>) : (<>Giá</>)}
+        //     </span>,
+        //   dataIndex: 'close',
+        //   className: 'left-sort',
+        //   // width: '9%',
+        //   render: (value: number) => (
+        //     <span style={{
+        //       color: '#ffffff',
+        //       fontFamily: 'Calibri, sans-serif',
+        //       fontSize: parseInt(props?.fontSize) - 1,
+        //       display: 'flex',
+        //       justifyContent: 'flex-end',
+        //       lineHeight: props?.lineHeight
+        //     }}>{props?.ww > 767 ? value.toFixed(2) : value.toFixed(1)}</span>
+        //   ),
+        //   sorter: (a: any, b: any) => {
+        //     const aValue = parseFloat(a.close);
+        //     const bValue = parseFloat(b.close);
+        //     return bValue - aValue;
+        //   }
+        // },
         {
           title:
             <span
@@ -433,6 +433,38 @@ const FilterStockTable = (props: any) => {
       }
 
       if (ww > 767) {
+        baseColumns.splice(ww >= 1100 ? 6 : 4, 0,
+          {
+            title:
+              <span
+                className='span-right'
+                style={{
+                  display: 'flex', justifyContent: 'flex-end',
+                  fontSize: parseInt(props?.fontSize) - 3,
+                }}>
+                {ww > 767 ? (<>Giá<br />hiện tại</>) : (<>Giá</>)}
+              </span>,
+            dataIndex: 'close',
+            className: 'left-sort',
+            // width: '9%',
+            render: (value: number) => (
+              <span style={{
+                color: '#ffffff',
+                fontFamily: 'Calibri, sans-serif',
+                fontSize: parseInt(props?.fontSize) - 1,
+                display: 'flex',
+                justifyContent: 'flex-end',
+                lineHeight: props?.lineHeight
+              }}>{props?.ww > 767 ? value.toFixed(2) : value.toFixed(1)}</span>
+            ),
+            sorter: (a: any, b: any) => {
+              const aValue = parseFloat(a.close);
+              const bValue = parseFloat(b.close);
+              return bValue - aValue;
+            }
+          },
+        );
+
         baseColumns.splice(11, 0,
           {
             title:

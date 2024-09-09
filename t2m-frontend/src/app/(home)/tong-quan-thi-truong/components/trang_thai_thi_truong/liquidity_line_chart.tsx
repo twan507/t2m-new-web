@@ -7,7 +7,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const LiquidityLineChart = (props: any) => {
 
-    const data_sets = props?.openState ? props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime()) : [];
+    const data_sets = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     const timeList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
@@ -21,7 +21,7 @@ const LiquidityLineChart = (props: any) => {
         datasets: [
             {
                 label: 'Giá trị',
-                data: data_sets?.map((item: any) => item.liquid_all_stock === null ? null : (item.liquid_all_stock * 100).toFixed(2)),
+                data: data_sets?.map((item: any) => props?.openState ? (item.liquid_all_stock === null ? null : (item.liquid_all_stock * 100).toFixed(2)) : null),
                 fill: 'start',
                 backgroundColor: 'rgba(2, 91, 196, 0.3)', // Thêm màu nền cho khu vực dưới đường biểu đồ
                 borderColor: '#025bc4',
