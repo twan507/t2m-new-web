@@ -198,7 +198,7 @@ export default function Page5() {
                     Khung thời gian
                   </p>
                   <div style={{
-                    width: '100%', height: '50px', background: '#161616',
+                    width: '100%', height: '40px', background: '#161616',
                     display: 'flex', justifyContent: 'center', alignItems: 'center',
                     padding: '5px', borderRadius: '5px', marginTop: '10px'
                   }}>
@@ -215,100 +215,120 @@ export default function Page5() {
                     fontSize: pixel(0.013, 14), fontFamily: 'Calibri, sans-serif', height: '15.5px',
                     color: '#B3B3B3', fontWeight: 'bold', margin: '20px 0px 0px 0px', padding: 0
                   }}>
-                    {ww > 500 ? 'Hiệu suất VNINDEX' : 'VNINDEX'}
+                    Giai đoạn hiện tại
                   </p>
                   <div style={{
-                    width: '100%', height: '50px', background: '#161616',
+                    width: '100%', height: '40px', background: '#161616',
                     display: 'flex', justifyContent: 'center', alignItems: 'center',
                     padding: '5px', borderRadius: '5px', marginTop: '10px'
                   }}>
                     <p style={{
                       fontSize: pixel(0.016, 16), fontFamily: 'Calibri, sans-serif',
-                      color: getColorPerform(auto_concat_perform_df.filter((item: any) => item.time_span === time_span)[0]?.vnindex_perform * 100),
-                      fontWeight: 'bold', margin: 0, padding: 0
+                      color: auto_concat_perform_df[0]?.final_portion ? '#24B75E' : '#e14040',
+                    fontWeight: 'bold', margin: 0, padding: 0
                     }}>
-                      {`${(auto_concat_perform_df.filter((item: any) => item.time_span === time_span)[0]?.vnindex_perform * 100)?.toFixed(2)}%`}
-                    </p>
-                  </div>
+                    {auto_concat_perform_df[0]?.final_portion ? 'Nắm giữ cổ phiếu' : 'Quan sát'}
+                  </p>
+                </div>
 
+                <p style={{
+                  fontSize: pixel(0.013, 14), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                  color: '#B3B3B3', fontWeight: 'bold', margin: '20px 0px 0px 0px', padding: 0
+                }}>
+                  {ww > 500 ? 'Hiệu suất VNINDEX' : 'VNINDEX'}
+                </p>
+                <div style={{
+                  width: '100%', height: '40px', background: '#161616',
+                  display: 'flex', justifyContent: 'center', alignItems: 'center',
+                  padding: '5px', borderRadius: '5px', marginTop: '10px'
+                }}>
                   <p style={{
-                    fontSize: pixel(0.013, 14), fontFamily: 'Calibri, sans-serif', height: '15.5px',
-                    color: '#B3B3B3', fontWeight: 'bold', margin: '20px 0px 0px 0px', padding: 0
+                    fontSize: pixel(0.016, 16), fontFamily: 'Calibri, sans-serif',
+                    color: getColorPerform(auto_concat_perform_df.filter((item: any) => item.time_span === time_span)[0]?.vnindex_perform * 100),
+                    fontWeight: 'bold', margin: 0, padding: 0
                   }}>
-                    {ww > 500 ? 'Hiệu suất hệ thống T2M' : 'Hệ thống T2M'}
+                    {`${(auto_concat_perform_df.filter((item: any) => item.time_span === time_span)[0]?.vnindex_perform * 100)?.toFixed(2)}%`}
                   </p>
-                  <div style={{
-                    width: '100%', height: '50px', background: '#161616',
-                    display: 'flex', justifyContent: 'center', alignItems: 'center',
-                    padding: '5px', borderRadius: '5px', marginTop: '10px'
+                </div>
+
+                <p style={{
+                  fontSize: pixel(0.013, 14), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                  color: '#B3B3B3', fontWeight: 'bold', margin: '20px 0px 0px 0px', padding: 0
+                }}>
+                  {ww > 500 ? 'Hiệu suất hệ thống T2M' : 'Hệ thống T2M'}
+                </p>
+                <div style={{
+                  width: '100%', height: '40px', background: '#161616',
+                  display: 'flex', justifyContent: 'center', alignItems: 'center',
+                  padding: '5px', borderRadius: '5px', marginTop: '10px'
+                }}>
+                  <p style={{
+                    fontSize: pixel(0.016, 16), fontFamily: 'Calibri, sans-serif',
+                    color: getColorPerform(auto_concat_perform_df.filter((item: any) => item.time_span === time_span)[0]?.invest_perform * 100),
+                    fontWeight: 'bold', margin: 0, padding: 0
                   }}>
-                    <p style={{
-                      fontSize: pixel(0.016, 16), fontFamily: 'Calibri, sans-serif',
-                      color: getColorPerform(auto_concat_perform_df.filter((item: any) => item.time_span === time_span)[0]?.invest_perform * 100),
-                      fontWeight: 'bold', margin: 0, padding: 0
-                    }}>
-                      {`${(auto_concat_perform_df.filter((item: any) => item.time_span === time_span)[0]?.invest_perform * 100)?.toFixed(2)}%`}
-                    </p>
-                  </div>
-                </Col>
-              </Row>
+                    {`${(auto_concat_perform_df.filter((item: any) => item.time_span === time_span)[0]?.invest_perform * 100)?.toFixed(2)}%`}
+                  </p>
+                </div>
+            </Col>
+          </Row>
+          <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
+            <Col span={24}>
+              <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
+                Tỉ trọng và phân bổ vốn
+              </p>
+              <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
+            </Col>
+          </Row>
+          <Row gutter={20} style={{ position: 'relative' }}>
+            <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
+            <Col xs={13} sm={14} md={15} lg={16} xl={16}>
+              <AllocationLinesChart data={auto_cap_allocation_line_df} ww={ww} time_span={time_span} fontSize={pixel(0.015, 17)} />
+            </Col>
+            <Col xs={11} sm={10} md={9} lg={8} xl={8}>
+              <AllocationPieChart data={auto_cap_allocation_pie_df} ww={ww} pixel={pixel} fontSize={pixel(0.015, 17)} />
+            </Col>
+          </Row>
+          {auto_holding_stock_df?.length > 0 && (
+            <>
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
                 <Col span={24}>
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
-                    Tỉ trọng và phân bổ vốn
-                  </p>
-                  <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
-                </Col>
-              </Row>
-              <Row gutter={20} style={{ position: 'relative' }}>
-                <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <Col xs={13} sm={14} md={15} lg={16} xl={16}>
-                  <AllocationLinesChart data={auto_cap_allocation_line_df} ww={ww} time_span={time_span} fontSize={pixel(0.015, 17)} />
-                </Col>
-                <Col xs={11} sm={10} md={9} lg={8} xl={8}>
-                  <AllocationPieChart data={auto_cap_allocation_pie_df} ww={ww} pixel={pixel} fontSize={pixel(0.015, 17)} />
-                </Col>
-              </Row>
-              {auto_holding_stock_df?.length > 0 && (
-                <>
-                  <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
-                    <Col span={24}>
-                      <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
-                        Cổ phiếu khuyến nghị
-                      </p>
-                      <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
-                    </Col>
-                  </Row>
-                  <Row style={{ marginTop: '20px', position: 'relative' }}>
-                    <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='94%' width='100%' />
-                    <IndustrySelector name='industry_name' sort='industry_name' data={auto_holding_stock_df} filter={set_filter_holding_nganh} filter_value={filter_holding_nganh} placeholder={placeholder} setPlaceholder={setPlaceholder} fontSize={pixel(0.011, 10)} />
-                    <HoldingStockTable
-                      data={auto_holding_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
-                      currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}
-                      filter_nhom_nganh={filter_holding_nganh}
-                    />
-                  </Row>
-                </>
-              )}
-              <Row style={{ marginTop: auto_holding_stock_df?.length > 0 ? '-10px' : '50px', marginBottom: '10px' }}>
-                <Col span={24}>
-                  <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
-                    Lịch sử khuyến nghị
+                    Cổ phiếu khuyến nghị
                   </p>
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
                 </Col>
               </Row>
               <Row style={{ marginTop: '20px', position: 'relative' }}>
-                <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <IndustrySelector name='industry_name' sort='industry_name' data={auto_traded_stock_df} filter={set_filter_traded_nganh} filter_value={filter_traded_nganh} placeholder={placeholder} setPlaceholder={setPlaceholder} fontSize={pixel(0.011, 10)} />
-                <TradedStockTable
-                  data={auto_traded_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
+                <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='94%' width='100%' />
+                <IndustrySelector name='industry_name' sort='industry_name' data={auto_holding_stock_df} filter={set_filter_holding_nganh} filter_value={filter_holding_nganh} placeholder={placeholder} setPlaceholder={setPlaceholder} fontSize={pixel(0.011, 10)} />
+                <HoldingStockTable
+                  data={auto_holding_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
                   currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}
-                  filter_nhom_nganh={filter_traded_nganh}
+                  filter_nhom_nganh={filter_holding_nganh}
                 />
               </Row>
-            </Col >
-          </Row >
+            </>
+          )}
+          <Row style={{ marginTop: auto_holding_stock_df?.length > 0 ? '-10px' : '50px', marginBottom: '10px' }}>
+            <Col span={24}>
+              <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
+                Lịch sử khuyến nghị
+              </p>
+              <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
+            </Col>
+          </Row>
+          <Row style={{ marginTop: '20px', position: 'relative' }}>
+            <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
+            <IndustrySelector name='industry_name' sort='industry_name' data={auto_traded_stock_df} filter={set_filter_traded_nganh} filter_value={filter_traded_nganh} placeholder={placeholder} setPlaceholder={setPlaceholder} fontSize={pixel(0.011, 10)} />
+            <TradedStockTable
+              data={auto_traded_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
+              currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}
+              filter_nhom_nganh={filter_traded_nganh}
+            />
+          </Row>
+        </Col >
+      </Row >
         </Col >
       </>
     )

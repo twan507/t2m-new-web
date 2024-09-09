@@ -50,26 +50,48 @@ const PerformChart = (props: any) => {
             {
                 label: 'VNINDEX',
                 data: data_sets?.map((item: any) => item.vnindex_perform),
-                fill: 'origin',
-                backgroundColor: 'rgba(2, 91, 196, 0.1)', // Thêm màu nền cho khu vực dưới đường biểu đồ
                 borderColor: '#025bc4',
                 pointRadius: 0, // Tắt các chấm màu xám ở các data label
                 hoverRadius: 5,
                 pointBackgroundColor: '#025bc4', // Màu nền cho các điểm
                 cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
+                yAxisID: 'y', // Đặt trên trục Y chính
             },
             {
                 label: 'Hệ thống T2M',
                 data: data_sets?.map((item: any) => item.invest_perform),
-                fill: 'origin',
-                backgroundColor: 'rgba(192, 49, 199, 0.1)', // Thêm màu nền cho khu vực dưới đường biểu đồ
                 borderColor: '#C031C7',
                 pointRadius: 0, // Tắt các chấm màu xám ở các data label
                 hoverRadius: 5,
                 pointBackgroundColor: '#C031C7', // Màu nền cho các điểm
                 cubicInterpolationMode: 'monotone',
                 borderWidth: props?.ww > 767 ? 2.5 : 2,
+                yAxisID: 'y', // Đặt trên trục Y chính
+            },
+            {
+                label: 'buy',
+                data: data_sets?.map((item: any) => item.final_portion),
+                fill: 'origin', // Để fill màu từ trục x đến đường line
+                backgroundColor: 'rgba(0, 255, 0, 0.1)', // Màu nền cho line Final Portion
+                pointRadius: 0,
+                hoverRadius: 0,
+                borderWidth: 0,
+                cubicInterpolationMode: 'monotone',
+                stepped: 'middle',
+                yAxisID: 'y1', // Đặt trên trục Y chính
+            },
+            {
+                label: 'sell',
+                data: data_sets?.map((item: any) => 1 - item.final_portion),
+                fill: 'origin', // Để fill màu từ trục x đến đường line
+                backgroundColor: 'rgba(255, 0, 0, 0.1)', // Màu nền cho line 1 - Final Portion
+                pointRadius: 0,
+                hoverRadius: 0,
+                borderWidth: 0,
+                cubicInterpolationMode: 'monotone',
+                stepped: 'middle',
+                yAxisID: 'y1', // Đặt trên trục Y chính
             },
         ],
     };
@@ -91,6 +113,10 @@ const PerformChart = (props: any) => {
                         size: parseInt(props?.fontSize) - 4, // Điều chỉnh cỡ chữ của legend
                         family: 'Calibri', // Điều chỉnh font chữ của legend
                     },
+                    filter: function(legendItem: any, chartData: any) {
+                        // Ẩn 'Final Portion' và '1 - Final Portion' khỏi legend
+                        return legendItem.text !== 'buy' && legendItem.text !== 'sell';
+                    },
                     color: '#dfdfdf' // Màu chữ của legend
                 }
             },
@@ -101,7 +127,11 @@ const PerformChart = (props: any) => {
                         return `Ngày ${tooltipItems[0].label}`;
                     },
                     label: function (tooltipItem: any) {
-                        return `${tooltipItem?.dataset.label}: ${(tooltipItem?.raw * 100).toFixed(2)}%`;
+                        // Chỉ hiển thị tooltip cho 'VNINDEX' và 'Hệ thống T2M'
+                        if (tooltipItem.dataset.label === 'VNINDEX' || tooltipItem.dataset.label === 'Hệ thống T2M') {
+                            return `${tooltipItem?.dataset.label}: ${(tooltipItem?.raw * 100).toFixed(2)}%`;
+                        }
+                        return null; // Không hiển thị tooltip cho 'Final Portion' và '1 - Final Portion'
                     }
                 },
                 displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip
@@ -149,6 +179,9 @@ const PerformChart = (props: any) => {
                     },
                 },
             },
+            y1: {
+                display: false,
+            },
         },
     };
 
@@ -159,7 +192,7 @@ const PerformChart = (props: any) => {
 
     if (!checkAuth) {
         return (
-            <div style={{ width: '100%', height: '320px' }}>
+            <div style={{ width: '100%', height: '370px' }}>
                 <Line data={lines} options={options} plugins={[customLegendMargin, customTitleMargin]} />
             </div>
         );
