@@ -75,7 +75,7 @@ function isInTimeFrame(market_update_time: any) {
     endTime.setHours(9, 16, 0, 0); // 9:16 AM
 
     // Kiểm tra nếu thời gian hiện tại nằm trong khoảng từ 8:30 đến 9:16
-    const isInTime = now >= startTime && now <= endTime;
+    const isInTime = !(now >= startTime && now <= endTime);
 
     // Trả về kết quả kiểm tra
     return isInTime;
@@ -853,43 +853,19 @@ export default function Page1() {
                   />
                 </Col>
               </Row>
-              <Row gutter={10} style={{ position: 'relative' }}>
+              <Row gutter={10} style={{ position: 'relative', marginBottom: '50px' }}>
                 <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   {switch_top_mobile === 'top' && (
-                    // <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0 }}>
-                    //   <p style={{
-                    //     fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
-                    //     marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
-                    //   }}>Top cổ phiếu dòng tiền vào mạnh</p>
-                    //   <TopCoPhieuTable data={market_top_stock_df} type='top' ww={ww}
-                    //     fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
-                    // </div>
                     <TopCoPhieuTable data={market_top_stock_df} type='top' ww={ww}
                       fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
                   )}
                   {switch_top_mobile === 'bottom' && (
-                    // <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0 }}>
-                    //   <p style={{
-                    //     fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
-                    //     marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
-                    //   }}>Top cổ phiếu dòng tiền ra mạnh</p>
-                    //   <TopCoPhieuTable data={market_top_stock_df} type='bottom' ww={ww}
-                    //     fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
-                    // </div>
                     <TopCoPhieuTable data={market_top_stock_df} type='bottom' ww={ww}
                       fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
                   )}
                 </Col>
                 <Col xs={0} sm={0} md={12} lg={12} xl={12}>
-                  {/* <div style={{ background: '#161616', padding: '10px 10px 0px 10px', borderRadius: '5px', margin: 0 }}>
-                    <p style={{
-                      fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: pixel(0.016, 15), color: 'white',
-                      marginTop: '1px', margin: 0, height: ww > 767 ? '32px' : '22px'
-                    }}>Top cổ phiếu dòng tiền ra mạnh</p>
-                    <TopCoPhieuTable data={market_top_stock_df} type='bottom' ww={ww}
-                      fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
-                  </div> */}
                   <TopCoPhieuTable data={market_top_stock_df} type='bottom' ww={ww}
                     fontSize={pixel(0.013, 11)} lineHeight='34px' width='100%' height='375px' />
                 </Col>

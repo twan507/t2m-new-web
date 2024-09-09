@@ -149,7 +149,7 @@ const HoldingStockTable = (props: any) => {
         {
           title: <span style={{ display: 'flex', justifyContent: 'center', fontSize: parseInt(props?.fontSize) - 3 }}> &nbsp;&nbsp;&nbsp;&nbsp;Ngày khuyến nghị </span>,
           dataIndex: 'buy_date',
-          // width: '14%',
+          width: '16%',
           sorter: (a: any, b: any) => new Date(a.buy_date).getTime() - new Date(b.buy_date).getTime(), // Sắp xếp ngày 'buy_date'
           render: (text: string) => (
             <span style={{
