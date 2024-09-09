@@ -854,7 +854,7 @@ export default function Page1() {
                 </Col>
               </Row>
               <Row gutter={10} style={{ position: 'relative', marginBottom: '50px' }}>
-                <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
+                <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='115%' width='100%' />
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   {switch_top_mobile === 'top' && (
                     <TopCoPhieuTable data={market_top_stock_df} type='top' ww={ww}
