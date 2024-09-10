@@ -7,16 +7,19 @@ import '../../styles.css';
 function convertDate(inputDate: any) {
   // Tách chuỗi thành [năm, tháng, ngày]
   const [year, month, day] = inputDate.split("-");
-
   // Trả về chuỗi theo định dạng dd/mm/yyyy
   return `${day}/${month}/${year}`;
 }
 
 const HoldingStockTable = (props: any) => {
 
+  // Nếu không có dữ liệu thì không render data này
+  if (!props?.data || props?.data.length === 0) {
+    return null;
+  }
+
   const filterData = (data: any) => {
     let filterData: any = data
-
     if (props?.filter_nhom_nganh?.length === 0) { filterData = filterData }
     else { filterData = filterData.filter((item: any) => props?.filter_nhom_nganh?.includes(item.industry_name)) };
 

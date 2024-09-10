@@ -56,7 +56,7 @@ export default function Page5() {
         method: "GET",
       })
 
-      if (res.data && res.data.length > 0) {
+      if ((res.data && res.data.length > 0) || (res.data && tableName === 'auto_holding_stock_df')) {
         break; // Thoát khỏi vòng lặp khi dữ liệu thỏa mãn điều kiện
       } else {
         console.log(`[${new Date().toLocaleTimeString()}] Bảng ${tableName} chưa tải xong, thử lại sau 1 giây...`);
@@ -66,8 +66,6 @@ export default function Page5() {
 
     if (tableName === 'market_update_time') {
       await set_market_update_time(res?.data)
-    } else if (tableName === 'stock_ta_filter_df') {
-      await set_stock_ta_filter_df(res?.data)
     } else if (tableName === 'auto_concat_perform_df') {
       await set_auto_concat_perform_df(res?.data)
     } else if (tableName === 'auto_cap_allocation_line_df') {
@@ -97,7 +95,6 @@ export default function Page5() {
 
   //State lưu trữ dữ liệu cổ phiếu
   const [market_update_time, set_market_update_time] = useState<any[]>([]);
-  const [stock_ta_filter_df, set_stock_ta_filter_df] = useState<any[]>([]);
   const [auto_concat_perform_df, set_auto_concat_perform_df] = useState<any[]>([]);
   const [auto_cap_allocation_line_df, set_auto_cap_allocation_line_df] = useState<any[]>([]);
   const [auto_cap_allocation_pie_df, set_auto_cap_allocation_pie_df] = useState<any[]>([]);
@@ -105,7 +102,6 @@ export default function Page5() {
   const [auto_traded_stock_df, set_auto_traded_stock_df] = useState<any[]>([]);
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
-  const [switch_ta_filter, set_switch_ta_filter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
