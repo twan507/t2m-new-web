@@ -193,6 +193,20 @@ export default function Page1() {
 
   const openState = isInTimeFrame(market_update_time)
 
+  function getLastNonNullElement(array: any): any {
+    const filteredArray = array.filter((obj: any) => {
+      return !Object.values(obj).some(value => value === null);
+    });
+  
+    // Sắp xếp mảng theo thứ tự giảm dần của cột `date`
+    filteredArray.sort((a: any, b: any) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
+  
+    // Trả về phần tử đầu tiên sau khi sắp xếp hoặc undefined nếu mảng rỗng
+    return filteredArray.length > 0 ? filteredArray[0] : undefined;
+  }
+
   const onChangeChiSoThiTruong = (e: any) => {
     const value = e.target.value;
     set_chi_so_thi_truong(value)
@@ -792,15 +806,15 @@ export default function Page1() {
                       color: 'white', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
                     }}> Trạng thái tâm lý
                     </p>
-                    <SentimentGaugeChart openState={openState} data={market_sentiment_df} width='100%' height='150px' ww={ww} />
+                    <SentimentGaugeChart openState={openState} data={getLastNonNullElement(market_sentiment_df)?.ratio} width='100%' height='150px' ww={ww} />
                   </div>
                   <div style={{
-                    background: getColorSentiment(openState ? market_sentiment_df?.[0]?.last_ratio : ''),
+                    background: getColorSentiment(openState ? getLastNonNullElement(market_sentiment_df)?.ratio : ''),
                     padding: '10px', borderRadius: '5px', margin: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: '10px', height: '30px'
                   }}>
                     <p style={{
                       color: 'white', fontSize: pixel(0.016, 11), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', margin: 0, padding: 0, width: '100%', display: 'flex', justifyContent: 'center'
-                    }}> {openState ? market_sentiment_df?.[0]?.last_sentiment : ''}
+                    }}> {openState ? getLastNonNullElement(market_sentiment_df)?.last_sentiment : ''}
                     </p>
                   </div>
                 </Col>
