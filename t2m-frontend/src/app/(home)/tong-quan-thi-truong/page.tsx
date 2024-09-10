@@ -77,7 +77,7 @@ function isInTimeFrame(market_update_time: any) {
     // Kiểm tra nếu thời gian hiện tại nằm trong khoảng từ 8:30 đến 9:16
     const isInTime = !(now >= startTime && now <= endTime);
 
-    // Trả về kết quả kiểm tra
+    // Nếu chưa mở cửa thì biến này là false, đã mở của thì là true
     return isInTime;
   }
 }
@@ -197,12 +197,12 @@ export default function Page1() {
     const filteredArray = array.filter((obj: any) => {
       return !Object.values(obj).some(value => value === null);
     });
-  
+
     // Sắp xếp mảng theo thứ tự giảm dần của cột `date`
     filteredArray.sort((a: any, b: any) => {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
-  
+
     // Trả về phần tử đầu tiên sau khi sắp xếp hoặc undefined nếu mảng rỗng
     return filteredArray.length > 0 ? filteredArray[0] : undefined;
   }
@@ -338,44 +338,6 @@ export default function Page1() {
                       </p>
                     </div>
                   </Button>
-                  <Button onClick={() => { set_index_name('VN30') }} type='text' style={{
-                    height: '60px', background: '#161616', borderRadius: '5px',
-                    margin: 0, padding: 0, width: '100%',
-                    marginBottom: '10px', display: 'flex', flexDirection: 'column'
-                  }}>
-                    <p style={{
-                      height: '28px', color: 'white', fontSize: pixel(0.015, 14), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-                      margin: `1px 0px 0px ${pixel(0.01, 0)}`, display: 'flex', alignItems: 'center'
-                    }}>
-                      {market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.stock}
-                    </p>
-                    <div style={{ height: '24px', display: 'flex', margin: 0, padding: 0, alignItems: 'center' }}>
-                      <p style={{
-                        color: 'white', fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
-                        margin: `0px 0px 0px ${pixel(0.01, 0)}`
-                      }}>
-                        {market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.close?.toFixed(2)}
-                      </p>
-                      <p style={{
-                        fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif',
-                        fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: 0,
-                        color: (market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) > 0.0001 ? '#24B75E' :
-                          ((market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) >= -0.0001 &&
-                            (market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
-                      }}>
-                        {market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_value?.toFixed(2)}
-                      </p>
-                      <p style={{
-                        fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif', color: 'white',
-                        fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: '0px 3px 0px 3px', borderRadius: '5px',
-                        background: (market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) > 0.0001 ? '#24B75E' :
-                          ((market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) >= -0.0001 &&
-                            (market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
-                      }}>
-                        {((market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) * 100)?.toFixed(2)}%
-                      </p>
-                    </div>
-                  </Button>
                   <Button onClick={() => { set_index_name('HNXINDEX') }} type='text' style={{
                     height: '60px', background: '#161616', borderRadius: '5px',
                     margin: 0, padding: 0, width: '100%',
@@ -449,6 +411,44 @@ export default function Page1() {
                             (market_index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
                       }}>
                         {((market_index_card_df?.filter(item => item.stock === 'UPINDEX')[0]?.change_percent) * 100)?.toFixed(2)}%
+                      </p>
+                    </div>
+                  </Button>
+                  <Button onClick={() => { set_index_name('VN30') }} type='text' style={{
+                    height: '60px', background: '#161616', borderRadius: '5px',
+                    margin: 0, padding: 0, width: '100%',
+                    marginBottom: '10px', display: 'flex', flexDirection: 'column'
+                  }}>
+                    <p style={{
+                      height: '28px', color: 'white', fontSize: pixel(0.015, 14), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                      margin: `1px 0px 0px ${pixel(0.01, 0)}`, display: 'flex', alignItems: 'center'
+                    }}>
+                      {market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.stock}
+                    </p>
+                    <div style={{ height: '24px', display: 'flex', margin: 0, padding: 0, alignItems: 'center' }}>
+                      <p style={{
+                        color: 'white', fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif', fontWeight: 'bold',
+                        margin: `0px 0px 0px ${pixel(0.01, 0)}`
+                      }}>
+                        {market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.close?.toFixed(2)}
+                      </p>
+                      <p style={{
+                        fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif',
+                        fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: 0,
+                        color: (market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) > 0.0001 ? '#24B75E' :
+                          ((market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) >= -0.0001 &&
+                            (market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
+                      }}>
+                        {market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_value?.toFixed(2)}
+                      </p>
+                      <p style={{
+                        fontSize: pixel(0.012, 10), fontFamily: 'Calibri, sans-serif', color: 'white',
+                        fontWeight: 'bold', margin: `0px 0px 0px ${pixel(0.01, 2)}`, padding: '0px 3px 0px 3px', borderRadius: '5px',
+                        background: (market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) > 0.0001 ? '#24B75E' :
+                          ((market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) >= -0.0001 &&
+                            (market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) <= 0.0001 ? '#D0be0f' : '#e14040')
+                      }}>
+                        {((market_index_card_df?.filter(item => item.stock === 'VN30')[0]?.change_percent) * 100)?.toFixed(2)}%
                       </p>
                     </div>
                   </Button>

@@ -39,12 +39,14 @@ const GroupPriceChart = (props: any) => {
                 rightOffset: 1,
                 barSpacing: ww > 767 ? 12 : (ww > 576 ? 6 : 3),
             },
-            // handleScroll: {
-            //     mouseWheel: false, // Disable zoom on mouse wheel
-            // },
-            // handleScale: {
-            //     mouseWheel: false, // Disable zoom on mouse wheel
-            // },
+            handleScroll: {
+                // mouseWheel: false,  // Disable zoom on mouse wheel
+                // pressedMouseMove: false,  // Disable scroll on mouse drag
+            },
+            handleScale: {
+                // mouseWheel: false,  // Disable zoom on mouse wheel
+                axisPressedMouseMove: false,  // Disable drag scaling on axes
+            },
         });
 
         // Thêm area series
@@ -119,7 +121,7 @@ const GroupPriceChart = (props: any) => {
             areaSeriesRef.current = null;
             volumeSeriesRef.current = null;
         };
-    }, [props.select_group]); // Chỉ chạy một lần khi component mount
+    }, []); // Chỉ chạy một lần khi component mount
 
     // useEffect để cập nhật dữ liệu khi props.data thay đổi
     useEffect(() => {
@@ -140,7 +142,7 @@ const GroupPriceChart = (props: any) => {
         // Cập nhật dữ liệu
         areaSeriesRef.current.setData(areaData);
         volumeSeriesRef.current.setData(volumeData);
-    }, [props.data]); // Chỉ chạy khi props.data thay đổi
+    }, [props.data, props.select_group]); // Chỉ chạy khi props.data thay đổi
 
     return (
         <div

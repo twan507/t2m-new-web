@@ -42,6 +42,14 @@ const IndexPriceChart = (props: any) => {
                 rightOffset: 2,
                 barSpacing: ww > 767 ? 15 : (ww > 576 ? 10 : 5),
             },
+            handleScroll: {
+                // mouseWheel: false,  // Disable zoom on mouse wheel
+                // pressedMouseMove: false,  // Disable scroll on mouse drag
+            },
+            handleScale: {
+                // mouseWheel: false,  // Disable zoom on mouse wheel
+                axisPressedMouseMove: false,  // Disable drag scaling on axes
+            },
         });
 
         candlestickSeriesRef.current = chartRef.current.addCandlestickSeries({
@@ -115,7 +123,7 @@ const IndexPriceChart = (props: any) => {
             candlestickSeriesRef.current = null;
             volumeSeriesRef.current = null;
         };
-    }, [props.index_name]); // Chỉ chạy một lần khi component mount
+    }, []); // Chỉ chạy một lần khi component mount
 
     // useEffect để cập nhật dữ liệu khi props.data hoặc props.index_name thay đổi
     useEffect(() => {
@@ -141,7 +149,7 @@ const IndexPriceChart = (props: any) => {
                 color: data.close > data.open ? 'rgba(36, 183, 94, 0.4)' : 'rgba(225, 64, 64, 0.4)', // Màu sắc dựa trên candlestick
             }))
         );
-    }, [props.data]); // Chỉ chạy khi props.data hoặc props.index_name thay đổi
+    }, [props.data, props.index_name]); // Chỉ chạy khi props.data hoặc props.index_name thay đổi
 
     return <div ref={chartContainerRef} style={{ width: '100%', height: props.ww > 767 ? '290px' : '235px' }} />;
 };

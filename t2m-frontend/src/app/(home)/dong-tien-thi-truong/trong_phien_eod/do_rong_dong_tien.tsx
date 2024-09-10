@@ -23,6 +23,18 @@ const name_dict: any = {
     'D': 'ngành hiệu suất D',
 }
 
+function replaceOpenValue(array: any) {
+    return array.map((item: any) => {
+        const newItem: any = { name: item.name };
+        Object.keys(item).forEach((key: any) => {
+            if (key !== 'name') {
+                newItem[key] = 0;
+            }
+        });
+        return newItem;
+    });
+}
+
 const MoneyFlowBreathChart = (props: any): any => {
 
     let data_sets: any
@@ -30,6 +42,14 @@ const MoneyFlowBreathChart = (props: any): any => {
         data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.industry_rank - b.industry_rank)
     } else {
         data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.order - b.order)
+    }
+
+    if (props.openState === false) {
+        if (props?.group === 'cap') {
+            data_sets = replaceOpenValue(data_sets)
+        } else {
+            data_sets = replaceOpenValue(data_sets).sort((a: any, b: any) => a.name.localeCompare(b.name))
+        }
     }
 
     // Chuẩn hóa dữ liệu thành phần trăm

@@ -6,9 +6,21 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, ChartDataLabels);
 
+function replaceOpenValue(array: any) {
+    return array.map((item: any) => {
+        const newItem: any = { name: item.name };
+        Object.keys(item).forEach((key: any) => {
+            if (key !== 'name') {
+                newItem[key] = 0;
+            }
+        });
+        return newItem;
+    });
+}
+
 const NhomVhLiquidItd = (props: any) => {
 
-    const data_sets = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    const data_sets = props.openState ? props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime()) : [];
 
     const timeList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
@@ -146,6 +158,8 @@ const NhomVhLiquidItd = (props: any) => {
                 },
             },
             y: {
+                min: props.openState ? null : 0,
+                max: props.openState ? null : 100,
                 position: 'right',
                 ticks: {
                     color: '#dfdfdf',

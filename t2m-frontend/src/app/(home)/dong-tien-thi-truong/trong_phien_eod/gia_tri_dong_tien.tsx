@@ -23,6 +23,18 @@ const name_dict: any = {
     'D': 'ngành hiệu suất D',
 }
 
+function replaceOpenValue(array: any) {
+    return array.map((item: any) => {
+        const newItem: any = { name: item.name };
+        Object.keys(item).forEach((key: any) => {
+            if (key !== 'name') {
+                newItem[key] = 0;
+            }
+        });
+        return newItem;
+    });
+}
+
 const MoneyFlowValueChart = (props: any) => {
 
     let data_sets: any
@@ -30,6 +42,15 @@ const MoneyFlowValueChart = (props: any) => {
         data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.industry_rank - b.industry_rank)
     } else {
         data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.order - b.order)
+    }
+
+
+    if (props.openState === false) {
+        if (props?.group === 'cap') {
+            data_sets = replaceOpenValue(data_sets)
+        } else {
+            data_sets = replaceOpenValue(data_sets).sort((a: any, b: any) => a.name.localeCompare(b.name))
+        }
     }
 
     const industry_data_sets = props?.data?.filter((item: any) => ['A', 'B', 'C', 'D'].includes(item.group))
@@ -117,7 +138,7 @@ const MoneyFlowValueChart = (props: any) => {
                     const value = context.dataset.data[context.dataIndex];
                     return value > 0 ? 'end' : 'start';
                 },
-                formatter: (value: any) => ((value > 0.01) || (value < -0.01)) ? value?.toFixed(2) : '', // Định dạng giá trị hiển thị
+                formatter: (value: any) => ((value > 0.005) || (value < -0.005)) ? value?.toFixed(2) : '', // Định dạng giá trị hiển thị
                 font: {
                     family: 'Helvetica, sans-serif',
                     size: props?.ww > 767 ? parseInt(props?.fontSize) - 7 : parseInt(props?.fontSize) - 6, // Chỉnh sửa cỡ chữ
