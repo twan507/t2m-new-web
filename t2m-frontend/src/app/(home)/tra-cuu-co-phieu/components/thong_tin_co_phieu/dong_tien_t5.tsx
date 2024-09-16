@@ -135,7 +135,6 @@ const StockMoneyFlowT5Chart = (props: any) => {
                     },
                 },
                 ticks: {
-                    stepSize: 1,
                     display: true,
                     color: '#dfdfdf',
                     font: {

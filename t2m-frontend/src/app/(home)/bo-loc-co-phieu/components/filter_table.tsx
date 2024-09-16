@@ -496,8 +496,8 @@ const FilterStockTable = (props: any) => {
               }}>{value}</span>
             ),
             sorter: (a: any, b: any) => {
-              const aValue = parseFloat(a.rank);
-              const bValue = parseFloat(b.rank);
+              const aValue = parseFloat(a.rank_t5);
+              const bValue = parseFloat(b.rank_t5);
               return aValue - bValue;
             }
           },

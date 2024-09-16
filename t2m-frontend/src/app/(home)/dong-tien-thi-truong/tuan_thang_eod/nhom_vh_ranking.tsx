@@ -8,8 +8,12 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const NhomVhRanking = (props: any) => {
 
-    const data_sets = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    let data_sets = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
+    if (!props?.openState) {
+        data_sets = data_sets.slice(0, -1)
+    }
+    
     const dateList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
         const month = ('0' + (date.getMonth() + 1))?.slice(-2); // Lấy tháng và thêm số 0 nếu cần

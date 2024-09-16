@@ -395,22 +395,22 @@ export default function Page2() {
                       <Row gutter={20} style={{ marginTop: ww > 991 ? '40px' : '30px', position: 'relative' }}>
                         < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
-                          <MoneyFlowT5Chart data={group_score_5p_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          <MoneyFlowT5Chart data={group_score_5p_df} ww={ww} fontSize={pixel(0.017, 16)} openState={openState}
                             group='hs' height={ww > 991 ? '250px' : '150px'} type='group' />
                         </Col>
                         <Col xs={12} sm={12} md={14} lg={14} xl={14}>
-                          <NhomHsRanking data={group_score_ranking_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          <NhomHsRanking data={group_score_ranking_df} ww={ww} fontSize={pixel(0.017, 16)} openState={openState}
                             height={ww > 991 ? '250px' : '160px'} type='group' />
                         </Col>
                       </Row>
                       <Row gutter={20} style={{ marginTop: ww > 991 ? '40px' : '30px', position: 'relative' }}>
                         < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
-                          <MoneyFlowT5Chart data={group_score_5p_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          <MoneyFlowT5Chart data={group_score_5p_df} ww={ww} fontSize={pixel(0.017, 16)} openState={openState}
                             group='cap' height={ww > 991 ? '250px' : '150px'} type='group' />
                         </Col>
                         <Col xs={12} sm={12} md={14} lg={14} xl={14}>
-                          <NhomVhRanking data={group_score_ranking_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          <NhomVhRanking data={group_score_ranking_df} ww={ww} fontSize={pixel(0.017, 16)} openState={openState}
                             height={ww > 991 ? '250px' : '160px'} type='group' />
                         </Col>
                       </Row>
@@ -671,44 +671,44 @@ export default function Page2() {
                       <Row gutter={20} style={{ marginTop: ww > 991 ? '40px' : '30px', position: 'relative' }}>
                         < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
-                          <MoneyFlowT5Chart data={group_score_5p_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          <MoneyFlowT5Chart data={group_score_5p_df} ww={ww} fontSize={pixel(0.017, 16)} openState={openState}
                             group='A' height={ww > 991 ? '370px' : '200px'} type='industry' />
                         </Col>
                         <Col xs={12} sm={12} md={14} lg={14} xl={14}>
-                          <NganhHsARanking data={group_score_ranking_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          <NganhHsARanking data={group_score_ranking_df} ww={ww} fontSize={pixel(0.017, 16)} openState={openState}
                             height={ww > 991 ? '370px' : '200px'} type='group' />
                         </Col>
                       </Row>
                       <Row gutter={20} style={{ marginTop: ww > 991 ? '40px' : '30px', position: 'relative' }}>
                         < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
-                          <MoneyFlowT5Chart data={group_score_5p_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          <MoneyFlowT5Chart data={group_score_5p_df} ww={ww} fontSize={pixel(0.017, 16)} openState={openState}
                             group='B' height={ww > 991 ? '320px' : '180px'} type='industry' />
                         </Col>
                         <Col xs={12} sm={12} md={14} lg={14} xl={14}>
-                          <NganhHsBRanking data={group_score_ranking_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          <NganhHsBRanking data={group_score_ranking_df} ww={ww} fontSize={pixel(0.017, 16)} openState={openState}
                             height={ww > 991 ? '320px' : '180px'} type='group' />
                         </Col>
                       </Row>
                       <Row gutter={20} style={{ marginTop: ww > 991 ? '40px' : '30px', position: 'relative' }}>
                         < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
-                          <MoneyFlowT5Chart data={group_score_5p_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          <MoneyFlowT5Chart data={group_score_5p_df} ww={ww} fontSize={pixel(0.017, 16)} openState={openState}
                             group='C' height={ww > 991 ? '320px' : '180px'} type='industry' />
                         </Col>
                         <Col xs={12} sm={12} md={14} lg={14} xl={14}>
-                          <NganhHsCRanking data={group_score_ranking_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          <NganhHsCRanking data={group_score_ranking_df} ww={ww} fontSize={pixel(0.017, 16)} openState={openState}
                             height={ww > 991 ? '320px' : '180px'} type='group' />
                         </Col>
                       </Row>
                       <Row gutter={20} style={{ marginTop: ww > 991 ? '40px' : '30px', position: 'relative' }}>
                         < LockSection type='paid' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
                         <Col xs={12} sm={12} md={10} lg={10} xl={10}>
-                          <MoneyFlowT5Chart data={group_score_5p_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          <MoneyFlowT5Chart data={group_score_5p_df} ww={ww} fontSize={pixel(0.017, 16)} openState={openState}
                             group='D' height={ww > 991 ? '250px' : '135px'} type='industry' />
                         </Col>
                         <Col xs={12} sm={12} md={14} lg={14} xl={14}>
-                          <NganhHsDRanking data={group_score_ranking_df} ww={ww} fontSize={pixel(0.017, 16)}
+                          <NganhHsDRanking data={group_score_ranking_df} ww={ww} fontSize={pixel(0.017, 16)} openState={openState}
                             height={ww > 991 ? '250px' : '140px'} type='group' />
                         </Col>
                       </Row>

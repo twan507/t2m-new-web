@@ -32,6 +32,10 @@ const MoneyFlowT5Chart = (props: any) => {
         data_sets = props?.data?.filter((item: any) => item.group === props?.group).sort((a: any, b: any) => a.industry_rank - b.industry_rank);
     }
 
+    if (!props?.openState) {
+        data_sets.forEach((item: any) => { item['T-0'] = 0; });
+    }
+
     const industry_data_sets = props?.data?.filter((item: any) => ['A', 'B', 'C', 'D'].includes(item.group));
     const minIndustryScore = industry_data_sets?.reduce((min: any, current: any) => {
         const currentMin = Math.min(
@@ -166,7 +170,6 @@ const MoneyFlowT5Chart = (props: any) => {
                     },
                 },
                 ticks: {
-                    stepSize: 1,
                     display: true,
                     color: '#dfdfdf',
                     font: {

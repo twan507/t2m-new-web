@@ -8,7 +8,11 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const NhomHsRanking = (props: any) => {
 
-    const data_sets = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    let data_sets = props?.data?.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+    if (!props?.openState) {
+        data_sets = data_sets.slice(0, -1)
+    }
 
     const dateList: string[] = data_sets?.map((item: any) => {
         const date = new Date(item.date);
