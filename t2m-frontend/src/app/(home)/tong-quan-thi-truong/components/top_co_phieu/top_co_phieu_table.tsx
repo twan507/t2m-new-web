@@ -159,6 +159,8 @@ const TopCoPhieuTable = (props: any) => {
         setCheckAuth(false)
     }, []);
 
+    console.log(props?.ww)
+
     if (!checkAuth) {
         return (
             <>
@@ -168,7 +170,9 @@ const TopCoPhieuTable = (props: any) => {
                             <p style={{
                                 fontFamily: 'Calibri, sans-serif', fontWeight: 'bold', fontSize: props?.fontSize, color: 'white',
                                 marginTop: '1px', margin: 0, height: props?.ww > 767 ? '32px' : '22px'
-                            }}>Top cổ phiếu dòng tiền vào mạnh</p>
+                            }}>
+                                {props?.type === 'top' ? 'Top cổ phiếu dòng tiền vào mạnh' : 'Top cổ phiếu dòng tiền ra mạnh'}
+                            </p>
                             <Table className="custom-table" columns={columns(props, props?.ww)} dataSource={data_sets} pagination={false} rowKey="index" />
                         </div>
                     )}

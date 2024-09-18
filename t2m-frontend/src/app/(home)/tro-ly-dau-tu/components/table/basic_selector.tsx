@@ -7,7 +7,7 @@ import '../../styles.css';
 const IndustrySelector = (props: any) => {
   const [placeholder, setPlaceholder] = useState<string | undefined>('All');
 
-  const sortedData = props?.data?.sort((a: any, b: any) => a[props?.sort].localeCompare(b[props?.sort]));
+  const sortedData = props?.data?.sort((a: any, b: any) => a[props?.sort]?.localeCompare(b[props?.sort]));
 
   const uniqueOptions = Array.from(new Set(sortedData?.map((obj: any) => obj[props?.name])));
   const options = uniqueOptions?.map((value: any) => ({

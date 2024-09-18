@@ -223,7 +223,7 @@ export default function Page5() {
                       color: auto_concat_perform_df[0]?.final_portion ? '#24B75E' : '#e14040',
                     fontWeight: 'bold', margin: 0, padding: 0
                     }}>
-                    {auto_concat_perform_df[0]?.final_portion ? 'Nắm giữ cổ phiếu' : 'Quan sát'}
+                    {auto_concat_perform_df[0]?.final_portion ? (ww > 500 ? 'Nắm giữ cổ phiếu' : 'Nắm giữ') : 'Quan sát'}
                   </p>
                 </div>
 

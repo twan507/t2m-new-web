@@ -95,7 +95,7 @@ const AllocationPieChart = (props: any) => {
         formatter: function (value: any, context: any) {
           // Hiển thị giá trị dưới dạng phần trăm nếu giá trị > 0
           if (value > 0) {
-            return `${(value * 100)}%`; // Định dạng với 2 chữ số thập phân
+            return `${(value * 100).toFixed(0)}%`; // Định dạng với 2 chữ số thập phân
           }
           return null; // Không hiển thị nếu giá trị <= 0
         },
