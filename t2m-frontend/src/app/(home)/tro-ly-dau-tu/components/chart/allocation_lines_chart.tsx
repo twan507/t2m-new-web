@@ -5,30 +5,6 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, ChartDataLabels);
 
-// const customLegendMargin: Plugin = {
-//     id: 'customLegendMargin',
-//     beforeInit(chart: any) {
-//         const originalFit = chart.legend.fit;
-//         chart.legend.fit = function fit() {
-//             originalFit.bind(chart.legend)();
-//             this.height += 30;
-//         };
-//     },
-// };
-
-// const customTitleMargin: Plugin = {
-//     id: 'customTitleMargin',
-//     beforeInit(chart: any) {
-//         if (chart.title && chart.title.draw) {
-//             const originalDraw = chart.title.draw;
-//             chart.title.draw = function draw() {
-//                 originalDraw.bind(chart.title)();
-//                 chart.chartArea.top -= 30;
-//             };
-//         }
-//     },
-// };
-
 const AllocationLinesChart = (props: any) => {
 
     function getColor(name: any) {
@@ -40,11 +16,11 @@ const AllocationLinesChart = (props: any) => {
             case 'Chứng khoán':
                 return '#025bc4';  // Màu cho Chứng khoán
             case 'Thép':
-                return '#e14040 ';  // Màu cho Thép
+                return '#ed0211 ';  // Màu cho Thép
             case 'Xây dựng':
-                return '#555555';  // Màu cho Xây dựng
+                return '#666666';  // Màu cho Xây dựng
             case 'Công nghiệp':
-                return '#6101c0 ';  // Màu cho Công nghiệp
+                return '#ad5deb ';  // Màu cho Công nghiệp
             case 'Dầu khí':
                 return '#250275';  // Màu cho Dầu khí
             case 'Hoá chất':
@@ -54,11 +30,11 @@ const AllocationLinesChart = (props: any) => {
             case 'Công nghệ':
                 return '#c91263';  // Màu cho Công nghệ
             case 'Ngân hàng':
-                return '#ad5deb';  // Màu cho Ngân hàng
+                return '#EC8000';  // Màu cho Ngân hàng 
             case 'Thực phẩm':
-                return '#EC8000';  // Màu cho Thực phẩm
+                return '#800b13';  // Màu cho Thực phẩm
             case 'Vận tải':
-                return '#2cb581';  // Màu cho Vận tải
+                return '#025218';  // Màu cho Vận tải
             default:
                 return '#161616';  // Màu mặc định cho các trường hợp khác
         }

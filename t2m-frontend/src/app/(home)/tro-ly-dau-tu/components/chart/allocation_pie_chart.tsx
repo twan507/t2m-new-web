@@ -19,11 +19,11 @@ const AllocationPieChart = (props: any) => {
       case 'Chứng khoán':
         return '#025bc4';  // Màu cho Chứng khoán
       case 'Thép':
-        return '#e14040 ';  // Màu cho Thép
+        return '#ed0211 ';  // Màu cho Thép
       case 'Xây dựng':
-        return '#555555';  // Màu cho Xây dựng
+        return '#666666';  // Màu cho Xây dựng
       case 'Công nghiệp':
-        return '#6101c0 ';  // Màu cho Công nghiệp
+        return '#ad5deb ';  // Màu cho Công nghiệp
       case 'Dầu khí':
         return '#250275';  // Màu cho Dầu khí
       case 'Hoá chất':
@@ -33,11 +33,11 @@ const AllocationPieChart = (props: any) => {
       case 'Công nghệ':
         return '#c91263';  // Màu cho Công nghệ
       case 'Ngân hàng':
-        return '#ad5deb';  // Màu cho Ngân hàng
+        return '#EC8000';  // Màu cho Ngân hàng 
       case 'Thực phẩm':
-        return '#EC8000';  // Màu cho Thực phẩm
+        return '#800b13';  // Màu cho Thực phẩm
       case 'Vận tải':
-        return '#2cb581';  // Màu cho Vận tải
+        return '#025218';  // Màu cho Vận tải
       default:
         return '#161616';  // Màu mặc định cho các trường hợp khác
     }
@@ -75,7 +75,7 @@ const AllocationPieChart = (props: any) => {
       tooltip: {
         callbacks: {
           label: function (tooltipItem: any) {
-            return `Tỉ trọng: ${tooltipItem?.raw * 100}%`;
+            return `Tỉ trọng: ${(tooltipItem?.raw * 100)?.toFixed(0)}%`;
           }
         },
         displayColors: true, // Kiểm soát việc hiển thị ô màu trong tooltip
