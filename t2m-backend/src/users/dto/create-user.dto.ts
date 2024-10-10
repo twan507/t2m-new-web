@@ -23,7 +23,7 @@ export class CreateUserDto {
     @IsOptional()
     sponsorCode: string
 
-    @IsNotEmpty({ message: "trialCheck không được để trống" })
+    @IsOptional()
     trialCheck: boolean
 }
 
@@ -59,6 +59,9 @@ export class RegisterUserDto {
 
     @IsOptional()
     sponsorCode: string
+
+    @IsOptional()
+    trialCheck: boolean
 }
 
 export class ChangePasswordDto {

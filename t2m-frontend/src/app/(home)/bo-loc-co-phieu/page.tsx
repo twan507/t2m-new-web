@@ -43,7 +43,7 @@ export default function Page5() {
     })()
   }, [authInfo?.user?.email, authInfo?.access_token]);
   const authState = !!authInfo?.user?._id && limitState
-  const accessLevel = authInfo?.user?.role === 'T2M ADMIN' ? 4 : authInfo?.user?.licenseInfo?.accessLevel
+  const accessLevel = (authInfo?.user?.role === 'T2M ADMIN') || (authInfo?.user?.role === 'T2M CTV') ? 4 : authInfo?.user?.licenseInfo?.accessLevel
 
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
   const getData = async (tableName: string) => {

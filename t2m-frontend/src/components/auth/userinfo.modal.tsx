@@ -233,7 +233,7 @@ const UserInfoModal = (props: IProps) => {
                                     <div style={{
                                         fontSize: 12, marginTop: 5, padding: '0px 5px 0px 5px',
                                         background:
-                                            authInfo.user.role === "T2M ADMIN" ? '#98217c' : (
+                                            ((authInfo.user.role === "T2M ADMIN") || (authInfo.user.role === "T2M CTV")) ? '#98217c' : (
                                                 !authInfo.user.licenseInfo?.accessLevel ? '#404040' : (
                                                     authInfo.user.licenseInfo?.accessLevel === 1 ? '#1777ff' : (
                                                         authInfo.user.licenseInfo?.accessLevel === 2 ? '#1E7607' : (
@@ -242,7 +242,7 @@ const UserInfoModal = (props: IProps) => {
                                         borderRadius: 5, width: 'fit-content'
                                     }}
                                     >
-                                        {authInfo.user.role === "T2M ADMIN" ? "ADMIN" : authInfo.user.licenseInfo?.product ?? 'FREE'}
+                                        {authInfo.user.role === "T2M ADMIN" ? "ADMIN" : (authInfo.user.role === "T2M CTV" ? "CTV" : authInfo.user.licenseInfo?.product ?? 'FREE')}
                                     </div>
                                     {(authInfo.user.licenseInfo?.daysLeft && authInfo.user.licenseInfo?.daysLeft < 370) && (
                                         //@ts-ignore

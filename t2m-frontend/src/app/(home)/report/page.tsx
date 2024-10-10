@@ -73,7 +73,7 @@ export default function Report() {
     })()
   }, [authInfo?.user?.email, authInfo?.access_token]);
   const authState = !!authInfo?.user?._id && limitState
-  const accessLevel = authInfo?.user?.role === 'T2M ADMIN' ? 4 : authInfo?.user?.licenseInfo?.accessLevel
+  const accessLevel = (authInfo?.user?.role === 'T2M ADMIN') || (authInfo?.user?.role === 'T2M CTV') ? 4 : authInfo?.user?.licenseInfo?.accessLevel
 
   const getData = async (tableName: string) => {
     const res = await sendRequest<IBackendRes<any>>({

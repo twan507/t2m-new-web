@@ -74,7 +74,7 @@ export default function Page3() {
     })()
   }, [authInfo?.user?.email, authInfo?.access_token]);
   const authState = !!authInfo?.user?._id && limitState
-  const accessLevel = authInfo?.user?.role === 'T2M ADMIN' ? 4 : authInfo?.user?.licenseInfo?.accessLevel
+  const accessLevel = (authInfo?.user?.role === 'T2M ADMIN') || (authInfo?.user?.role === 'T2M CTV') ? 4 : authInfo?.user?.licenseInfo?.accessLevel
 
   const [select_group, set_select_group] = useState('Thị trường');
   const selectGroupRef = useRef(select_group);

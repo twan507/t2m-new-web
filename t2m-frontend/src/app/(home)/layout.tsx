@@ -217,7 +217,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
       icon: <FundViewOutlined style={{ fontSize: '18px', marginLeft: '-1px', marginTop: collapsed ? '11px' : '0px' }} />,
     },
 
-    ...((authInfo?.user?.role === "T2M ADMIN") ? [
+    ...(((authInfo?.user?.role === "T2M ADMIN") || (authInfo?.user?.role === "T2M CTV")) ? [
       {
         label: (
           <Link href="/tro-ly-dau-tu" onClick={(e) => {
@@ -229,7 +229,8 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
         ),
         key: 'tro-ly-dau-tu',
         icon: <RobotOutlined style={{ fontSize: '18px', marginLeft: '-1px', marginTop: collapsed ? '11px' : '0px' }} />,
-      },
+      }] : []),
+    ...((authInfo?.user?.role === "T2M ADMIN") ? [
       {
         label: (
           <Link href="/report" onClick={(e) => {
@@ -318,7 +319,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
                         <div style={{
                           fontSize: 12, marginTop: 4, padding: '0px 5px 0px 5px',
                           background:
-                            authInfo.user.role === "T2M ADMIN" ? '#98217c' : (
+                            ((authInfo.user.role === "T2M ADMIN") || (authInfo.user.role === "T2M CTV")) ? '#98217c' : (
                               !authInfo.user.licenseInfo?.accessLevel ? '#404040' : (
                                 authInfo.user.licenseInfo?.accessLevel === 1 ? '#1777ff' : (
                                   authInfo.user.licenseInfo?.accessLevel === 2 ? '#1E7607' : (
@@ -327,7 +328,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
                           borderRadius: 5, width: 'fit-content'
                         }}
                         >
-                          {collapsed ? null : authInfo.user.role === "T2M ADMIN" ? "ADMIN" : authInfo.user.licenseInfo?.product ?? 'FREE'}
+                          {collapsed ? null : authInfo.user.role === "T2M ADMIN" ? "ADMIN" : (authInfo.user.role === "T2M CTV" ? "CTV" : authInfo.user.licenseInfo?.product ?? 'FREE')}
                         </div>
                         {(authInfo.user.licenseInfo?.daysLeft && authInfo.user.licenseInfo?.daysLeft < 370) && (
                           //@ts-ignore
@@ -426,7 +427,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
                         </Button>,
                       </div>
                     )}
-                    {authInfo?.user?.role !== "T2M ADMIN" && (
+                    {authInfo?.user?.role !== "T2M ADMIN" && authInfo?.user?.role !== "T2M CTV" && (
                       <>
                         {authState && (
                           <div>

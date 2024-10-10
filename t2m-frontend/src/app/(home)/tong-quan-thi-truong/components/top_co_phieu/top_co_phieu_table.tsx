@@ -159,8 +159,6 @@ const TopCoPhieuTable = (props: any) => {
         setCheckAuth(false)
     }, []);
 
-    console.log(props?.ww)
-
     if (!checkAuth) {
         return (
             <>

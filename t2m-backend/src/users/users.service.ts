@@ -195,7 +195,8 @@ export class UsersService {
       license: "",
       affiliateCode: affiliateCode ? affiliateCode : "",
       sponsorCode: sponsorCode ? sponsorCode : "",
-      role: userRole?.name
+      role: userRole?.name,
+      trialCheck: false
     })
 
     //Gửi email xác nhận cho khách

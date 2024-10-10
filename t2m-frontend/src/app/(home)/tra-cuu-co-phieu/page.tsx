@@ -48,7 +48,7 @@ export default function Page4() {
     })()
   }, [authInfo?.user?.email, authInfo?.access_token]);
   const authState = !!authInfo?.user?._id && limitState
-  const accessLevel = authInfo?.user?.role === 'T2M ADMIN' ? 4 : authInfo?.user?.licenseInfo?.accessLevel
+  const accessLevel = (authInfo?.user?.role === 'T2M ADMIN') || (authInfo?.user?.role === 'T2M CTV') ? 4 : authInfo?.user?.licenseInfo?.accessLevel
 
   const [select_stock, set_select_stock] = useState('AAA');
   const [select_industry, set_select_industry] = useState('Hoá chất');
@@ -71,7 +71,7 @@ export default function Page4() {
         method: "GET",
         queryParams: { columnName: columnName, columnValue: currentStock },
       })
-      
+
       if (res.data && res.data.length > 0) {
         break; // Thoát khỏi vòng lặp khi dữ liệu thỏa mãn điều kiện
       } else {
