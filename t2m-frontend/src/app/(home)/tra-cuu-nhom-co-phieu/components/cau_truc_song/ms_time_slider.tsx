@@ -4,7 +4,7 @@ import type { InputNumberProps } from 'antd';
 import { Col, InputNumber, Row, Slider, Space } from 'antd';
 
 const IntegerStep = (props: any) => {
-    const [inputValue, setInputValue] = useState(960);
+    const [inputValue, setInputValue] = useState(props?.data?.length);
 
     const onChange: InputNumberProps['onChange'] = (newValue) => {
         setInputValue(newValue as number);
@@ -17,7 +17,6 @@ const IntegerStep = (props: any) => {
             props.set_ms_time_index(props?.slice);
         }
     }, [props?.slice])
-
 
 
     const data_sets = props?.data?.filter((item: any) => item.name === 'Thị trường')
@@ -37,7 +36,7 @@ const IntegerStep = (props: any) => {
     return (
         <Slider
             min={props?.slice}
-            max={960}
+            max={props?.data?.length}
             onChange={onChange}
             value={typeof inputValue === 'number' ? inputValue : 0}
             tooltip={{ formatter }}

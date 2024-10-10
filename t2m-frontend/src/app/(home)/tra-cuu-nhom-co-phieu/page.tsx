@@ -161,7 +161,9 @@ export default function Page3() {
   const [ms_time_index, set_ms_time_index] = useState(0);
 
   useEffect(() => {
-    set_ms_time_index(group_ms_chart_df?.length)
+    if (!ms_time_index) {
+      set_ms_time_index(group_ms_chart_df?.length)
+    }
     set_group_price_chart_df(group_price_chart_df)
   }, [group_ms_chart_df?.length, group_price_chart_df])
 
