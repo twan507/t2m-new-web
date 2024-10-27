@@ -12,6 +12,8 @@ import AllocationPieChart from "./components/chart/allocation_pie_chart";
 import IndustrySelector from "./components/table/basic_selector";
 import HoldingStockTable from "./components/table/holding_stock_table";
 import TradedStockTable from "./components/table/traded_stock_table";
+import { Tooltip as ReactTooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 import './styles.css'
 
 const useWindowWidth = (): any => {
@@ -76,6 +78,10 @@ export default function Page5() {
       await set_auto_holding_stock_df(res?.data)
     } else if (tableName === 'auto_traded_stock_df') {
       await set_auto_traded_stock_df(res?.data)
+    } else if (tableName === 'auto_market_checklist') {
+      await set_auto_market_checklist(res?.data)
+    } else if (tableName === 'auto_industry_checklist') {
+      await set_auto_industry_checklist(res?.data)
     }
   }
   useEffect(() => {
@@ -88,6 +94,8 @@ export default function Page5() {
       getData('auto_cap_allocation_pie_df');
       getData('auto_holding_stock_df');
       getData('auto_traded_stock_df');
+      getData('auto_market_checklist');
+      getData('auto_industry_checklist');
     };
     fetchData();
     setInterval(fetchData, 10000)
@@ -100,6 +108,10 @@ export default function Page5() {
   const [auto_cap_allocation_pie_df, set_auto_cap_allocation_pie_df] = useState<any[]>([]);
   const [auto_holding_stock_df, set_auto_holding_stock_df] = useState<any[]>([]);
   const [auto_traded_stock_df, set_auto_traded_stock_df] = useState<any[]>([]);
+  const [auto_market_checklist, set_auto_market_checklist] = useState<any[]>([]);
+  const [auto_industry_checklist, set_auto_industry_checklist] = useState<any[]>([]);
+
+  console.log(auto_market_checklist)
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
   const [currentPage, setCurrentPage] = useState(1);
@@ -268,6 +280,15 @@ export default function Page5() {
                   </div>
                 </Col>
               </Row>
+              
+
+              <Row>
+                <button data-tooltip-id="my-tooltip">Di chuột vào đây</button>
+                <ReactTooltip id="my-tooltip" place="top">
+                  <PerformChart data={auto_concat_perform_df} ww={ww} time_span={time_span} fontSize={pixel(0.015, 17)} />
+                </ReactTooltip>
+              </Row>
+
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
                 <Col span={24}>
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
