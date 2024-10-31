@@ -39,6 +39,12 @@
     display: flex;
 }
 
+.custom-button {
+    background-color: #161616 !important;
+    border: 0 !important;
+    color: #dfdfdf !important;
+}
+
 /* -------------------------------------------------------------------------------------------------------------- */
 /* CSS cho phần menu mobile mục trạng thái thì trường */
 .page2-menu .ant-menu-item {

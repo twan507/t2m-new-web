@@ -17,18 +17,19 @@ const MarketBullButton = (props: any) => {
   const checkingtooltip6 = !!props.data[0]?.['5p_upcheck4']
   const checkingtooltip11 = !!props.data[0]?.['5p_upcheck']
   const checkingtooltip7 = !!props.data[0]?.['20p_upcheck']
-  const checkingtooltip8 = !!props.data[0]?.['20p_upcheck4']
+  const checkingtooltip8 = !!props.data[0]?.['20p_upcheck1']
   const checkingtooltip12 = !!props.data[0]?.['20p_upcheck4']
   const checkingtooltip9 = !!props.data[0]?.['60p_upcheck']
   const checkingtooltip10 = !!props.data[0]?.['60p_upcheck2']
   const checkingtooltip13 = !!props.data[0]?.['60p_upcheck']
+  const checkingtooltip14 = !!props.data[0]?.['up_check']
 
   const buttonColor = checking ? '#24B75E' : '#e14040'
   const buttonBackGround = checking ? 'rgba(36, 183, 94, 0.5)' : 'rgba(225, 64, 64, 0.5)'
 
   return (
     <>
-      <button data-tooltip-id={props.checkid} style={{
+      <button data-tooltip-id={`market_${props.checkid}`} style={{
         color: buttonColor,
         borderColor: buttonColor,
         backgroundColor: buttonBackGround,
@@ -48,7 +49,7 @@ const MarketBullButton = (props: any) => {
         }
       </button>
 
-      <ReactTooltip id="portion_raw_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+      <ReactTooltip id="market_portion_raw_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
         <p style={{
           width: '350px', fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
@@ -60,7 +61,7 @@ const MarketBullButton = (props: any) => {
         </p>
       </ReactTooltip>
 
-      <ReactTooltip id="portion_phase_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+      <ReactTooltip id="market_portion_phase_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
         <p style={{
           fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
@@ -83,11 +84,23 @@ const MarketBullButton = (props: any) => {
         </p>
       </ReactTooltip>
 
-      <ReactTooltip id="5p_upcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+      <ReactTooltip id="market_up_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+        <p style={{
+          width: '300px', fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
+        }}>
+          {'Cấu trúc sóng thị trường được đánh giá dựa trên giá trị hiện tại của các con sóng thị trường, trạng thái hiện tại:  '}
+          {checkingtooltip14 ?
+            <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
+            <strong style={{ color: "#e14040" }}>Không đạt<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
+          }
+        </p>
+      </ReactTooltip>
+
+      <ReactTooltip id="market_5p_upcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
         <p style={{
           fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
-          {'Cấu trúc sóng tuần được đánh giá dựa trên 3 điều kiện: '}
+          {'Xu hướng sóng tuần được đánh giá dựa trên 3 điều kiện: '}
           {'\nĐiều kiện ngắn hạn: '}
           {checkingtooltip5 ?
             <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
@@ -106,11 +119,11 @@ const MarketBullButton = (props: any) => {
         </p>
       </ReactTooltip>
 
-      <ReactTooltip id="20p_upcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+      <ReactTooltip id="market_20p_upcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
         <p style={{
           fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
-          {'Cấu trúc sóng tháng được đánh giá dựa trên 3 điều kiện: '}
+          {'Xu hướng sóng tháng được đánh giá dựa trên 3 điều kiện: '}
           {'\nĐiều kiện ngắn hạn: '}
           {checkingtooltip7 ?
             <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
@@ -129,11 +142,11 @@ const MarketBullButton = (props: any) => {
         </p>
       </ReactTooltip>
 
-      <ReactTooltip id="60p_upcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+      <ReactTooltip id="market_60p_upcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
         <p style={{
           fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
-          {'Cấu trúc sóng quý được đánh giá dựa trên 3 điều kiện: '}
+          {'Xu hướng sóng quý được đánh giá dựa trên 3 điều kiện: '}
           {'\nĐiều kiện ngắn hạn: '}
           {checkingtooltip9 ?
             <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :

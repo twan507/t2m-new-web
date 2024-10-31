@@ -20,6 +20,9 @@ import AllocationPieChart from "./components/chart/allocation_pie_chart";
 import IndustrySelector from "./components/table/industry_selector";
 import HoldingStockTable from "./components/table/holding_stock_table";
 import TradedStockTable from "./components/table/traded_stock_table";
+import TopIndustryTable from "./components/table/top_industry_table";
+import IndustryBullButton from "./components/signal/industry_bull_button";
+import IndustryBearButton from "./components/signal/industry_bear_button";
 
 
 const useWindowWidth = (): any => {
@@ -125,10 +128,11 @@ export default function Page5() {
   const [auto_industry_toplist, set_auto_industry_toplist] = useState<any[]>([]);
   const [auto_industry_stocklist_df, set_auto_industry_stocklist_df] = useState<any[]>([]);
 
-
   //State lưu giữ trạng thái hiển thị của các nút bấm
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [industryDetail, setIndustryDetail] = useState(false);
+  const [selectIndustryDetail, setSelectIndustryDetail] = useState('Bán lẻ');
 
   //State lưu giữ trạng thái của các filter
   const [time_span, set_time_span] = useState('3M');
@@ -152,6 +156,10 @@ export default function Page5() {
     if (value >= 0.01) return '#24B75E';
     else if (value <= -0.01) return '#e14040';
     else return '#D0be0f';
+  };
+
+  const onChangeIndustryDetail = (e: any) => {
+    setIndustryDetail(industryDetail ? false : true)
   };
 
 
@@ -285,7 +293,7 @@ export default function Page5() {
                         fontSize: pixel(0.013, 12), fontFamily: 'Calibri, sans-serif', height: '18px',
                         color: '#B3B3B3', fontWeight: 'bold', margin: '5px 0px 0px 35px', padding: 0, cursor: 'pointer'
                       }}>
-                        {ww > 996 ? 'Giai đoạn thị trường hiện tại' : 'TThị trường'}
+                        {ww > 996 ? 'Giai đoạn thị trường hiện tại' : 'Thị trường'}
                         <InfoCircleOutlined style={{ marginLeft: '7px' }} />
                       </p>
                       <ReactTooltip id="giai-doan-thi-truong-hien-tai" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
@@ -322,14 +330,16 @@ export default function Page5() {
                             checkid={'portion_raw_check'} name={'Sức mạnh dòng tiền'} />
                           <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
                             checkid={'portion_phase_check'} name={'Rủi ro dòng tiền'} />
+                          <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                            checkid={'up_check'} name={ww > 850 ? 'Cấu trúc sóng thị trường' : 'Cấu trúc sóng'} />
                         </Row>
                         <Row style={{ marginTop: '5px' }}>
                           <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
-                            checkid={'5p_upcheck'} name={'Cấu trúc sóng tuần'} />
+                            checkid={'5p_upcheck'} name={ww < 850 ? 'Xu hướng tuần' : 'Xu hướng sóng tuần'} />
                           <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
-                            checkid={'20p_upcheck'} name={'Cấu trúc sóng tháng'} />
+                            checkid={'20p_upcheck'} name={ww < 850 ? 'Xu hướng tháng' : 'Xu hướng sóng tháng'} />
                           <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
-                            checkid={'60p_upcheck'} name={'Cấu trúc sóng quý'} />
+                            checkid={'60p_upcheck'} name={ww < 850 ? 'Xu hướng quý' : 'Xu hướng sóng quý'} />
                         </Row>
                       </Col>
                     ) : (
@@ -339,12 +349,14 @@ export default function Page5() {
                             checkid={'portion_phase_check'} name={'Vị thế nắm giữ'} />
                           <MarketBearButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
                             checkid={'portion_t3_check'} name={'Thời gian nắm giữ'} />
+                          <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                            checkid={'down_check'} name={ww > 850 ? 'Cấu trúc sóng thị trường' : 'Cấu trúc sóng'} />
                         </Row>
                         <Row style={{ marginTop: '5px' }}>
                           <MarketBearButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
-                            checkid={'5p_downcheck'} name={'Cấu trúc sóng tuần'} />
+                            checkid={'5p_downcheck'} name={'Xu hướng sóng tuần'} />
                           <MarketBearButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
-                            checkid={'20p_downcheck'} name={'Cấu trúc sóng tháng'} />
+                            checkid={'20p_downcheck'} name={'Xu hướng sóng tháng'} />
                         </Row>
                       </Col>
                     )}
@@ -356,21 +368,116 @@ export default function Page5() {
               </Row>
 
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>
-                <Col span={24}>
+                <Col xs={13} sm={14} md={15} lg={16} xl={16}>
                   <p style={{ color: 'white', fontSize: pixel(0.025, 18), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0, fontWeight: 'bold' }}>
                     Tỉ trọng và phân bổ vốn
                   </p>
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
                 </Col>
+                <Col xs={11} sm={10} md={9} lg={8} xl={8}>
+                  <Button className="custom-button" block={true} size={ww > 991 ? 'large' : 'middle'}
+                    style={{ fontSize: pixel(0.013, 11) }} onClick={onChangeIndustryDetail}
+                  >
+                    {!industryDetail ? 'Xem chi tiết ngành' : 'Quay lại'}
+                  </Button>
+                </Col>
               </Row>
               <Row gutter={20} style={{ position: 'relative' }}>
                 <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <Col xs={13} sm={14} md={15} lg={16} xl={16}>
-                  <AllocationLinesChart data={auto_cap_allocation_line_df} ww={ww} time_span={time_span} fontSize={pixel(0.015, 17)} />
-                </Col>
-                <Col xs={11} sm={10} md={9} lg={8} xl={8}>
-                  <AllocationPieChart data={auto_cap_allocation_pie_df} ww={ww} pixel={pixel} fontSize={pixel(0.015, 17)} />
-                </Col>
+                {!industryDetail ? (
+                  <>
+                    <Col xs={13} sm={14} md={15} lg={16} xl={16}>
+                      <AllocationLinesChart data={auto_cap_allocation_line_df} ww={ww} time_span={time_span} fontSize={pixel(0.015, 17)} />
+                    </Col>
+                    <Col xs={11} sm={10} md={9} lg={8} xl={8}>
+                      <AllocationPieChart data={auto_cap_allocation_pie_df} ww={ww} pixel={pixel} fontSize={pixel(0.015, 17)} />
+                    </Col>
+                  </>
+                ) : (
+                  <>
+                    <Col xs={24} sm={24} md={9} lg={8} xl={8}>
+                      <TopIndustryTable data={auto_industry_toplist} subdata={auto_industry_checklist} ww={ww} fontSize={pixel(0.013, 12)} lineHeight={ww > 776 ? '30px' : '24px'} setFunction={setSelectIndustryDetail} />
+                    </Col>
+                    <Col xs={24} sm={24} md={15} lg={16} xl={16}>
+                      <Row>
+                        <Col xs={24} sm={24} md={8} lg={7} xl={6}>
+                          <p style={{
+                            fontSize: pixel(0.016, 17), fontFamily: 'Calibri, sans-serif',
+                            color: auto_industry_checklist.filter((item: any) => item.industry === selectIndustryDetail)[0]?.final_portion ? '#24B75E' : '#e14040',
+                            fontWeight: 'bold', margin: '20px 0px 0px 10px', padding: 0
+                          }}>
+                            {auto_industry_checklist.filter((item: any) => item.industry === selectIndustryDetail)[0]?.final_portion ? 'Nắm giữ cổ phiếu' : 'Quan sát'}
+                          </p>
+                          <p data-tooltip-id="giai-doan-nganh-hien-tai" style={{
+                            fontSize: pixel(0.011, 11), fontFamily: 'Calibri, sans-serif', height: '18px',
+                            color: '#B3B3B3', fontWeight: 'bold', margin: '5px 0px 0px 10px', padding: 0, cursor: 'pointer', whiteSpace: 'pre-wrap'
+                          }}>
+                            {ww > 767 ? `Khuyến nghị ngành \n${selectIndustryDetail}` : `Khuyến nghị ngành ${selectIndustryDetail}`}
+                            <InfoCircleOutlined style={{ marginLeft: '7px' }} />
+                          </p>
+                          <ReactTooltip id="giai-doan-nganh-hien-tai" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+                            <p style={{
+                              fontSize: pixel(0.011, 11),
+                              fontFamily: 'Calibri, sans-serif',
+                              background: '#161616',
+                              padding: 0,
+                              whiteSpace: 'pre-wrap'
+                            }}>
+                              {'Theo hệ thống T2M, ngành được chia thành 2 giai đoạn bao gồm:\n'}
+                              <strong style={{ color: "#24B75E" }}>Nắm giữ cổ phiếu:</strong>
+                              {' Nắm giữ những cổ phiếu trong ngành theo khuyến nghị của hệ thống\n'}
+                              <strong style={{ color: "#e14040" }}>Quan sát:</strong>
+                              {' Không nắm giữ cổ phiếu và theo dõi các diễn biến dòng tiền chờ đợi cơ hội\n'}
+                              {!auto_industry_checklist.filter((item: any) => item.industry === selectIndustryDetail)[0]?.final_portion ? (
+                                <>
+                                  {'Khi toàn bộ điều kiện bên phải đạt yêu cầu, ngành sẽ chuyển sang giai đoạn '}
+                                  <strong style={{ color: "#24B75E" }}>Nắm giữ cổ phiếu</strong>
+                                </>
+                              ) : (
+                                <>
+                                  {'Khi toàn bộ điều kiện bên phải không đạt yêu cầu, ngành sẽ chuyển sang giai đoạn '}
+                                  <strong style={{ color: "#e14040" }}>Quan sát</strong>
+                                </>
+                              )}
+                            </p>
+                          </ReactTooltip>
+                        </Col>
+                        {!auto_industry_checklist.filter((item: any) => item.industry === selectIndustryDetail)[0]?.final_portion ? (
+                          <Col xs={0} sm={0} md={16} lg={17} xl={18}>
+                            <Row style={{ marginTop: '25px' }}>
+                              <IndustryBullButton data={auto_industry_checklist} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
+                                checkid={'portion_raw_check'} name={ww > 996 ? 'Sức mạnh dòng tiền' : 'Sức mạnh DT'} />
+                              <IndustryBullButton data={auto_industry_checklist} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
+                                checkid={'portion_phase_check'} name={ww > 996 ? 'Rủi ro dòng tiền' : 'Rủi ro DT'} />
+                              <IndustryBullButton data={auto_industry_checklist} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
+                                checkid={'up_check'} name={ww > 996 ? 'Cấu trúc sóng ngành' : 'Sóng ngành'} />
+                            </Row>
+                            <Row style={{ marginTop: '5px' }}>
+                              <IndustryBullButton data={auto_industry_checklist} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
+                                checkid={'5p_upcheck'} name={ww > 996 ? 'Xu hướng sóng tuần' : 'Xu hướng tuần'} />
+                              <IndustryBullButton data={auto_industry_checklist} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
+                                checkid={'20p_upcheck'} name={ww > 996 ? 'Xu hướng sóng tháng' : 'Xu hướng tháng'} />
+                            </Row>
+                          </Col>
+                        ) : (
+                          <Col xs={0} sm={0} md={16} lg={17} xl={18}>
+                            <Row style={{ marginTop: '25px' }}>
+                              <IndustryBearButton data={auto_industry_checklist} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
+                                checkid={'down_check'} name={'Cấu trúc sóng ngành'} />
+                            </Row>
+                            <Row style={{ marginTop: '5px' }}>
+                              <IndustryBearButton data={auto_industry_checklist} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
+                                checkid={'5p_downcheck'} name={'Xu hướng sóng tuần'} />
+                              <IndustryBearButton data={auto_industry_checklist} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
+                                checkid={'20p_downcheck'} name={'Xu hướng sóng tháng'} />
+                            </Row>
+                          </Col>
+                        )}
+                      </Row>
+
+                    </Col>
+                  </>
+                )}
               </Row>
               {auto_holding_stock_df?.length > 0 && (
                 <>

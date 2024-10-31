@@ -5,27 +5,24 @@ import 'react-tooltip/dist/react-tooltip.css';
 import '../../styles.css';
 import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 
-const MarketBearButton = (props: any) => {
+const IndustryBearButton = (props: any) => {
 
-  const checking = !['portion_t3_check', 'portion_phase_check'].includes(props.checkid) ? !props.data[0]?.[props.checkid] : !!props.data[0]?.[props.checkid];
+  const checking = !props.data.filter((item: any) => item.industry === props.industry)[0]?.[props.checkid];
 
-
-  const checkingtooltip1 = !(props.data[0]?.portion_phase_check != 2)
-  const checkingtooltip2 = props.data[0]?.portion_t3_check
-  const checkingtooltip3 = !props.data[0]?.['5p_downcheck1']
-  const checkingtooltip4 = !props.data[0]?.['5p_downcheck2']
-  const checkingtooltip7 = !props.data[0]?.['5p_downcheck']
-  const checkingtooltip5 = !props.data[0]?.['20p_downcheck1']
-  const checkingtooltip6 = !props.data[0]?.['20p_downcheck2']
-  const checkingtooltip8 = !props.data[0]?.['20p_downcheck']
-  const checkingtooltip9 = !props.data[0]?.['down_check']
+  const checkingtooltip1 = !props.data.filter((item: any) => item.industry === props.industry)[0]?.['5p_downcheck1']
+  const checkingtooltip2 = !props.data.filter((item: any) => item.industry === props.industry)[0]?.['5p_downcheck2']
+  const checkingtooltip3 = !props.data.filter((item: any) => item.industry === props.industry)[0]?.['5p_downcheck']
+  const checkingtooltip4 = !props.data.filter((item: any) => item.industry === props.industry)[0]?.['20p_downcheck1']
+  const checkingtooltip5 = !props.data.filter((item: any) => item.industry === props.industry)[0]?.['20p_downcheck2']
+  const checkingtooltip6 = !props.data.filter((item: any) => item.industry === props.industry)[0]?.['20p_downcheck']
+  const checkingtooltip7 = !props.data.filter((item: any) => item.industry === props.industry)[0]?.['down_check']
 
   const buttonColor = checking ? '#24B75E' : '#e14040'
   const buttonBackGround = checking ? 'rgba(36, 183, 94, 0.5)' : 'rgba(225, 64, 64, 0.5)'
 
   return (
     <>
-      <button data-tooltip-id={`market_${props.checkid}`} style={{
+      <button data-tooltip-id={`industry_${props.checkid}`} style={{
         color: buttonColor,
         borderColor: buttonColor,
         backgroundColor: buttonBackGround,
@@ -45,64 +42,11 @@ const MarketBearButton = (props: any) => {
         }
       </button>
 
-      <ReactTooltip id="market_portion_phase_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
-        <p style={{
-          fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
-        }}>
-          {'Theo hệ thống T2M, vị thế nắm giữ có thể có 2 trạng thái: \n'}
-          <strong style={{ color: "#24B75E" }}>Đạt</strong>
-          {' Thị trường rơi vào trạng thái quá bán, nên tiếp tục nắm giữ cổ phiếu\n'}
-          <strong style={{ color: "#e14040" }}>Không đạt</strong>
-          {' Thị trường chưa tới vùng quá bán, có thể bán cổ phiếu nếu diễn biến xấu\n'}
-          {'Trạng thái hiện tại:  '}
-          {checkingtooltip1 ?
-            <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
-            <strong style={{ color: "#e14040" }}>Không đạt<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
-          }
-        </p>
-      </ReactTooltip>
-
-      <ReactTooltip id="market_portion_t3_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
-        <p style={{
-          width: '350px', fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
-        }}>
-          {'Trạng thái nắm giữ cổ phiếu phải có thời gian tối thiếu T+2, trạng thái hiện tại: '}
-          {checkingtooltip2 ?
-            <strong style={{ color: "#24B75E" }}>Chưa thể bán<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
-            <strong style={{ color: "#e14040" }}>Có thể bán<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
-          }
-        </p>
-      </ReactTooltip>
-
-      <ReactTooltip id="market_down_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+      <ReactTooltip id="industry_down_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
         <p style={{
           width: '300px', fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
           {'Cấu trúc sóng thị trường được đánh giá dựa trên giá trị hiện tại của các con sóng thị trường, trạng thái hiện tại:  '}
-          {checkingtooltip9 ?
-            <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
-            <strong style={{ color: "#e14040" }}>Không đạt<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
-          }
-        </p>
-      </ReactTooltip>
-
-
-      <ReactTooltip id="market_5p_downcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
-        <p style={{
-          fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
-        }}>
-          {'Xu hướng sóng tuần được đánh giá dựa trên 3 điều kiện: '}
-          {'\nĐiều kiện ngắn hạn: '}
-          {checkingtooltip3 ?
-            <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
-            <strong style={{ color: "#e14040" }}>Không đạt<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
-          }
-          {'\nĐiều kiện dài hạn: '}
-          {checkingtooltip4 ?
-            <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
-            <strong style={{ color: "#e14040" }}>Không đạt<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
-          }
-          {'\nĐiều kiện tổng thể: '}
           {checkingtooltip7 ?
             <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
             <strong style={{ color: "#e14040" }}>Không đạt<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
@@ -110,23 +54,46 @@ const MarketBearButton = (props: any) => {
         </p>
       </ReactTooltip>
 
-      <ReactTooltip id="market_20p_downcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+      <ReactTooltip id="industry_5p_downcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+        <p style={{
+          fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
+        }}>
+          {'Xu hướng sóng tuần được đánh giá dựa trên 3 điều kiện: '}
+          {'\nĐiều kiện ngắn hạn: '}
+          {checkingtooltip1 ?
+            <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
+            <strong style={{ color: "#e14040" }}>Không đạt<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
+          }
+          {'\nĐiều kiện dài hạn: '}
+          {checkingtooltip2 ?
+            <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
+            <strong style={{ color: "#e14040" }}>Không đạt<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
+          }
+          {'\nĐiều kiện tổng thể: '}
+          {checkingtooltip3 ?
+            <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
+            <strong style={{ color: "#e14040" }}>Không đạt<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
+          }
+        </p>
+      </ReactTooltip>
+
+      <ReactTooltip id="industry_20p_downcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
         <p style={{
           fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
           {'Xu hướng sóng tháng được đánh giá dựa trên 3 điều kiện: '}
           {'\nĐiều kiện ngắn hạn: '}
-          {checkingtooltip5 ?
+          {checkingtooltip4 ?
             <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
             <strong style={{ color: "#e14040" }}>Không đạt<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
           }
           {'\nĐiều kiện dài hạn: '}
-          {checkingtooltip6 ?
+          {checkingtooltip5 ?
             <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
             <strong style={{ color: "#e14040" }}>Không đạt<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
           }
           {'\nĐiều kiện tổng thể: '}
-          {checkingtooltip8 ?
+          {checkingtooltip6 ?
             <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
             <strong style={{ color: "#e14040" }}>Không đạt<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
           }
@@ -136,4 +103,4 @@ const MarketBearButton = (props: any) => {
   )
 }
 
-export default MarketBearButton;
+export default IndustryBearButton;
