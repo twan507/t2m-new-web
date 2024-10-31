@@ -6,15 +6,21 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { sessionLimit } from "@/utlis/sessionLimit";
 import { resetAuthState } from "@/redux/authSlice";
 import LockSection from "@/components/subscribers/blurComponents";
-import PerformChart from "./components/chart/perform_chart";
-import AllocationLinesChart from "./components/chart/allocation_lines_chart";
-import AllocationPieChart from "./components/chart/allocation_pie_chart";
-import IndustrySelector from "./components/table/basic_selector";
-import HoldingStockTable from "./components/table/holding_stock_table";
-import TradedStockTable from "./components/table/traded_stock_table";
+
+
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import './styles.css'
+import { CheckCircleTwoTone, InfoCircleOutlined } from "@ant-design/icons";
+import MarketBullButton from "./components/signal/market_bull_button";
+import MarketBearButton from "./components/signal/market_bear_button";
+import AllocationLinesChart from "./components/chart/allocation_lines_chart";
+import PerformChart from "./components/chart/perform_chart";
+import AllocationPieChart from "./components/chart/allocation_pie_chart";
+import IndustrySelector from "./components/table/industry_selector";
+import HoldingStockTable from "./components/table/holding_stock_table";
+import TradedStockTable from "./components/table/traded_stock_table";
+
 
 const useWindowWidth = (): any => {
   const [windowWidth, setWindowWidth] = useState(Math.min(window.innerWidth, 1250));
@@ -82,6 +88,10 @@ export default function Page5() {
       await set_auto_market_checklist(res?.data)
     } else if (tableName === 'auto_industry_checklist') {
       await set_auto_industry_checklist(res?.data)
+    } else if (tableName === 'auto_industry_toplist') {
+      await set_auto_industry_toplist(res?.data)
+    } else if (tableName === 'auto_industry_stocklist_df') {
+      await set_auto_industry_stocklist_df(res?.data)
     }
   }
   useEffect(() => {
@@ -96,6 +106,8 @@ export default function Page5() {
       getData('auto_traded_stock_df');
       getData('auto_market_checklist');
       getData('auto_industry_checklist');
+      getData('auto_industry_toplist');
+      getData('auto_industry_stocklist_df');
     };
     fetchData();
     setInterval(fetchData, 10000)
@@ -110,8 +122,9 @@ export default function Page5() {
   const [auto_traded_stock_df, set_auto_traded_stock_df] = useState<any[]>([]);
   const [auto_market_checklist, set_auto_market_checklist] = useState<any[]>([]);
   const [auto_industry_checklist, set_auto_industry_checklist] = useState<any[]>([]);
+  const [auto_industry_toplist, set_auto_industry_toplist] = useState<any[]>([]);
+  const [auto_industry_stocklist_df, set_auto_industry_stocklist_df] = useState<any[]>([]);
 
-  console.log(auto_market_checklist)
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
   const [currentPage, setCurrentPage] = useState(1);
@@ -128,6 +141,7 @@ export default function Page5() {
     return `${Math.max(ratio * ww, min)?.toFixed(0)}px`;
   }
 
+  console.log(ww)
 
   const onChangePerformChart = (e: any) => {
     const value = e.target.value;
@@ -165,18 +179,15 @@ export default function Page5() {
                   <p style={{ color: 'white', fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', margin: 0, padding: 0 }}>{market_update_time?.[0]?.date}</p>
                 </Col>
               </Row>
-              <Row gutter={ww > 767 ? 20 : 10} style={{ position: 'relative' }}>
+              <Row gutter={ww > 810 ? 20 : 10} style={{ position: 'relative', marginTop: '30px' }}>
                 <LockSection type='free' ww={ww} authState={authState} accessLevel={accessLevel} height='100%' width='100%' />
-                <Col xs={16} sm={16} md={18} lg={19} xl={19}>
-                  <PerformChart data={auto_concat_perform_df} ww={ww} time_span={time_span} fontSize={pixel(0.015, 17)} />
-                </Col>
                 <Col xs={8} sm={8} md={6} lg={5} xl={5}>
                   <Radio.Group
                     className="custom-radio-group" size="small"
                     defaultValue={time_span}
                     buttonStyle="solid"
                     onChange={onChangePerformChart}
-                    style={{ display: 'flex', width: '100%', height: '20px' }}
+                    style={{ display: 'flex', width: '100%', height: '20px', marginTop: '10px' }}
                   >
                     <Radio.Button value="3M" className="custom-radio-button"
                       style={{
@@ -200,8 +211,8 @@ export default function Page5() {
                     </Radio.Button>
                   </Radio.Group>
                   <p style={{
-                    fontSize: pixel(0.013, 14), fontFamily: 'Calibri, sans-serif', height: '15.5px',
-                    color: '#B3B3B3', fontWeight: 'bold', margin: '30px 0px 0px 0px', padding: 0
+                    fontSize: pixel(0.013, 14), fontFamily: 'Calibri, sans-serif', height: '18px',
+                    color: '#B3B3B3', fontWeight: 'bold', margin: '40px 0px 0px 0px', padding: 0
                   }}>
                     Khung thời gian
                   </p>
@@ -220,27 +231,7 @@ export default function Page5() {
                   </div>
 
                   <p style={{
-                    fontSize: pixel(0.013, 14), fontFamily: 'Calibri, sans-serif', height: '15.5px',
-                    color: '#B3B3B3', fontWeight: 'bold', margin: '20px 0px 0px 0px', padding: 0
-                  }}>
-                    Giai đoạn hiện tại
-                  </p>
-                  <div style={{
-                    width: '100%', height: '40px', background: '#161616',
-                    display: 'flex', justifyContent: 'center', alignItems: 'center',
-                    padding: '5px', borderRadius: '5px', marginTop: '10px'
-                  }}>
-                    <p style={{
-                      fontSize: pixel(0.016, 16), fontFamily: 'Calibri, sans-serif',
-                      color: auto_concat_perform_df[0]?.final_portion ? '#24B75E' : '#e14040',
-                      fontWeight: 'bold', margin: 0, padding: 0
-                    }}>
-                      {auto_concat_perform_df[0]?.final_portion ? (ww > 500 ? 'Nắm giữ cổ phiếu' : 'Nắm giữ') : 'Quan sát'}
-                    </p>
-                  </div>
-
-                  <p style={{
-                    fontSize: pixel(0.013, 14), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                    fontSize: pixel(0.013, 14), fontFamily: 'Calibri, sans-serif', height: '18px',
                     color: '#B3B3B3', fontWeight: 'bold', margin: '20px 0px 0px 0px', padding: 0
                   }}>
                     {ww > 500 ? 'Hiệu suất VNINDEX' : 'VNINDEX'}
@@ -260,7 +251,7 @@ export default function Page5() {
                   </div>
 
                   <p style={{
-                    fontSize: pixel(0.013, 14), fontFamily: 'Calibri, sans-serif', height: '15.5px',
+                    fontSize: pixel(0.013, 14), fontFamily: 'Calibri, sans-serif', height: '18px',
                     color: '#B3B3B3', fontWeight: 'bold', margin: '20px 0px 0px 0px', padding: 0
                   }}>
                     {ww > 500 ? 'Hiệu suất hệ thống T2M' : 'Hệ thống T2M'}
@@ -279,14 +270,89 @@ export default function Page5() {
                     </p>
                   </div>
                 </Col>
-              </Row>
-              
 
-              <Row>
-                <button data-tooltip-id="my-tooltip">Di chuột vào đây</button>
-                <ReactTooltip id="my-tooltip" place="top">
-                  <PerformChart data={auto_concat_perform_df} ww={ww} time_span={time_span} fontSize={pixel(0.015, 17)} />
-                </ReactTooltip>
+                <Col xs={16} sm={16} md={18} lg={19} xl={19}>
+                  <Row>
+                    <Col xs={24} sm={24} md={6} lg={8} xl={8}>
+                      <p style={{
+                        fontSize: pixel(0.022, 20), fontFamily: 'Calibri, sans-serif',
+                        color: auto_concat_perform_df[0]?.final_portion ? '#24B75E' : '#e14040',
+                        fontWeight: 'bold', margin: '0px 0px 0px 35px', padding: 0
+                      }}>
+                        {auto_concat_perform_df[0]?.final_portion ? 'Nắm giữ cổ phiếu' : 'Quan sát'}
+                      </p>
+                      <p data-tooltip-id="giai-doan-thi-truong-hien-tai" style={{
+                        fontSize: pixel(0.013, 12), fontFamily: 'Calibri, sans-serif', height: '18px',
+                        color: '#B3B3B3', fontWeight: 'bold', margin: '5px 0px 0px 35px', padding: 0, cursor: 'pointer'
+                      }}>
+                        {ww > 996 ? 'Giai đoạn thị trường hiện tại' : 'TThị trường'}
+                        <InfoCircleOutlined style={{ marginLeft: '7px' }} />
+                      </p>
+                      <ReactTooltip id="giai-doan-thi-truong-hien-tai" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+                        <p style={{
+                          fontSize: pixel(0.011, 11),
+                          fontFamily: 'Calibri, sans-serif',
+                          background: '#161616',
+                          padding: 0,
+                          whiteSpace: 'pre-wrap'
+                        }}>
+                          {'Theo hệ thống T2M, thị trường được chia thành 2 giai đoạn bao gồm:\n'}
+                          <strong style={{ color: "#24B75E" }}>Nắm giữ cổ phiếu:</strong>
+                          {' Nắm giữ và điều chỉnh danh mục cổ phiếu liên tục theo tỉ trọng phân bổ vốn\n'}
+                          <strong style={{ color: "#e14040" }}>Quan sát:</strong>
+                          {' Không nắm giữ cổ phiếu và theo dõi các diễn biến dòng tiền chờ đợi cơ hội\n'}
+                          {!auto_concat_perform_df[0]?.final_portion ? (
+                            <>
+                              {'Khi toàn bộ điều kiện bên phải đạt yêu cầu, thị trường sẽ chuyển sang giai đoạn '}
+                              <strong style={{ color: "#24B75E" }}>Nắm giữ cổ phiếu</strong>
+                            </>
+                          ) : (
+                            <>
+                              {'Khi toàn bộ điều kiện bên phải không đạt yêu cầu, thị trường sẽ chuyển sang giai đoạn '}
+                              <strong style={{ color: "#e14040" }}>Quan sát</strong>
+                            </>
+                          )}
+                        </p>
+                      </ReactTooltip>
+                    </Col>
+                    {!auto_concat_perform_df[0]?.final_portion ? (
+                      <Col xs={0} sm={0} md={18} lg={16} xl={16}>
+                        <Row style={{ marginTop: '5px' }}>
+                          <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                            checkid={'portion_raw_check'} name={'Sức mạnh dòng tiền'} />
+                          <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                            checkid={'portion_phase_check'} name={'Rủi ro dòng tiền'} />
+                        </Row>
+                        <Row style={{ marginTop: '5px' }}>
+                          <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                            checkid={'5p_upcheck'} name={'Cấu trúc sóng tuần'} />
+                          <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                            checkid={'20p_upcheck'} name={'Cấu trúc sóng tháng'} />
+                          <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                            checkid={'60p_upcheck'} name={'Cấu trúc sóng quý'} />
+                        </Row>
+                      </Col>
+                    ) : (
+                      <Col xs={0} sm={0} md={18} lg={16} xl={16}>
+                        <Row style={{ marginTop: '5px' }}>
+                          <MarketBearButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                            checkid={'portion_phase_check'} name={'Vị thế nắm giữ'} />
+                          <MarketBearButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                            checkid={'portion_t3_check'} name={'Thời gian nắm giữ'} />
+                        </Row>
+                        <Row style={{ marginTop: '5px' }}>
+                          <MarketBearButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                            checkid={'5p_downcheck'} name={'Cấu trúc sóng tuần'} />
+                          <MarketBearButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                            checkid={'20p_downcheck'} name={'Cấu trúc sóng tháng'} />
+                        </Row>
+                      </Col>
+                    )}
+                  </Row>
+                  <Row>
+                    <PerformChart data={auto_concat_perform_df} ww={ww} time_span={time_span} fontSize={pixel(0.015, 17)} />
+                  </Row>
+                </Col>
               </Row>
 
               <Row style={{ marginTop: '50px', marginBottom: '10px' }}>

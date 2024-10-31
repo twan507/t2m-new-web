@@ -15,7 +15,6 @@ const TopCoPhieuTable = (props: any) => {
     };
 
     const data_sets = props?.data
-    console.log(props?.subdata)
 
     function isArrayValid(array: any[]): boolean {
         return array?.some(item => item.stock !== null && item.t0_score !== null);

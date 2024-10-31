@@ -12,7 +12,7 @@ const customLegendMargin: Plugin = {
         const originalFit = chart.legend.fit;
         chart.legend.fit = function fit() {
             originalFit.bind(chart.legend)();
-            this.height += 30; // Adjust this value as needed
+            this.height += 0; // Adjust this value as needed
         };
     },
 };
@@ -25,7 +25,7 @@ const customTitleMargin: Plugin = {
             const originalDraw = chart.title.draw;
             chart.title.draw = function draw() {
                 originalDraw.bind(chart.title)();
-                chart.chartArea.top -= 30; // Adjust this value as needed
+                chart.chartArea.top -= 0; // Adjust this value as needed
             };
         }
     },
@@ -113,7 +113,7 @@ const PerformChart = (props: any) => {
                         size: parseInt(props?.fontSize) - 4, // Điều chỉnh cỡ chữ của legend
                         family: 'Calibri', // Điều chỉnh font chữ của legend
                     },
-                    filter: function(legendItem: any, chartData: any) {
+                    filter: function (legendItem: any, chartData: any) {
                         // Ẩn 'Final Portion' và '1 - Final Portion' khỏi legend
                         return legendItem.text !== 'buy' && legendItem.text !== 'sell';
                     },
@@ -167,7 +167,7 @@ const PerformChart = (props: any) => {
                 ticks: {
                     color: '#dfdfdf', // Màu của các nhãn trên trục Y
                     callback: function (value: any) {
-                        return value?.toFixed(2) * 100 + '%'; // Thêm ký hiệu % vào giá trị hiển thị
+                        return (value * 100)?.toFixed(0) + '%'; // Thêm ký hiệu % vào giá trị hiển thị
                     }
                 },
                 grid: {
@@ -192,7 +192,7 @@ const PerformChart = (props: any) => {
 
     if (!checkAuth) {
         return (
-            <div style={{ width: '100%', height: '370px' }}>
+            <div style={{ width: '100%', height: props.ww > 767 ? '255px' : '260px', marginTop: '10px' }}>
                 <Line data={lines} options={options} plugins={[customLegendMargin, customTitleMargin]} />
             </div>
         );
