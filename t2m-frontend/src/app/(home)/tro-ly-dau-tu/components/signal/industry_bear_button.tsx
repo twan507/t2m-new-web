@@ -42,7 +42,7 @@ const IndustryBearButton = (props: any) => {
         }
       </button>
 
-      <ReactTooltip id="industry_down_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+      <ReactTooltip id="industry_down_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616', zIndex: 1 }}>
         <p style={{
           width: '300px', fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
@@ -54,7 +54,7 @@ const IndustryBearButton = (props: any) => {
         </p>
       </ReactTooltip>
 
-      <ReactTooltip id="industry_5p_downcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+      <ReactTooltip id="industry_5p_downcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616', zIndex: 1 }}>
         <p style={{
           fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
@@ -77,7 +77,7 @@ const IndustryBearButton = (props: any) => {
         </p>
       </ReactTooltip>
 
-      <ReactTooltip id="industry_20p_downcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+      <ReactTooltip id="industry_20p_downcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616', zIndex: 1 }}>
         <p style={{
           fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>

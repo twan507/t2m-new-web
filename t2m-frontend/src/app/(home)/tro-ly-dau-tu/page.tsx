@@ -87,12 +87,12 @@ export default function Page5() {
       await set_auto_holding_stock_df(res?.data)
     } else if (tableName === 'auto_traded_stock_df') {
       await set_auto_traded_stock_df(res?.data)
-    } else if (tableName === 'auto_market_checklist') {
-      await set_auto_market_checklist(res?.data)
-    } else if (tableName === 'auto_industry_checklist') {
-      await set_auto_industry_checklist(res?.data)
-    } else if (tableName === 'auto_industry_toplist') {
-      await set_auto_industry_toplist(res?.data)
+    } else if (tableName === 'auto_market_checklist_df') {
+      await set_auto_market_checklist_df(res?.data)
+    } else if (tableName === 'auto_industry_checklist_df') {
+      await set_auto_industry_checklist_df(res?.data)
+    } else if (tableName === 'auto_industry_toplist_df') {
+      await set_auto_industry_toplist_df(res?.data)
     } else if (tableName === 'auto_industry_stocklist_df') {
       await set_auto_industry_stocklist_df(res?.data)
     }
@@ -107,9 +107,9 @@ export default function Page5() {
       getData('auto_cap_allocation_pie_df');
       getData('auto_holding_stock_df');
       getData('auto_traded_stock_df');
-      getData('auto_market_checklist');
-      getData('auto_industry_checklist');
-      getData('auto_industry_toplist');
+      getData('auto_market_checklist_df');
+      getData('auto_industry_checklist_df');
+      getData('auto_industry_toplist_df');
       getData('auto_industry_stocklist_df');
     };
     fetchData();
@@ -123,9 +123,9 @@ export default function Page5() {
   const [auto_cap_allocation_pie_df, set_auto_cap_allocation_pie_df] = useState<any[]>([]);
   const [auto_holding_stock_df, set_auto_holding_stock_df] = useState<any[]>([]);
   const [auto_traded_stock_df, set_auto_traded_stock_df] = useState<any[]>([]);
-  const [auto_market_checklist, set_auto_market_checklist] = useState<any[]>([]);
-  const [auto_industry_checklist, set_auto_industry_checklist] = useState<any[]>([]);
-  const [auto_industry_toplist, set_auto_industry_toplist] = useState<any[]>([]);
+  const [auto_market_checklist_df, set_auto_market_checklist_df] = useState<any[]>([]);
+  const [auto_industry_checklist_df, set_auto_industry_checklist_df] = useState<any[]>([]);
+  const [auto_industry_toplist_df, set_auto_industry_toplist_df] = useState<any[]>([]);
   const [auto_industry_stocklist_df, set_auto_industry_stocklist_df] = useState<any[]>([]);
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
@@ -140,12 +140,11 @@ export default function Page5() {
   const [filter_holding_nganh, set_filter_holding_nganh] = useState<any[]>([]);
   const [filter_traded_nganh, set_filter_traded_nganh] = useState<any[]>([]);
 
+
   const ww = useWindowWidth();
   const pixel = (ratio: number, min: number) => {
     return `${Math.max(ratio * ww, min)?.toFixed(0)}px`;
   }
-
-  console.log(ww)
 
   const onChangePerformChart = (e: any) => {
     const value = e.target.value;
@@ -251,10 +250,10 @@ export default function Page5() {
                   }}>
                     <p style={{
                       fontSize: pixel(0.016, 16), fontFamily: 'Calibri, sans-serif',
-                      color: getColorPerform(auto_concat_perform_df.filter((item: any) => item.time_span === time_span)[0]?.vnindex_perform * 100),
+                      color: getColorPerform(auto_concat_perform_df?.filter((item: any) => item.time_span === time_span)[0]?.vnindex_perform * 100),
                       fontWeight: 'bold', margin: 0, padding: 0
                     }}>
-                      {`${(auto_concat_perform_df.filter((item: any) => item.time_span === time_span)[0]?.vnindex_perform * 100)?.toFixed(2)}%`}
+                      {`${(auto_concat_perform_df?.filter((item: any) => item.time_span === time_span)[0]?.vnindex_perform * 100)?.toFixed(2)}%`}
                     </p>
                   </div>
 
@@ -271,10 +270,10 @@ export default function Page5() {
                   }}>
                     <p style={{
                       fontSize: pixel(0.016, 16), fontFamily: 'Calibri, sans-serif',
-                      color: getColorPerform(auto_concat_perform_df.filter((item: any) => item.time_span === time_span)[0]?.invest_perform * 100),
+                      color: getColorPerform(auto_concat_perform_df?.filter((item: any) => item.time_span === time_span)[0]?.invest_perform * 100),
                       fontWeight: 'bold', margin: 0, padding: 0
                     }}>
-                      {`${(auto_concat_perform_df.filter((item: any) => item.time_span === time_span)[0]?.invest_perform * 100)?.toFixed(2)}%`}
+                      {`${(auto_concat_perform_df?.filter((item: any) => item.time_span === time_span)[0]?.invest_perform * 100)?.toFixed(2)}%`}
                     </p>
                   </div>
                 </Col>
@@ -326,36 +325,36 @@ export default function Page5() {
                     {!auto_concat_perform_df[0]?.final_portion ? (
                       <Col xs={0} sm={0} md={18} lg={16} xl={16}>
                         <Row style={{ marginTop: '5px' }}>
-                          <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                          <MarketBullButton data={auto_market_checklist_df} fontSize={pixel(0.011, 11)}
                             checkid={'portion_raw_check'} name={'Sức mạnh dòng tiền'} />
-                          <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                          <MarketBullButton data={auto_market_checklist_df} fontSize={pixel(0.011, 11)}
                             checkid={'portion_phase_check'} name={'Rủi ro dòng tiền'} />
-                          <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                          <MarketBullButton data={auto_market_checklist_df} fontSize={pixel(0.011, 11)}
                             checkid={'up_check'} name={ww > 850 ? 'Cấu trúc sóng thị trường' : 'Cấu trúc sóng'} />
                         </Row>
                         <Row style={{ marginTop: '5px' }}>
-                          <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                          <MarketBullButton data={auto_market_checklist_df} fontSize={pixel(0.011, 11)}
                             checkid={'5p_upcheck'} name={ww < 850 ? 'Xu hướng tuần' : 'Xu hướng sóng tuần'} />
-                          <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                          <MarketBullButton data={auto_market_checklist_df} fontSize={pixel(0.011, 11)}
                             checkid={'20p_upcheck'} name={ww < 850 ? 'Xu hướng tháng' : 'Xu hướng sóng tháng'} />
-                          <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                          <MarketBullButton data={auto_market_checklist_df} fontSize={pixel(0.011, 11)}
                             checkid={'60p_upcheck'} name={ww < 850 ? 'Xu hướng quý' : 'Xu hướng sóng quý'} />
                         </Row>
                       </Col>
                     ) : (
                       <Col xs={0} sm={0} md={18} lg={16} xl={16}>
                         <Row style={{ marginTop: '5px' }}>
-                          <MarketBearButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                          <MarketBearButton data={auto_market_checklist_df} fontSize={pixel(0.011, 11)}
                             checkid={'portion_phase_check'} name={'Vị thế nắm giữ'} />
-                          <MarketBearButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                          <MarketBearButton data={auto_market_checklist_df} fontSize={pixel(0.011, 11)}
                             checkid={'portion_t3_check'} name={'Thời gian nắm giữ'} />
-                          <MarketBullButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                          <MarketBullButton data={auto_market_checklist_df} fontSize={pixel(0.011, 11)}
                             checkid={'down_check'} name={ww > 850 ? 'Cấu trúc sóng thị trường' : 'Cấu trúc sóng'} />
                         </Row>
                         <Row style={{ marginTop: '5px' }}>
-                          <MarketBearButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                          <MarketBearButton data={auto_market_checklist_df} fontSize={pixel(0.011, 11)}
                             checkid={'5p_downcheck'} name={'Xu hướng sóng tuần'} />
-                          <MarketBearButton data={auto_market_checklist} fontSize={pixel(0.011, 11)}
+                          <MarketBearButton data={auto_market_checklist_df} fontSize={pixel(0.011, 11)}
                             checkid={'20p_downcheck'} name={'Xu hướng sóng tháng'} />
                         </Row>
                       </Col>
@@ -396,17 +395,17 @@ export default function Page5() {
                 ) : (
                   <>
                     <Col xs={24} sm={24} md={9} lg={8} xl={8}>
-                      <TopIndustryTable data={auto_industry_toplist} subdata={auto_industry_checklist} ww={ww} fontSize={pixel(0.013, 12)} lineHeight={ww > 776 ? '30px' : '24px'} setFunction={setSelectIndustryDetail} />
+                      <TopIndustryTable data={auto_industry_toplist_df} subdata={auto_industry_checklist_df} ww={ww} fontSize={pixel(0.013, 12)} lineHeight={ww > 776 ? '35px' : '24px'} setFunction={setSelectIndustryDetail} />
                     </Col>
                     <Col xs={24} sm={24} md={15} lg={16} xl={16}>
                       <Row>
                         <Col xs={24} sm={24} md={8} lg={7} xl={6}>
                           <p style={{
                             fontSize: pixel(0.016, 17), fontFamily: 'Calibri, sans-serif',
-                            color: auto_industry_checklist.filter((item: any) => item.industry === selectIndustryDetail)[0]?.final_portion ? '#24B75E' : '#e14040',
+                            color: auto_industry_checklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.final_portion ? '#24B75E' : '#e14040',
                             fontWeight: 'bold', margin: '20px 0px 0px 10px', padding: 0
                           }}>
-                            {auto_industry_checklist.filter((item: any) => item.industry === selectIndustryDetail)[0]?.final_portion ? 'Nắm giữ cổ phiếu' : 'Quan sát'}
+                            {auto_industry_checklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.final_portion ? 'Nắm giữ cổ phiếu' : 'Quan sát'}
                           </p>
                           <p data-tooltip-id="giai-doan-nganh-hien-tai" style={{
                             fontSize: pixel(0.011, 11), fontFamily: 'Calibri, sans-serif', height: '18px',
@@ -428,7 +427,7 @@ export default function Page5() {
                               {' Nắm giữ những cổ phiếu trong ngành theo khuyến nghị của hệ thống\n'}
                               <strong style={{ color: "#e14040" }}>Quan sát:</strong>
                               {' Không nắm giữ cổ phiếu và theo dõi các diễn biến dòng tiền chờ đợi cơ hội\n'}
-                              {!auto_industry_checklist.filter((item: any) => item.industry === selectIndustryDetail)[0]?.final_portion ? (
+                              {!auto_industry_checklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.final_portion ? (
                                 <>
                                   {'Khi toàn bộ điều kiện bên phải đạt yêu cầu, ngành sẽ chuyển sang giai đoạn '}
                                   <strong style={{ color: "#24B75E" }}>Nắm giữ cổ phiếu</strong>
@@ -442,39 +441,219 @@ export default function Page5() {
                             </p>
                           </ReactTooltip>
                         </Col>
-                        {!auto_industry_checklist.filter((item: any) => item.industry === selectIndustryDetail)[0]?.final_portion ? (
+                        {!auto_industry_checklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.final_portion ? (
                           <Col xs={0} sm={0} md={16} lg={17} xl={18}>
                             <Row style={{ marginTop: '25px' }}>
-                              <IndustryBullButton data={auto_industry_checklist} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
+                              <IndustryBullButton data={auto_industry_checklist_df} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
                                 checkid={'portion_raw_check'} name={ww > 996 ? 'Sức mạnh dòng tiền' : 'Sức mạnh DT'} />
-                              <IndustryBullButton data={auto_industry_checklist} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
+                              <IndustryBullButton data={auto_industry_checklist_df} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
                                 checkid={'portion_phase_check'} name={ww > 996 ? 'Rủi ro dòng tiền' : 'Rủi ro DT'} />
-                              <IndustryBullButton data={auto_industry_checklist} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
+                              <IndustryBullButton data={auto_industry_checklist_df} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
                                 checkid={'up_check'} name={ww > 996 ? 'Cấu trúc sóng ngành' : 'Sóng ngành'} />
                             </Row>
                             <Row style={{ marginTop: '5px' }}>
-                              <IndustryBullButton data={auto_industry_checklist} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
+                              <IndustryBullButton data={auto_industry_checklist_df} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
                                 checkid={'5p_upcheck'} name={ww > 996 ? 'Xu hướng sóng tuần' : 'Xu hướng tuần'} />
-                              <IndustryBullButton data={auto_industry_checklist} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
+                              <IndustryBullButton data={auto_industry_checklist_df} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
                                 checkid={'20p_upcheck'} name={ww > 996 ? 'Xu hướng sóng tháng' : 'Xu hướng tháng'} />
                             </Row>
                           </Col>
                         ) : (
                           <Col xs={0} sm={0} md={16} lg={17} xl={18}>
                             <Row style={{ marginTop: '25px' }}>
-                              <IndustryBearButton data={auto_industry_checklist} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
+                              <IndustryBearButton data={auto_industry_checklist_df} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
                                 checkid={'down_check'} name={'Cấu trúc sóng ngành'} />
                             </Row>
                             <Row style={{ marginTop: '5px' }}>
-                              <IndustryBearButton data={auto_industry_checklist} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
+                              <IndustryBearButton data={auto_industry_checklist_df} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
                                 checkid={'5p_downcheck'} name={'Xu hướng sóng tuần'} />
-                              <IndustryBearButton data={auto_industry_checklist} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
+                              <IndustryBearButton data={auto_industry_checklist_df} industry={selectIndustryDetail} fontSize={pixel(0.011, 11)}
                                 checkid={'20p_downcheck'} name={'Xu hướng sóng tháng'} />
                             </Row>
                           </Col>
                         )}
                       </Row>
-
+                      <Row gutter={20}>
+                        <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                          <div style={{
+                            width: '100%', height: '140.5px', background: '#161616',
+                            padding: '5px', borderRadius: '5px', marginTop: '20px'
+                          }}>
+                            <p style={{
+                              fontSize: pixel(0.011, 11), fontFamily: 'Calibri, sans-serif', height: '15px',
+                              color: '#B3B3B3', fontWeight: 'bold', margin: '0px 0px 0px 2px', padding: 0
+                            }}>
+                              {'Điểm đánh giá ngành'}
+                            </p>
+                            <p style={{
+                              fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', height: '15px',
+                              color: '#dfdfdf',
+                              fontWeight: 'bold', margin: '5px 0px 0px 2px', padding: 0
+                            }}>
+                              {auto_industry_checklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.portion_raw.toFixed(4)}
+                            </p>
+                            <p style={{
+                              fontSize: pixel(0.011, 11), fontFamily: 'Calibri, sans-serif', height: '15px',
+                              color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
+                            }}>
+                              {'Số ngày nắm giữ'}
+                            </p>
+                            <p style={{
+                              fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', height: '15px',
+                              color: '#dfdfdf',
+                              fontWeight: 'bold', margin: '5px 0px 0px 2px', padding: 0
+                            }}>
+                              {auto_industry_checklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.day_count.toFixed(0)}
+                            </p>
+                            <p style={{
+                              fontSize: pixel(0.011, 11), fontFamily: 'Calibri, sans-serif', height: '15px',
+                              color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
+                            }}>
+                              {'Xếp hạng hệ thống'}
+                            </p>
+                            <p style={{
+                              fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', height: '15px',
+                              color: '#dfdfdf',
+                              fontWeight: 'bold', margin: '5px 0px 0px 2px', padding: 0
+                            }}>
+                              {auto_industry_checklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.top_rank.toFixed(0) != 10 ? auto_industry_checklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.top_rank.toFixed(0) : "Không có xếp hạng"}
+                            </p>
+                          </div>
+                        </Col>
+                        <Col xs={2} sm={2} md={2} lg={2} xl={2} />
+                        <Col xs={7} sm={7} md={7} lg={7} xl={7}>
+                          <p style={{
+                            fontSize: pixel(0.011, 11), fontFamily: 'Calibri, sans-serif', height: '15px',
+                            color: '#B3B3B3', fontWeight: 'bold', margin: '25px 0px 0px 2px', padding: 0
+                          }}>
+                            {'Cổ phiếu đề suất 1'}
+                          </p>
+                          <p style={{
+                            fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15px',
+                            color: '#dfdfdf',
+                            fontWeight: 'bold', margin: '8px 0px 0px 2px', padding: 0
+                          }}>
+                            1.&nbsp;
+                            {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.score_stock}:
+                            &nbsp;&nbsp;
+                            {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.score_value.toFixed(4)}
+                          </p>
+                          <p style={{
+                            fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15px',
+                            color: '#dfdfdf',
+                            fontWeight: 'bold', margin: '8px 0px 0px 2px', padding: 0
+                          }}>
+                            2.&nbsp;
+                            {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[1]?.score_stock}:
+                            &nbsp;&nbsp;
+                            {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[1]?.score_value.toFixed(4)}
+                          </p>
+                          <p style={{
+                            fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15px',
+                            color: '#dfdfdf',
+                            fontWeight: 'bold', margin: '8px 0px 0px 2px', padding: 0
+                          }}>
+                            3.&nbsp;
+                            {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[2]?.score_stock}:
+                            &nbsp;&nbsp;
+                            {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[2]?.score_value.toFixed(4)}
+                          </p>
+                          <p style={{
+                            fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15px',
+                            color: '#dfdfdf',
+                            fontWeight: 'bold', margin: '8px 0px 0px 2px', padding: 0
+                          }}>
+                            {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[3]?.score_stock && (
+                              <>
+                                4.&nbsp;
+                                {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[3]?.score_stock}:
+                                &nbsp;&nbsp;
+                                {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[3]?.score_value.toFixed(4)}
+                              </>
+                            )}
+                          </p>
+                          <p style={{
+                            fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15px',
+                            color: '#dfdfdf',
+                            fontWeight: 'bold', margin: '8px 0px 0px 2px', padding: 0
+                          }}>
+                            {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[4]?.score_stock && (
+                              <>
+                                5.&nbsp;
+                                {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[4]?.score_stock}:
+                                &nbsp;&nbsp;
+                                {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[4]?.score_value.toFixed(4)}
+                              </>
+                            )}
+                          </p>
+                        </Col>
+                        <Col xs={7} sm={7} md={7} lg={7} xl={7}>
+                          <p style={{
+                            fontSize: pixel(0.011, 11), fontFamily: 'Calibri, sans-serif', height: '15px',
+                            color: '#B3B3B3', fontWeight: 'bold', margin: '25px 0px 0px 2px', padding: 0
+                          }}>
+                            {'Cổ phiếu đề suất 2'}
+                          </p>
+                          <p style={{
+                            fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15px',
+                            color: '#dfdfdf',
+                            fontWeight: 'bold', margin: '8px 0px 0px 2px', padding: 0
+                          }}>
+                            1.&nbsp;
+                            {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.portion_stock}:
+                            &nbsp;&nbsp;
+                            {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.portion_value.toFixed(4)}
+                          </p>
+                          <p style={{
+                            fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15px',
+                            color: '#dfdfdf',
+                            fontWeight: 'bold', margin: '8px 0px 0px 2px', padding: 0
+                          }}>
+                            2.&nbsp;
+                            {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[1]?.portion_stock}:
+                            &nbsp;&nbsp;
+                            {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[1]?.portion_value.toFixed(4)}
+                          </p>
+                          <p style={{
+                            fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15px',
+                            color: '#dfdfdf',
+                            fontWeight: 'bold', margin: '8px 0px 0px 2px', padding: 0
+                          }}>
+                            3.&nbsp;
+                            {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[2]?.portion_stock}:
+                            &nbsp;&nbsp;
+                            {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[2]?.portion_value.toFixed(4)}
+                          </p>
+                          <p style={{
+                            fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15px',
+                            color: '#dfdfdf',
+                            fontWeight: 'bold', margin: '8px 0px 0px 2px', padding: 0
+                          }}>
+                            {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[3]?.portion_stock && (
+                              <>
+                                4.&nbsp;
+                                {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[3]?.portion_stock}:
+                                &nbsp;&nbsp;
+                                {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[3]?.portion_value.toFixed(4)}
+                              </>
+                            )}
+                          </p>
+                          <p style={{
+                            fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15px',
+                            color: '#dfdfdf',
+                            fontWeight: 'bold', margin: '8px 0px 0px 2px', padding: 0
+                          }}>
+                            {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[4]?.portion_stock && (
+                              <>
+                                5.&nbsp;
+                                {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[4]?.portion_stock}:
+                                &nbsp;&nbsp;
+                                {auto_industry_stocklist_df.filter((item: any) => item.industry === selectIndustryDetail)[4]?.portion_value.toFixed(4)}
+                              </>
+                            )}
+                          </p>
+                        </Col>
+                      </Row>
                     </Col>
                   </>
                 )}

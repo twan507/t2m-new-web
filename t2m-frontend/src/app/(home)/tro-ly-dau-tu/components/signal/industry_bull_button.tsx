@@ -42,7 +42,7 @@ const IndustryBullButton = (props: any) => {
         }
       </button>
 
-      <ReactTooltip id="industry_portion_raw_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+      <ReactTooltip id="industry_portion_raw_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616', zIndex: 1 }}>
         <p style={{
           width: '350px', fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
@@ -54,7 +54,7 @@ const IndustryBullButton = (props: any) => {
         </p>
       </ReactTooltip>
 
-      <ReactTooltip id="industry_portion_phase_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+      <ReactTooltip id="industry_portion_phase_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616', zIndex: 1 }}>
         <p style={{
           width: '290px', fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
@@ -66,7 +66,7 @@ const IndustryBullButton = (props: any) => {
         </p>
       </ReactTooltip>
 
-      <ReactTooltip id="industry_up_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+      <ReactTooltip id="industry_up_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616', zIndex: 1 }}>
         <p style={{
           width: '300px', fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
@@ -78,7 +78,7 @@ const IndustryBullButton = (props: any) => {
         </p>
       </ReactTooltip>
 
-      <ReactTooltip id="industry_5p_upcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+      <ReactTooltip id="industry_5p_upcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616', zIndex: 1 }}>
         <p style={{
           fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
@@ -101,7 +101,7 @@ const IndustryBullButton = (props: any) => {
         </p>
       </ReactTooltip>
 
-      <ReactTooltip id="industry_20p_upcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+      <ReactTooltip id="industry_20p_upcheck" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616', zIndex: 1 }}>
         <p style={{
           width: '250px', fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
