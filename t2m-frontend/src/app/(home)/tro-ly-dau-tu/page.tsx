@@ -414,7 +414,7 @@ export default function Page5() {
                             {ww > 767 ? `Khuyến nghị ngành \n${selectIndustryDetail}` : `Khuyến nghị ngành ${selectIndustryDetail}`}
                             <InfoCircleOutlined style={{ marginLeft: '7px' }} />
                           </p>
-                          <ReactTooltip id="giai-doan-nganh-hien-tai" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
+                          <ReactTooltip id="giai-doan-nganh-hien-tai" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616', zIndex: 1 }}>
                             <p style={{
                               fontSize: pixel(0.011, 11),
                               fontFamily: 'Calibri, sans-serif',
@@ -474,39 +474,39 @@ export default function Page5() {
                         )}
                       </Row>
                       <Row gutter={20}>
-                        <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                        <Col xs={8} sm={6} md={6} lg={6} xl={6}>
                           <div style={{
                             width: '100%', height: '140.5px', background: '#161616',
                             padding: '5px', borderRadius: '5px', marginTop: '20px'
                           }}>
                             <p style={{
-                              fontSize: pixel(0.011, 11), fontFamily: 'Calibri, sans-serif', height: '15px',
+                              fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', height: '15px',
                               color: '#B3B3B3', fontWeight: 'bold', margin: '0px 0px 0px 2px', padding: 0
                             }}>
                               {'Điểm đánh giá ngành'}
                             </p>
                             <p style={{
-                              fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', height: '15px',
+                              fontSize: pixel(0.013, 12), fontFamily: 'Calibri, sans-serif', height: '15px',
                               color: '#dfdfdf',
                               fontWeight: 'bold', margin: '5px 0px 0px 2px', padding: 0
                             }}>
                               {auto_industry_checklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.portion_raw.toFixed(4)}
                             </p>
                             <p style={{
-                              fontSize: pixel(0.011, 11), fontFamily: 'Calibri, sans-serif', height: '15px',
+                              fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', height: '15px',
                               color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
                             }}>
                               {'Số ngày nắm giữ'}
                             </p>
                             <p style={{
-                              fontSize: pixel(0.013, 13), fontFamily: 'Calibri, sans-serif', height: '15px',
+                              fontSize: pixel(0.013, 12), fontFamily: 'Calibri, sans-serif', height: '15px',
                               color: '#dfdfdf',
                               fontWeight: 'bold', margin: '5px 0px 0px 2px', padding: 0
                             }}>
                               {auto_industry_checklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.day_count.toFixed(0)}
                             </p>
                             <p style={{
-                              fontSize: pixel(0.011, 11), fontFamily: 'Calibri, sans-serif', height: '15px',
+                              fontSize: pixel(0.011, 10), fontFamily: 'Calibri, sans-serif', height: '15px',
                               color: '#B3B3B3', fontWeight: 'bold', margin: '10px 0px 0px 2px', padding: 0
                             }}>
                               {'Xếp hạng hệ thống'}
@@ -516,12 +516,12 @@ export default function Page5() {
                               color: '#dfdfdf',
                               fontWeight: 'bold', margin: '5px 0px 0px 2px', padding: 0
                             }}>
-                              {auto_industry_checklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.top_rank.toFixed(0) != 10 ? auto_industry_checklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.top_rank.toFixed(0) : "Không có xếp hạng"}
+                              {auto_industry_checklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.top_rank.toFixed(0) != 10 ? auto_industry_checklist_df.filter((item: any) => item.industry === selectIndustryDetail)[0]?.top_rank.toFixed(0) : "Không xếp hạng"}
                             </p>
                           </div>
                         </Col>
-                        <Col xs={2} sm={2} md={2} lg={2} xl={2} />
-                        <Col xs={7} sm={7} md={7} lg={7} xl={7}>
+                        <Col xs={0} sm={2} md={2} lg={2} xl={2} />
+                        <Col xs={8} sm={8} md={7} lg={7} xl={7}>
                           <p style={{
                             fontSize: pixel(0.011, 11), fontFamily: 'Calibri, sans-serif', height: '15px',
                             color: '#B3B3B3', fontWeight: 'bold', margin: '25px 0px 0px 2px', padding: 0
@@ -587,7 +587,7 @@ export default function Page5() {
                             )}
                           </p>
                         </Col>
-                        <Col xs={7} sm={7} md={7} lg={7} xl={7}>
+                        <Col xs={8} sm={8} md={7} lg={7} xl={7}>
                           <p style={{
                             fontSize: pixel(0.011, 11), fontFamily: 'Calibri, sans-serif', height: '15px',
                             color: '#B3B3B3', fontWeight: 'bold', margin: '25px 0px 0px 2px', padding: 0
