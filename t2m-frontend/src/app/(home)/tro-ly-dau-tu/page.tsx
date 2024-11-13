@@ -345,11 +345,9 @@ export default function Page5() {
                       <Col xs={0} sm={0} md={18} lg={16} xl={16}>
                         <Row style={{ marginTop: '5px' }}>
                           <MarketBearButton data={auto_market_checklist_df} fontSize={pixel(0.011, 11)}
-                            checkid={'portion_phase_check'} name={'Vị thế nắm giữ'} />
+                            checkid={'portion_t3_check'} name={'Rủi ro dòng tiền'} />
                           <MarketBearButton data={auto_market_checklist_df} fontSize={pixel(0.011, 11)}
-                            checkid={'portion_t3_check'} name={'Thời gian nắm giữ'} />
-                          <MarketBullButton data={auto_market_checklist_df} fontSize={pixel(0.011, 11)}
-                            checkid={'down_check'} name={ww > 850 ? 'Cấu trúc sóng thị trường' : 'Cấu trúc sóng'} />
+                            checkid={'portion_phase_check'} name={'Trạng thái quá bán'} />
                         </Row>
                         <Row style={{ marginTop: '5px' }}>
                           <MarketBearButton data={auto_market_checklist_df} fontSize={pixel(0.011, 11)}
@@ -526,7 +524,7 @@ export default function Page5() {
                             fontSize: pixel(0.011, 11), fontFamily: 'Calibri, sans-serif', height: '15px',
                             color: '#B3B3B3', fontWeight: 'bold', margin: '25px 0px 0px 2px', padding: 0
                           }}>
-                            {'Cổ phiếu đề suất 1'}
+                            {'Cổ phiếu đề xuất 1'}
                           </p>
                           <p style={{
                             fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15px',
@@ -592,7 +590,7 @@ export default function Page5() {
                             fontSize: pixel(0.011, 11), fontFamily: 'Calibri, sans-serif', height: '15px',
                             color: '#B3B3B3', fontWeight: 'bold', margin: '25px 0px 0px 2px', padding: 0
                           }}>
-                            {'Cổ phiếu đề suất 2'}
+                            {'Cổ phiếu đề xuất 2'}
                           </p>
                           <p style={{
                             fontSize: pixel(0.012, 12), fontFamily: 'Calibri, sans-serif', height: '15px',

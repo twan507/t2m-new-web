@@ -7,8 +7,14 @@ import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 
 const MarketBearButton = (props: any) => {
 
-  const checking = !['portion_t3_check', 'portion_phase_check'].includes(props.checkid) ? !props.data[0]?.[props.checkid] : !!props.data[0]?.[props.checkid];
-
+  let checking
+  if (props.checkid === 'portion_phase_check') {
+    checking = !!props.data[0]?.[props.checkid]
+  } else if (props.checkid === 'portion_t3_check') {
+    checking = !props.data[0]?.portion_t3_check || props.data[0]?.['down_check']
+  } else {
+    checking = !props.data[0]?.[props.checkid]
+  }
 
   const checkingtooltip1 = !(props.data[0]?.portion_phase_check != 2)
   const checkingtooltip2 = props.data[0]?.portion_t3_check
@@ -19,6 +25,8 @@ const MarketBearButton = (props: any) => {
   const checkingtooltip6 = !props.data[0]?.['20p_downcheck2']
   const checkingtooltip8 = !props.data[0]?.['20p_downcheck']
   const checkingtooltip9 = !props.data[0]?.['down_check']
+
+  console.log(checkingtooltip1)
 
   const buttonColor = checking ? '#24B75E' : '#e14040'
   const buttonBackGround = checking ? 'rgba(36, 183, 94, 0.5)' : 'rgba(225, 64, 64, 0.5)'
@@ -49,27 +57,35 @@ const MarketBearButton = (props: any) => {
         <p style={{
           fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
-          {'Theo hệ thống T2M, vị thế nắm giữ có thể có 2 trạng thái: \n'}
-          <strong style={{ color: "#24B75E" }}>Đạt</strong>
-          {' Thị trường rơi vào trạng thái quá bán, nên tiếp tục nắm giữ cổ phiếu\n'}
-          <strong style={{ color: "#e14040" }}>Không đạt</strong>
-          {' Thị trường chưa tới vùng quá bán, có thể bán cổ phiếu nếu diễn biến xấu\n'}
           {'Trạng thái hiện tại:  '}
           {checkingtooltip1 ?
-            <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
-            <strong style={{ color: "#e14040" }}>Không đạt<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
+            <>
+              <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong>
+              {'\nThị trường đã rơi vào trạng thái quá bán, nên tiếp tục nắm giữ cổ phiếu'}
+            </>
+            :
+            <>
+              <strong style={{ color: "#e14040" }}>Không đạt<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
+              {'\nThị trường chưa tới vùng quá bán, có thể bán cổ phiếu nếu diễn biến xấu'}
+            </>
           }
         </p>
       </ReactTooltip>
 
       <ReactTooltip id="market_portion_t3_check" place="bottom" style={{ padding: '0px 10px', borderRadius: '5px', background: '#161616' }}>
         <p style={{
-          width: '350px', fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
+          fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
-          {'Trạng thái nắm giữ cổ phiếu phải có thời gian tối thiếu T+2, trạng thái hiện tại: '}
+          {'Hệ thống T2M đánh rủi ro dòng tiền khi bán ra dựa trên 2 điều kiện: '}
+          {'\nĐiều kiện thời gian: '}
           {checkingtooltip2 ?
-            <strong style={{ color: "#24B75E" }}>Chưa thể bán<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
-            <strong style={{ color: "#e14040" }}>Có thể bán<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
+            <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
+            <strong style={{ color: "#e14040" }}>Không đạt<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
+          }
+          {'\nĐiều kiện tổng thế: '}
+          {checkingtooltip9 ?
+            <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
+            <strong style={{ color: "#e14040" }}>Không đạt<CloseCircleTwoTone twoToneColor="#e14040" style={{ marginLeft: '7px' }} /></strong>
           }
         </p>
       </ReactTooltip>

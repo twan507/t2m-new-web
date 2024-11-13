@@ -65,7 +65,7 @@ const MarketBullButton = (props: any) => {
         <p style={{
           fontSize: props.fontSize, fontFamily: 'Calibri, sans-serif', background: '#161616', padding: 0, whiteSpace: 'pre-wrap'
         }}>
-          {'Hệ thống T2M đánh rủi ro dòng tiền dựa trên 3 điều kiện: '}
+          {'Hệ thống T2M đánh rủi ro dòng tiền khi mua vào dựa trên 3 điều kiện: '}
           {'\nĐiều kiện xu hướng: '}
           {checkingtooltip2 ?
             <strong style={{ color: "#24B75E" }}>Đạt<CheckCircleTwoTone twoToneColor="#24B75E" style={{ marginLeft: '7px' }} /></strong> :
