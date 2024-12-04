@@ -227,7 +227,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
       ),
       key: 'tro-ly-dau-tu',
       icon: <RobotOutlined style={{ fontSize: '18px', marginLeft: '-1px', marginTop: collapsed ? '11px' : '0px' }} />,
-    }
+    },
 
     // ...(((authInfo?.user?.role === "T2M ADMIN") || (authInfo?.user?.role === "T2M CTV")) ? [
     //   {
