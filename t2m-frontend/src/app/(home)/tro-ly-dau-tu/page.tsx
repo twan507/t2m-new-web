@@ -58,62 +58,109 @@ export default function Page5() {
   const accessLevel = (authInfo?.user?.role === 'T2M ADMIN') || (authInfo?.user?.role === 'T2M CTV') ? 4 : authInfo?.user?.licenseInfo?.accessLevel
 
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-  const getData = async (tableName: string) => {
 
-    let res;
-    for (let i = 0; i < 8; i++) {
-      res = await sendRequest<IBackendRes<any>>({
-        url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
-        method: "GET",
-      })
-
-      if ((res.data && res.data.length > 0) || (res.data && tableName === 'auto_holding_stock_df')) {
-        break; // Thoát khỏi vòng lặp khi dữ liệu thỏa mãn điều kiện
-      } else {
-        console.log(`[${new Date().toLocaleTimeString()}] Bảng ${tableName} chưa tải xong, thử lại sau 1 giây...`);
-        await delay(1000); // Nghỉ 1 giây trước khi thử lại
-      }
-    }
-
-    if (tableName === 'market_update_time') {
-      await set_market_update_time(res?.data)
-    } else if (tableName === 'auto_concat_perform_df') {
-      await set_auto_concat_perform_df(res?.data)
-    } else if (tableName === 'auto_cap_allocation_line_df') {
-      await set_auto_cap_allocation_line_df(res?.data)
-    } else if (tableName === 'auto_cap_allocation_pie_df') {
-      await set_auto_cap_allocation_pie_df(res?.data)
-    } else if (tableName === 'auto_holding_stock_df') {
-      await set_auto_holding_stock_df(res?.data)
-    } else if (tableName === 'auto_traded_stock_df') {
-      await set_auto_traded_stock_df(res?.data)
-    } else if (tableName === 'auto_market_checklist_df') {
-      await set_auto_market_checklist_df(res?.data)
-    } else if (tableName === 'auto_industry_checklist_df') {
-      await set_auto_industry_checklist_df(res?.data)
-    } else if (tableName === 'auto_industry_toplist_df') {
-      await set_auto_industry_toplist_df(res?.data)
-    } else if (tableName === 'auto_industry_stocklist_df') {
-      await set_auto_industry_stocklist_df(res?.data)
-    }
-  }
   useEffect(() => {
-    const fetchData = async () => {
-      getData('market_update_time');
-      getData('stock_ta_filter_df');
-      getData('group_eod_score_liquidity_df');
-      getData('auto_concat_perform_df');
-      getData('auto_cap_allocation_line_df');
-      getData('auto_cap_allocation_pie_df');
-      getData('auto_holding_stock_df');
-      getData('auto_traded_stock_df');
-      getData('auto_market_checklist_df');
-      getData('auto_industry_checklist_df');
-      getData('auto_industry_toplist_df');
-      getData('auto_industry_stocklist_df');
+    let isMounted = true;
+    const abortController = new AbortController();
+
+    const getData = async (tableName: string) => {
+      if (!isMounted) return;
+
+      let res;
+      try {
+        for (let i = 0; i < 8; i++) {
+          try {
+            res = await sendRequest<IBackendRes<any>>({
+              url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stockdata/${tableName}`,
+              method: "GET",
+            });
+
+            if ((res.data && res.data.length > 0) || (res.data && tableName === 'auto_holding_stock_df')) {
+              break; // Exit loop when data meets conditions
+            } else {
+              console.log(`[${new Date().toLocaleTimeString()}] Bảng ${tableName} chưa tải xong, thử lại sau 1 giây...`);
+              await delay(1000 * Math.min(i + 1, 3)); // Progressive delay with max 3 seconds
+            }
+          } catch (error: any) {
+            if (error.name === 'AbortError') return;
+            console.error(`Error fetching ${tableName}:`, error);
+            await delay(1000);
+          }
+        }
+
+        // Only update state if component is still mounted and we have data  
+        if (isMounted && res?.data) {
+          switch (tableName) {
+            case 'market_update_time':
+              set_market_update_time(res.data);
+              break;
+            case 'auto_concat_perform_df':
+              set_auto_concat_perform_df(res.data);
+              break;
+            case 'auto_cap_allocation_line_df':
+              set_auto_cap_allocation_line_df(res.data);
+              break;
+            case 'auto_cap_allocation_pie_df':
+              set_auto_cap_allocation_pie_df(res.data);
+              break;
+            case 'auto_holding_stock_df':
+              set_auto_holding_stock_df(res.data);
+              break;
+            case 'auto_traded_stock_df':
+              set_auto_traded_stock_df(res.data);
+              break;
+            case 'auto_market_checklist_df':
+              set_auto_market_checklist_df(res.data);
+              break;
+            case 'auto_industry_checklist_df':
+              set_auto_industry_checklist_df(res.data);
+              break;
+            case 'auto_industry_toplist_df':
+              set_auto_industry_toplist_df(res.data);
+              break;
+            case 'auto_industry_stocklist_df':
+              set_auto_industry_stocklist_df(res.data);
+              break;
+          }
+        }
+      } catch (error) {
+        console.error(`Failed to process data for ${tableName}:`, error);
+      }
     };
-    fetchData();
-    setInterval(fetchData, 10000)
+
+    const fetchAllData = async () => {
+      try {
+        await Promise.all([
+          getData('market_update_time'),
+          getData('stock_ta_filter_df'),
+          getData('group_eod_score_liquidity_df'),
+          getData('auto_concat_perform_df'),
+          getData('auto_cap_allocation_line_df'),
+          getData('auto_cap_allocation_pie_df'),
+          getData('auto_holding_stock_df'),
+          getData('auto_traded_stock_df'),
+          getData('auto_market_checklist_df'),
+          getData('auto_industry_checklist_df'),
+          getData('auto_industry_toplist_df'),
+          getData('auto_industry_stocklist_df'),
+        ]);
+      } catch (error) {
+        console.error("Error fetching market data:", error);
+      }
+    };
+
+    // Initial data fetch  
+    fetchAllData();
+
+    // Set up interval for periodic refreshes    
+    const intervalId = setInterval(fetchAllData, 10000);
+
+    // Cleanup function  
+    return () => {
+      isMounted = false;
+      clearInterval(intervalId);
+      abortController.abort();
+    };
   }, []);
 
   //State lưu trữ dữ liệu cổ phiếu
@@ -129,8 +176,10 @@ export default function Page5() {
   const [auto_industry_stocklist_df, set_auto_industry_stocklist_df] = useState<any[]>([]);
 
   //State lưu giữ trạng thái hiển thị của các nút bấm
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [currentPage1, setCurrentPage1] = useState(1);
+  const [currentPage2, setCurrentPage2] = useState(1);
+  const [pageSize1, setPageSize1] = useState(10);
+  const [pageSize2, setPageSize2] = useState(10);
   const [industryDetail, setIndustryDetail] = useState(false);
   const [selectIndustryDetail, setSelectIndustryDetail] = useState('Bán lẻ');
 
@@ -139,7 +188,6 @@ export default function Page5() {
   const [placeholder, setPlaceholder] = useState<string | undefined>('Chọn ngành');
   const [filter_holding_nganh, set_filter_holding_nganh] = useState<any[]>([]);
   const [filter_traded_nganh, set_filter_traded_nganh] = useState<any[]>([]);
-
 
   const ww = useWindowWidth();
   const pixel = (ratio: number, min: number) => {
@@ -671,7 +719,7 @@ export default function Page5() {
                     <IndustrySelector name='industry_name' sort='industry_name' data={auto_holding_stock_df} filter={set_filter_holding_nganh} filter_value={filter_holding_nganh} placeholder={placeholder} setPlaceholder={setPlaceholder} fontSize={pixel(0.011, 10)} />
                     <HoldingStockTable
                       data={auto_holding_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
-                      currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}
+                      currentPage={currentPage1} setCurrentPage={setCurrentPage1} pageSize={pageSize1} setPageSize={setPageSize1}
                       filter_nhom_nganh={filter_holding_nganh}
                     />
                   </Row>
@@ -690,7 +738,7 @@ export default function Page5() {
                 <IndustrySelector name='industry_name' sort='industry_name' data={auto_traded_stock_df} filter={set_filter_traded_nganh} filter_value={filter_traded_nganh} placeholder={placeholder} setPlaceholder={setPlaceholder} fontSize={pixel(0.011, 10)} />
                 <TradedStockTable
                   data={auto_traded_stock_df} ww={ww} fontSize={ww > 400 ? pixel(0.012, 13) : pixel(0.012, 11)} lineHeight='34px'
-                  currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} setPageSize={setPageSize}
+                  currentPage={currentPage2} setCurrentPage={setCurrentPage2} pageSize={pageSize2} setPageSize={setPageSize2}
                   filter_nhom_nganh={filter_traded_nganh}
                 />
               </Row>

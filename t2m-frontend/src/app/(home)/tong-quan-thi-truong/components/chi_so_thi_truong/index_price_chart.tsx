@@ -125,31 +125,54 @@ const IndexPriceChart = (props: any) => {
         };
     }, []); // Chỉ chạy một lần khi component mount
 
-    // useEffect để cập nhật dữ liệu khi props.data hoặc props.index_name thay đổi
     useEffect(() => {
         if (!candlestickSeriesRef.current || !volumeSeriesRef.current) return;
-
-        const chartData: any = props?.data?.filter((item: any) => item.index === props?.index_name)
-            .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
-
+    
+        // Filter data by index name
+        const filteredData = props?.data?.filter((item: any) => item.index === props?.index_name);
+        
+        // Use a Map to eliminate duplicate timestamps
+        const uniqueDataMap = new Map();
+        
+        filteredData?.forEach((data: any) => {
+            const timestamp = Math.floor(Date.parse(data.date) / 1000); // Ensure consistent integer conversion
+            
+            // If this timestamp already exists, keep the most recent entry
+            // This is just one strategy - you could also merge data or use another approach
+            uniqueDataMap.set(timestamp, {
+                time: timestamp,
+                open: data.open,
+                high: data.high,
+                low: data.low,
+                close: data.close,
+                volume: data.volume
+            });
+        });
+        
+        // Convert Map to array and sort by timestamp
+        const uniqueChartData = Array.from(uniqueDataMap.values())
+            .sort((a, b) => a.time - b.time);
+        
+        // Set the candlestick data with unique timestamps
         candlestickSeriesRef.current.setData(
-            chartData?.map((data: any) => ({
-                time: Date.parse(data.date) / 1000, // Chuyển đổi sang giây
+            uniqueChartData.map(data => ({
+                time: data.time,
                 open: data.open,
                 high: data.high,
                 low: data.low,
                 close: data.close,
             }))
         );
-
+    
+        // Set the volume data with the same unique timestamps
         volumeSeriesRef.current.setData(
-            chartData?.map((data: any) => ({
-                time: Date.parse(data.date) / 1000, // Chuyển đổi sang giây
+            uniqueChartData.map(data => ({
+                time: data.time,
                 value: data.volume,
-                color: data.close > data.open ? 'rgba(36, 183, 94, 0.4)' : 'rgba(225, 64, 64, 0.4)', // Màu sắc dựa trên candlestick
+                color: data.close > data.open ? 'rgba(36, 183, 94, 0.4)' : 'rgba(225, 64, 64, 0.4)',
             }))
         );
-    }, [props.data, props.index_name]); // Chỉ chạy khi props.data hoặc props.index_name thay đổi
+    }, [props.data, props.index_name]);
 
     return <div ref={chartContainerRef} style={{ width: '100%', height: props.ww > 767 ? '290px' : '235px' }} />;
 };
