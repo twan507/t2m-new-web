@@ -27,6 +27,6 @@ services:
     build:
       context: ./t2m-backend
       dockerfile: Dockerfile
-    command: npm run start
+    command: npm run start:prod
     expose:
       - 8000

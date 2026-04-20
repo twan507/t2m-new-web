@@ -28,6 +28,7 @@ import { useRouter } from 'next/navigation';
 import AuthSignInModal from '@/components/auth/signin.modal';
 import AuthSignUpModal from '@/components/auth/signup.modal';
 import UserInfoModal from '@/components/auth/userinfo.modal';
+import FinextAnnouncementModal from '@/components/announcement/finext.modal';
 import FooterComponent from '@/components/footer/footer';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { signOut } from '@/utlis/signOut';
@@ -278,6 +279,7 @@ const Homelayout = ({ children }: React.PropsWithChildren) => {
           isUserInfoModal={isUserInfoModal}
           setUserInfoModalOpen={setUserInfoModalOpen}
         />
+        <FinextAnnouncementModal />
         <SubScribesModaOpen
           isSubScribesModaOpen={isSubScribesModaOpen}
           setSubScribesModaOpen={setSubScribesModaOpen}
